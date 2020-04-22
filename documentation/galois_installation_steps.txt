@@ -1,0 +1,14 @@
+# install dependencies
+sudo apt-get install g++
+sudo apt-get install cmake
+sudo apt-get install libboost-all-dev
+sudo apt-get install llvm
+
+# setup optional prerequisites
+sudo apt-get install libnuma-dev
+# TODO Hugepages
+
+# install galois
+git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois
+cmake Galois/
+make Galois/lonestar/sssp
