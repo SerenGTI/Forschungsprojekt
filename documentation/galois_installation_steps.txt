@@ -11,4 +11,6 @@ sudo apt-get install libnuma-dev
 # install galois
 git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois
 cmake Galois/
-make Galois/lonestar/sssp
+make -C Galois/lonestar/sssp -j
+# build the graph-converter tool
+make Galois/graph-convert
