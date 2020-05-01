@@ -1,5 +1,5 @@
 # install gcc & g++, if needed
-sudo apt install gcc g++
+sudo apt install gcc g++ make
 
 # install numa lib
 sudo apt install libnuma-dev
