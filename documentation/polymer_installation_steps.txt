@@ -1,0 +1,12 @@
+# install gcc & g++, if needed
+sudo apt install gcc g++ make
+
+# install numa lib
+sudo apt install libnuma-dev
+
+# clone polymer
+git clone https://github.com/realstolz/polymer
+
+# build the system by running
+make
+# in the directory polymer was cloned to (here polymer/).
