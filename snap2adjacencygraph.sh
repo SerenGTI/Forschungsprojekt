@@ -3,8 +3,11 @@
 sourceFile=$1
 targetFile=$2
 currentNode=0
+numberOfEdges=$(grep '[0-9]' $sourceFile | wc -l)
 # initialize the output file
 echo "AdjacencyGraph" > $targetFile
+echo "to be replaced by the number of nodes" >> $targetFile
+echo $numberOfEdges >> $targetFile
 
 while [ $(grep $currentNode $sourceFile | wc -l) -ge 1 ]
 do
@@ -13,6 +16,8 @@ do
     echo $offset >> $targetFile
     let currentNode=$currentNode+1
 done
+
+sed -i "2s/.*/$currentNode/" $targetFile
 
 for (( activeNode = 0; activeNode < $currentNode; activeNode++ ))
 do
