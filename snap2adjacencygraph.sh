@@ -14,7 +14,8 @@ echo $numberOfEdges >> $targetFile
 for (( currentNode = 0; currentNode <= $biggestNumber; currentNode++ ))
 do
     pattern="^${currentNode}[[:space:]]"
-    offset=$(( $offset + $(grep "$pattern" $sourceFile | wc -l) ))
+    occurences=$(grep "$pattern" $sourceFile | wc -l)
+    offset=$(( $offset + $occurences ))
     echo $offset >> $targetFile
 done
 
@@ -24,7 +25,7 @@ for (( activeNode = 0; activeNode <= $currentNode; activeNode++ ))
 do
     pattern="^${activeNode}[[:space:]]"
     edgesOfActiveNode=$(grep "$pattern" $sourceFile)
-    antiPattern="${activeNode} "
+    antiPattern="${activeNode}[[:space:]]"
     # removes the source nodes
     edgesOfActiveNode="${edgesOfActiveNode//$antiPattern}"
     if ! [[ -z $edgesOfActiveNode ]];
