@@ -3,7 +3,7 @@
 sourceFile=$1
 targetFile=$2
 currentNode=0
-numberOfEdges=$(grep '[0-9]' $sourceFile | wc -l)
+numberOfEdges=$(grep '^[0-9]' $sourceFile | wc -l)
 offset=0
 biggestNumber=$(grep -Eo '[0-9]+' $sourceFile | sort -rn | head -n 1)
 # initialize the output file
