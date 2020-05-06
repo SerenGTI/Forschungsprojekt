@@ -15,8 +15,8 @@ for (( currentNode = 0; currentNode <= $biggestNumber; currentNode++ ))
 do
     pattern="^${currentNode}[[:space:]]"
     occurences=$(grep "$pattern" $sourceFile | wc -l)
-    offset=$(( $offset + $occurences ))
     echo $offset >> $targetFile
+    offset=$(( $offset + $occurences ))
 done
 
 sed -i "2s/.*/$currentNode/" $targetFile
