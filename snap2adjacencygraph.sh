@@ -16,8 +16,6 @@ echo "AdjacencyGraph" > $targetFile
 echo "to be replaced by the number of nodes" >> $targetFile
 echo $numberOfEdges >> $targetFile
 
-echo "% offsets" >> $targetFile
-
 for (( currentNode = 0; currentNode <= $biggestNumber; currentNode++ ))
 do
     pattern="^${currentNode}[[:space:]]"
@@ -27,8 +25,6 @@ do
 done
 
 sed -i "2s/.*/$currentNode/" $targetFile
-
-echo "% edges" >> $targetFile
 
 for (( activeNode = 0; activeNode <= $currentNode; activeNode++ ))
 do
@@ -40,8 +36,6 @@ do
         echo "$edgesOfActiveNode" >> $targetFile
     fi
 done
-
-echo "weights" >> $targetFile
 
 weights=$(grep '^[0-9]' $sourceFile | awk '{print $3}')
 if ! [[ -z $weights ]];
