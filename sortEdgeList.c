@@ -270,6 +270,49 @@ void reindex(char* filename, struct edgeList graph) {
     free(nodes);
 }
 
+// writes the given graph to the specified file in the adjacencyGraph format
+// requires a sorted and reindexed input graph
+void writeAdjacencyGraph(char* filename, struct edgeList graph){
+    int arrayLen;
+    if (graph.type == WEIGHTED){
+        arrayLen = 3;
+    } else {
+        arrayLen = 2;
+    }
+    node_id (*data)[arrayLen] = graph.graph;
+    node_id currentNode = data[0][0];
+    int offset = 0;
+    FILE* f = fopen(filename, "w");
+    fprintf(f, "AdjacencyGraph\n");
+    node_id biggestNodeId = data[graph.length-1][0];
+    for ( int i = 0; i < graph.length; i++){
+        if (data[i][1] > biggestNodeId){
+            biggestNodeId = data[i][1];
+        }
+    }
+    fprintf(f, "%d\n", biggestNodeId+1);
+    fprintf(f, "%d\n", graph.length);
+    fprintf(f, "%d\n", 0);
+    // write the number of leaving edges per node
+    for (int i = 1; i < graph.length; i++){
+        offset++;
+        if (currentNode != data[i][0]){
+            fprintf(f, "%d\n", offset);
+            currentNode = data[i][0];
+        }
+    }
+    if (graph.type == WEIGHTED){
+        for (int i = 0; i < graph.length; i++){
+            fprintf(f, "%d %d\n", data[i][1], data[i][2]);
+        }
+    } else {
+        for (int i = 0; i < graph.length; i++){
+            fprintf(f, "%d\n", data[i][1]);
+        }
+    }
+    fclose(f);
+}
+
 int main(int argc, char* argv[]) {
     if (argc < 3) {
         return 0;
@@ -278,6 +321,10 @@ int main(int argc, char* argv[]) {
     struct edgeList graph = readEdgeList(argv[1], 0);
     sort(graph);
     writeEdgeList(argv[2], graph);
+    if (argc == 4 && argv[3] != NULL){
+        reindex(NULL, graph);
+        writeAdjacencyGraph(argv[3], graph);
+    }
 
     free(graph.graph);
 }
