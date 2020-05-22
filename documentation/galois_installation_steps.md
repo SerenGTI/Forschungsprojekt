@@ -25,6 +25,7 @@ sudo apt-get install libnuma-dev
 ```
 
 #### setup hugepages
+There are many ways to setup hugepages. The only way worked for us is the way using *systemd*. If your system doesn't uses systemd, you could try an other one.
 1. create hugepagesgroup
 ```
 groupadd my-hugetlbfs
