@@ -69,6 +69,10 @@ git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois Ga
 cd Galiois
 cmake -S src -B build -DCMAKE_BUILD_TYPE=Release
 ```
+If you easy want to call the algorithms, add those to your path
+```
+export PATH="$HOME/Galois/bin:$PATH"
+```
 
 ## build applications
 
@@ -99,7 +103,17 @@ cp build/tools/graph-convert/graph-convert bin/galois-graph-convert
 # Graph converting
 Graphs should be a list of type *<SOURCE> <TARGET> <WEIGHT>* seperated by newline.
 ```
-galois-convert -edgelist2gr -edgeType=int32|int64|float32|float64 <INPUT> <OUTPUT>
+galois-graph-convert -edgelist2gr -edgeType=int32|int64|float32|float64 <INPUT> <OUTPUT>
 ```
 The weight is optional. If no weight in the list the command can be run with no argument *-edgeType*. The *-edgeType* specifys the datatype used for the weight.
 *IMPORTANT:* galois-sssp needs weights and produces a *Segmentation Fault* without
+
+A lot of edge-list-graph-files have commentars on top of the file. The algorithm in galois-convert will fail on this commentars. You can remove thos with (NUMBER=#commentars+1)
+```
+tail -n +<NUMBER> old > new
+```
+
+If you want to add a weight of 1 to every edge to make a weighted graph out of an unweighted one.
+```
+awk '{print $0, "1"}' old > new
+```
