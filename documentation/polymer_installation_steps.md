@@ -1,33 +1,67 @@
-#Polymer installation
+# Polymer installation
 
-1. install gcc & g++, if needed
+## Installing the required dependencies
+1. gcc, g++ and make
 ```
 sudo apt install gcc g++ make
 ```
-
-2. install numa lib
+2. the NUMA library
 ```
 sudo apt install libnuma-dev
 ```
 
-3. clone polymer
+## Installing Polymer itself
+Clone the Polymer repository
 ```
 git clone https://github.com/realstolz/polymer
 ```
-
-4. build the system by running
+and build the system by running `make` in the directory polymer was cloned into
 ```
+cd polymer
 make
 ```
-  in the directory polymer was cloned to (here polymer/).
 
 
-#Usage
+
+# Usage
+## Input Graph Format
+The input format is the same as with Ligra. It uses the *AdjacencyList* or the *WeightedAdjacencyList* format.
+
+## Supported Algorithms
+Polymer supports the following algorithms
+- Page Rank (PR)
 ```
-PageRank: ./numa-PageRank [graph file] [maximum iteration]
-SPMV: ./numa-SPMV [graph file] [maximum iteration]
-BP: ./numa-BP [graph file] [maximum iteration]
-BFS: ./numa-BFS [graph file] [start vertex number]
-BellmanFord: ./numa-BellmanFord [graph file] [start vertex number]
-ConnectedComponents: ./numa-Components [graph file]
+./numa-PageRank [graph file] [maximum iteration]
 ```
+- Sparse matrix-vector multiplication (SPMV) 
+```
+./numa-SPMV [graph file] [maximum iteration]
+```
+- Bayesian belief propagation (BP)
+```
+./numa-BP [graph file] [maximum iteration]
+```
+  requires a weighted input graph.
+
+- Breadth-first search (BFS)
+```
+./numa-BFS [graph file] [start vertex number]
+```
+- Single Source Shortest Path (SSSP) based on the Bellman Ford Algorithm
+```
+./numa-BellmanFord [graph file] [start vertex number]
+```
+  requires a weighted input graph.
+- Connected Components (CC)
+```
+./numa-Components [graph file]
+```
+
+
+
+
+
+
+
+## Retreiving and using the generated output
+
