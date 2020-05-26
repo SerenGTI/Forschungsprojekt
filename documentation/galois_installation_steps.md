@@ -2,7 +2,7 @@
 
 ## install dependencies
 
-### required
+### requirements
 - C++ compiler (has to be C++-17 compliant(gcc >= 7, clang >= 7))
 - cmake >= 3.13
 - Boost library >= 1.58.0 (full install recommended)
@@ -25,7 +25,7 @@ sudo apt-get install libnuma-dev
 ```
 
 #### setup hugepages
-There are many ways to setup hugepages. The only way worked for us is the way using *systemd*. If your system doesn't uses systemd, you could try an other one.
+There are many ways to setup hugepages. We could only get it to work using *systemd*. If your system doesn't use systemd, you could try an other one.
 1. create hugepagesgroup
 ```
 groupadd my-hugetlbfs
@@ -38,7 +38,7 @@ getent group my-hugetlbfs
 3. add your user to the group
 adduser <USER> my-hugetlbfs
 4. edit */etc/sysctl.conf*
-With <NUMBER> is the number of hugepages you want to set and <ID> is the id from step 2.
+<NUMBER> is the number of hugepages you want to set and <ID> is the id from step 2.
 ```
   vm.nr_hugepages = <NUMBER>
   vm.hugetlb_shm_group = <ID>
@@ -48,7 +48,7 @@ With <NUMBER> is the number of hugepages you want to set and <ID> is the id from
 mkdir <MOUNTPOINT>
 ```
 6. edit */etc/fstab*
-With <MOUNTPOINT is the mountpoint and <ID> is the id from step 2.
+<MOUNTPOINT> is the mountpoint and <ID> is the id from step 2.
 ```
 hugetlbfs <MOUNTPOINT> hugetlbfs mode=1770,gid=<ID> 0 0
 ```
@@ -108,7 +108,7 @@ galois-graph-convert -edgelist2gr -edgeType=int32|int64|float32|float64 <INPUT> 
 The weight is optional. If no weight in the list the command can be run with no argument *-edgeType*. The *-edgeType* specifys the datatype used for the weight.
 *IMPORTANT:* galois-sssp needs weights and produces a *Segmentation Fault* without
 
-A lot of edge-list-graph-files have commentars on top of the file. The algorithm in galois-convert will fail on this commentars. You can remove thos with (NUMBER=#commentars+1)
+A lot of edge-list-graph-files have comments at the of top of the file. The algorithm in galois-convert will fail if comments are present comments. You can remove those with (NUMBER=#comments+1)
 ```
 tail -n +<NUMBER> old > new
 ```
