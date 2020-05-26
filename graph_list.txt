@@ -1,14 +1,25 @@
-Orkut
-DBLP
-Live
-Journal
-Flickr
-Potentiell
-Wikipedia
-Netflix
-LiveJournal
-Web trackers
-TREC
-Friendster
-Twitter
-Twitter (MPI)
+g  Orkut           http://snap.stanford.edu/data/bigdata/communities/com-orkut.ungraph.txt.gz (edgelist, sortiert aufsteigend)     3,072,441	  117,185,083
+                   http://konect.uni-koblenz.de/downloads/tsv/orkut-links.tar.bz2
+
+   DBLP            http://snap.stanford.edu/data/bigdata/communities/com-dblp.ungraph.txt.gz                                       317,080	    1,049,866
+                   (konnect: hier gibt es viele)
+
+   LiveJournal     (snap/konnect: hier gibt es viele)
+
+   Flickr          http://snap.stanford.edu/data/web-flickr.html                                                                   105,938     2,316,948
+                   http://konect.uni-koblenz.de/downloads/tsv/flickrEdges.tar.bz2
+
+   Wikipedia       (snap/konnect: hier gibt es viele)
+
+   Netflix         (kein Downloadlink)                                                                                             978,148     ?
+
+   Web trackers    http://konect.uni-koblenz.de/downloads/tsv/trackers-trackers.tar.bz2 	                                          68,087,704  140,613,762
+
+   TREC            (konnect: es gibt 2)
+
+   Friendster      http://snap.stanford.edu/data/bigdata/communities/com-friendster.ungraph.txt.gz                                 65,608,366  1,806,067,135
+                   http://konect.uni-koblenz.de/downloads/tsv/friendster.tar.bz2                                                   68,349,466  2,586,147,869
+
+   Twitter         (kein Downloadlink)                                                                                             2,919,613   ?
+
+   Twitter (MPI)   http://konect.uni-koblenz.de/downloads/tsv/twitter_mpi.tar.bz                                                   252,579,682 1,963,263,821
