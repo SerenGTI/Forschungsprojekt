@@ -274,18 +274,19 @@ void reindex(char* filename, struct edgeList graph) {
 // requires a sorted and reindexed input graph
 void writeAdjacencyGraph(char* filename, struct edgeList graph){
     int arrayLen;
+    FILE* f = fopen(filename, "w");
     if (graph.type == WEIGHTED){
         arrayLen = 3;
+        fprintf(f, "WeightedAdjacencyGraph\n");
     } else {
         arrayLen = 2;
+        fprintf(f, "AdjacencyGraph\n");
     }
     node_id (*data)[arrayLen] = graph.graph;
     node_id currentNode = data[0][0];
     int offset = 0;
-    FILE* f = fopen(filename, "w");
-    fprintf(f, "AdjacencyGraph\n");
     node_id biggestNodeId = data[graph.length-1][0];
-    for ( int i = 0; i < graph.length; i++){
+    for (int i = 0; i < graph.length; i++){
         if (data[i][1] > biggestNodeId){
             biggestNodeId = data[i][1];
         }
@@ -301,13 +302,14 @@ void writeAdjacencyGraph(char* filename, struct edgeList graph){
             currentNode = data[i][0];
         }
     }
+    // write the target node of the i-th edge
+    for (int i = 0; i < graph.length; i++){
+        fprintf(f, "%d\n", data[i][1]);
+    }
+    // if the graph is weighted the weights will be appended
     if (graph.type == WEIGHTED){
         for (int i = 0; i < graph.length; i++){
-            fprintf(f, "%d %d\n", data[i][1], data[i][2]);
-        }
-    } else {
-        for (int i = 0; i < graph.length; i++){
-            fprintf(f, "%d\n", data[i][1]);
+            fprintf(f, "%d\n", data[i][2]);
         }
     }
     fclose(f);
