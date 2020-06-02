@@ -249,9 +249,11 @@ void writeAdjacencyGraph(char* filename, edgeList graph){
     for (; currentNode < biggestNodeId; currentNode++) {
         fprintf(f, "%d\n", offset + 1);
     }
+    // write the target node of the i-th edge
     for (size_t i = 0; i < graph.length; i++){
         fprintf(f, "%d\n", graph.edges[i].to);
     }
+    // if the graph is weighted the weights will be appended
     if (graph.type == WEIGHTED) {
         for (size_t i = 0; i < graph.length; i++){
             fprintf(f, "%d\n", graph.edges[i].weigth);
