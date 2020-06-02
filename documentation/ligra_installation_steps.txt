@@ -1,8 +1,0 @@
-# install dependencies
-sudo apt-get install g++ make
-
-# install ligra
-git clone https://github.com/jshun/ligra.git
-export OPENMP=1
-cd ligra/apps
-make
