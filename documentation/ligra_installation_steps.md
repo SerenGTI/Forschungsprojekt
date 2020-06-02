@@ -69,8 +69,15 @@ Graph must be symmetic, weighted and bipartite
 
 Common options along these algorithms are
 ```
-[-s]
+[-s] For symmetric and undirected graphs
 [-c]
-[-b]
+[-b] If graph is stored as binary
 [-m]
+[-c] For compressed graphs using the ligra encode programm
 ```
+
+To convert a graph into a compressed one
+```
+./encoder [-s] [-w] adjacencyGraph compressedGraph
+```
+with the option s for symmetric graphs and the option w for weighted graphs

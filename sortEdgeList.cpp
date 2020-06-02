@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <unistd.h>
+#include <getopt.h>
 #include <vector>
 #include <unordered_map>
 
@@ -24,7 +24,13 @@ struct edgeList {
     types type; 
 };
 
-node_id parseInteger(char * line, unsigned int * i, unsigned int len) {
+inline void skipWhitespaces(char * line, size_t * i, size_t len) {
+    while (*i < len && (line[*i] == ' ' || line[*i] == '\t' || line[*i] == '\r' || line[*i] == '\n')) {
+        (*i)++;
+    }
+}
+
+inline node_id parseInteger(char * line, size_t * i, size_t len) {
     node_id num = 0;
     while (*i < len && (line[*i] >= '0' && line[*i] <= '9')) {
         num *= 10;
@@ -72,56 +78,29 @@ edgeList readEdgeList(char* filename, int isWeighted) {
     }
     graph.length = 0;
 
-    unsigned int i;
-    unsigned int len;
-    int weight;
-    int decimalPlaces;
+    size_t i;
+    size_t len;
     // parse edges
     while (fgets(line, lineLength, f) != NULL) {
         i = 0;
         len = strlen(line);
-        // skip whitespaces
-        while (i < len && (line[i] == ' ' || line[i] == '\t' || line[i] == '\r' || line[i] == '\n')) {
-            i++;
-        }
+        
+        skipWhitespaces(line, &i, len);
         // ignore if not a number
         if (i < len && !(line[i] >= '0' && line[i] <= '9')) {
             continue;
         }
-        // parse start id
         graph.edges[graph.length].from = parseInteger(line, &i, len);
-        // skip whitespaces
-        while (i < len && (line[i] == ' ' || line[i] == '\t' || line[i] == '\r' || line[i] == '\n')) {
-            i++;
-        }
-        // parse end id
+        skipWhitespaces(line, &i, len);
         graph.edges[graph.length].to = parseInteger(line, &i, len);
         
         if (isWeighted) {
-            // skip whitespaces
-            while (i < len && (line[i] == ' ' || line[i] == '\t' || line[i] == '\r' || line[i] == '\n')) {
-                i++;
-            }
-            // parse weight
-            weight = parseInteger(line, &i, len);
-            decimalPlaces = 1;
-            /*
-            if (i < len && (line[i] == '.')) {
-                i++;
-                while (i < len && (line[i] >= '0' && line[i] <= '9')) {
-                    weight *= 10;
-                    decimalPlaces *= 10;
-                    weight += line[i] - '0';
-                    i++;
-                }
-            }
-            */
-            graph.edges[graph.length].weigth = weight;
-            // data[graph.length][2] = (float) weight / decimalPlaces;
+            skipWhitespaces(line, &i, len);
+            graph.edges[graph.length].weigth = parseInteger(line, &i, len);
         }
         graph.length++;
     }
-    // close file
+    
     fclose(f);
     return graph;
 }
@@ -237,7 +216,9 @@ void writeAdjacencyGraph(char* filename, edgeList graph){
     }
     fprintf(f, "%d\n", biggestNodeId+1);
     fprintf(f, "%d\n", graph.length);
-    fprintf(f, "%d\n", 0);
+    for (size_t i = 0; i <= graph.edges[0].from; i++) {
+        fprintf(f, "%d\n", 0);
+    }
     // write the number of leaving edges per node
     for (size_t i = 1; i < graph.length; i++){
         offset++;
@@ -249,11 +230,9 @@ void writeAdjacencyGraph(char* filename, edgeList graph){
     for (; currentNode < biggestNodeId; currentNode++) {
         fprintf(f, "%d\n", offset + 1);
     }
-    // write the target node of the i-th edge
     for (size_t i = 0; i < graph.length; i++){
         fprintf(f, "%d\n", graph.edges[i].to);
     }
-    // if the graph is weighted the weights will be appended
     if (graph.type == WEIGHTED) {
         for (size_t i = 0; i < graph.length; i++){
             fprintf(f, "%d\n", graph.edges[i].weigth);
@@ -263,55 +242,67 @@ void writeAdjacencyGraph(char* filename, edgeList graph){
 }
 
 int main(int argc, char* argv[]) {
-    // Args: edgeListIn, edgeListOut, AdjGraph
-    bool isWeighted = 0;
+    const char* help = "Usage: sortEdgeList [OPTIONS]\nOptions:\n  -h, --help             Print this help and exit\n  -i, --in PATH          Location of the graph to convert in edge list format\n  -r, --reindex PATH     Location to save the file containing the function from old id to new id\n  -e, --edge-list PATH   Location to save the file containing the graph as edge list after reindexing\n  -a, --adjacency PATH   Location to save the file containing the graph in the adjacency format after reindexing\n  -w, --weighted         Interprets the input graph as weighted\n  -n, --add-weights      Add weight of 1 to each edge. This will override any existing weights\n";
+    int isWeighted = 0;
+    int newWeights = 0;
     int opt;
     char* input = NULL;
     char* reindexOut = NULL;
     char* edgeListOut = NULL;
     char* adjacencyOut = NULL;
-    /*
+    
     static const struct option long_options[] =
     {
         { "weighted",        no_argument, 0, 'w' },
-        { "in"      ,  required_argument, 0, 'i' },
+        { "add-weights",     no_argument, 0, 'n' },
+        { "in",        required_argument, 0, 'i' },
         { "reindex",   required_argument, 0, 'r' },
-        { "edgeList",  required_argument, 0, 'e' },
+        { "edge-list", required_argument, 0, 'e' },
         { "adjacency", required_argument, 0, 'a' },
-        0
+        { "help",            no_argument, 0, 'h' },
+        { 0,                 no_argument, 0, 0 }
     };
-    while ((opt = getopt_long(argc, argv, "wi:r:e:a:", long_options, NULL)) != -1) {
-        */
-    while ((opt = getopt(argc, argv, "wi:r:e:a:")) != -1) {
+    while ((opt = getopt_long(argc, argv, "wni:r:e:a:", long_options, NULL)) != -1) {
         switch (opt) {
         case 'w': isWeighted = 1; break;
+        case 'n': newWeights = 1; break;
         case 'i': input = optarg; break;
         case 'r': reindexOut = optarg; break;
         case 'e': edgeListOut = optarg; break;
         case 'a': adjacencyOut = optarg; break;
+        case 'h': 
+            printf(help);
+            exit(EXIT_SUCCESS);
         case '?':
-            fprintf(stderr, "Unknown parameter\n");
-            fprintf(stderr, "Usage: %s [-w] [-i inputFile] [-r reindexingFunctionOutFile] [-e edgeListOutFile] [-a adjacencyGraphOutFile]\n", argv[0]);
+            fprintf(stderr, "Error: Unknown parameter\n\n");
+            fprintf(stderr, help);
             exit(EXIT_FAILURE);
         case ':':
-            fprintf(stderr, "Missing argument\n");
-            fprintf(stderr, "Usage: %s [-w] [-i inputFile] [-r reindexingFunctionOutFile] [-e edgeListOutFile] [-a adjacencyGraphOutFile]\n", argv[0]);
+            fprintf(stderr, "Error: Missing argument\n\n");
+            fprintf(stderr, help);
             exit(EXIT_FAILURE);
         default:
-            fprintf(stderr, "Usage: %s [-w] [-i inputFile] [-r reindexingFunctionOutFile] [-e edgeListOutFile] [-a adjacencyGraphOutFile]\n", argv[0]);
+            fprintf(stderr, help);
             exit(EXIT_FAILURE);
         }
     }
 
     if (input == NULL) {
-        fprintf(stderr, "Input file is required\n");
-        fprintf(stderr, "Usage: %s [-w] [-i inputFile] [-r reindexingFunctionOutFile] [-e edgeListOutFile] [-a adjacencyGraphOutFile]\n", argv[0]);
+        fprintf(stderr, "No Input file\n");
+        fprintf(stderr, help);
         exit(EXIT_FAILURE);
     }
 
     clock_t begin = clock();
     edgeList graph = readEdgeList(input, isWeighted);
     printf("Reading edge list in: %f seconds\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
+
+    if (newWeights) {
+        graph.type = WEIGHTED;
+        for (size_t i = 0; i < graph.length; i++) {
+            graph.edges[i].weigth = 1;
+        }
+    }
 
     begin = clock();
     sort(graph);
