@@ -14,6 +14,11 @@ sudo apt-get install libboost-all-dev
 sudo apt-get install llvm
 ```
 
+### required for distributed
+```
+sudo apt-get install libopenmpi-dev
+```
+
 ### optional
 Linux HUGE_PAGES support (2MB pagesize (ideally allocation of huge pages on kernel boot (hugepages=<num_of_pages>), if multiple huge page sizes are supported a selection (hugepagesz=<size>) should be made pre allocation))
 If the mmap system call is used to allocate huge pages, a pseudo filesystem of type hugelbfs has to be mounted (for further information "https://www.kernel.org/doc/Documentation/vm/hugetlbpage.txt")
@@ -69,34 +74,63 @@ git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois Ga
 cd Galiois
 cmake -S src -B build -DCMAKE_BUILD_TYPE=Release
 ```
+If your want D-Galois
+```
+cmake build -DGALOIS_ENABLE_DIST=1
+```
 If you easy want to call the algorithms, add those to your path
 ```
 export PATH="$HOME/Galois/bin:$PATH"
 ```
 
 ## build applications
+*Important Note:* If you only have very limited RAM leave out the *-j* option on the make commands otherwise you will run out of memory. The build-process will take much longer. (On 4GB-RAM the build crashed with the -j option)
 
 ### single source shortest path
 ```
-make -C build sssp
+make -C build -j sssp
 cp build/lonestar/sssp/sssp bin/galois-sssp
+```
+
+### single source shortest path (pull, distributed)
+```
+make -C build -j sssp_pull
+cp build/lonestardist/sssp/sssp_pull bin/d-galois-sssp-pull
+```
+
+### single source shortest path (push, distributed)
+```
+make -C build -j sssp_push
+cp build/lonestardist/sssp/sssp_push bin/d-galois-sssp-push
 ```
 
 ### page rank (pull)
 ```
-make -C build pagerank-pull
-cp build/lonestar/pagerank/pagerank-pull bin/galois/pagerank-pull
+make -C build -j pagerank-pull
+cp build/lonestar/pagerank/pagerank-pull bin/galois-pagerank-pull
 ```
 
 ### page rank (push)
 ```
-make -C build pagerank-push
-cp build/lonestar/pagerank/pagerank-push bin/galois/pagerank-push
+make -C build -j  pagerank-push
+cp build/lonestar/pagerank/pagerank-push bin/galois-pagerank-push
+```
+
+### page rank (pull, distributed)
+```
+make -C build/lonestardist/pagerank -j pagerank_pull
+cp build/lonestardist/pagerank/pagerank_pull bin/d-galois-pagerank-pull
+```
+
+### page rank (push, distributed)
+```
+make -C build/lonestardist/pagerank -j pagerank_push
+cp build/lonestardist/pagerank/pagerank_push bin/d-galois-pagerank-push
 ```
 
 ### graph converter
 ```
-make -C build graph-convert
+make -C build -j graph-convert
 cp build/tools/graph-convert/graph-convert bin/galois-graph-convert
 ```
 
