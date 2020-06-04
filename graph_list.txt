@@ -1,4 +1,10 @@
-g  Orkut           http://snap.stanford.edu/data/bigdata/communities/com-orkut.ungraph.txt.gz (edgelist, sortiert aufsteigend)     3,072,441	  117,185,083
+ga Orkut           volume/Forschungsprojekt                                                                                        3,072,442    117,184,899
+ga trackers        volume/Forschungsprojekt                                                                                        27,665,731   140,613,762
+
+
+
+
+   Orkut           http://snap.stanford.edu/data/bigdata/communities/com-orkut.ungraph.txt.gz (edgelist, sortiert aufsteigend)     3,072,441	  117,185,083
                    http://konect.uni-koblenz.de/downloads/tsv/orkut-links.tar.bz2
 
    DBLP            http://snap.stanford.edu/data/bigdata/communities/com-dblp.ungraph.txt.gz                                       317,080	    1,049,866
