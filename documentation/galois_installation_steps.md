@@ -71,20 +71,20 @@ grep "Hugepagesize:" /proc/meminfo
 ```
 mkdir Galois Galois/src Galois/build Galois/bin
 git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois Galois/src
-cd Galiois
+cd Galois
 cmake -S src -B build -DCMAKE_BUILD_TYPE=Release
 ```
-If your want D-Galois
+If you want D-Galois
 ```
 cmake build -DGALOIS_ENABLE_DIST=1
 ```
-If you easy want to call the algorithms, add those to your path
+If ease of use is a concern you may want to export the path to the binaries
 ```
 export PATH="$HOME/Galois/bin:$PATH"
 ```
 
 ## build applications
-*Important Note:* If you only have very limited RAM leave out the *-j* option on the make commands otherwise you will run out of memory. The build-process will take much longer. (On 4GB-RAM the build crashed with the -j option)
+*Important Note:* If RAM is very limited omit the *-j* flag on the make commands, otherwise you may run out of memory. The build-process will take much longer. (On 4GB-RAM the build crashed with the -j option)
 
 ### single source shortest path
 ```
@@ -112,7 +112,7 @@ cp build/lonestar/pagerank/pagerank-pull bin/galois-pagerank-pull
 
 ### page rank (push)
 ```
-make -C build -j  pagerank-push
+make -C build -j pagerank-push
 cp build/lonestar/pagerank/pagerank-push bin/galois-pagerank-push
 ```
 
@@ -139,10 +139,10 @@ Graphs should be a list of type *<SOURCE> <TARGET> <WEIGHT>* seperated by newlin
 ```
 galois-graph-convert -edgelist2gr -edgeType=int32|int64|float32|float64 <INPUT> <OUTPUT>
 ```
-The weight is optional. If no weight in the list the command can be run with no argument *-edgeType*. The *-edgeType* specifys the datatype used for the weight.
+The weight is optional. If there are no weights the command can be run without *-edgeType*. The *-edgeType* specifys the datatype used for the weight.
 *IMPORTANT:* galois-sssp needs weights and produces a *Segmentation Fault* without
 
-A lot of edge-list-graph-files have comments at the of top of the file. The algorithm in galois-convert will fail if comments are present comments. You can remove those with (NUMBER=#comments+1)
+A lot of edge-list-graph-files have comments at the of top of the file. The galois-convert tool will fail if comments are present . You can remove those with (NUMBER=#comments+1)
 ```
 tail -n +<NUMBER> old > new
 ```
