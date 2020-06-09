@@ -2,7 +2,7 @@
 
 ## install dependencies
 
-### required
+### requirements
 - C++ compiler (has to be C++-17 compliant(gcc >= 7, clang >= 7))
 - cmake >= 3.13
 - Boost library >= 1.58.0 (full install recommended)
@@ -12,6 +12,11 @@ sudo apt-get install g++
 sudo apt-get install cmake
 sudo apt-get install libboost-all-dev
 sudo apt-get install llvm
+```
+
+### required for distributed
+```
+sudo apt-get install libopenmpi-dev
 ```
 
 ### optional
@@ -26,7 +31,7 @@ sudo apt-get install libnuma-dev
 
 
 #### setup hugepages
-There are many ways to setup hugepages. The only way worked for us is the way using *systemd*. If your system doesn't uses systemd, you could try an other one.
+There are many ways to setup hugepages. We could only get it to work using *systemd*. If your system doesn't use systemd, you could try an other one.
 1. create hugepagesgroup
 ```
 groupadd my-hugetlbfs
@@ -39,7 +44,7 @@ getent group my-hugetlbfs
 3. add your user to the group
 adduser <USER> my-hugetlbfs
 4. edit */etc/sysctl.conf*
-With <NUMBER> is the number of hugepages you want to set and <ID> is the id from step 2.
+<NUMBER> is the number of hugepages you want to set and <ID> is the id from step 2.
 ```
   vm.nr_hugepages = <NUMBER>
   vm.hugetlb_shm_group = <ID>
@@ -49,7 +54,7 @@ With <NUMBER> is the number of hugepages you want to set and <ID> is the id from
 mkdir <MOUNTPOINT>
 ```
 6. edit */etc/fstab*
-With <MOUNTPOINT is the mountpoint and <ID> is the id from step 2.
+<MOUNTPOINT> is the mountpoint and <ID> is the id from step 2.
 ```
 hugetlbfs <MOUNTPOINT> hugetlbfs mode=1770,gid=<ID> 0 0
 ```
@@ -70,34 +75,63 @@ git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois Ga
 cd Galois
 cmake -S src -B build -DCMAKE_BUILD_TYPE=Release
 ```
-If you easy want to call the algorithms, add those to your path
+If you want D-Galois
+```
+cmake build -DGALOIS_ENABLE_DIST=1
+```
+If ease of use is a concern you may want to export the path to the binaries
 ```
 export PATH="$HOME/Galois/bin:$PATH"
 ```
 
 ## build applications
+*Important Note:* If RAM is very limited omit the *-j* flag on the make commands, otherwise you may run out of memory. The build-process will take much longer. (On 4GB-RAM the build crashed with the -j option)
 
 ### single source shortest path
 ```
-make -C build sssp
+make -C build -j sssp
 cp build/lonestar/sssp/sssp bin/galois-sssp
+```
+
+### single source shortest path (pull, distributed)
+```
+make -C build -j sssp_pull
+cp build/lonestardist/sssp/sssp_pull bin/d-galois-sssp-pull
+```
+
+### single source shortest path (push, distributed)
+```
+make -C build -j sssp_push
+cp build/lonestardist/sssp/sssp_push bin/d-galois-sssp-push
 ```
 
 ### page rank (pull)
 ```
-make -C build pagerank-pull
-cp build/lonestar/pagerank/pagerank-pull bin/galois/pagerank-pull
+make -C build -j pagerank-pull
+cp build/lonestar/pagerank/pagerank-pull bin/galois-pagerank-pull
 ```
 
 ### page rank (push)
 ```
-make -C build pagerank-push
-cp build/lonestar/pagerank/pagerank-push bin/galois/pagerank-push
+make -C build -j pagerank-push
+cp build/lonestar/pagerank/pagerank-push bin/galois-pagerank-push
+```
+
+### page rank (pull, distributed)
+```
+make -C build/lonestardist/pagerank -j pagerank_pull
+cp build/lonestardist/pagerank/pagerank_pull bin/d-galois-pagerank-pull
+```
+
+### page rank (push, distributed)
+```
+make -C build/lonestardist/pagerank -j pagerank_push
+cp build/lonestardist/pagerank/pagerank_push bin/d-galois-pagerank-push
 ```
 
 ### graph converter
 ```
-make -C build graph-convert
+make -C build -j graph-convert
 cp build/tools/graph-convert/graph-convert bin/galois-graph-convert
 ```
 
@@ -106,10 +140,10 @@ Graphs should be a list of type *<SOURCE> <TARGET> <WEIGHT>* seperated by newlin
 ```
 galois-graph-convert -edgelist2gr -edgeType=int32|int64|float32|float64 <INPUT> <OUTPUT>
 ```
-The weight is optional. If no weight in the list the command can be run with no argument *-edgeType*. The *-edgeType* specifys the datatype used for the weight.
+The weight is optional. If there are no weights the command can be run without *-edgeType*. The *-edgeType* specifys the datatype used for the weight.
 *IMPORTANT:* galois-sssp needs weights and produces a *Segmentation Fault* without
 
-A lot of edge-list-graph-files have commentars on top of the file. The algorithm in galois-convert will fail on this commentars. You can remove thos with (NUMBER=#commentars+1)
+A lot of edge-list-graph-files have comments at the of top of the file. The galois-convert tool will fail if comments are present . You can remove those with (NUMBER=#comments+1)
 ```
 tail -n +<NUMBER> old > new
 ```
