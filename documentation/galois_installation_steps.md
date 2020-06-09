@@ -24,6 +24,7 @@ CUDA for distributed heterogenous systems
 sudo apt-get install libnuma-dev
 ```
 
+
 #### setup hugepages
 There are many ways to setup hugepages. The only way worked for us is the way using *systemd*. If your system doesn't uses systemd, you could try an other one.
 1. create hugepagesgroup
@@ -66,7 +67,7 @@ grep "Hugepagesize:" /proc/meminfo
 ```
 mkdir Galois Galois/src Galois/build Galois/bin
 git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois Galois/src
-cd Galiois
+cd Galois
 cmake -S src -B build -DCMAKE_BUILD_TYPE=Release
 ```
 If you easy want to call the algorithms, add those to your path
