@@ -5,13 +5,20 @@
 # Arguments (supplied arguments must be ordered according to this listing):
 # nd -> doesn't set up the D-Galois applications
 # od -> installs only the D-Galois applications
+# dep -> installs only the dependencies
 # nj -> disables the -j flag in the building process. This option can be necessary if RAM is very limited. 
 
-sudo apt-get install g++
-sudo apt-get install cmake
-sudo apt-get install libboost-all-dev
-sudo apt-get install llvm
-sudo apt-get install libnuma-dev
+sudo apt-get install g++ cmake libboost-all-dev llvm libnuma-dev
+
+if [[ $1 != "nd" ]];
+then
+    sudo apt-get install libopenmpi-dev
+fi
+
+if [[ $1 == "dep" || $2 == "dep" ]];
+then
+    exit 0
+fi
 
 # required for both D-Galois and regular Galois
 mkdir Galois Galois/src Galois/build Galois/bin
@@ -46,7 +53,6 @@ fi
 # for D-Galois
 if [[ $1 != "nd" ]];
 then
-    sudo apt-get install libopenmpi-dev
     cmake build -DGALOIS_ENABLE_DIST=1
     $make_build"sssp_pull"
     cp build/lonestardist/sssp/sssp_pull bin/d-galois-sssp-pull
