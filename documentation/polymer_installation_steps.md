@@ -1,5 +1,5 @@
 # Polymer installation
-
+On Ubuntu
 ## Installing the required dependencies
 1. gcc, g++ and make
 ```
@@ -28,7 +28,7 @@ make
 The input format is the same as with Ligra. It uses the *AdjacencyList* or the *WeightedAdjacencyList* format.
 
 ## Supported Algorithms
-Polymer supports the following algorithms
+Polymer supports the following algorithms with the supplied command line invocations
 - Page Rank (PR)
 ```
 ./numa-PageRank [graph file] [maximum iteration]
@@ -37,21 +37,18 @@ Polymer supports the following algorithms
 ```
 ./numa-SPMV [graph file] [maximum iteration]
 ```
-- Bayesian belief propagation (BP)
+- Bayesian belief propagation (BP) requires a weighted input graph
 ```
 ./numa-BP [graph file] [maximum iteration]
 ```
-  requires a weighted input graph.
-
 - Breadth-first search (BFS)
 ```
 ./numa-BFS [graph file] [start vertex number]
 ```
-- Single Source Shortest Path (SSSP) based on the Bellman Ford Algorithm
+- Single Source Shortest Path (SSSP) based on the Bellman Ford Algorithm, requires a weighted input graph.
 ```
 ./numa-BellmanFord [graph file] [start vertex number]
 ```
-  requires a weighted input graph.
 - Connected Components (CC)
 ```
 ./numa-Components [graph file]
