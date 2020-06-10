@@ -8,10 +8,7 @@
 - Boost library >= 1.58.0 (full install recommended)
 - LLVM >= 7.0 (with RTTI support)
 ```
-sudo apt-get install g++
-sudo apt-get install cmake
-sudo apt-get install libboost-all-dev
-sudo apt-get install llvm
+sudo apt-get install g++ cmake libboost-all-dev llvm
 ```
 
 ### required for distributed
@@ -151,3 +148,17 @@ If you want to add a weight of 1 to every edge to make a weighted graph out of a
 ```
 awk '{print $0, "1"}' old > new
 ```
+
+# Run distributed
+
+## run ssp-pull twice on one machine
+```
+GALOIS_DO_NOT_BIND_THREADS=1 mpirun -n 2 -H <HOSTNAME>,<HOSTNAME> d-galois-sssp-pull <GRAPH>
+```
+
+## Setup Cluster
+
+### 1. Setup hostnames
+To keep the overview it's recommended to first setup the hostnames in the */etc/hosts*.
+You have to choose a Master and one or multiple Slave nodes. The Master node needs the (name, ip) pairs of Master and all the Slaves.
+Each Slave needs his own and the Master (name, ip) pair.
