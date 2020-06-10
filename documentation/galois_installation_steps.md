@@ -152,14 +152,37 @@ awk '{print $0, "1"}' old > new
 
 # Run distributed
 
-## run ssp-pull twice on one machine
+## run on each core of one machine
 ```
-GALOIS_DO_NOT_BIND_THREADS=1 mpirun -n 2 -H <HOSTNAME>,<HOSTNAME> d-galois-sssp-pull <GRAPH>
+GALOIS_DO_NOT_BIND_THREADS=1 mpirun <ALGORITHM> <GRAPH>
 ```
 
 ## Setup Cluster
 
-### 1. Setup hostnames
+## 1. Setup mpi
+Make sure on every node is the exact same version of *mpirun* installed. You can check this with
+```
+mpirun --version
+```
+
+### 2. Setup hostnames
 To keep the overview it's recommended to first setup the hostnames in the */etc/hosts*.
 You have to choose a Master and one or multiple Slave nodes. The Master node needs the (name, ip) pairs of Master and all the Slaves.
-Each Slave needs his own and the Master (name, ip) pair.
+Each Slave needs his own and the Master (name, ip) pair. This is not neccessary, but reccomendet, you can also use IP adresses.
+
+### 3. Setup ssh connection
+Each Node communicates using ssh. Therefore a passwordless ssh configuration from the master node to all slave nodes and back is needed.
+You schould create on each Node a ssh key with and add the public key of the master node to each slave node and the public key of each slave node to the master node.
+Try each connection to make sure all hosts are added to the trusted hosts.
+
+### 4. Setup data
+Make sure that each node has the exact same user and the algorithm to use such as the graph is at the exact same location on each machine.
+*IMPORTANT:* Do never use relative paths for the algorithm and the graph file. Only absolute paths works.
+
+### 5. Run the algorithm
+Now you are able to run the algorithm distributed. Host1 to Hostn are the names you set for each node in step two.
+If you want to also run multiple processes on each machine, write that hostname mutiple times into the list after -H.
+```
+GALOIS_DO_NOT_BIND_THREADS=1 mpirun -H <HOST1>,<HOST2>,...,<HOSTn> <ALGORITHM> <GRAPH>
+```
+
