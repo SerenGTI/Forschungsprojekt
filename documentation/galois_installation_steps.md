@@ -131,15 +131,29 @@ cp build/lonestardist/pagerank/pagerank_push bin/d-galois-pagerank-push
 make -C build -j graph-convert
 cp build/tools/graph-convert/graph-convert bin/galois-graph-convert
 ```
+### graph converter (huge)
+```
+make -C build -j graph-convert-huge
+cp build/tools/graph-convert/graph-convert-huge bin/galois-graph-convert-huge
+```
 
 # Graph converting
 Graphs should be a list of type *<SOURCE> <TARGET> <WEIGHT>* seperated by newline.
+
+## using galois-graph-convert
 ```
 galois-graph-convert -edgelist2gr -edgeType=int32|int64|float32|float64 <INPUT> <OUTPUT>
 ```
 The weight is optional. If there are no weights the command can be run without *-edgeType*. The *-edgeType* specifys the datatype used for the weight.
 *IMPORTANT:* galois-sssp needs weights and produces a *Segmentation Fault* without
 
+## using galois-graph-convert-huge
+There also is a program called graph-convert-huge. The name suggests it can be used to convert big graph. It has a very weak documentation und help page, but it seems to work for weighted graphs as well as for unweighted graphs. And also don't break for edge lists with commentaries (#). For small graphs it produces slightly bigger graph files as the normal graph convert.
+```
+galois-graph-convert-huge <INPUT> <OUTPUT>
+```
+
+## other helpful things
 A lot of edge-list-graph-files have comments at the of top of the file. The galois-convert tool will fail if comments are present . You can remove those with (NUMBER=#comments+1)
 ```
 tail -n +<NUMBER> old > new
