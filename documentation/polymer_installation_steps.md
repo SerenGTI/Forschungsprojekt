@@ -1,5 +1,5 @@
 # Polymer installation
-On Ubuntu
+On Ubuntu 20.04
 ## Installing the required dependencies
 1. gcc, g++ and make
 ```
@@ -57,8 +57,5 @@ Polymer supports the following algorithms with the supplied command line invocat
 
 
 
-
-
-
 ## Retreiving and using the generated output
-
+tbd
