@@ -21,7 +21,7 @@ struct edge {
 struct edgeList {
     edge * edges;
     unsigned int length;
-    types type; 
+    types type;
 };
 
 inline void skipWhitespaces(char * line, size_t * i, size_t len) {
@@ -84,7 +84,7 @@ edgeList readEdgeList(char* filename, int isWeighted) {
     while (fgets(line, lineLength, f) != NULL) {
         i = 0;
         len = strlen(line);
-        
+
         skipWhitespaces(line, &i, len);
         // ignore if not a number
         if (i < len && !(line[i] >= '0' && line[i] <= '9')) {
@@ -93,14 +93,14 @@ edgeList readEdgeList(char* filename, int isWeighted) {
         graph.edges[graph.length].from = parseInteger(line, &i, len);
         skipWhitespaces(line, &i, len);
         graph.edges[graph.length].to = parseInteger(line, &i, len);
-        
+
         if (isWeighted) {
             skipWhitespaces(line, &i, len);
             graph.edges[graph.length].weigth = parseInteger(line, &i, len);
         }
         graph.length++;
     }
-    
+
     fclose(f);
     return graph;
 }
@@ -122,6 +122,32 @@ void writeEdgeList(char * filename, edgeList graph) {
     else {
         for (size_t i = 0; i < graph.length; i++) {
             fprintf(f, "%d %d\n", graph.edges[i].from, graph.edges[i].to);
+        }
+    }
+    fclose(f);
+}
+
+void writeEdgeListBin(char * filename, edgeList graph) {
+    FILE* f;
+    f = fopen(filename, "wb");
+    if (f == NULL) {
+        perror("Cannot open file\n");
+        exit(EXIT_FAILURE);
+    }
+
+    if(graph.type == WEIGHTED) {
+        for (int i = 0; i < graph.length; i++) {
+            fwrite(&graph.edges[i].from, sizeof(int), 1, f);
+            fwrite(&graph.edges[i].to, sizeof(int), 1, f);
+            float weight = (float) graph.edges[i].weigth;
+            fwrite(&weight, sizeof(float), 1, f);
+        }
+    }
+    else {
+        for (int i = 0; i < graph.length; i++)
+        {
+            fwrite(&graph.edges[i].from, sizeof(int), 1, f);
+            fwrite(&graph.edges[i].to, sizeof(int), 1, f);
         }
     }
     fclose(f);
@@ -242,35 +268,38 @@ void writeAdjacencyGraph(char* filename, edgeList graph){
 }
 
 int main(int argc, char* argv[]) {
-    const char* help = "Usage: sortEdgeList [OPTIONS]\nOptions:\n  -h, --help             Print this help and exit\n  -i, --in PATH          Location of the graph to convert in edge list format\n  -r, --reindex PATH     Location to save the file containing the function from old id to new id\n  -e, --edge-list PATH   Location to save the file containing the graph as edge list after reindexing\n  -a, --adjacency PATH   Location to save the file containing the graph in the adjacency format after reindexing\n  -w, --weighted         Interprets the input graph as weighted\n  -n, --add-weights      Add weight of 1 to each edge. This will override any existing weights\n";
+    const char* help = "Usage: sortEdgeList [OPTIONS]\nOptions:\n  -h, --help              Print this help and exit\n  -i, --in PATH           Location of the graph to convert in edge list format\n  -r, --reindex PATH      Location to save the file containing the function from old id to new id\n  -e, --edgelist PATH     Location to save the file containing the graph as edge list after reindexing\n  -b, --edgelistbin PATH  Location to save the file containing the graph as edge list after reindexing in binary\n  -a, --adjacency PATH    Location to save the file containing the graph in the adjacency format after reindexing\n  -w, --weighted          Interprets the input graph as weighted\n  -n, --addweights        Add weight of 1 to each edge. This will override any existing weights\n";
     int isWeighted = 0;
     int newWeights = 0;
     int opt;
     char* input = NULL;
     char* reindexOut = NULL;
     char* edgeListOut = NULL;
+    char* edgeListBinOut = NULL;
     char* adjacencyOut = NULL;
-    
+
     static const struct option long_options[] =
     {
-        { "weighted",        no_argument, 0, 'w' },
-        { "add-weights",     no_argument, 0, 'n' },
-        { "in",        required_argument, 0, 'i' },
-        { "reindex",   required_argument, 0, 'r' },
-        { "edge-list", required_argument, 0, 'e' },
-        { "adjacency", required_argument, 0, 'a' },
-        { "help",            no_argument, 0, 'h' },
-        { 0,                 no_argument, 0, 0 }
+        { "weighted",          no_argument, 0, 'w' },
+        { "addweights",        no_argument, 0, 'n' },
+        { "in",          required_argument, 0, 'i' },
+        { "reindex",     required_argument, 0, 'r' },
+        { "edgelist",    required_argument, 0, 'e' },
+        { "edgelistbin", required_argument, 0, 'b' },
+        { "adjacency",   required_argument, 0, 'a' },
+        { "help",              no_argument, 0, 'h' },
+        { 0,                   no_argument, 0, 0 }
     };
-    while ((opt = getopt_long(argc, argv, "wni:r:e:a:", long_options, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "wni:r:e:b:a:", long_options, NULL)) != -1) {
         switch (opt) {
         case 'w': isWeighted = 1; break;
         case 'n': newWeights = 1; break;
         case 'i': input = optarg; break;
         case 'r': reindexOut = optarg; break;
         case 'e': edgeListOut = optarg; break;
+        case 'b': edgeListBinOut = optarg; break;
         case 'a': adjacencyOut = optarg; break;
-        case 'h': 
+        case 'h':
             printf(help);
             exit(EXIT_SUCCESS);
         case '?':
@@ -318,11 +347,17 @@ int main(int argc, char* argv[]) {
         printf("Writing edge list in: %f seconds\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
     }
 
+    if (edgeListBinOut != NULL) {
+        begin = clock();
+        writeEdgeListBin(edgeListBinOut, graph);
+        printf("Writing binary edge list in: %f seconds\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
+    }
+
     if (adjacencyOut != NULL) {
         begin = clock();
         writeAdjacencyGraph(adjacencyOut, graph);
         printf("Writing adjacency graph in: %f seconds\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
     }
-    
+
     free(graph.edges);
 }
