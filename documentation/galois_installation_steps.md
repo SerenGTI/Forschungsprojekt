@@ -68,7 +68,8 @@ grep "Hugepagesize:" /proc/meminfo
 ## prepare build
 ```
 mkdir Galois Galois/src Galois/build Galois/bin
-git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois Galois/src
+# Version5: git clone -b release-5.0 https://github.com/IntelligentSoftwareSystems/Galois Galois/src
+git clone -b release-6.0 https://github.com/IntelligentSoftwareSystems/Galois Galois/src
 cd Galois
 cmake -S src -B build -DCMAKE_BUILD_TYPE=Release
 ```
@@ -84,46 +85,62 @@ export PATH="$HOME/Galois/bin:$PATH"
 ## build applications
 *Important Note:* If RAM is very limited omit the *-j* flag on the make commands, otherwise you may run out of memory. The build-process will take much longer. (On 4GB-RAM the build crashed with the -j option)
 
+We assume you have enabled the D-GALOIS
+
 ### single source shortest path
 ```
-make -C build -j sssp
-cp build/lonestar/sssp/sssp bin/galois-sssp
+# Version5: make -C build -j sssp
+# Version5: cp build/lonestar/sssp/sssp bin/galois-sssp
+make -C build -j sssp-cpu
+cp build/lonestar/analytics/cpu/sssp/sssp-cpu bin/galois-sssp-cpu
 ```
 
 ### single source shortest path (pull, distributed)
 ```
-make -C build -j sssp_pull
-cp build/lonestardist/sssp/sssp_pull bin/d-galois-sssp-pull
+# Version5: make -C build -j sssp_pull
+# Version5: cp build/lonestardist/sssp/sssp_pull bin/d-galois-sssp-pull
+make -C build -j sssp-pull-dist
+cp build/lonestar/analytics/distributed/sssp/sssp-pull-dist bin/galois-sssp-pull-dist
 ```
 
 ### single source shortest path (push, distributed)
 ```
-make -C build -j sssp_push
-cp build/lonestardist/sssp/sssp_push bin/d-galois-sssp-push
+# Version5: make -C build -j sssp_push
+# Version5: cp build/lonestardist/sssp/sssp_push bin/d-galois-sssp-push
+make -C build -j sssp-push-dist
+cp build/lonestar/analytics/distributed/sssp/sssp-push-dist bin/galois-sssp-push-dist
 ```
 
 ### page rank (pull)
 ```
-make -C build -j pagerank-pull
-cp build/lonestar/pagerank/pagerank-pull bin/galois-pagerank-pull
+# Version5: make -C build -j pagerank-pull
+# Version5: cp build/lonestar/pagerank/pagerank-pull bin/galois-pagerank-pull
+make -C build -j pagerank-pull-cpu
+cp build/lonestar/analytics/cpu/pagerank/pagerank-pull-cpu bin/galois-pagerank-pull-cpu
 ```
 
 ### page rank (push)
 ```
-make -C build -j pagerank-push
-cp build/lonestar/pagerank/pagerank-push bin/galois-pagerank-push
+# Version5: make -C build -j pagerank-push
+# Version5: cp build/lonestar/pagerank/pagerank-push bin/galois-pagerank-push
+make -C build -j pagerank-push-cpu
+cp build/lonestar/analytics/cpu/pagerank/pagerank-push-cpu bin/galois-pagerank-push-cpu
 ```
 
 ### page rank (pull, distributed)
 ```
-make -C build/lonestardist/pagerank -j pagerank_pull
-cp build/lonestardist/pagerank/pagerank_pull bin/d-galois-pagerank-pull
+# Version5: make -C build/lonestardist/pagerank -j pagerank_pull
+# Version5: cp build/lonestardist/pagerank/pagerank_pull bin/d-galois-pagerank-pull
+make -C build -j pagerank-pull-dist
+cp build/lonestar/analytics/distributed/pagerank/pagerank-pull-dist bin/galois-pagerank-pull-dist
 ```
 
 ### page rank (push, distributed)
 ```
-make -C build/lonestardist/pagerank -j pagerank_push
-cp build/lonestardist/pagerank/pagerank_push bin/d-galois-pagerank-push
+# Version5: make -C build/lonestardist/pagerank -j pagerank_push
+# Version5: cp build/lonestardist/pagerank/pagerank_push bin/d-galois-pagerank-push
+make -C build -j pagerank-push-dist
+cp build/lonestar/analytics/distributed/pagerank/pagerank-push-dist bin/galois-pagerank-push-dist
 ```
 
 ### graph converter
@@ -135,6 +152,11 @@ cp build/tools/graph-convert/graph-convert bin/galois-graph-convert
 ```
 make -C build -j graph-convert-huge
 cp build/tools/graph-convert/graph-convert-huge bin/galois-graph-convert-huge
+```
+### graph converter (distributed)
+```
+make -C build -j dist-graph-convert
+cp build/tools/dist-graph-convert/dist-graph-convert bin/galois-dist-graph-convert
 ```
 
 # Graph converting
@@ -199,4 +221,3 @@ If you want to also run multiple processes on each machine, write that hostname 
 ```
 GALOIS_DO_NOT_BIND_THREADS=1 mpirun -H <HOST1>,<HOST2>,...,<HOSTn> <ALGORITHM> <GRAPH>
 ```
-
