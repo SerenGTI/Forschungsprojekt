@@ -62,7 +62,7 @@ Graph must be symmetric
 ```
 - Collaborative Filtering (CF)
 ```
-./BFS [-K] [-numiter int] [-step double] [-lambda double] [-randInit] graphFile
+./CF [-K] [-numiter int] [-step double] [-lambda double] [-randInit] graphFile
 ```
 Graph must be symmetic, weighted and bipartite
 
