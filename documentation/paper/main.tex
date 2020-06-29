@@ -4,10 +4,11 @@
 \usepackage[utf8]{inputenc}
 %\usepackage{csquotes}
 \usepackage{hyperref}
+\usepackage{amsmath}
 
 \bibliography{literature.bib}
 \title{Forschungsprojekt}
-\author{Simon König (3344789) \\ \and Leon Matzner (3315161) \\ \and Felix Rollbühler (3310069) \\ \and Jakob Schmid (??????)}
+\author{Simon König (3344789) \and Leon Matzner (3315161) \and Felix Rollbühler (3310069) \and Jakob Schmid (??????)}
 \date{\today}
 
 
@@ -32,11 +33,11 @@ My intro... blah blah \cite{Polymer}.
 
 
 
-
+\input{graphFormats}
 \section{Things}
-\input{galois.tex}
+\input{galois}
 
-\input{polymer.tex}
+\input{polymer}
 
 
 \section{Conclusion}
@@ -117,6 +118,13 @@ K.~Zhang, R.~Chen, and H.~Chen, ``Numa-aware graph-structured analytics,'' in
   minus 0.4em\relax New York, NY, USA: Association for Computing Machinery,
   2015, p. 183–193. [Online]. Available:
   \url{https://doi.org/10.1145/2688500.2688507}
+\BIBentrySTDinterwordspacing
+
+\bibitem{adjListFormat}
+\BIBentryALTinterwordspacing
+J.~Shun, G.~Blelloch, J.~Fineman, P.~Gibbons, A.~Kyrola, K.~Tangwonsan, and
+  H.~V. Simhadri. (2020, Jun.) {Problem Based Benchmark Suite}. graphIO.html.
+  [Online]. Available: \url{http://www.cs.cmu.edu/~pbbs/benchmarks/}
 \BIBentrySTDinterwordspacing
 
 \bibitem{Galois}
