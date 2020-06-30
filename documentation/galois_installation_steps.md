@@ -165,7 +165,8 @@ Graphs should be a list of type *<SOURCE> <TARGET> <WEIGHT>* seperated by newlin
 
 ## using galois-graph-convert
 ```
-galois-graph-convert -edgelist2gr -edgeType=int32|int64|float32|float64 <INPUT> <OUTPUT>
+# Version5: galois-graph-convert -edgelist2gr -edgeType=int32|int64|float32|float64 <INPUT> <OUTPUT>
+galois-graph-convert --edgelist2gr --edgeType=int32|int64|float32|float64 <INPUT> <OUTPUT>
 ```
 The weight is optional. If there are no weights the command can be run without *-edgeType*. The *-edgeType* specifys the datatype used for the weight.
 *IMPORTANT:* galois-sssp needs weights and produces a *Segmentation Fault* without
@@ -187,11 +188,21 @@ If you want to add a weight of 1 to every edge to make a weighted graph out of a
 awk '{print $0, "1"}' old > new
 ```
 
+If your want to remove weigths from the graph
+```
+awk 'NF{NF-=1};1' old > new
+```
+
 # Run distributed
+*IMPORTANT:* The pull will need the transposed graph, you either could transpose the graph, or specify to read the graph transposed wit the --transposedGraph option for the algorithms
 
 ## run on each core of one machine
 ```
 GALOIS_DO_NOT_BIND_THREADS=1 mpirun <ALGORITHM> <GRAPH>
+```
+or
+```
+GALOIS_DO_NOT_BIND_THREADS=1 mpiexec <ALGORITHM> <GRAPH>
 ```
 
 ## Setup Cluster
