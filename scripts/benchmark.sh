@@ -8,32 +8,56 @@
 # The third parameter is the path to a directory containing only the binaries (the names of the binaries must be the original name with the name of the framework und a minus prepended). 
 # The final mandatory parameter is file which will contain the results of the benchmarks (previous content will be overwritten).
 # Optionally a log file can be supplied
+log() { echo "$@" 1>&2; }
 
 galois-sssp () {
-    bin="${path_to_bins}/galois-sssp-cpu"
-    result=$(timeout 3h ./$bin $i | ts '%s')
-    finished=$(grep 'Verification' $result | awk '{print $1}')
-    started=$(grep 'Read ' $result | awk '{print $1}')
-    echo "Galois-sssp on $i" >> $result_file
-    echo $(( $finished - $started )) >> $result_file
+    bin="$path_to_bins/galois-sssp-cpu"
+    graph="$path_to_graphs/$1.gr"
+    start=$((`date +%s`*1000+`date +%-N`/1000000))
+    result=$(timeout 3h $bin --startNode=$2 $graph 2> /dev/null | ts '%.s')
+    log "$result"
+    finished=$(echo "$result" | grep 'Verification' | awk '{print $1}')
+    started=$(echo "$result" | grep 'Read ' | awk '{print $1}')
+    finished=${finished//.}
+    finished=$(($finished/1000))
+    started=${started//.}
+    started=$(($started/1000))
+    time_read=$(($started-$start))
+    time_calc=$(($finished-$started))
+    echo "galois-sssp $1 $time_read $time_calc"
 }
+
 galois-pagerank-push () {
-    # pagerank push
-    bin="${path_to_bins}/galois-pagerank-push-cpu"
-    result=$(timeout 3h ./$bin $i | ts '%s')
-    finished=$(grep 'STAT_TYPE' $result | awk '{print $1}')
-    started=$(grep 'Read ' $result | awk '{print $1}')
-    echo "Galois-pagerank-push on $i" >> $result_file
-    echo $(( $finished - $started )) >> $result_file
+    bin="$path_to_bins/galois-pagerank-push-cpu"
+    graph="$path_to_graphs/$1.gr"
+    start=$((`date +%s`*1000+`date +%-N`/1000000))
+    result=$(timeout 3h $bin --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s')
+    log "$result"
+    finished=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
+    started=$(echo "$result" | grep 'Read ' | awk '{print $1}')
+    finished=${finished//.}
+    finished=$(($finished/1000))
+    started=${started//.}
+    started=$(($started/1000))
+    time_read=$(($started-$start))
+    time_calc=$(($finished-$started))
+    echo "galois-pagerank-push $1 $time_read $time_calc"
 }
 galois-pagerank-pull () {
-    # pagerank pull
-    bin="${path_to_bins}/galois-pagerank-pull-cpu"
-    result=$(timeout 3h ./$bin --transposedGraph $i | ts '%s')
-    finished=$(grep 'STAT_TYPE' $result | awk '{print $1}')
-    started=$(grep 'Read ' $result | awk '{print $1}')
-    echo "Galois-pagerank-pull on $i" >> $result_file
-    echo $(( $finished - $started )) >> $result_file
+    bin="$path_to_bins/galois-pagerank-pull-cpu"
+    graph="$path_to_graphs/$1.gr"
+    start=$((`date +%s`*1000+`date +%-N`/1000000))
+    result=$(timeout 3h $bin --maxIterations=$pagerank_number_of_iterations --transposedGraph  $graph 2> /dev/null | ts '%.s')
+    log "$result"
+    finished=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
+    started=$(echo "$result" | grep 'Read ' | awk '{print $1}')
+    finished=${finished//.}
+    finished=$(($finished/1000))
+    started=${started//.}
+    started=$(($started/1000))
+    time_read=$(($started-$start))
+    time_calc=$(($finished-$started))
+    echo "galois-pagerank_pull $1 $time_read $time_calc"
 }
 polymer-sssp () {
     # polymer sssp
@@ -74,27 +98,10 @@ ligra-pagerank () {
     echo $time >> $result_file
 }
 
-graphs=$(ls $1)
-path_to_bins=$2
-result_file=$3
-iterations=10
-page_rank_number_of_iterations=5
-echo "# benchmark results (elapsed time in seconds )" > $result_file
+path_to_bins=/home/ubuntu/bin
+path_to_graphs=/home/ubuntu/graph
+pagerank_number_of_iterations=1000
 
-# polymer and ligra
-if [[ $i == *.adj ]];
-then
-    # sssp
-    if [[ $i != +(u_) ]];
-    then
-    fi
-    # pagerank
-    if [[ $i == +(u_) ]];
-    then
-    fi
-fi
-# gemini
-if [[ $i == *.bin ]];
-then
-    #TODO gemini
-fi
+galois-sssp orkut 10
+galois-pagerank-push orkut
+galois-pagerank-push orkut
