@@ -80,24 +80,24 @@ polymer-pagerank () {
 
 ligra-sssp () {
     # ligra sssp
-    bin="${path_to_bins}/ligra-BellmanFord"
-    graph="${path_to_graphs}/${1}.adj"
-    result=$(timeout 3h ./$bin -r $2 -rounds 1 $1)
+    local bin="${path_to_bins}/ligra-BellmanFord"
+    local graph="${path_to_graphs}/${1}.adj"
+    local result=$(timeout 3h ./$bin -r $2 -rounds 1 $graph)
     log "$result"
-    time="${result//Running time : }"
-    time=echo "${time}*1000000" | bc
-    time="${time//.*}"
+    local time="${result//Running time : }"
+    local time=echo "${time}*1000000" | bc
+    local time="${time//.*}"
 }
 
 ligra-pagerank () {
     # ligra Pagerank
-    bin="${path_to_bins}/ligra-PageRank"
-    graph="${path_to_graphs}/u_${1}.adj"
-    result=$(timeout 3h ./$bin -rounds 1 -maxiters $pagerank_number_of_iterations $1)
+    local bin="${path_to_bins}/ligra-PageRank"
+    local graph="${path_to_graphs}/u_${1}.adj"
+    local result=$(timeout 3h ./$bin -rounds 1 -maxiters $pagerank_number_of_iterations $graph)
     log "$result"
-    time="${result//Running time : }"
-    time=echo "${time}*1000000" | bc
-    time="${time//.*}"
+    local time="${result//Running time : }"
+    local time=echo "${time}*1000000" | bc
+    local time="${time//.*}"
 }
 
 path_to_graphs=/home/ubuntu/graph
