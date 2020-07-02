@@ -14,72 +14,67 @@ log() { echo "$@" 1>&2; }
 galois-sssp () {
     local bin="$path_to_bins/galois-sssp-cpu"
     local graph="$path_to_graphs/$1.gr"
-    local start=$((`date +%s`*1000+`date +%-N`/1000000))
+    local start=$((`date +%s`*1000000+`date +%-N`/1000))
     local result=$(timeout 3h $bin --startNode=$2 $graph 2> /dev/null | ts '%.s')
     log "$result"
     local finished=$(echo "$result" | grep 'Verification' | awk '{print $1}')
     local started=$(echo "$result" | grep 'Read ' | awk '{print $1}')
     local finished=${finished//.}
-    local finished=$(($finished/1000))
     local started=${started//.}
-    local started=$(($started/1000))
     local time_read=$(($started-$start))
     local time_calc=$(($finished-$started))
-    echo "galois-sssp $1 $startnode $time_read $time_calc"
+    echo "galois-sssp $1 $2 $time_read $time_calc"
 }
 
 galois-pagerank-push () {
     local bin="$path_to_bins/galois-pagerank-push-cpu"
     local graph="$path_to_graphs/$1.gr"
-    local start=$((`date +%s`*1000+`date +%-N`/1000000))
+    local start=$((`date +%s`*1000000+`date +%-N`/1000))
     local result=$(timeout 3h $bin --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s')
     log "$result"
     local finished=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
     local started=$(echo "$result" | grep 'Read ' | awk '{print $1}')
     local finished=${finished//.}
-    local finished=$(($finished/1000))
     local started=${started//.}
-    local started=$(($started/1000))
     local time_read=$(($started-$start))
     local time_calc=$(($finished-$started))
-    echo "galois-pagerank-push $1 $startnode $time_read $time_calc"
+    echo "galois-pagerank-push $1 $pagerank_number_of_iterations $time_read $time_calc"
 }
 
 galois-pagerank-pull () {
     local bin="$path_to_bins/galois-pagerank-pull-cpu"
     local graph="$path_to_graphs/$1.gr"
-    local start=$((`date +%s`*1000+`date +%-N`/1000000))
+    local start=$((`date +%s`*1000000+`date +%-N`/1000))
     local result=$(timeout 3h $bin --maxIterations=$pagerank_number_of_iterations --transposedGraph  $graph 2> /dev/null | ts '%.s')
     log "$result"
     local finished=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
     local started=$(echo "$result" | grep 'Read ' | awk '{print $1}')
     local finished=${finished//.}
-    local finished=$(($finished/1000))
     local started=${started//.}
-    local started=$(($started/1000))
     local time_read=$(($started-$start))
     local time_calc=$(($finished-$started))
-    echo "galois-pagerank_pull $1 $startnode $time_read $time_calc"
+    echo "galois-pagerank_pull $1 $pagerank_number_of_Iterations $time_read $time_calc"
 }
 
 polymer-sssp () {
-    # polymer sssp
-    bin="${path_to_bins}/polymer-numa-BellmandFord"
-    graph="${path_to_graphs}/${1}.adj"
-    result=$(timeout 3h ./$bin $i 0)
-    time=$(grep 'BellmanFord' $result)
-    time="${time//BellmanFord : }"
-    time="${time//.}"
+    local bin="${path_to_bins}/polymer-sssp"
+    local graph="${path_to_graphs}/$1.adj"
+    local result=$(timeout 3h $bin $graph 2> /dev/null $startnode)
+    log "$result"
+    local time_calc=$(echo $result | grep "BellmanFord" | awk '{print $NF}')
+    local time_calc=$(echo "$time_calc*1000000" | bc)
+    local time_calc=${time_calc//.*}
+    echo "polymer-sssp $1 $2 - $time_calc"
 }
 
 polymer-pagerank () {
-    # polymer Pagerank
-    bin="${path_to_bins}/polymer-numa-PageRank"
-    graph="${path_to_graphs}/u_${1}.adj"
-    result=$(timeout 3h ./$bin $i $page_rank_number_of_iterations)
-    time=$(grep 'PageRank' $result)
-    time="${time//PageRank : }"
-    time="${time//.}"
+    local bin="${path_to_bins}/polymer-pagerank"
+    local graph="${path_to_graphs}/u_$1.adj"
+    local result=$(timeout 3h $bin $graph 2> /dev/null $pagerank_number_of_iterations)
+    local time_calc=$(echo $result | grep 'PageRank' | awk '{print $NF}')
+    local time_calc=$(echo "$time_calc*1000000" | bc)
+    local time_calc=${time_calc//.*}
+    echo "polymer-pagerank $1 $pagerank_number_of_iterations - $time_calc"
 }
 
 ligra-sssp () {
@@ -107,7 +102,7 @@ path_to_bins=/home/ubuntu/bin
 pagerank_number_of_iterations=1000
 
 benchmark () {
-    #echo "# benchmark results (elapsed time in milliseconds )" > $result_file
+    #echo "# benchmark results (elapsed time in micro )" > $result_file
     while read -r line; do
 	for ((i=1; i<=$1; i++)); do
             graph=$(echo "$line" | awk '{print $1}')
@@ -118,12 +113,12 @@ benchmark () {
             galois-sssp $graph $startnode
             galois-pagerank-push $graph
             galois-pagerank-pull $graph
-            #polymer-sssp $graph $startnode $number_of_nodes
-            #polymer-pagerank $graph $startnode $number_of_nodes
+            polymer-sssp $graph $startnode
+            polymer-pagerank $graph
             #ligra-sssp $graph $startnode $number_of_nodes
             #ligra-pagerank $graph $startnode $number_of_nodes
         done
     done < $graph_info
 }
 
-benchmark 10
+benchmark 1
