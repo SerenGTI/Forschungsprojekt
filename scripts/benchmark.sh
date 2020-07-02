@@ -29,11 +29,7 @@ galois-sssp () {
 }
 
 galois-pagerank-push () {
-    local bin="$path_to_bins/galois-pagerank-push-cpu"
-    local graph="$path_to_graphs/$1.gr"
-    local start=$((`date +%s`*1000+`date +%-N`/1000000))
-    local result=$(timeout 3h $bin --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s')
-    log "$result"
+    local bin="$path_to_bins/galois-pagerank-push-cpu" local graph="$path_to_graphs/$1.gr" local start=$((`date +%s`*1000+`date +%-N`/1000000)) local result=$(timeout 3h $bin --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s') log "$result"
     local finished=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
     local started=$(echo "$result" | grep 'Read ' | awk '{print $1}')
     local finished=${finished//.}
@@ -79,25 +75,29 @@ polymer-pagerank () {
     result=$(timeout 3h ./$bin $i $page_rank_number_of_iterations)
     time=$(grep 'PageRank' $result)
     time="${time//PageRank : }"
-    time="${time//.}"
+    time=$(($time*1000000))
 }
 
 ligra-sssp () {
     # ligra sssp
     bin="${path_to_bins}/ligra-BellmanFord"
     graph="${path_to_graphs}/${1}.adj"
-    result=$(timeout 3h ./$bin -rounds 1 $i)
+    result=$(timeout 3h ./$bin -r $2 -rounds 1 $1)
+    log "$result"
     time="${result//Running time : }"
-    time="${time//.}"
+    time=echo "${time}*1000000" | bc
+    time="${time//.*}"
 }
 
 ligra-pagerank () {
     # ligra Pagerank
     bin="${path_to_bins}/ligra-PageRank"
     graph="${path_to_graphs}/u_${1}.adj"
-    result=$(timeout 3h ./$bin -rounds 1 -maxiters $page_rank_number_of_iterations $i)
+    result=$(timeout 3h ./$bin -rounds 1 -maxiters $pagerank_number_of_iterations $1)
+    log "$result"
     time="${result//Running time : }"
-    time="${time//.}"
+    time=echo "${time}*1000000" | bc
+    time="${time//.*}"
 }
 
 path_to_graphs=/home/ubuntu/graph
