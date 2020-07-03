@@ -3,10 +3,11 @@
 #include <string.h>
 #include <time.h>
 #include <getopt.h>
+#include <inttypes.h>
 #include <vector>
 #include <unordered_map>
 
-typedef int node_id;
+typedef int32_t node_id;
 
 const int lineLength = 100;
 
@@ -20,7 +21,7 @@ struct edge {
 
 struct edgeList {
     edge * edges;
-    unsigned int length;
+    uint64_t length;
     types type;
 };
 
@@ -155,7 +156,7 @@ void writeEdgeListBin(char * filename, edgeList graph) {
 
 
 // compare for sort function (for all comperable node_id types)
-node_id compare_node_id(const void * a, const void * b) {
+int compare_node_id(const void * a, const void * b) {
     edge x = *(edge*) a;
     edge y = *(edge*) b;
     if ( x.from < y.from ) {
@@ -241,7 +242,7 @@ void writeAdjacencyGraph(char* filename, edgeList graph){
         }
     }
     fprintf(f, "%d\n", biggestNodeId+1);
-    fprintf(f, "%d\n", graph.length);
+    fprintf(f, "%" PRIu64 "\n", graph.length);
     for (size_t i = 0; i <= graph.edges[0].from; i++) {
         fprintf(f, "%d\n", 0);
     }

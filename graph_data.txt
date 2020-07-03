@@ -1,0 +1,6 @@
+ % Name,        Nodes,      Edges,      MaxSourceNodeId
+flickrEdges,    105939,     2416948,    74591
+friendster,     68349467,   2586147869, 56110198
+orkut,          3072442,    117184899,  2724230
+twitterMpi,     52579683,   1963263821, 43983853
+

@@ -69,10 +69,10 @@ Graph must be symmetic, weighted and bipartite
 
 Common options along these algorithms are
 ```
+[-rounds int] Specify the number of rounds the algorithm will be benchmarked. 3 is default
 [-s] For symmetric and undirected graphs
-[-c]
 [-b] If graph is stored as binary
-[-m]
+[-m] mmap
 [-c] For compressed graphs using the ligra encode programm
 ```
 
