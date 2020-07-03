@@ -2,15 +2,31 @@
 
 # This script requires a correctly set up /etc/hosts file and the moreutils package (needed for ts)
 # This script expects two parameter and two files as input.
-# The first parameter is the path to a directory containing all of the graphs. 
+# The first parameter is the path to a directory containing all of the graphs.
 # The directory mustn't contain anything but the graphs in every repuired format (.gr, .adj, .bin) including weighted versions (the filenames for unweighted graphs require a leading "u_").
 # The second parameter is a file containing the base names of all graphs, the respective number of nodes, edges and the biggest usable sssp sourcenode delimited by spaces
-# The third parameter is the path to a directory containing only the binaries (the names of the binaries must be the original name with the name of the framework und a minus prepended). 
+# The third parameter is the path to a directory containing only the binaries (the names of the binaries must be the original name with the name of the framework und a minus prepended).
 # The final mandatory parameter is file which will contain the results of the benchmarks (previous content will be overwritten).
 # Optionally a log file can be supplied
-log() { echo "$@" 1>&2; }
-
 # $1 graph $2 sssp startnode $3 number of nodes
+
+log () { echo "$@" 1>&2; }
+
+convert_time () { # from float or exponential seconds to integer microsceconds
+    local res=$1
+    if [[ "$res" == *e* ]]; then
+        local m=$(cut -d'e' -f1 <<<"$res" | sed -e 's/^-0*/-/g' -e 's/^0//g')
+        local e=$(cut -d'e' -f2 <<<"$res" | sed -e 's/^-0*/-/g' -e 's/^0//g')
+        local res=$(python -c "print($m*10**$e)")
+    fi
+    local res=$(python -c "print($res*1000000)" | sed -e 's/\..*//g')
+    echo $res
+}
+
+get_time () { # timestamp in microsceconds
+    echo $((`date +%s`*1000000+`date +%-N`/1000))
+}
+
 galois-sssp () {
     local bin="$path_to_bins/galois-sssp-cpu"
     local graph="$path_to_graphs/$1.gr"
