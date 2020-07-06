@@ -121,8 +121,7 @@ galois-pagerank-pull-dist () {
     local bin="$path_to_bins/galois-pagerank-pull-dist"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    # transposed graph not yet working
-    local result=$(timeout 3h mpiexec --hostfile $host_file $bin --maxIterations=$pagerank_number_of_iterations --transposedGraph $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h mpiexec --hostfile $host_file $bin --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
@@ -186,33 +185,55 @@ gemini-sssp () {
     local bin="${path_to_bins}/gemini-sssp"
     local graph="${path_to_graphs}/$1.bin"
     local time_start=$(get_time)
-    # TODO currently calculates the result 6 times (probably source code alteration)
-    local result=$(timeout 3h $bin $graph $number_of_nodes $2)
+    local result=$(timeout 3h $bin $graph $3 $2)
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
-    local dur_calc=$(echo $result | grep 'exec_time=' | tail -1)
-    echo "gemini-sssp dur_calc: $dur_calc"
-    dur_calc="${dur_calc//*exec_time=}"
-    echo "gemini-sssp dur_calc: $dur_calc"
-    dur_calc="${dur_calc//(s)*}"
-    echo "gemini-sssp dur_calc: $dur_calc"
-    dur_calc=$(convert_time $dur_calc)
-    echo "gemini-sssp dur_calc: $dur_calc"
+    local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)
+    local dur_calc="${dur_calc//exec_time=}"
+    local dur_calc="${dur_calc//(s)}"
+    local dur_calc=$(convert_time $dur_calc)
     log "gemini-sssp $1 $2 - $dur_calc $dur_exec"
 }
 
-# TODO figure out why pagerank produces segfault
 gemini-pagerank () {
     local bin="${path_to_bins}/gemini-pagerank"
-    local graph="u_${path_to_graphs}/$1.bin"
+    local graph="${path_to_graphs}/u_$1.bin"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin $graph $number_of_nodes $pagerank_number_of_iterations)
+    local result="$(timeout 3h $bin $graph $2 $pagerank_number_of_iterations)"
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
-    local dur_calc=$(echo $result | grep 'exec_time=' | tail -1)
-i   dur_calc="${dur_calc//exec_time=}"
-    dur_calc="${dur_calc//(s)}"
-    dur_calc=$(convert_time $dur_calc)
+    local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)
+    local dur_calc="${dur_calc//exec_time=}"
+    local dur_calc="${dur_calc//(s)}"
+    local dur_calc=$(convert_time $dur_calc)
+    log "gemini-pagerank $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
+}
+
+gemini-sssp-dist () {
+    local bin="${path_to_bins}/gemini-sssp"
+    local graph="${path_to_graphs}/$1.bin"
+    local time_start=$(get_time)
+    local result=$(timeout 3h mpiexec --hostfile $host_file $bin $graph $3 $2)
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)
+    local dur_calc="${dur_calc//exec_time=}"
+    local dur_calc="${dur_calc//(s)}"
+    local dur_calc=$(convert_time $dur_calc)
+    log "gemini-sssp $1 $2 - $dur_calc $dur_exec"
+}
+
+gemini-pagerank-dist () {
+    local bin="${path_to_bins}/gemini-pagerank"
+    local graph="${path_to_graphs}/u_$1.bin"
+    local time_start=$(get_time)
+    local result="$(timeout 3h mpiexec --hostfile $host_file $bin $graph $2 $pagerank_number_of_iterations)"
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)
+    local dur_calc="${dur_calc//exec_time=}"
+    local dur_calc="${dur_calc//(s)}"
+    local dur_calc=$(convert_time $dur_calc)
     log "gemini-pagerank $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
 }
 
@@ -221,7 +242,7 @@ graph_info=/home/ubuntu/graph/graph_info.txt
 path_to_bins=/home/ubuntu/bin
 host_file=/home/ubuntu/host_file
 #result_file=$4
-pagerank_number_of_iterations=1000
+pagerank_number_of_iterations=1
 
 benchmark () {
     #echo "# benchmark results (elapsed time in micro )" > $result_file
@@ -233,23 +254,25 @@ benchmark () {
             maxstartnode=$(echo "${line}" | awk '{print $3}')
             startnode=$RANDOM
             let "startnode %= $maxstartnode"
-            galois-sssp $graph $startnode
-            galois-pagerank-push $graph
-            galois-pagerank-pull $graph
-            polymer-sssp $graph $startnode
-            polymer-pagerank $graph
-            ligra-sssp $graph $startnode
-            ligra-pagerank $graph
-	    gemini-sssp $graph $startnode
-	    # gemini-pagerank $graph
+            #galois-sssp $graph $startnode
+            #galois-pagerank-push $graph
+            #galois-pagerank-pull $graph
+            #polymer-sssp $graph $startnode
+            #polymer-pagerank $graph
+            #ligra-sssp $graph $startnode
+            #ligra-pagerank $graph
+	    #gemini-sssp $graph $startnode $number_of_nodes
+	    #gemini-pagerank $graph $number_of_nodes
 	    #distributed
-	    galois-sssp-push-dist $graph $startnode
-	    galois-sssp-pull-dist $graph $startnode
-	    galois-pagerank-push-dist $graph
-	    # galois-pagerank-pull-dist $graph
+	    #gemini-sssp-dist $graph $startnode $number_of_nodes
+	    #gemini-pagerank-dist $graph $number_of_nodes
+	    #galois-sssp-push-dist $graph $startnode
+	    #galois-sssp-pull-dist $graph $startnode
+	    #galois-pagerank-push-dist $graph
+	    #galois-pagerank-pull-dist $graph
         done
     done < $graph_info
     log "benchmark took $(($(get_time)-time_start))"
 }
 
-benchmark 1
+#benchmark 1
