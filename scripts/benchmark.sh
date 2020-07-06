@@ -250,29 +250,29 @@ benchmark () {
     while read -r line; do
 	for ((i=1; i<=$1; i++)); do
             graph=$(echo "$line" | awk '{print $1}')
-            number_of_nodes=$(echo "${line}" | awk '{print $2}')
-            maxstartnode=$(echo "${line}" | awk '{print $3}')
+            number_of_nodes=$(echo "$line" | awk '{print $2}')
+            maxstartnode=$(echo "$line" | awk '{print $3}')
             startnode=$RANDOM
             let "startnode %= $maxstartnode"
-            #galois-sssp $graph $startnode
-            #galois-pagerank-push $graph
-            #galois-pagerank-pull $graph
-            #polymer-sssp $graph $startnode
-            #polymer-pagerank $graph
-            #ligra-sssp $graph $startnode
-            #ligra-pagerank $graph
-	    #gemini-sssp $graph $startnode $number_of_nodes
-	    #gemini-pagerank $graph $number_of_nodes
-	    #distributed
-	    #gemini-sssp-dist $graph $startnode $number_of_nodes
-	    #gemini-pagerank-dist $graph $number_of_nodes
-	    #galois-sssp-push-dist $graph $startnode
-	    #galois-sssp-pull-dist $graph $startnode
-	    #galois-pagerank-push-dist $graph
-	    #galois-pagerank-pull-dist $graph
+            galois-sssp $graph $startnode
+            galois-pagerank-push $graph
+            galois-pagerank-pull $graph
+            polymer-sssp $graph $startnode
+            polymer-pagerank $graph
+            ligra-sssp $graph $startnode
+            ligra-pagerank $graph
+	    gemini-sssp $graph $startnode $number_of_nodes
+	    gemini-pagerank $graph $number_of_nodes
+	    distributed
+	    gemini-sssp-dist $graph $startnode $number_of_nodes
+	    gemini-pagerank-dist $graph $number_of_nodes
+	    galois-sssp-push-dist $graph $startnode
+	    galois-sssp-pull-dist $graph $startnode
+	    galois-pagerank-push-dist $graph
+	    galois-pagerank-pull-dist $graph
         done
     done < $graph_info
     log "benchmark took $(($(get_time)-time_start))"
 }
 
-#benchmark 1
+benchmark 1
