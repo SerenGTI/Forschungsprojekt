@@ -114,7 +114,7 @@ galois-pagerank-pull () {
     local time_started_calc=$(echo "$result" | grep 'Read ' | awk '{print $1}')
     local dur_read=$((${time_started_calc//.}-$time_start))
     local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
-    log "galois-pagerank_pull $1 $pagerank_number_of_Iterations $dur_read $dur_calc $dur_exec"
+    log "galois-pagerank_pull $1 $pagerank_number_of_iterations $dur_read $dur_calc $dur_exec"
 }
 
 galois-pagerank-pull-dist () {
@@ -126,8 +126,6 @@ galois-pagerank-pull-dist () {
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
     local time_started_calc=$(echo "$result" | grep 'Reading graph complete.' | tail -1 | awk '{print $1}')
-    echo "time started: $time_started_calc"
-    echo "time finished: $time_finished_calc"
     local dur_read=$((${time_started_calc//.}-$time_start))
     local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
     log "galois-pagerank-pull-dist $1 $pagerank_number_of_iterations $dur_read $dur_calc $dur_exec"
@@ -220,7 +218,7 @@ gemini-sssp-dist () {
     local dur_calc="${dur_calc//exec_time=}"
     local dur_calc="${dur_calc//(s)}"
     local dur_calc=$(convert_time $dur_calc)
-    log "gemini-sssp $1 $2 - $dur_calc $dur_exec"
+    log "gemini-sssp-dist $1 $2 - $dur_calc $dur_exec"
 }
 
 gemini-pagerank-dist () {
@@ -234,7 +232,7 @@ gemini-pagerank-dist () {
     local dur_calc="${dur_calc//exec_time=}"
     local dur_calc="${dur_calc//(s)}"
     local dur_calc=$(convert_time $dur_calc)
-    log "gemini-pagerank $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
+    log "gemini-pagerank-dist $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
 }
 
 path_to_graphs=/home/ubuntu/graph
@@ -244,35 +242,30 @@ host_file=/home/ubuntu/host_file
 #result_file=$4
 pagerank_number_of_iterations=1
 
-benchmark () {
-    #echo "# benchmark results (elapsed time in micro )" > $result_file
-    time_start=$(get_time)
-    while read -r line; do
-	for ((i=1; i<=$1; i++)); do
-            graph=$(echo "$line" | awk '{print $1}')
-            number_of_nodes=$(echo "$line" | awk '{print $2}')
-            maxstartnode=$(echo "$line" | awk '{print $3}')
-            startnode=$RANDOM
-            let "startnode %= $maxstartnode"
-            galois-sssp $graph $startnode
-            galois-pagerank-push $graph
-            galois-pagerank-pull $graph
-            polymer-sssp $graph $startnode
-            polymer-pagerank $graph
-            ligra-sssp $graph $startnode
-            ligra-pagerank $graph
-	    gemini-sssp $graph $startnode $number_of_nodes
-	    gemini-pagerank $graph $number_of_nodes
-	    distributed
-	    gemini-sssp-dist $graph $startnode $number_of_nodes
-	    gemini-pagerank-dist $graph $number_of_nodes
-	    galois-sssp-push-dist $graph $startnode
-	    galois-sssp-pull-dist $graph $startnode
-	    galois-pagerank-push-dist $graph
-	    galois-pagerank-pull-dist $graph
-        done
-    done < $graph_info
-    log "benchmark took $(($(get_time)-time_start))"
+benchmark_graph () { # graph $1, startnode $2, number_of_nodes $3, maxstartnode $4
+	local startnode=$2
+	if [[ "$startnode" == "random" ]]; then
+		startnode=$RANDOM
+		let "startnode %= $4"
+	fi
+	galois-sssp $1 $startnode
+	galois-pagerank-push $1
+	galois-pagerank-pull $1
+	polymer-sssp $1 $startnode
+	polymer-pagerank $1
+	ligra-sssp $1 $startnode
+	ligra-pagerank $1
+	gemini-sssp $1 $startnode $3
+	gemini-pagerank $1 $3
+	#distributed
+	gemini-sssp-dist $1 $startnode $3
+	gemini-pagerank-dist $1 $3
+	galois-sssp-push-dist $1 $startnode
+	galois-sssp-pull-dist $1 $startnode
+	galois-pagerank-push-dist $1
+	galois-pagerank-pull-dist $1
 }
 
-benchmark 1
+
+benchmark_graph test random 3 3
+benchmark_graph orkut random 3072442 2724230
