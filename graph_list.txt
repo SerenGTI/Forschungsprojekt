@@ -5,18 +5,11 @@ ga trackers        volume/Forschungsprojekt                                     
 
    Orkut           http://konect.uni-koblenz.de/downloads/tsv/orkut-links.tar.bz2                                                  3,072,442   117,184,899
 
-   DBLP            http://snap.stanford.edu/data/bigdata/communities/com-dblp.ungraph.txt.gz                                       317,080	    1,049,866
-                   (konnect: hier gibt es viele)
-
-   LiveJournal     (snap/konnect: hier gibt es viele)
-
    Flickr          http://konect.uni-koblenz.de/downloads/tsv/flickrEdges.tar.bz2                                                  105,939     2,416,948
 
-   Wikipedia       (snap/konnect: hier gibt es viele)
+   Wikipedia       http://konect.uni-koblenz.de/downloads/tsv/wikipedia_link_en.tar.bz2                                            12,150,977  378,142,420
 
    Web trackers    http://konect.uni-koblenz.de/downloads/tsv/trackers-trackers.tar.bz2 	                                       68,087,704  140,613,762
-
-   TREC            (konnect: es gibt 2)
 
    Friendster      http://konect.uni-koblenz.de/downloads/tsv/friendster.tar.bz2                                                   68,349,466  2,586,147,869
 
