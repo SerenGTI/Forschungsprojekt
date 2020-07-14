@@ -65,8 +65,7 @@ export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true
 Create a temporary directory for hadoop to work on
 ```
 sudo mkdir -p /app/hadoop/tmp
-sudo chown hduser:hadoop /app/hadoop/tmp
-//sudo chown ubuntu /app/hadoop/tmp
+sudo chown <username> /app/hadoop/tmp
 sudo chmod 750 /app/hadoop/tmp
 ```
 
@@ -76,27 +75,92 @@ Now check that the `/etc/hosts` is correctly configured with
 127.0.0.1 localhost
 <IP> <hostname>
 ```
-make sure to replace IP and hostname with the current IP of this machine and the hostname with the corresponding hostname.
+make sure to replace IP and hostname with the current IP of this machine and  hostname with a hostname for this machine. It does not need to be the same as `hostname`. `master` or `slave1` is allowed. Use this hostname in the configuration below.
+Find out the ip with
+```
+ifconfig
+```
+and note that it might differ from the one used to ssh into the machine.
 
 
-## Configuring Hadoop
-in conf/* .xml
-hdnode01 durch hostname (koenigsn_giraph) ersetzen
+## Configuring Hadoop for a single node cluster
+We are working in the `$HADOOP_HOME/conf` directory. Add the following between the `<configuration>...</configuration>` in the files specified below.
+In `core-site.xml`
+```
+<property>
+<name>hadoop.tmp.dir</name>
+<value>/app/hadoop/tmp</value>
+</property>
 
-in core-site.xml den teil mit 
 <property> 
 <name>fs.default.name</name> 
-<value>hdfs://koenigsn_giraph:54310</value> 
+<value>hdfs://<hostname>:54310</value> 
 </property>
-weglassen..?
+```
 
-außerdem wenn man localhost in core-site benutzt gehts..
-Einfach IP-Adressen verwenden?
+In `mapred-site.xml`
+```
+<property>
+<name>mapred.job.tracker</name> 
+<value><hostname>:54311</value>
+</property>
+
+<property>
+<name>mapred.tasktracker.map.tasks.maximum</name>
+<value>4</value>
+</property>
+
+<property>
+<name>mapred.map.tasks</name>
+<value>4</value>
+</property>
+```
+
+In `hdfs-site.xml`
+```
+<property>
+<name>dfs.replication</name> 
+<value>1</value> 
+</property>
+```
+The value here represents the amount of datanodes.
 
 
-in slaves und masters jeweils localhost entfernen! sonst werden mache sachen irgendwie doppelt und andere gar nicht gestartet
+### Set up ssh between the nodes without passwords
+add the ssh keys of each node to the authorized keys of each other node.
+This is for a single node cluster
+```
+ssh-keygen -t rsa -P ""
+cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+```
 
-namenode format entweder als hduser oder im richtigen verzeichnis, ubuntu kennt $HADOOP_HOME nicht
+
+### Configuring Slaves and Masters
+In `$HADOOP_HOME/conf/slaves` and `$HADOOP_HOME/conf/masters` you will need to specify which nodes should be the master and which are slaves.
+
+For a single node cluster we will change both files to only contain `<hostname>`.
+
+
+### Formatting the Hadoop DFS and starting all processes
+The following will format the file system.
+```
+$HADOOP_HOME/bin/hadoop namenode -format
+```
+Now start up the deamons
+```
+$HADOOP_HOME/bin/start-dfs.sh
+$HADOOP_HOME/bin/start-mapred.sh
+```
+
+Check that everything worked by running `jps`. The output should be something like the following (on a single node cluster, ignore the PIDs)
+```
+12880 SecondaryNameNode
+14272 Jps
+13169 TaskTracker
+12513 NameNode
+12691 DataNode
+12985 JobTracker
+```
 
 
 
@@ -117,8 +181,24 @@ We should
 ls $GIRAPH_HOME/giraph-examples/target
 ```
 
+
+
 # Running Giraph Jobs
-THIS DOES NOT WORK YET
+
 ```
-$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/hduser/input/tiny_graph.txt -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/hduser/output/shortestpaths -w 1
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/tiny_graph.txt -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/shortestpaths -w 1
 ```
+
+
+
+
+
+
+
+ubuntu@koenigsn-giraph:/usr/local/giraph/giraph-examples/src/main/java/org/apache/giraph/examples$ ls
+ConnectedComponentsComputation.java
+SimplePageRankComputation.java
+SimpleShortestPathsComputation.java
+PageRankComputation.java
+RandomWalkComputation.java
+[...]
