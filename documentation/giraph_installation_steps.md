@@ -295,30 +295,34 @@ To stop the deamons, run the corresponding `$HADOOP_HOME/bin/stop-*.sh` commands
 
 
 ## Installing Giraph
+We install giraph on the master node. First clone the repository
 ```
 cd /usr/local/
 sudo git clone https://github.com/apache/giraph.git
 sudo chown -R ubuntu giraph
 ```
-Now install the package using maven. We recommend piping the output to `/dev/null` since it is quite a lot of useless text.
+and then install the package using maven.
 ```
 cd $GIRAPH_HOME
-mvn package -DskipTests > /dev/null
+mvn package -DskipTests
 ```
-You should now however verify the correct installation afterwards.
-We should
-```
-ls $GIRAPH_HOME/giraph-examples/target
-```
+You do not need to copy the resulting jar to all nodes of the cluster!
 
-
-
+Giraph can now be used to run jobs.
 # Running Giraph Jobs
-
+Copying graph files to the hadoop dfs
 ```
-$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/tiny_graph.txt -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/shortestpaths -w 1
+$HADOOP_HOME/bin/hadoop dfs -copyFromLocal <path to graph file> /user/<username>/input/<graph name>
+$HADOOP_HOME/bin/hadoop dfs -ls /user/<username>/input
 ```
 
+
+This calls a shortest paths calculation from node 1.. we need to fix this in the future.
+*We recommend copying this command in a text editor and editing it before putting it in the console..*
+```
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/<username>/input/<graph name> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/<username>/output/shortestpaths_<graph name> -w <number of workers>
+```
+make sure to set the -w flag to the amount of workers i.e. the amount of nodes in the cluster.
 
 
 
@@ -332,7 +336,3 @@ SimpleShortestPathsComputation.java
 PageRankComputation.java
 RandomWalkComputation.java
 [...]
-
-
-# Encountered Mistakes and how to fix them
-
