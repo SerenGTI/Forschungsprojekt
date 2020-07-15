@@ -1,12 +1,12 @@
 #!/bin/bash
 source benchmark.sh
 
-path_to_graphs=/home/ubuntu/graph
-graph_info=/home/ubuntu/graph/graph_info.txt
-path_to_bins=/home/ubuntu/bin
-host_file=/home/ubuntu/host_file
+path_to_graphs=/home/fp-ss20/graph
+#graph_info=/home/ubuntu/graph/graph_info.txt
+path_to_bins=/home/fp-ss20/bin
+#host_file=/home/ubuntu/host_file
 #result_file=$4
-pagerank_number_of_iterations=1
+pagerank_number_of_iterations=5
 
 #Name,           Nodes,      Edges,      MaxSourceNodeId   RandomStartNodes
 #flickrEdges,    105939,     2416948,    74591             5114,73690,23892,30641,38088,16717,68726,25185,31011,42329
