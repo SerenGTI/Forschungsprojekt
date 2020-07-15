@@ -1,49 +1,78 @@
 
-Unfinished! Doesn't work yet
+Unfinished! May not work yet.
 
 # Prerequisites
 First install Open JDK, git and maven
 ```
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install default-jdk git maven
+sudo apt-get install default-jdk git maven net-tools
 ```
 
-We will not use a different user for the installation.
-(optional?)
-Create a new group hadoop and user hduser
+Find out the ip of all machines with
+```
+ifconfig
+```
+and note that it might differ from the one used to ssh into the machine.
+Now check that the `/etc/hosts` is correctly configured for each master and slave with
+```
+127.0.0.1 localhost
+<IP> <master-hostname>
+<IP> <slave1-hostname>
+<IP> <slave2-hostname>
+...
+```
+make sure to replace IP and hostname. The hostnames do not need to be the same as the actual hostnames of the machine. `master` or `slave1` is allowed.
+*Use these hostnames in the configuration below.*
+
+
+The installation can be done with a `hadoop` group and `hduser` user.
+We will however not use a different user for the installation. So the following is optional.
 ```
 sudo addgroup hadoop
 sudo adduser --ingroup hadoop hduser
 ```
 
 
-
-## Download and install hadoop.
+## Download and install Hadoop
+We will download hadoop from apache and install it in `/usr/local/hadoop`.
+The Giraph quick start guide recommends the version 0.20.203. We found that using 0.20.205 solves a problem with `Failed map tasks`.
 ```
 cd /usr/local
+```
+According to the quick start guide
+```
 sudo wget http://archive.apache.org/dist/hadoop/core/hadoop-0.20.203.0/hadoop-0.20.203.0rc1.tar.gz
 sudo tar xzf hadoop-0.20.203.0rc1.tar.gz
 sudo mv hadoop-0.20.203.0 hadoop
-
-(optional?)
 ```
-Allow read rights to hadoop group
+
+We recommend the following
+```
+sudo wget http://archive.apache.org/dist/hadoop/core/hadoop-0.20.205.0/hadoop-0.20.205.0.tar.gz
+sudo tar xzf hadoop-0.20.205.0.tar.gz
+sudo mv hadoop-0.20.205.0 hadoop
+sudo rm hadoop-0.20.205.0.tar.gz
+```
+
+
+Now you will have to modify the permissions for this folder.
+If you are using a dedicated user and group, allow read rights to the hadoop group and hduser,
 ```
 sudo chown -R hduser:hadoop hadoop
 ```
+else just make yourself the owner of the folder.
+```
+sudo chown -R <username> hadoop
+```
 
-(stattdessen)
-sudo chown -R ubuntu hadoop
 
-
-
-
+## Configuring Hadoop
 Find the name of the installed JDK folder by running 
 ```
 ls /usr/lib/jvm
 ```
-for us it was `/usr/lib/jvm/java-11-openjdk-amd64`. Use this path in the following commands.
+for us it was `/usr/lib/jvm/java-11-openjdk-amd64/`. Use this path in the following commands.
 
 Switch to the hduser using `su hduser` and append the following to their `$HOME/.bashrc`
 ```
@@ -60,6 +89,7 @@ Now edit `/usr/local/hadoop/conf/hadoop-env.sh`
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true
 ```
+The second line will force Hadoop to use IPv4 instead of IPv6.
 
 
 Create a temporary directory for hadoop to work on
@@ -70,21 +100,8 @@ sudo chmod 750 /app/hadoop/tmp
 ```
 
 
-Now check that the `/etc/hosts` is correctly configured with
-```
-127.0.0.1 localhost
-<IP> <hostname>
-```
-make sure to replace IP and hostname with the current IP of this machine and  hostname with a hostname for this machine. It does not need to be the same as `hostname`. `master` or `slave1` is allowed. Use this hostname in the configuration below.
-Find out the ip with
-```
-ifconfig
-```
-and note that it might differ from the one used to ssh into the machine.
-
-
-## Configuring Hadoop for a single node cluster
-We are working in the `$HADOOP_HOME/conf` directory. Add the following between the `<configuration>...</configuration>` in the files specified below.
+### Configuring Hadoop for a single node cluster
+We are working in the `$HADOOP_HOME/conf` directory. Add the following between the `<configuration>...</configuration>` in the files specified below. Note that `<hostname>` has to be replaced with whatever you put in `/etc/hosts` file.
 In `core-site.xml`
 ```
 <property>
@@ -115,6 +132,7 @@ In `mapred-site.xml`
 <value>4</value>
 </property>
 ```
+remember that the master is a slave as well.
 
 In `hdfs-site.xml`
 ```
@@ -123,30 +141,113 @@ In `hdfs-site.xml`
 <value>1</value> 
 </property>
 ```
-The value here represents the amount of datanodes.
+
+Now edit both `$HADOOP_HOME/conf/masters` and `$HADOOP_HOME/conf/slaves` to only contain the hostname.
 
 
-### Set up ssh between the nodes without passwords
-add the ssh keys of each node to the authorized keys of each other node.
-This is for a single node cluster
+### Configuring Hadoop for a multi node cluster
+#### Configuration of the masters
+Edit `$HADOOP_HOME/conf/masters` to contain the hostname `<master-hostname` of the master.
+Edit `$HADOOP_HOME/conf/slaves` to contain the hostnames of all nodes
+```
+<master-hostname>
+<slave1-hostname>
+<slave2-hostname>
+...
+```
+
+#### Additional configuration for all nodes in the multi node cluster
+We will now need to set the configuration of all nodes by copying the properties given below between the `<configuration>...</configuration>` tags.
+
+In `$HADOOP_HOME/conf/core-site.xml` we add
+```
+<property>
+  <name>hadoop.tmp.dir</name>
+  <value>/app/hadoop/tmp</value>
+</property>
+
+<property>
+  <name>fs.default.name</name>
+  <value>hdfs://<master-hostname>:54310</value>
+</property>
+```
+to specify the NameNode host and port. This is the master.
+
+
+Second in `$HADOOP_HOME/conf/mapred-site.xml` we add
+```
+<property>
+  <name>mapred.job.tracker</name>
+  <value><master-hostname>:54311</value>
+</property>
+
+<property>
+  <name>mapred.local.dir</name>
+  <value>/app/hadoop/tmp/mapred</value>
+</property>
+
+<!--<property>
+  <name>mapred.map.tasks</name>
+  <value><about 10x number of slaves></value>
+</property>
+
+<property>
+  <name>mapred.reduce.tasks</name>
+  <value><about 10x number of slaves></value>
+</property>-->
+```
+
+
+And last we edit `$HADOOP_HOME/conf/hdfs-site.xml` to contain
+```
+<property>
+  <name>dfs.replication</name>
+  <value><your number></value>
+</property>
+```
+where we will need to replace `<your number>` with an integer less or equal to the amount of nodes in the cluster. So for one master and one slave, put this to 2. The dfs.replication specifies the default block replication. It defines how many machines a single file should be replicated to before it becomes available. The default value is 3.
+
+### Setting up ssh between the nodes without passwords
+This is necessary regardless of the amount of nodes in the cluster, meaning you will need to perform this step even in a single node cluster!
+
+On the master, generate a set of ssh keys
 ```
 ssh-keygen -t rsa -P ""
-cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
 ```
 
 
-### Configuring Slaves and Masters
-In `$HADOOP_HOME/conf/slaves` and `$HADOOP_HOME/conf/masters` you will need to specify which nodes should be the master and which are slaves.
+Add this key to the authorized keys to all machines.
+So first allow password-less ssh from master to master by running
+```
+cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+```
+this is the only step you will have to perform on a single node cluster.
 
-For a single node cluster we will change both files to only contain `<hostname>`.
+For all other slaves, run
+```
+ssh-copy-id -i $HOME/.ssh/id_rsa.pub <username>@slave
+```
+to copy the public key to the slaves. It is important that you use the same username on all machines.
+If this command does not work because access to the slaves is also only by rsa keypair, log into the slave and append the contents of `$HOME/.ssh/id_rsa.pub` to the slaves `$HOME/.ssh/authorized_keys` by hand.
 
+Now check that everything works
+```
+ssh <username>@master
+ssh <username>@slave1
+...
+```
 
-### Formatting the Hadoop DFS and starting all processes
-The following will format the file system.
+### Formatting the Hadoop DFS
+On the master or the only node in a single node cluster, we run
 ```
 $HADOOP_HOME/bin/hadoop namenode -format
 ```
-Now start up the deamons
+to format the file system.
+
+If this fails, check that you set the permissions to `/app/hadoop/tmp` correctly.
+
+### Starting the single node cluster
+Now start up the deamons by running
 ```
 $HADOOP_HOME/bin/start-dfs.sh
 $HADOOP_HOME/bin/start-mapred.sh
@@ -162,6 +263,35 @@ Check that everything worked by running `jps`. The output should be something li
 12985 JobTracker
 ```
 
+### Starting the multi node cluster
+On the master, run 
+```
+$HADOOP_HOME/bin/start-dfs.sh
+```
+
+To check that everything is working as intended, run `jps` on master and slave. We expect
+```
+32880 DataNode
+33075 SecondaryNameNode
+33144 Jps
+32701 NameNode
+```
+on master and 
+```
+31415 DataNode
+31484 Jps
+```
+on the slaves. Ignore the Process IDs.
+
+We will now start the map-reduce deamons. Run 
+```
+$HADOOP_HOME/bin/start-mapred.sh
+```
+on the master.
+
+If you run `jps` again, there should now be a `TaskTracker` running on every node and a `JobTracker` on the master.
+
+To stop the deamons, run the corresponding `$HADOOP_HOME/bin/stop-*.sh` commands in *reverse order*.
 
 
 ## Installing Giraph
@@ -202,3 +332,7 @@ SimpleShortestPathsComputation.java
 PageRankComputation.java
 RandomWalkComputation.java
 [...]
+
+
+# Encountered Mistakes and how to fix them
+
