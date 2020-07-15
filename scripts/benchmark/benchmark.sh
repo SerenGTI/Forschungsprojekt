@@ -235,6 +235,36 @@ gemini-pagerank-dist () {
     log "gemini-pagerank-dist $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
 }
 
+giraph-sssp () {
+    # local bin="${path_to_bins}/giraph-sssp"
+    #local graph="${path_to_graphs}/$1.adj"
+    local time_start=$(get_time)
+    #local result=$(timeout 3h $bin -r $2 -rounds 1 $graph)
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_init=$(echo $result | grep 'Initialize (ms)')
+    local dur_init="${dur_init//.*Initialize (ms)=}"
+    local dur_total="${result//.*Total (ms)=}" 
+    local dur_calc=$(($dur_total-$dur_init))
+    local dur_calc=$(convert_time $dur_calc)
+    log "giraph-sssp $1 $2 - $dur_calc $dur_exec"
+}
+
+giraph-pagerank () {
+    # local bin="${path_to_bins}/giraph-sssp"
+    #local graph="${path_to_graphs}/$1.adj"
+    local time_start=$(get_time)
+    #local result=$(timeout 3h $bin -r $2 -rounds 1 $graph)
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_init=$(echo $result | grep 'Initialize (ms)')
+    local dur_init="${dur_init//.*Initialize (ms)=}"
+    local dur_total="${result//.*Total (ms)=}" 
+    local dur_calc=$(($dur_total-$dur_init))
+    local dur_calc=$(convert_time $dur_calc)
+    log "giraph-pagerank $1 $2 - $dur_calc $dur_exec"
+}
+
 benchmark_graph () { # graph $1, startnode $2, number_of_nodes $3, maxstartnode $4
 	local startnode=$2
 	if [[ "$startnode" == "random" ]]; then
