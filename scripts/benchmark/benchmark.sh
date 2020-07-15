@@ -11,11 +11,11 @@
 # $1 graph $2 sssp startnode $3 number of nodes
 
 logv () { # writes to stdout
-    echo "$@" 1>&2; 
+    echo "$@" 1>&2;
 }
 log () { # writes to stdout and stderr
     echo "$@"
-    echo "#$@" 1>&2; 
+    echo "#$@" 1>&2;
 }
 
 convert_time () { # from float or exponential seconds to integer microsceconds
@@ -235,13 +235,6 @@ gemini-pagerank-dist () {
     log "gemini-pagerank-dist $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
 }
 
-path_to_graphs=/home/ubuntu/graph
-graph_info=/home/ubuntu/graph/graph_info.txt
-path_to_bins=/home/ubuntu/bin
-host_file=/home/ubuntu/host_file
-#result_file=$4
-pagerank_number_of_iterations=1
-
 benchmark_graph () { # graph $1, startnode $2, number_of_nodes $3, maxstartnode $4
 	local startnode=$2
 	if [[ "$startnode" == "random" ]]; then
@@ -266,6 +259,3 @@ benchmark_graph () { # graph $1, startnode $2, number_of_nodes $3, maxstartnode 
 	galois-pagerank-pull-dist $1
 }
 
-
-benchmark_graph test random 3 3
-benchmark_graph orkut random 3072442 2724230
