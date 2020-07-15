@@ -8,4 +8,92 @@ host_file=/home/ubuntu/host_file
 #result_file=$4
 pagerank_number_of_iterations=1
 
-get_time
+#Name,           Nodes,      Edges,      MaxSourceNodeId   RandomStartNodes
+#flickrEdges,    105939,     2416948,    74591             5114,73690,23892,30641,38088,16717,68726,25185,31011,42329
+#friendster,     68349467,   2586147869, 56110198          39797743,35222816,1794578,43131729,20457996,490332,4274039,10253002,30789169,54514110
+#orkut,          3072442,    117184899,  2724230           1345950,1962322,2692187,1198261,163962,1407061,1613980,1976485,2350837,1834214
+#twitterMpi,     52579683,   1963263821, 43983853          9226150,28694596,11344459,8641427,34012760,43840792,106660,26370335,38559695,19217596
+#wikipedia,      12150977,   378142420,  12114967          6712096,1761449,4340524,4857604,7825079,6241517,10821044,3259457,8277471,7539859
+
+startnodes_flickr=(5114 73690 23892 30641 38088 16717 68726 25185 31011 42329)
+startnodes_friendster=(39797743 35222816 1794578 43131729 20457996 490332 4274039 10253002 30789169 54514110)
+startnodes_orkut=(1345950 1962322 2692187 1198261 163962 1407061 1613980 1976485 2350837 1834214)
+startnodes_twitter=(9226150 28694596 11344459 8641427 34012760 43840792 106660 26370335 38559695 19217596)
+startnodes_wikipedia=(6712096 1761449 4340524 4857604 7825079 6241517 10821044 3259457 8277471 7539859)
+
+benchmark_polymer_sssp() {
+  for startnode in ${startnodes_flickr[@]}; do
+    polymer-sssp flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    polymer-sssp friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    polymer-sssp orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    polymer-sssp twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    polymer-sssp wikipedia $startnode
+  done
+}
+
+benchmark_polymer_pagerank() {
+  for startnode in ${startnodes_flickr[@]}; do
+    polymer-pagerank flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    polymer-pagerank friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    polymer-pagerank orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    polymer-pagerank twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    polymer-pagerank wikipedia
+  done
+}
+
+benchmark_ligra_sssp() {
+  for startnode in ${startnodes_flickr[@]}; do
+    ligra-sssp flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    ligra-sssp friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    ligra-sssp orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    ligra-sssp twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    ligra-sssp wikipedia $startnode
+  done
+}
+
+benchmark_ligra_pagerank() {
+  for startnode in ${startnodes_flickr[@]}; do
+    ligra-pagerank flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    ligra-pagerank friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    ligra-pagerank orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    ligra-pagerank twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    ligra-pagerank wikipedia
+  done
+}
+
+benchmark_polymer_sssp
+#benchmark_polymer_pagerank
+#benchmark_ligra_sssp
+#benchmark_ligra_pagerank
