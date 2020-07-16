@@ -1,0 +1,49 @@
+# Gemittelte Werte von 10 Durchläufen
+# calc_time: Zeit, die Algorithmen angeben für die Berechnung gebraucht zu haben
+# exec_time: Zeit, die die Binaries insgesammt liefen
+# pagerank 5 Durchläufe, sssp random Startknoten
+# Notiz: gemini berechnet Algorithmus immer 6x => von exec_time wurde bereits 5x calc_time abgezogen
+# ligra, polymer, gemini (local 96 Kerne 256GB RAM)
+# Zeiten in Sekunden
+
+# graph         algorithmus    calc_time  exec_time
+
+flickr        ligra-pagerank   0.058920   0.231507
+flickr      polymer-pagerank   0.094580   0.609342
+flickr       gemini-pagerank   0.028488   0.669367
+
+flickr        ligra-sssp       0.062630   0.294567
+flickr      polymer-sssp       0.044840   0.492365
+flickr       gemini-sssp       0.022766   0.623268
+
+friendster    ligra-pagerank  52.760000 159.677000
+friendster  polymer-pagerank  10.330000 622.739000
+friendster   gemini-pagerank   5.366216 717.959992
+
+friendster    ligra-sssp       3.517340  83.078800
+friendster  polymer-sssp       1.106500 663.588000
+friendster   gemini-sssp       2.086600 742.649000
+
+orkut         ligra-pagerank   0.719500   3.104090
+orkut       polymer-pagerank   0.386500  24.852700
+orkut        gemini-pagerank   0.155593  13.104435
+
+orkut         ligra-sssp       0.065388   2.660140
+orkut       polymer-sssp       0.072420  26.604900
+orkut        gemini-sssp       0.074497  13.880110
+
+wikipedia     ligra-pagerank   3.410000  12.167600
+wikipedia   polymer-pagerank   1.008000  79.584900
+wikipedia    gemini-pagerank   0.638616  44.356919
+
+wikipedia     ligra-sssp       0.467900  12.534700
+wikipedia   polymer-sssp       0.208300  84.804100
+wikipedia    gemini-sssp       1.100280  48.495500
+
+twitter       ligra-pagerank 130.500000 338.875000
+twitter     polymer-pagerank   7.601000 444.689000
+twitter      gemini-pagerank   3.976480 359.902600
+
+twitter       ligra-sssp       7.294030 111.417000
+twitter     polymer-sssp       0.740520 466.467000
+twitter      gemini-sssp       1.409740 390.026000
