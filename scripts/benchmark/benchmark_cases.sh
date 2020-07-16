@@ -20,6 +20,11 @@ startnodes_friendster=(39797743 35222816 1794578 43131729 20457996 490332 427403
 startnodes_orkut=(1345950 1962322 2692187 1198261 163962 1407061 1613980 1976485 2350837 1834214)
 startnodes_twitter=(9226150 28694596 11344459 8641427 34012760 43840792 106660 26370335 38559695 19217596)
 startnodes_wikipedia=(6712096 1761449 4340524 4857604 7825079 6241517 10821044 3259457 8277471 7539859)
+nodes_flickr=105939
+nodes_friendster=68349467
+nodes_orkut=3072442
+nodes_twitter=52579683
+nodes_wikipedia=12150977
 
 benchmark_polymer_sssp() {
   for startnode in ${startnodes_flickr[@]}; do
@@ -93,7 +98,43 @@ benchmark_ligra_pagerank() {
   done
 }
 
-benchmark_polymer_sssp
+benchmark_gemini_sssp() {
+  for startnode in ${startnodes_flickr[@]}; do
+    gemini-sssp flickr $startnode $nodes_flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    gemini-sssp friendster $startnode $nodes_friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    gemini-sssp orkut $startnode $nodes_orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    gemini-sssp twitter $startnode $nodes_twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    gemini-sssp wikipedia $startnode $nodes_wikipedia
+  done
+}
+
+benchmark_gemini_pagerank() {
+  for startnode in ${startnodes_flickr[@]}; do
+    gemini-pagerank flickr $nodes_flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    gemini-pagerank friendster $nodes_friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    gemini-pagerank orkut $nodes_orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    gemini-pagerank twitter $nodes_twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    gemini-pagerank wikipedia $nodes_wikipedia
+  done
+}
+
+#benchmark_polymer_sssp
 #benchmark_polymer_pagerank
 #benchmark_ligra_sssp
 #benchmark_ligra_pagerank
