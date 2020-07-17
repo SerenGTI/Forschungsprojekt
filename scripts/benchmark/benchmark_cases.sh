@@ -134,7 +134,117 @@ benchmark_gemini_pagerank() {
   done
 }
 
-#benchmark_polymer_sssp
-#benchmark_polymer_pagerank
-#benchmark_ligra_sssp
-#benchmark_ligra_pagerank
+benchmark_gemini_bfs() {
+  for startnode in ${startnodes_flickr[@]}; do
+    gemini-bfs flickr $startnode $nodes_flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    gemini-bfs friendster $startnode $nodes_friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    gemini-bfs orkut $startnode $nodes_orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    gemini-bfs twitter $startnode $nodes_twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    gemini-bfs wikipedia $startnode $nodes_wikipedia
+  done
+}
+
+benchmark_ligra_bfs() {
+  for startnode in ${startnodes_flickr[@]}; do
+    ligra-bfs flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    ligra-bfs friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    ligra-bfs orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    ligra-bfs twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    ligra-bfs wikipedia $startnode
+  done
+}
+
+benchmark_polymer_bfs() {
+  for startnode in ${startnodes_flickr[@]}; do
+    polymer-bfs flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    polymer-bfs friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    polymer-bfs orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    polymer-bfs twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    polymer-bfs wikipedia $startnode
+  done
+}
+
+benchmark_ligra_pagerank_delta() {
+  for startnode in ${startnodes_flickr[@]}; do
+    ligra-pagerank-delta flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    ligra-pagerank-delta friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    ligra-pagerank-delta orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    ligra-pagerank-delta twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    ligra-pagerank-delta wikipedia
+  done
+}
+
+benchmark_polymer_pagerank_delta() {
+  for startnode in ${startnodes_flickr[@]}; do
+    polymer-pagerank-delta flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    polymer-pagerank-delta friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    polymer-pagerank-delta orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    polymer-pagerank-delta twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    polymer-pagerank-delta wikipedia
+  done
+}
+
+benchmark_polymer_pagerank_write() {
+  for startnode in ${startnodes_flickr[@]}; do
+    polymer-pagerank-write flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    polymer-pagerank-write friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    polymer-pagerank-write orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    polymer-pagerank-write twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    polymer-pagerank-write wikipedia
+  done
+}
+
+#benchmark_gemini_bfs
+#benchmark_ligra_bfs
+#benchmark_polymer_bfs
+#benchmark_ligra_pagerank_delta
+#benchmark_polymer_pagerank_delta
+#benchmark_polymer_pagerank_write

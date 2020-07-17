@@ -135,7 +135,7 @@ polymer-sssp () {
     local bin="${path_to_bins}/polymer-sssp"
     local graph="${path_to_graphs}/$1.adj"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin $graph 2> /dev/null $startnode)
+    local result=$(timeout 3h $bin $graph $startnode 2> /dev/null)
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local dur_calc=$(echo $result | grep "BellmanFord" | awk '{print $NF}')
@@ -147,12 +147,36 @@ polymer-pagerank () {
     local bin="${path_to_bins}/polymer-pagerank"
     local graph="${path_to_graphs}/u_$1.adj"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin $graph 2> /dev/null $pagerank_number_of_iterations)
+    local result=$(timeout 3h $bin $graph $pagerank_number_of_iterations 2> /dev/null)
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local dur_calc=$(echo $result | grep 'PageRank' | awk '{print $NF}')
     local dur_calc=$(convert_time $dur_calc)
     log "polymer-pagerank $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
+}
+
+polymer-pagerank-delta () {
+    local bin="${path_to_bins}/polymer-pagerank-delta"
+    local graph="${path_to_graphs}/u_$1.adj"
+    local time_start=$(get_time)
+    local result=$(timeout 3h $bin $graph $pagerank_number_of_iterations 2> /dev/null)
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_calc=$(echo $result | grep 'PageRankDelta' | awk '{print $NF}')
+    local dur_calc=$(convert_time $dur_calc)
+    log "polymer-pagerank-delta $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
+}
+
+polymer-bfs () {
+    local bin="${path_to_bins}/polymer-bfs"
+    local graph="${path_to_graphs}/u_$1.adj"
+    local time_start=$(get_time)
+    local result=$(timeout 3h $bin $graph $startnode 2> /dev/null)
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_calc=$(echo $result | grep "BFS" | awk '{print $NF}')
+    local dur_calc=$(convert_time $dur_calc)
+    log "polymer-bfs $1 $2 - $dur_calc $dur_exec"
 }
 
 ligra-sssp () {
@@ -177,6 +201,30 @@ ligra-pagerank () {
     local dur_calc="${result//Running time : }"
     local dur_calc=$(convert_time $dur_calc)
     log "ligra-pagerank $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
+}
+
+ligra-pagerank-delta () {
+    local bin="${path_to_bins}/ligra-pagerank-delta"
+    local graph="${path_to_graphs}/u_${1}.adj"
+    local time_start=$(get_time)
+    local result=$(timeout 3h $bin -rounds 1 -maxiters $pagerank_number_of_iterations $graph)
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_calc="${result//Running time : }"
+    local dur_calc=$(convert_time $dur_calc)
+    log "ligra-pagerank-delta $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
+}
+
+ligra-bfs () {
+    local bin="${path_to_bins}/ligra-bfs"
+    local graph="${path_to_graphs}/u_$1.adj"
+    local time_start=$(get_time)
+    local result=$(timeout 3h $bin -r $2 -rounds 1 $graph)
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_calc="${result//Running time : }"
+    local dur_calc=$(convert_time $dur_calc)
+    log "ligra-bfs $1 $2 - $dur_calc $dur_exec"
 }
 
 gemini-sssp () {
@@ -207,6 +255,20 @@ gemini-pagerank () {
     log "gemini-pagerank $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
 }
 
+gemini-bfs () {
+    local bin="${path_to_bins}/gemini-bfs"
+    local graph="${path_to_graphs}/u_$1.bin"
+    local time_start=$(get_time)
+    local result="$(timeout 3h $bin $graph $3 $2)"
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)
+    local dur_calc="${dur_calc//exec_time=}"
+    local dur_calc="${dur_calc//(s)}"
+    local dur_calc=$(convert_time $dur_calc)
+    log "gemini-bfs $1 $2 - $dur_calc $dur_exec"
+}
+
 gemini-sssp-dist () {
     local bin="${path_to_bins}/gemini-sssp"
     local graph="${path_to_graphs}/$1.bin"
@@ -235,6 +297,20 @@ gemini-pagerank-dist () {
     log "gemini-pagerank-dist $1 $pagerank_number_of_iterations - $dur_calc $dur_exec"
 }
 
+gemini-bfs-dist () {
+    local bin="${path_to_bins}/gemini-bfs"
+    local graph="${path_to_graphs}/u_$1.bin"
+    local time_start=$(get_time)
+    local result=$(timeout 3h mpiexec --hostfile $host_file $bin $graph $3 $2)
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)
+    local dur_calc="${dur_calc//exec_time=}"
+    local dur_calc="${dur_calc//(s)}"
+    local dur_calc=$(convert_time $dur_calc)
+    log "gemini-bfs-dist $1 $2 - $dur_calc $dur_exec"
+}
+
 giraph-sssp () {
     # local bin="${path_to_bins}/giraph-sssp"
     #local graph="${path_to_graphs}/$1.adj"
@@ -244,7 +320,7 @@ giraph-sssp () {
     logv "$result"
     local dur_init=$(echo $result | grep 'Initialize (ms)')
     local dur_init="${dur_init//.*Initialize (ms)=}"
-    local dur_total="${result//.*Total (ms)=}" 
+    local dur_total="${result//.*Total (ms)=}"
     local dur_calc=$(($dur_total-$dur_init))
     local dur_calc=$(convert_time $dur_calc)
     log "giraph-sssp $1 $2 - $dur_calc $dur_exec"
@@ -259,7 +335,7 @@ giraph-pagerank () {
     logv "$result"
     local dur_init=$(echo $result | grep 'Initialize (ms)')
     local dur_init="${dur_init//.*Initialize (ms)=}"
-    local dur_total="${result//.*Total (ms)=}" 
+    local dur_total="${result//.*Total (ms)=}"
     local dur_calc=$(($dur_total-$dur_init))
     local dur_calc=$(convert_time $dur_calc)
     log "giraph-pagerank $1 $2 - $dur_calc $dur_exec"
