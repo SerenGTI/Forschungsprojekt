@@ -73,7 +73,7 @@ edgeList readEdgeList(char* filename, int isWeighted) {
     // allocate edgeList
     graph.edges = (edge*) malloc(graph.length * sizeof(edge));
     if (graph.edges == NULL) {
-        fprintf(stderr, "Failed to malloc array for graph with length %d\n", graph.length * sizeof(edge));
+        fprintf(stderr, "Failed to malloc array for graph with length %llu\n", graph.length * sizeof(edge));
         fclose(f);
         return graph;
     }
@@ -268,8 +268,45 @@ void writeAdjacencyGraph(char* filename, edgeList graph){
     fclose(f);
 }
 
+
+
+// writes the given graph to the specified file in the
+// AdjacencyListTextVertexInputFormat format
+// requires a sorted and reindexed input graph
+void writeAdjacencyListTextVertexFormat(char* filename, edgeList graph){
+    FILE* f = fopen(filename, "w");
+    if (f == NULL) {
+        perror("Cannot open file\n");
+        exit(EXIT_FAILURE);
+    }
+
+    //prints <nodeID> <nodeWeight> (<targetNodeId> <edgeWeight>)*\n
+    //where the nodeWeight is set as 1.
+    node_id currentNode = graph.edges[0].from;
+    fprintf(f, "%d 1", currentNode);
+
+    for(size_t i = 0; i < graph.length; i++) {
+        if(currentNode != graph.edges[i].from) {
+            fprintf(f, "\n");//end line
+
+            currentNode = graph.edges[i].from;
+            fprintf(f, "%d 1", currentNode); //begin new line
+        }
+        fprintf(f, " %d", graph.edges[i].to);
+        if(graph.type == WEIGHTED) {
+            fprintf(f, " %d", graph.edges[i].weigth);
+        }
+        else {
+            fprintf(f, " 1");
+        }
+    }
+    fclose(f);
+}
+
+
+
 int main(int argc, char* argv[]) {
-    const char* help = "Usage: sortEdgeList [OPTIONS]\nOptions:\n  -h, --help              Print this help and exit\n  -i, --in PATH           Location of the graph to convert in edge list format\n  -r, --reindex PATH      Location to save the file containing the function from old id to new id\n  -e, --edgelist PATH     Location to save the file containing the graph as edge list after reindexing\n  -b, --edgelistbin PATH  Location to save the file containing the graph as edge list after reindexing in binary\n  -a, --adjacency PATH    Location to save the file containing the graph in the adjacency format after reindexing\n  -w, --weighted          Interprets the input graph as weighted\n  -n, --addweights        Add weight of 1 to each edge. This will override any existing weights\n";
+    const char* help = "Usage: sortEdgeList [OPTIONS]\nOptions:\n  -h, --help              Print this help and exit\n  -i, --in PATH           Location of the graph to convert in edge list format\n  -r, --reindex PATH      Location to save the file containing the function from old id to new id\n  -e, --edgelist PATH     Location to save the file containing the graph as edge list after reindexing\n  -b, --edgelistbin PATH  Location to save the file containing the graph as edge list after reindexing in binary\n  -a, --adjacency PATH    Location to save the file containing the graph in the adjacency format after reindexing\n  -g, --giraph PATH       Location to save the file containing the graph in the AdjacencyListTextVertexInputFormat after reindexing\n  -w, --weighted          Interprets the input graph as weighted\n  -n, --addweights        Add weight of 1 to each edge. This will override any existing weights\n";
     int isWeighted = 0;
     int newWeights = 0;
     int opt;
@@ -278,6 +315,7 @@ int main(int argc, char* argv[]) {
     char* edgeListOut = NULL;
     char* edgeListBinOut = NULL;
     char* adjacencyOut = NULL;
+    char* giraphOut = NULL;
 
     static const struct option long_options[] =
     {
@@ -288,10 +326,11 @@ int main(int argc, char* argv[]) {
         { "edgelist",    required_argument, 0, 'e' },
         { "edgelistbin", required_argument, 0, 'b' },
         { "adjacency",   required_argument, 0, 'a' },
+        { "giraph",      required_argument, 0, 'g' },
         { "help",              no_argument, 0, 'h' },
-        { 0,                   no_argument, 0, 0 }
+        { 0,                   no_argument, 0,  0 }
     };
-    while ((opt = getopt_long(argc, argv, "wni:r:e:b:a:", long_options, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "wni:r:e:b:a:g:", long_options, NULL)) != -1) {
         switch (opt) {
         case 'w': isWeighted = 1; break;
         case 'n': newWeights = 1; break;
@@ -300,26 +339,27 @@ int main(int argc, char* argv[]) {
         case 'e': edgeListOut = optarg; break;
         case 'b': edgeListBinOut = optarg; break;
         case 'a': adjacencyOut = optarg; break;
+        case 'g': giraphOut = optarg; break;
         case 'h':
-            printf(help);
+            printf("%s", help);
             exit(EXIT_SUCCESS);
         case '?':
             fprintf(stderr, "Error: Unknown parameter\n\n");
-            fprintf(stderr, help);
+            fprintf(stderr, "%s", help);
             exit(EXIT_FAILURE);
         case ':':
             fprintf(stderr, "Error: Missing argument\n\n");
-            fprintf(stderr, help);
+            fprintf(stderr, "%s", help);
             exit(EXIT_FAILURE);
         default:
-            fprintf(stderr, help);
+            fprintf(stderr, "%s", help);
             exit(EXIT_FAILURE);
         }
     }
 
     if (input == NULL) {
         fprintf(stderr, "No Input file\n");
-        fprintf(stderr, help);
+        fprintf(stderr, "%s", help);
         exit(EXIT_FAILURE);
     }
 
@@ -358,6 +398,12 @@ int main(int argc, char* argv[]) {
         begin = clock();
         writeAdjacencyGraph(adjacencyOut, graph);
         printf("Writing adjacency graph in: %f seconds\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
+    }
+
+    if (giraphOut != NULL) {
+        begin = clock();
+        writeAdjacencyListTextVertexFormat(giraphOut, graph);
+        printf("Writing AdjacencyListTExtVertexInputFormat for Giraph in: %f seconds\n", (double)(clock() - begin) / CLOCKS_PER_SEC);
     }
 
     free(graph.edges);
