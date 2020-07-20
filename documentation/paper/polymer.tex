@@ -1,5 +1,19 @@
 %!TEX root=main.tex
 
-\subsection{Polymer}
-Installing Polymer is straight forward.
+Polymer is very similar to Ligra, in fact Polymer inherits the programming interface from Ligra\cite{Polymer}.
 
+
+Polymer aims to minimize both random and remote memory accesses by implementing NUMA- and graph-aware data layout and memory access strategies.
+Specifically, Polymer co-locates graph data and the computation within NUMA-nodes to reduce remote memory accesses.
+For example, Polymer eliminates remote accesses by letting threads allocate memory in their local memory node for graph topology data like vertices and edges that are only accessed by one thread.
+Application-defined data with static memory locations which gets dynamically updated during computation is allocated with virtual addresses that make for a seamless cross-node data access.
+Other mutable runtime states (e.g. active vertices) might be dynamically allocated in each iteration. This data is allocated in a distributed way but only accessed through a global lookup table.
+
+
+
+
+
+
+
+
+%Graph analytics has been long recognized to have many random access and poor data locality. Based on the observation that sequential inter-node (i.e., remote) memory accesses have much higher bandwidth than both intra- and inter-node random ones, Polymer borrows the idea from distributed graph systems by replicating vertex data across NUMA-nodes in a lightweight way. (This essentially follows the philosophy of current multi-core OS designs by treating a large-scale machine as a distributed system). Specifically, a vertex only conducts computation on edges within the local NUMA-node and uses its replicas in other NUMA-node to initiate the computation on other edges. Unlike distributed graph systems, Polymer does not distribute application- defined data but still applies all updates to a vertex within a single copy of application-defined data. Polymer has three optimizations to improve scheduling on NUMA machines and handle different properties of graphs. First, being aware of the hierarchical parallelism and locality in NUMA machines, Polymer is extended with a hierarchical scheduler to reduce the cost for synchronizing threads on multiple NUMA-nodes. Second, inspired by vertex-cuts from distributed graph systems, Polymer improves the balance of workload among NUMA-nodes by evenly partitioning edges rather than vertices for skewed graphs. Finally, as most graph algorithms converge asymmetrically, using a single data structure for runtime states may drastically degrade the performance, especially for traversal algorithms on high-diameter graphs, Polymer adopts adaptive data structures boost performance.

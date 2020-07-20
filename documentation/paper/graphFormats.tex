@@ -1,11 +1,11 @@
 %!TEX root = ./main.tex
 
-\section{Graph Formats}
+\subsection{An overview of some graph formats}
 A rather big portion of our time was invested in figuring out which graph framework requires which graph formats. We thus decided to give an overview over all the formats we encountered, with explanation on how they represent the graph.
 
-Additionally, to make life in the future a little bit easier, we wrote multiple tools to convert graphs acquired from Snap or Konect to the required formats. Information on how to use those tools is available in our repository.
+Additionally, to make life in the future a little bit easier, we wrote multiple tools to convert graphs acquired from Snap or Konect to the required formats. Additional information on this is available in the section \nameref{supplementaryData} at the end.
 
-\subsection{AdjacencyList}
+\subsubsection{AdjacencyList}
 The AdjacencyList and WeightedAdjacencyList formats\cite{adjListFormat} are used by Ligra and Polymer. They represent the directed edges of a graph as a number of offsets that point to a set of target nodes in the file.
 First the file contains the number of vertices $n$ and edges $m$, followed by an offset for each vertex. This offset specifies at what point in the following list of numbers the information for a node begins.
 Lastly the file format contains a list of target nodes.
@@ -29,7 +29,7 @@ The offsets $o_i=k$ and $o_{i+1}=k+j$ mean that vertex $i$ has $j$ outgoing edge
 
 For the WeightedAdjacencyList format, the weights are just appended to the end of the file in the same order as the edges.
 
-\subsection{EdgeList}
+\subsubsection{EdgeList}
 The EdgeList format is probably the easiest to understand and is one of the most commonly used in the online graph repositories. The directed eges $(s_1,t_1),(s_2,t_2),\ldots$ are represented in the following way.
 \begin{align*}
 	&s_1,t_1\\
@@ -38,7 +38,7 @@ The EdgeList format is probably the easiest to understand and is one of the most
 	&s_m,t_m
 \end{align*}
 
-\subsection{Binary EdgeList}
+\subsubsection{Binary EdgeList}
 The binary EdgeList format is used by Gemini. Finding information on this format required reverse engineering of the Gemini code.
 
 We found that Gemini requires the following input format
@@ -48,4 +48,4 @@ We found that Gemini requires the following input format
 where $s_i,t_i$ have \texttt{uint32} ?? data type and the weights are \texttt{float32}. 
 Gemini will derive the number of edges from the file size, so there is no file header or anything similar allowed.
 
-\subsection{?}
+\subsubsection{Giraph's numerous I/O formats}

@@ -6,6 +6,8 @@
 \usepackage{hyperref}
 \usepackage{amsmath}
 
+\newcommand{\todo}{{\color{red}TODO}}
+
 \bibliography{literature.bib}
 \title{Forschungsprojekt}
 \author{Simon König (3344789) \and Leon Matzner (3315161) \and Felix Rollbühler (3310069) \and Jakob Schmid (??????)}
@@ -19,25 +21,54 @@
 
 
 \begin{abstract}
-In this paper we will analyze and compare the graph frameworks Galois, Ligra and Polymer in their parformance. We will also set up and compare these frameworks in a distributed scenario.
+In this paper we will analyze and compare the graph frameworks Galois, Ligra, Polymer, Gemini and Giraph in their parformance. All the frameworks will be tested in shared memory and Galois, Gemini and Giraph are tested on a distributed cluster as well.
+Furthermore we will give some insight on the complexity of writing custom applications based on these frameworks.
 \end{abstract}
 
-
 \begin{IEEEkeywords}
-Galois, Ligra, Polymer, distributed computing, Gluon
+graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon
 \end{IEEEkeywords}
 
+
+
 \section{Introduction}
-My intro... blah blah \cite{Polymer}.
+%\todo
 
+This paper makes the following contributions:
+\begin{itemize}
+  \item 
+  \item 
+  \item 
+  \item 
+\end{itemize}
 
-
-
-\input{graphFormats}
-\section{Things}
+\section{Overview of the framworks}
 \input{galois}
 
 \input{polymer}
+
+\input{giraph}
+
+\section{And}
+\input{graphFormats}%hier oder supplementary data
+
+\section{Our Testing methods}
+
+
+\section{Results}
+
+
+\subsection{Pure Performance-Ergebnisse}
+
+
+\subsection{Komplexität Aufsetzen}
+
+\subsection{Komplexität eigene Apps schreiben}
+
+
+\section{Discussion}
+
+
 
 
 \section{Conclusion}
@@ -58,11 +89,6 @@ Gemini~\cite{Gemini}
 
 
 
-
-
-
-
-% Das hier ist mega beschissen: 
 % Beim Hinzufügen neuer Referenzen
 % 1. die beiden Zeilen nach diesem Kommentar auskommentieren.
 %    (gemeint ist \bibliographystyle... und \bibliography..)
@@ -169,8 +195,18 @@ X.~Zhu, W.~Chen, W.~Zheng, and X.~Ma, ``Gemini: A computation-centric
 
 \end{thebibliography}
 
-
-
 % Alles bis hier kommt aus main.bbl
+
+
+
+\section*{Supplementary Data}\label{supplementaryData}
+We have written a number of conversion tools and installation guides to help
+users or develeopers with the use of the tested frameworks.
+
+Everything can be retrieved on our GitHub repository
+\url{http://www.github.com/serengti/Forschungsprojekt}.
+
+For each Framework, there is a 
+
 
 \end{document}
