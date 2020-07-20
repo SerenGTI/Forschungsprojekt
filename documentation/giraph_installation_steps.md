@@ -9,23 +9,6 @@ sudo apt-get upgrade
 sudo apt-get install default-jdk git maven net-tools
 ```
 
-Find out the ip of all machines with
-```
-ifconfig
-```
-and note that it might differ from the one used to ssh into the machine.
-Now check that the `/etc/hosts` is correctly configured for each master and slave with
-```
-127.0.0.1 localhost
-<IP> <master-hostname>
-<IP> <slave1-hostname>
-<IP> <slave2-hostname>
-...
-```
-make sure to replace IP and hostname. The hostnames do not need to be the same as the actual hostnames of the machine. `master` or `slave1` is allowed.
-*Use these hostnames in the configuration below.*
-
-
 The installation can be done with a `hadoop` group and `hduser` user.
 We will however not use a different user for the installation. So the following is optional.
 ```
@@ -40,14 +23,7 @@ The Giraph quick start guide recommends the version 0.20.203. We found that usin
 ```
 cd /usr/local
 ```
-According to the quick start guide
-```
-sudo wget http://archive.apache.org/dist/hadoop/core/hadoop-0.20.203.0/hadoop-0.20.203.0rc1.tar.gz
-sudo tar xzf hadoop-0.20.203.0rc1.tar.gz
-sudo mv hadoop-0.20.203.0 hadoop
-```
-
-We recommend the following
+Giraphs quick start guide installs an outdated version of hadoop with which our giraph jobs only failed. So we recommend the following
 ```
 sudo wget http://archive.apache.org/dist/hadoop/core/hadoop-0.20.205.0/hadoop-0.20.205.0.tar.gz
 sudo tar xzf hadoop-0.20.205.0.tar.gz
@@ -73,8 +49,9 @@ Find the name of the installed JDK folder by running
 ls /usr/lib/jvm
 ```
 for us it was `/usr/lib/jvm/java-11-openjdk-amd64/`. Use this path in the following commands.
+It *should* be possible to use the `/usr/lib/jvm/default-java` link.
 
-Switch to the hduser using `su hduser` and append the following to their `$HOME/.bashrc`
+(Switch to the hduser using `su hduser` and) append the following to the `$HOME/.bashrc`
 ```
 export HADOOP_HOME=/usr/local/hadoop
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
@@ -98,6 +75,27 @@ sudo mkdir -p /app/hadoop/tmp
 sudo chown <username> /app/hadoop/tmp
 sudo chmod 750 /app/hadoop/tmp
 ```
+
+---
+Our Setup script can do everthing up to this point, (for a sudoer, at least).
+
+---
+
+Find out the ip of all machines with
+```
+hostname -I
+```
+and note that it might differ from the one used to ssh into the machine.
+Now check that the `/etc/hosts` is correctly configured for each master and slave with
+```
+127.0.0.1 localhost
+<IP> <master-hostname>
+<IP> <slave1-hostname>
+<IP> <slave2-hostname>
+...
+```
+make sure to replace IP and hostname. The hostnames do not need to be the same as the actual hostnames of the machine. `master` or `slave1` is allowed.
+*Use these hostnames in the configuration below.*
 
 
 ### Configuring Hadoop for a single node cluster
@@ -310,13 +308,36 @@ You do not need to copy the resulting jar to all nodes of the cluster!
 
 Giraph can now be used to run jobs.
 # Running Giraph Jobs
-Copying graph files to the hadoop dfs
+We have written a conversion of edge list graphs into the `AdjacencyListTextVertexInputFormat`. All vertex weights will be initialized with 1, also for an unweighted input graph, the edge weights will be set to 1.
+In the case of an unweighted input graph, convert using
+```
+./sortEdgeList --in <inputGraph> -g <outputGraph>
+```
+or for a weighted input graph
+```
+./sortEdgeList --in <inputGraph> -g <outputGraph> --weighted
+```
+
+## Copying graph files to the HDFS
+All input and output files must be copied to the hadoop dfs. Only there are they accessible through Giraph. You can copy to the HDFS with
 ```
 $HADOOP_HOME/bin/hadoop dfs -copyFromLocal <path to graph file> /user/<username>/input/<graph name>
+```
+And then check the contents of the directory with
+```
 $HADOOP_HOME/bin/hadoop dfs -ls /user/<username>/input
+```
+In the same way, you can retrieve the output from HDFS by running
+```
+$HADOOP_HOME/bin/hadoop dfs -copyToLocal /user/<username>/output/<filename> <path in regular file system> 
 ```
 
 
+## Running our Applications
+
+### PageRank
+
+### SSSP
 This calls a shortest paths calculation from node 1.. we need to fix this in the future.
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
 ```
