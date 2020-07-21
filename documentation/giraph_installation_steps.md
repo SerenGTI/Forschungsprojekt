@@ -334,16 +334,46 @@ $HADOOP_HOME/bin/hadoop dfs -copyToLocal /user/<username>/output/<filename> <pat
 
 
 ## Running our Applications
+Since Giraph does not provide working SSSP and PageRank applications, we had to modify the given examples.
 
-### PageRank
+For SSSP, the start could not be parameterized.
+The supplied PageRank Computation did not work at all because the used Aggregators are never registered in the `MasterCompute`.
+
+The supplied files `GeneralShortestPathsComputation.java` and `SimplePageRankComputationWithAggregator` will be copied in the already existing examples folder
+```
+/usr/local/giraph/giraph-examples/src/main/java/org/apache/giraph/examples
+```
+
+
+Our Conversion tool writes the vertex input graph format
+`org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat`.
+
 
 ### SSSP
-This calls a shortest paths calculation from node 1.. we need to fix this in the future.
+We run the computation with the following command. It specifies the input and output format, our computation class followed by the start vertex id and the paths to the input and output files.
+Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster.
+
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
 ```
-$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleShortestPathsComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/<username>/input/<graph name> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/<username>/output/shortestpaths_<graph name> -w <number of workers>
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation <start vertex id> -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/<graph file> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/<output folder name> -w <cluster size>
 ```
-make sure to set the -w flag to the amount of workers i.e. the amount of nodes in the cluster.
+
+
+### PageRank
+THIS DOES NOT WORK YET.
+
+
+Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster.
+
+*We recommend copying this command in a text editor and editing it before putting it in the console..*
+```
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputationWithAggregator -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/wiki-Vote.txt -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/pagerank_wiki_4 -mc org.apache.giraph.examples.SimplePageRankComputationWithAggregator$SimplePageRankMasterCompute -w 2
+```
+
+
+
+
+
 
 
 
