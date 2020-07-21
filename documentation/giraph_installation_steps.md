@@ -339,7 +339,7 @@ Since Giraph does not provide working SSSP and PageRank applications, we had to 
 For SSSP, the start could not be parameterized.
 The supplied PageRank Computation did not work at all because the used Aggregators are never registered in the `MasterCompute`.
 
-The supplied files `GeneralShortestPathsComputation.java` and `SimplePageRankComputationWithAggregator` will be copied in the already existing examples folder
+The supplied file `GeneralShortestPathsComputation.java` will be copied in the already existing examples folder
 ```
 /usr/local/giraph/giraph-examples/src/main/java/org/apache/giraph/examples
 ```
@@ -367,7 +367,7 @@ Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes
 
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
 ```
-$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputationWithAggregator -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/wiki-Vote.txt -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/pagerank_wiki_4 -mc org.apache.giraph.examples.SimplePageRankComputationWithAggregator$SimplePageRankMasterCompute -w 2
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/wiki-Vote.txt -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/pagerank_wiki_5 -mc org.apache.giraph.examples.SimplePageRankComputation$SimplePageRankMasterCompute -w 2
 ```
 
 
