@@ -271,7 +271,7 @@ void writeAdjacencyGraph(char* filename, edgeList graph){
 
 
 // writes the given graph to the specified file in the
-// AdjacencyListTextVertexInputFormat format
+// org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat
 // requires a sorted and reindexed input graph
 void writeAdjacencyListTextVertexFormat(char* filename, edgeList graph){
     FILE* f = fopen(filename, "w");
@@ -280,33 +280,61 @@ void writeAdjacencyListTextVertexFormat(char* filename, edgeList graph){
         exit(EXIT_FAILURE);
     }
 
-    //prints <nodeID> <nodeWeight> (<targetNodeId> <edgeWeight>)*\n
-    //where the nodeWeight is set as 1.
-    node_id currentNode = graph.edges[0].from;
-    fprintf(f, "%d 1", currentNode);
-
-    for(size_t i = 0; i < graph.length; i++) {
-        if(currentNode != graph.edges[i].from) {
-            fprintf(f, "\n");//end line
-
-            currentNode = graph.edges[i].from;
-            fprintf(f, "%d 1", currentNode); //begin new line
-        }
-        fprintf(f, " %d", graph.edges[i].to);
-        if(graph.type == WEIGHTED) {
-            fprintf(f, " %d", graph.edges[i].weigth);
-        }
-        else {
-            fprintf(f, " 1");
+    node_id biggestNodeId = graph.edges[graph.length-1].from;
+    for (size_t i = 0; i < graph.length; i++){
+        if (graph.edges[i].to > biggestNodeId){
+            biggestNodeId = graph.edges[i].to;
         }
     }
+
+    //prints [<nodeID>, <nodeWeight>, [[<targetNodeId> <edgeWeight>]*]]\n
+    //where the nodeWeight is set to 0 and
+    //the edge weights are 1 if the graph is not weighted.
+    node_id currentNode = graph.edges[0].from;
+    fprintf(f, "[%d,0,[", currentNode);
+    bool first = true;
+    for(size_t i = 0; i < graph.length; i++) {
+        if(currentNode != graph.edges[i].from) {
+            fprintf(f, "]]\n");//end line
+
+            //this is for nodes that have no outgoing edges
+            while(graph.edges[i].from != currentNode + 1) {
+                currentNode += 1;
+                fprintf(f, "[%d,0,[]]\n", currentNode);
+            }
+
+            currentNode = graph.edges[i].from;
+            fprintf(f, "[%d,0,[", currentNode); //begin new line
+            first = true;
+        }
+        if(first) {
+            fprintf(f, "[%d,", graph.edges[i].to);
+        }
+        else {
+            fprintf(f, ",[%d,", graph.edges[i].to);
+        }
+        first = false;
+        if(graph.type == WEIGHTED) {
+            fprintf(f, "%d]", graph.edges[i].weigth);
+        }
+        else {
+            fprintf(f, "1]");
+        }
+    }
+    fprintf(f, "]]\n");//close the last one
+
+    while(currentNode != biggestNodeId) {
+        currentNode += 1;
+        fprintf(f, "[%d,0,[]]\n", currentNode);
+    }
+
     fclose(f);
 }
 
 
 
 int main(int argc, char* argv[]) {
-    const char* help = "Usage: sortEdgeList [OPTIONS]\nOptions:\n  -h, --help              Print this help and exit\n  -i, --in PATH           Location of the graph to convert in edge list format\n  -r, --reindex PATH      Location to save the file containing the function from old id to new id\n  -e, --edgelist PATH     Location to save the file containing the graph as edge list after reindexing\n  -b, --edgelistbin PATH  Location to save the file containing the graph as edge list after reindexing in binary\n  -a, --adjacency PATH    Location to save the file containing the graph in the adjacency format after reindexing\n  -g, --giraph PATH       Location to save the file containing the graph in the AdjacencyListTextVertexInputFormat after reindexing\n  -w, --weighted          Interprets the input graph as weighted\n  -n, --addweights        Add weight of 1 to each edge. This will override any existing weights\n";
+    const char* help = "Usage: sortEdgeList [OPTIONS]\nOptions:\n  -h, --help              Print this help and exit\n  -i, --in PATH           Location of the graph to convert in edge list format\n  -r, --reindex PATH      Location to save the file containing the function from old id to new id\n  -e, --edgelist PATH     Location to save the file containing the graph as edge list after reindexing\n  -b, --edgelistbin PATH  Location to save the file containing the graph as edge list after reindexing in binary\n  -a, --adjacency PATH    Location to save the file containing the graph in the adjacency format after reindexing\n  -g, --giraph PATH       Location to save the file containing the graph in the JsonLongDoubleFloatDoubleVertexInputFormat after reindexing\n  -w, --weighted          Interprets the input graph as weighted\n  -n, --addweights        Add weight of 1 to each edge. This will override any existing weights\n";
     int isWeighted = 0;
     int newWeights = 0;
     int opt;
