@@ -242,9 +242,79 @@ benchmark_polymer_pagerank_write() {
   done
 }
 
-#benchmark_gemini_bfs
-#benchmark_ligra_bfs
-#benchmark_polymer_bfs
-#benchmark_ligra_pagerank_delta
-#benchmark_polymer_pagerank_delta
-#benchmark_polymer_pagerank_write
+benchmark_galois_sssp_cpu() {
+  for startnode in ${startnodes_flickr[@]}; do
+    galois-sssp-cpu flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    galois-sssp-cpu friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    galois-sssp-cpu orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    galois-sssp-cpu twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    galois-sssp-cpu wikipedia $startnode
+  done
+}
+
+benchmark_galois_pagerank_push_cpu() {
+  for startnode in ${startnodes_flickr[@]}; do
+    galois-pagerank-push-cpu flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    galois-pagerank-push-cpu friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    galois-pagerank-push-cpu orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    galois-pagerank-push-cpu twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    galois-pagerank-push-cpu wikipedia
+  done
+}
+
+benchmark_galois_pagerank_pull_cpu() {
+  for startnode in ${startnodes_flickr[@]}; do
+    galois-pagerank-pull-cpu flickr
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    galois-pagerank-pull-cpu friendster
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    galois-pagerank-pull-cpu orkut
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    galois-pagerank-pull-cpu twitter
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    galois-pagerank-pull-cpu wikipedia
+  done
+}
+
+benchmark_galois_bfs_cpu() {
+  for startnode in ${startnodes_flickr[@]}; do
+    galois-bfs-cpu flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    galois-bfs-cpu friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    galois-bfs-cpu orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    galois-bfs-cpu twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    galois-bfs-cpu wikipedia $startnode
+  done
+}
+
+#benchmark_galois_sssp_cpu
+#benchmark_galois_pagerank_push_cpu
+#benchmark_galois_pagerank_pull_cpu
+#benchmark_galois_bfs_cpu

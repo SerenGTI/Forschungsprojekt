@@ -33,7 +33,7 @@ get_time () { # timestamp in microsceconds
     echo $((`date +%s`*1000000+`date +%-N`/1000))
 }
 
-galois-sssp () {
+galois-sssp-cpu () {
     local bin="$path_to_bins/galois-sssp-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
@@ -44,7 +44,7 @@ galois-sssp () {
     local time_started_calc=$(echo "$result" | grep 'Read ' | awk '{print $1}')
     local dur_read=$((${time_started_calc//.}-$time_start))
     local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
-    log "galois-sssp $1 $2 $dur_read $dur_calc $dur_exec"
+    log "galois-sssp-cpu $1 $2 $dur_read $dur_calc $dur_exec"
 }
 
 galois-sssp-push-dist () {
@@ -75,7 +75,7 @@ galois-sssp-pull-dist () {
     log "galois-sssp-pull-dist $1 $2 $dur_read $dur_calc $dur_exec"
 }
 
-galois-pagerank-push () {
+galois-pagerank-push-cpu () {
     local bin="$path_to_bins/galois-pagerank-push-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
@@ -86,7 +86,7 @@ galois-pagerank-push () {
     local time_started_calc=$(echo "$result" | grep 'Read ' | awk '{print $1}')
     local dur_read=$((${time_started_calc//.}-$time_start))
     local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
-    log "galois-pagerank-push $1 $pagerank_number_of_iterations $dur_read $dur_calc $dur_exec"
+    log "galois-pagerank-push-cpu $1 $pagerank_number_of_iterations $dur_read $dur_calc $dur_exec"
 }
 
 galois-pagerank-push-dist () {
@@ -103,7 +103,7 @@ galois-pagerank-push-dist () {
     log "galois-pagerank-push-dist $1 $pagerank_number_of_iterations $dur_read $dur_calc $dur_exec"
 }
 
-galois-pagerank-pull () {
+galois-pagerank-pull-cpu () {
     local bin="$path_to_bins/galois-pagerank-pull-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
@@ -114,7 +114,7 @@ galois-pagerank-pull () {
     local time_started_calc=$(echo "$result" | grep 'Read ' | awk '{print $1}')
     local dur_read=$((${time_started_calc//.}-$time_start))
     local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
-    log "galois-pagerank_pull $1 $pagerank_number_of_iterations $dur_read $dur_calc $dur_exec"
+    log "galois-pagerank-pull-cpu $1 $pagerank_number_of_iterations $dur_read $dur_calc $dur_exec"
 }
 
 galois-pagerank-pull-dist () {
@@ -129,6 +129,48 @@ galois-pagerank-pull-dist () {
     local dur_read=$((${time_started_calc//.}-$time_start))
     local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
     log "galois-pagerank-pull-dist $1 $pagerank_number_of_iterations $dur_read $dur_calc $dur_exec"
+}
+
+galois-bfs-cpu () {
+    local bin="$path_to_bins/galois-bfs-cpu"
+    local graph="$path_to_graphs/$1.gr"
+    local time_start=$(get_time)
+    local result=$(timeout 3h $bin --startNode=$2 $graph 2> /dev/null | ts '%.s')
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local time_finished_calc=$(echo "$result" | grep 'Verification' | awk '{print $1}')
+    local time_started_calc=$(echo "$result" | grep 'Read ' | awk '{print $1}')
+    local dur_read=$((${time_started_calc//.}-$time_start))
+    local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
+    log "galois-bfs-cpu $1 $2 $dur_read $dur_calc $dur_exec"
+}
+
+galois-bfs-push-dist () {
+    local bin="$path_to_bins/galois-sssp-bfs-dist"
+    local graph="$path_to_graphs/$1.gr"
+    local time_start=$(get_time)
+    local result=$(timeout 3h mpiexec --hostfile $host_file $bin --startNode=$2 $graph 2> /dev/null | ts '%.s')
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local time_finished_calc=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
+    local time_started_calc=$(echo "$result" | grep 'Reading graph complete.' | tail -1 | awk '{print $1}')
+    local dur_read=$((${time_started_calc//.}-$time_start))
+    local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
+    log "galois-bfs-push-dist $1 $2 $dur_read $dur_calc $dur_exec"
+}
+
+galois-sssp-bfs-dist () {
+    local bin="$path_to_bins/galois-sssp-bfs-dist"
+    local graph="$path_to_graphs/$1.gr"
+    local time_start=$(get_time)
+    local result=$(timeout 3h mpiexec --hostfile $host_file $bin --startNode=$2 $graph 2> /dev/null | ts '%.s')
+    local dur_exec=$(($(get_time)-$time_start))
+    logv "$result"
+    local time_finished_calc=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
+    local time_started_calc=$(echo "$result" | grep 'Reading graph complete.' | tail -1 | awk '{print $1}')
+    local dur_read=$((${time_started_calc//.}-$time_start))
+    local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
+    log "galois-sssp-bfs-dist $1 $2 $dur_read $dur_calc $dur_exec"
 }
 
 polymer-sssp () {
