@@ -93,3 +93,11 @@ wikipedia galois-bfs-cpu-96thread 0.523828 2.36312
 wikipedia galois-pagerank-pull-cpu-96thread 0.167657 1.69852
 wikipedia galois-pagerank-push-cpu-96thread 0.0004038 13.1426
 wikipedia galois-sssp-cpu-96thread 0.376119 1.7929
+rMat27 ligra-sssp 7.934 82.285
+rMat27 ligra-bfs 0.4092 48.8211
+rMat27 ligra-pagerank 71.5 191.443
+rMat27 ligra-pagerank-delta 52.55 158.987
+rMat28 ligra-sssp Error Error
+rMat28 ligra-bfs 0.20636 114.763
+rMat28 ligra-pagerank 0.5021 99.2197
+rMat28 ligra-pagerank-delta 107.04 310.992
