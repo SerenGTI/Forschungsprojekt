@@ -144,6 +144,24 @@ make -C build -j pagerank-push-dist
 cp build/lonestar/analytics/distributed/pagerank/pagerank-push-dist bin/galois-pagerank-push-dist
 ```
 
+### bfs
+```
+make -C build -j bfs-cpu
+cp build/lonestar/analytics/cpu/bfs/bfs-cpu bin/galois-bfs-cpu
+```
+
+### bfs (push, distributed)
+```
+make -C build -j bfs-push-dist
+cp build/lonestar/analytics/distributed/bfs/bfs-push-dist bin/galois-bfs-push-dist
+```
+
+### bfs (pull, distributed)
+```
+make -C build -j bfs-pull-dist
+cp build/lonestar/analytics/distributed/bfs/bfs-pull-dist bin/galois-bfs-pull-dist
+```
+
 ### graph converter
 ```
 make -C build -j graph-convert
