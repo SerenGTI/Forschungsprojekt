@@ -76,11 +76,6 @@ sudo chown <username> /app/hadoop/tmp
 sudo chmod 750 /app/hadoop/tmp
 ```
 
----
-Our Setup script can do everthing up to this point, (for a sudoer, at least).
-
----
-
 Find out the ip of all machines with
 ```
 hostname -I
@@ -144,7 +139,7 @@ Now edit both `$HADOOP_HOME/conf/masters` and `$HADOOP_HOME/conf/slaves` to only
 
 
 ### Configuring Hadoop for a multi node cluster
-#### Configuration of the masters
+#### Configuration of the master
 Edit `$HADOOP_HOME/conf/masters` to contain the hostname `<master-hostname` of the master.
 Edit `$HADOOP_HOME/conf/slaves` to contain the hostnames of all nodes
 ```

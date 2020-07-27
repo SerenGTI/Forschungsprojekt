@@ -1,34 +1,32 @@
 
-# This will install hadoop and giraph,
-# however it will NOT configure:
-# * /etc/hosts
+cd $HOME
+
+echo "Starting up."
+wget http://archive.apache.org/dist/hadoop/core/hadoop-0.20.205.0/hadoop-0.20.205.0.tar.gz
+tar xzf hadoop-0.20.205.0.tar.gz
+mv hadoop-0.20.205.0 $HOME/hadoop
+rm hadoop-0.20.205.0.tar.gz
+echo "Hadoop downloaded and moved to home directory."
 
 
-#prerequisites
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install default-jdk git maven net-tools
+echo "Writing bashrc."
 
-#install hadoop
-cd /usr/local
-sudo wget http://archive.apache.org/dist/hadoop/core/hadoop-0.20.205.0/hadoop-0.20.205.0.tar.gz
-sudo tar xzf hadoop-0.20.205.0.tar.gz
-sudo mv hadoop-0.20.205.0 hadoop
-sudo rm hadoop-0.20.205.0.tar.gz
+echo "export HADOOP_HOME=/home/fp-ss20/hadoop" >> .bashrc
+echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> .bashrc
+echo "export GIRAPH_HOME=/home/fp-ss20/giraph" >> .bashrc
 
-#permissions to hadoop folder
-sudo chown -R $USER hadoop
+source .bashrc
 
-#.bashrc, except not
-export HADOOP_HOME=/usr/local/hadoop
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-export GIRAPH_HOME=/usr/local/giraph
+echo "Writing hadoop-env"
 
-#hadoop-env
-echo "export JAVA_HOME=/usr/lib/jvm/default-java
-export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true" >> /usr/local/hadoop/conf/hadoop-env.sh
+echo "export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64" >> hadoop/conf/hadoop-env.sh
+echo "export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true" >> hadoop/conf/hadoop-env.sh
 
-#hadoop tmp folder
-sudo mkdir -p /app/hadoop/tmp
-sudo chown $USER /app/hadoop/tmp
-sudo chmod 750 /app/hadoop/tmp
+
+
+echo "creating tmp folder for hadoop"
+mkdir hadoop-tmp
+
+
+echo "TODO: HADOOP/conf files"
+
