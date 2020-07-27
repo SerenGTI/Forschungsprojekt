@@ -315,6 +315,8 @@ giraph-sssp () {
     # local bin="${path_to_bins}/giraph-sssp"
     #local graph="${path_to_graphs}/$1.adj"
     local time_start=$(get_time)
+    # hardcoded the cluster size to 4
+    /bin/hadoop jar /giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/<graph file> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/<output folder name> -w 4
     #local result=$(timeout 3h $bin -r $2 -rounds 1 $graph)
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
