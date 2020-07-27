@@ -334,10 +334,7 @@ $HADOOP_HOME/bin/hadoop dfs -copyToLocal /user/<username>/output/<filename> <pat
 
 
 ## Running our Applications
-Since Giraph does not provide working SSSP and PageRank applications, we had to modify the given examples.
-
-For SSSP, the start could not be parameterized.
-The supplied PageRank Computation did not work at all because the used Aggregators are never registered in the `MasterCompute`.
+Since Giraph does not provide a working SSSP application, we had to modify the given example, the start could not be parameterized.
 
 The supplied file `GeneralShortestPathsComputation.java` will be copied in the already existing examples folder
 ```
@@ -348,10 +345,15 @@ The supplied file `GeneralShortestPathsComputation.java` will be copied in the a
 Our Conversion tool writes the vertex input graph format
 `org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat`.
 
+Always remember to specify a new directory in the output path (`-op`) flag. Otherwise, the computation will crash.
 
 ### SSSP
 We run the computation with the following command. It specifies the input and output format, our computation class followed by the start vertex id and the paths to the input and output files.
-Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster.
+You will need to replace the following
+* `<start vertex id>`,
+* `<graph file>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
+* `output folder name>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS).
+* `<cluster size>`: Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster!
 
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
 ```
@@ -359,31 +361,21 @@ $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-
 ```
 
 
+
 ### PageRank
-THIS DOES NOT WORK YET.
-
-
-Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster.
+We run the computation with the following command. It specifies the input and output format, some classes required for computation and the paths to the input and output files.
+* `<graph file>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
+* `output folder name>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS).
+* `<cluster size>`: Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster!
 
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
 ```
-$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/wiki-Vote.txt -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/pagerank_wiki_5 -mc org.apache.giraph.examples.SimplePageRankComputation$SimplePageRankMasterCompute -w 2
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/<graph name> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/<output folder name> -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w <cluster size>
 ```
 
+Some problems and how to fix them:
+* The `class org.apache.giraph.examples.SimplePageRankComputation not ...` exception. In this case, you selected the inner class of the MasterCompute or WorkerContext falsely. The correct way to adress those is `packageName.OuterClass\$InnerClass`! The backslash is very important. Check the supplied command above, the WorkerContext and MasterCompute  are selected correctly.
+* The console output is very short and the log file contains the exception
+`Tried to access reducer which wasn't registered <aggregator name>; Aggregators can be registered from MasterCompute by calling registerReducer function\. [...]`. Here you forgot to create a MasterCompute class or failed to tell giraph which one to use. Just add the `-mc` flag followed by the class name of a `MasterCompute`.
 
-
-
-
-
-
-
-
-
-
-ubuntu@koenigsn-giraph:/usr/local/giraph/giraph-examples/src/main/java/org/apache/giraph/examples$ ls
-ConnectedComponentsComputation.java
-SimplePageRankComputation.java
-SimpleShortestPathsComputation.java
-PageRankComputation.java
-RandomWalkComputation.java
-[...]
+---
