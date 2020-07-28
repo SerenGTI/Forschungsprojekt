@@ -353,27 +353,28 @@ gemini-bfs-dist () {
     log "gemini-bfs-dist $1 $2 - $dur_calc $dur_exec"
 }
 
-giraph-sssp () {
-    # local bin="${path_to_bins}/giraph-sssp"
-    #local graph="${path_to_graphs}/$1.adj"
+giraph-sssp-dist () {
+    local graph="$1.gir"
+    $HADOOP_HOME/bin/hadoop dfs -rmr /output/$graph
     local time_start=$(get_time)
-    # hardcoded the cluster size to 4
-    /bin/hadoop jar /giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/<graph file> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/<output folder name> -w 4
-    #local result=$(timeout 3h $bin -r $2 -rounds 1 $graph)
+    # hardcoded the cluster size to 4 
+    local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -w 4 2>&1 | ts '%.s')
+    local time_finish=$(get_time)
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local dur_init=$(echo $result | grep 'Initialize (ms)')
     local dur_init="${dur_init//.*Initialize (ms)=}"
-    local dur_total="${result//.*Total (ms)=}"
-    local dur_calc=$(($dur_total-$dur_init))
-    local dur_calc=$(convert_time $dur_calc)
-    log "giraph-sssp $1 $2 - $dur_calc $dur_exec"
+    local start_calc=$(echo $result | grep 'Running job' | awk '{print $1}')
+    local start_calc=convert_time $start_calc
+    local dur_calc=$(($time_finish-$start_calc))
+    log "giraph-sssp $1 $2 $dur_init $dur_calc $dur_exec"
 }
 
-giraph-pagerank () {
+giraph-pagerank-dist () {
     # local bin="${path_to_bins}/giraph-sssp"
-    #local graph="${path_to_graphs}/$1.adj"
+    #local graph="${path_to_graphs}/$1.gir"
     local time_start=$(get_time)
+    $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip <input path> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op <output path> -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w <cluster size>
     #local result=$(timeout 3h $bin -r $2 -rounds 1 $graph)
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
@@ -409,3 +410,4 @@ benchmark_graph () { # graph $1, startnode $2, number_of_nodes $3, maxstartnode 
 	galois-pagerank-pull-dist $1
 }
 
+giraph-sssp-dist $1 $startnode
