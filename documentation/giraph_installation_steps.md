@@ -292,7 +292,7 @@ We install giraph on the master node. First clone the repository
 ```
 cd /usr/local/
 sudo git clone https://github.com/apache/giraph.git
-sudo chown -R ubuntu giraph
+sudo chown -R <username> giraph
 ```
 and then install the package using maven.
 ```
@@ -316,15 +316,15 @@ or for a weighted input graph
 ## Copying graph files to the HDFS
 All input and output files must be copied to the hadoop dfs. Only there are they accessible through Giraph. You can copy to the HDFS with
 ```
-$HADOOP_HOME/bin/hadoop dfs -copyFromLocal <path to graph file> /user/<username>/input/<graph name>
+$HADOOP_HOME/bin/hadoop dfs -copyFromLocal <path on regular fs> <path on hdfs>
 ```
 And then check the contents of the directory with
 ```
-$HADOOP_HOME/bin/hadoop dfs -ls /user/<username>/input
+$HADOOP_HOME/bin/hadoop dfs -ls <path on hdfs>
 ```
 In the same way, you can retrieve the output from HDFS by running
 ```
-$HADOOP_HOME/bin/hadoop dfs -copyToLocal /user/<username>/output/<filename> <path in regular file system> 
+$HADOOP_HOME/bin/hadoop dfs -copyToLocal <path on hdfs> <path on regular fs> 
 ```
 
 
@@ -333,8 +333,9 @@ Since Giraph does not provide a working SSSP application, we had to modify the g
 
 The supplied file `GeneralShortestPathsComputation.java` will be copied in the already existing examples folder
 ```
-/usr/local/giraph/giraph-examples/src/main/java/org/apache/giraph/examples
+$GIRAPH_HOME/giraph-examples/src/main/java/org/apache/giraph/examples
 ```
+you will need to repackage `mvn package -DskipTests`.
 
 
 Our Conversion tool writes the vertex input graph format
@@ -345,30 +346,30 @@ Always remember to specify a new directory in the output path (`-op`) flag. Othe
 ### SSSP
 We run the computation with the following command. It specifies the input and output format, our computation class followed by the start vertex id and the paths to the input and output files.
 You will need to replace the following
-* `<start vertex id>`,
-* `<graph file>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
-* `output folder name>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS).
+* `<start vertex id>`: The vertex id from which to start the SSSP.
+* `<input path>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
+* `output path>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS).
 * `<cluster size>`: Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster!
 
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
 ```
-$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation <start vertex id> -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/<graph file> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/<output folder name> -w <cluster size>
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation <start vertex id> -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip <input path> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op <output path> -w <cluster size>
 ```
 
 
 
 ### PageRank
 We run the computation with the following command. It specifies the input and output format, some classes required for computation and the paths to the input and output files.
-* `<graph file>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
-* `output folder name>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS).
+* `<input path>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
+* `<output path>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS).
 * `<cluster size>`: Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster!
 
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
 ```
-$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /user/ubuntu/input/<graph name> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /user/ubuntu/output/<output folder name> -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w <cluster size>
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip <input path> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op <output path> -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w <cluster size>
 ```
 
-Some problems and how to fix them:
+#### Some problems and how to fix them:
 * The `class org.apache.giraph.examples.SimplePageRankComputation not ...` exception. In this case, you selected the inner class of the MasterCompute or WorkerContext falsely. The correct way to adress those is `packageName.OuterClass\$InnerClass`! The backslash is very important. Check the supplied command above, the WorkerContext and MasterCompute  are selected correctly.
 * The console output is very short and the log file contains the exception
 `Tried to access reducer which wasn't registered <aggregator name>; Aggregators can be registered from MasterCompute by calling registerReducer function\. [...]`. Here you forgot to create a MasterCompute class or failed to tell giraph which one to use. Just add the `-mc` flag followed by the class name of a `MasterCompute`.
