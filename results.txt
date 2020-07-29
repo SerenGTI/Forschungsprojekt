@@ -104,6 +104,10 @@ rMat27 polymer-sssp 1.126 543.152
 rMat27 polymer-bfs 217.067 316.248
 rMat27 polymer-pagerank 7.885 506.311
 rMat27 polymer-pagerank-delta 7.035 455.007
+rMat27 galois-sssp-cpu-96thread 4.50218 16.0359
+rMat27 galois-bfs-cpu-96thread 5.61511 14.6172
+rMat27 galois-pagerank-push-cpu-96thread 0.0007216 239.701
+rMat27 galois-pagerank-pull-cpu-96thread 0.651387 19.2033
 rMat28 gemini-sssp 2.7108 1236.73
 rMat28 gemini-bfs 0.901889 1178.71
 rMat28 gemini-pagerank 7.33944 1188.5
