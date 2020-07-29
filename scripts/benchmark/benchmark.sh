@@ -37,7 +37,7 @@ galois-sssp-cpu () {
     local bin="$path_to_bins/galois-sssp-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin --startNode=$2 $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h $bin -t 96 --startNode=$2 $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'Verification' | awk '{print $1}')
@@ -79,7 +79,7 @@ galois-pagerank-push-cpu () {
     local bin="$path_to_bins/galois-pagerank-push-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h $bin -t 96 --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
@@ -107,7 +107,7 @@ galois-pagerank-pull-cpu () {
     local bin="$path_to_bins/galois-pagerank-pull-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin --maxIterations=$pagerank_number_of_iterations --transposedGraph  $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h $bin -t 96 --maxIterations=$pagerank_number_of_iterations --transposedGraph  $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
@@ -135,7 +135,7 @@ galois-bfs-cpu () {
     local bin="$path_to_bins/galois-bfs-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin --startNode=$2 $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h $bin -t 96 --startNode=$2 $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'Verification' | awk '{print $1}')
@@ -357,7 +357,7 @@ giraph-sssp () {
     local graph="$1.gir"
     $($HADOOP_HOME/bin/hadoop dfs -rmr /output/$graph)
     local time_start=$(get_time)
-    # hardcoded for our current setup 
+    # hardcoded for our current setup
     local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -w 1 2>&1 | ts '%.s')
     local time_finish=$(get_time)
     local dur_exec=$(($(get_time)-$time_start))
@@ -375,7 +375,7 @@ giraph-sssp-dist () {
     local graph="$1.gir"
     $($HADOOP_HOME/bin/hadoop dfs -rmr /output/$graph)
     local time_start=$(get_time)
-    # hardcoded for our current setup 
+    # hardcoded for our current setup
     local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -w 4 2>&1 | ts '%.s')
     local time_finish=$(get_time)
     local dur_exec=$(($(get_time)-$time_start))
@@ -393,7 +393,7 @@ giraph-pagerank () {
     local graph="$1.gir"
     $($HADOOP_HOME/bin/hadoop dfs -rmr /output/$graph)
     local time_start=$(get_time)
-    # hardcoded for our current setup 
+    # hardcoded for our current setup
     local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w 1 2>&1 | ts '%.s')
     local time_finish=$(get_time)
     local dur_exec=$(($(get_time)-$time_start))
@@ -408,7 +408,7 @@ giraph-pagerank-dist () {
     local graph="$1.gir"
     $($HADOOP_HOME/bin/hadoop dfs -rmr /output/$graph)
     local time_start=$(get_time)
-    # hardcoded for our current setup 
+    # hardcoded for our current setup
     local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w 4 2>&1 | ts '%.s')
     local time_finish=$(get_time)
     local dur_exec=$(($(get_time)-$time_start))

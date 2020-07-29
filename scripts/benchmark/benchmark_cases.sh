@@ -363,13 +363,16 @@ benchmark_gemini_rMat() {
   done
 }
 
-benchmark_galois_rMat() {
+benchmark_galois_rMat27() {
   for startnode in ${startnodes_rMat27[@]}; do
     galois-sssp-cpu rMat27 $startnode
     galois-bfs-cpu rMat27 $startnode
     galois-pagerank-push-cpu rMat27
     galois-pagerank-pull-cpu rMat27
   done
+}
+
+benchmark_galois_rMat28() {
   for startnode in ${startnodes_rMat28[@]}; do
     galois-sssp-cpu rMat28 $startnode
     galois-bfs-cpu rMat28 $startnode
@@ -378,7 +381,5 @@ benchmark_galois_rMat() {
   done
 }
 
-#benchmark_ligra_rMat
-#benchmark_polymer_rMat
-#benchmark_gemini_rMat
-#benchmark_galois_rMat
+#benchmark_galois_rMat27
+#benchmark_galois_rMat28
