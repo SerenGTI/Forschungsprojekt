@@ -389,8 +389,8 @@ test_galois_dist() {
   galois-sssp-pull-dist flickr 1
   galois-bfs-push-dist flickr 1
   galois-bfs-pull-dist flickr 1
-  galois-pagerank-push-dist
-  galois-pagerank-pull-dist
+  galois-pagerank-push-dist flickr
+  galois-pagerank-pull-dist flickr
 }
 
 
