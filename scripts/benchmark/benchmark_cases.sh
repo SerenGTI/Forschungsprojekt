@@ -6,9 +6,9 @@ path_to_graphs=/home/fp-ss20/graph
 path_to_bins=/home/fp-ss20/bin
 #host_file=/home/ubuntu/host_file
 #result_file=$4
-threads=48
-hosts=129.69.210.223,129.69.210.224
-#hosts=129.69.210.223,129.69.210.224,129.69.210.225,129.69.210.226,129.69.210.227
+threads=1
+#hosts=129.69.210.223,129.69.210.224
+hosts=129.69.210.223,129.69.210.224,129.69.210.225,129.69.210.226,129.69.210.227
 pagerank_number_of_iterations=5
 
 #Name,           Nodes,      Edges,      MaxSourceNodeId   RandomStartNodes
@@ -64,9 +64,7 @@ benchmark_polymer_pagerank() {
   for startnode in ${startnodes_twitter[@]}; do
     polymer-pagerank twitter
   done
-  for startnode in ${startnodes_wikipedia[@]}; do
-    polymer-pagerank wikipedia
-  done
+  for startnode in ${startnodes_wikipedia[@]}; do polymer-pagerank wikipedia done
 }
 
 benchmark_ligra_sssp() {
@@ -393,8 +391,85 @@ test_galois_dist() {
   galois-pagerank-pull-dist flickr
 }
 
+benchmark_galois_dist_flickr() {
+  for startnode in ${startnodes_flickr[@]}; do
+    galois-sssp-push-dist flickr $startnode
+    galois-sssp-pull-dist flickr $startnode
+    galois-bfs-push-dist flickr $startnode
+    galois-bfs-pull-dist flickr $startnode
+    galois-pagerank-push-dist flickr
+    galois-pagerank-pull-dist flickr
+  done
+}
+benchmark_galois_dist_friendster() {
+  for startnode in ${startnodes_friendster[@]}; do
+    galois-sssp-push-dist friendster $startnode
+    galois-sssp-pull-dist friendster $startnode
+    galois-bfs-push-dist friendster $startnode
+    galois-bfs-pull-dist friendster $startnode
+    galois-pagerank-push-dist friendster
+    galois-pagerank-pull-dist friendster
+  done
+}
+benchmark_galois_dist_orkut() {
+  for startnode in ${startnodes_orkut[@]}; do
+    galois-sssp-push-dist orkut $startnode
+    galois-sssp-pull-dist orkut $startnode
+    galois-bfs-push-dist orkut $startnode
+    galois-bfs-pull-dist orkut $startnode
+    galois-pagerank-push-dist orkut
+    galois-pagerank-pull-dist orkut
+  done
+}
+benchmark_galois_dist_twitter() {
+  for startnode in ${startnodes_twitter[@]}; do
+    galois-sssp-push-dist twitter $startnode
+    galois-sssp-pull-dist twitter $startnode
+    galois-bfs-push-dist twitter $startnode
+    galois-bfs-pull-dist twitter $startnode
+    galois-pagerank-push-dist twitter
+    galois-pagerank-pull-dist twitter
+  done
+}
+benchmark_galois_dist_wikipedia() {
+  for startnode in ${startnodes_wikipedia[@]}; do
+    galois-sssp-push-dist wikipedia $startnode
+    galois-sssp-pull-dist wikipedia $startnode
+    galois-bfs-push-dist wikipedia $startnode
+    galois-bfs-pull-dist wikipedia $startnode
+    galois-pagerank-push-dist wikipedia
+    galois-pagerank-pull-dist wikipedia
+  done
+}
+benchmark_galois_dist_rMat27() {
+  for startnode in ${startnodes_rMat27[@]}; do
+    galois-sssp-push-dist rMat27 $startnode
+    galois-sssp-pull-dist rMat27 $startnode
+    galois-bfs-push-dist rMat27 $startnode
+    galois-bfs-pull-dist rMat27 $startnode
+    galois-pagerank-push-dist rMat27
+    galois-pagerank-pull-dist rMat27
+  done
+}
+benchmark_galois_dist_rMat28() {
+  for startnode in ${startnodes_rMat28[@]}; do
+    galois-sssp-push-dist rMat28 $startnode
+    galois-sssp-pull-dist rMat28 $startnode
+    galois-bfs-push-dist rMat28 $startnode
+    galois-bfs-pull-dist rMat28 $startnode
+    galois-pagerank-push-dist rMat28
+    galois-pagerank-pull-dist rMat28
+  done
+}
+
 
 time_start=$(get_time)
-test_galois_dist
+benchmark_galois_dist_flickr
+benchmark_galois_dist_friendster
+benchmark_galois_dist_orkut
+benchmark_galois_dist_twitter
+benchmark_galois_dist_wikipedia
+benchmark_galois_dist_rMat27
+benchmark_galois_dist_rMat28
 dur_exec=$((($(get_time)-$time_start)/1000000))
 echo "benchmark took $dur_exec seconds"
