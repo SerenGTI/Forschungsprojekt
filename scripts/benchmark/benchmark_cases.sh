@@ -6,6 +6,9 @@ path_to_graphs=/home/fp-ss20/graph
 path_to_bins=/home/fp-ss20/bin
 #host_file=/home/ubuntu/host_file
 #result_file=$4
+threads=48
+hosts=129.69.210.223,129.69.210.224
+#hosts=129.69.210.223,129.69.210.224,129.69.210.225,129.69.210.226,129.69.210.227
 pagerank_number_of_iterations=5
 
 #Name,           Nodes,      Edges,      MaxSourceNodeId   RandomStartNodes
@@ -381,5 +384,12 @@ benchmark_galois_rMat28() {
   done
 }
 
-#benchmark_galois_rMat27
-#benchmark_galois_rMat28
+test_galois_dist() {
+  galois-sssp-push-dist flickr 1
+  galois-sssp-pull-dist flickr 1
+  galois-bfs-push-dist flickr 1
+  galois-bfs-pull-dist flickr 1
+  galois-pagerank-push-dist
+  galois-pagerank-pull-dist
+}
+
