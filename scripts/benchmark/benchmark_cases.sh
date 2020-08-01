@@ -393,3 +393,8 @@ test_galois_dist() {
   galois-pagerank-pull-dist
 }
 
+
+time_start=$(get_time)
+test_galois_dist
+dur_exec=$((($(get_time)-$time_start)/1000000))
+echo "benchmark took $dur_exec seconds"

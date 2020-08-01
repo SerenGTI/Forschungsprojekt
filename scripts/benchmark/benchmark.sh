@@ -146,7 +146,7 @@ galois-bfs-cpu () {
 }
 
 galois-bfs-push-dist () {
-    local bin="$path_to_bins/galois-sssp-bfs-dist"
+    local bin="$path_to_bins/galois-bfs-push-dist"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
     local result=$(timeout 3h mpiexec -H $hosts $bin -t=$threads --runs=1 --startNode=$2 $graph 2> /dev/null | ts '%.s')
@@ -159,8 +159,8 @@ galois-bfs-push-dist () {
     log "galois-bfs-push-dist $1 $2 $dur_read $dur_calc $dur_exec"
 }
 
-galois-sssp-bfs-dist () {
-    local bin="$path_to_bins/galois-sssp-bfs-dist"
+galois-bfs-pull-dist () {
+    local bin="$path_to_bins/galois-bfs-pull-dist"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
     local result=$(timeout 3h mpiexec -H $hosts $bin -t=$threads --runs=1 --startNode=$2 $graph 2> /dev/null | ts '%.s')
@@ -170,7 +170,7 @@ galois-sssp-bfs-dist () {
     local time_started_calc=$(echo "$result" | grep 'Reading graph complete.' | tail -1 | awk '{print $1}')
     local dur_read=$((${time_started_calc//.}-$time_start))
     local dur_calc=$((${time_finished_calc//.}-${time_started_calc//.}))
-    log "galois-sssp-bfs-dist $1 $2 $dur_read $dur_calc $dur_exec"
+    log "galois-bfs-pull-dist $1 $2 $dur_read $dur_calc $dur_exec"
 }
 
 polymer-sssp () {
