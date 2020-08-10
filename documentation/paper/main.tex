@@ -10,7 +10,21 @@
 
 \bibliography{literature.bib}
 \title{Forschungsprojekt}
-\author{Simon König (3344789) \and Leon Matzner (3315161) \and Felix Rollbühler (3310069) \and Jakob Schmid (??????)}
+\author{\IEEEauthorblockN{Simon König}
+\IEEEauthorblockA{(3344789)\\
+st156571@stud.uni-stuttgart.de}
+\and
+\IEEEauthorblockN{Leon Matzner}
+\IEEEauthorblockA{(3315161)\\
+@stud.uni-stuttgart.de}
+\and
+\IEEEauthorblockN{Felix Rollbühler}
+\IEEEauthorblockA{(3310069)\\
+@stud.uni-stuttgart.de}
+\and
+\IEEEauthorblockN{Jakob Schmid}
+\IEEEauthorblockA{()\\
+@stud.uni-stuttgart.de}}
 \date{\today}
 
 
@@ -36,30 +50,43 @@ graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon
 
 This paper makes the following contributions:
 \begin{itemize}
-  \item 
+  \item Comparison of some of the most widely used graph based calculation frameworks
   \item 
   \item 
   \item 
 \end{itemize}
 
 \section{Overview of the framworks}
-\input{galois}
+\subsection{Galois and Gluon}
+\input{sections/overview/galois}
 
-\input{polymer}
+\subsection{Ligra}
+\input{sections/overview/ligra}
 
-\input{giraph}
+\subsection{Polymer}
+\input{sections/overview/polymer}
+
+\subsection{Gemini}
+\input{sections/overview/gemini}
+
+\subsection{Giraph}
+\input{sections/overview/giraph}
 
 \section{And}
-\input{graphFormats}%hier oder supplementary data
+\input{sections/graphFormats}%hier oder supplementary data?
 
-\section{Our Testing methods}
-\input{testingMethods}
+\section{Testing methods}
+\input{sections/testingMethods}
+
+Hier sollten wir auch evtl Vergleichsgrundlagen für Aufsetzen und Apps schreiben einführen, wenn wir das mit aufnehmen.
 
 
 \section{Results}
 \subsection{Komplexität Aufsetzen}
+Systeme wie distr. Giraph bei denen man erstmal ewig suchen muss bis man überhaupt einen Guide findet sollten hier schlechter abschneiden. \emph{vorausgesetzt, wir nehmen das hier überhaupt mit auf..}
 
 \subsection{Komplexität eigene Apps schreiben}
+Schwierig objektiv zu vergleichen.
 
 
 \subsection{Pure Performance-Ergebnisse}
@@ -88,11 +115,16 @@ We are using the graph frameworks Galois~\cite{Galois}, Ligra~\cite{Ligra}, Poly
 
 Also we use Gluon~\cite{vertGalois} for the distributed setups.
 
-
-
-
 Gemini~\cite{Gemini}
 
+\section*{Supplementary Data}\label{supplementaryData}
+We have written a number of conversion tools and installation guides to help
+users or develeopers with the use of the tested frameworks.
+
+Everything can be retrieved on our GitHub repository
+\url{http://www.github.com/serengti/Forschungsprojekt}.
+
+For each Framework, there is a 
 
 
 
@@ -212,16 +244,6 @@ A.~S. Foundation. (2020, Jun.) {Apache Giraph}. [Online]. Available:
 
 % Alles bis hier kommt aus main.bbl
 
-
-
-\section*{Supplementary Data}\label{supplementaryData}
-We have written a number of conversion tools and installation guides to help
-users or develeopers with the use of the tested frameworks.
-
-Everything can be retrieved on our GitHub repository
-\url{http://www.github.com/serengti/Forschungsprojekt}.
-
-For each Framework, there is a 
 
 
 \end{document}
