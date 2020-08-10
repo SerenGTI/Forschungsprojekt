@@ -1,5 +1,9 @@
 %!TEX root=main.tex
 
-Galois \cite{Galois} is a general purpose library designed for parallel programming. The Galois system supports fine grain tasks, allows for autonomous, speculative execution of these tasks and grants control over the task scheduling policies to the application. It also simplifies the implementation of parallel applications by providing an implicitly parallel unordered-set iterator.\\
-For graph analytics purposes a topology aware work stealing scheduler, a priority scheduler and a library of scalable data structures have been implemented. Galois includes applications for for many graph analytics problems, among these are single-source shorthest-paths (sssp) and pagerank. Both of these applications can be executed in shared memory systems and due to the Gluon integration in a distributed environment.\\
-Gluon \cite{vertGalois} reduces the communication overhead needed in distributed systems for graph analysis by exploiting structural and temporal invariants.
+Galois\cite{Galois} is a general purpose library designed for parallel programming. The Galois system supports fine grain tasks, allows for autonomous, speculative execution of these tasks and grants control over the task scheduling policies to the application. It also simplifies the implementation of parallel applications by providing an implicitly parallel unordered-set iterator.
+
+For graph analytics purposes a topology aware work stealing scheduler, a priority scheduler and a library of scalable data structures have been implemented. Galois includes applications for for many graph analytics problems, among these are single-source shorthest-paths (sssp), breath-first-search (bfs) and pagerank. For most of these applications Galois offers a huge amount of algorithms to perform these analytics problems and many setting options, like the amount of threads used or policies for splitting the graph. All of these applications can be executed in shared memory systems and due to the Gluon integration in a distributed environment.
+
+Gluon\cite{vertGalois} is a framework written by the Galois team as a middleware to write distributed systems for graph analysis. It reduces the communication overhead needed in distributed by exploiting structural and temporal invariants.
+
+The code of Gluon is embedded into the project of Galois and already integrated with it. It is possible to integrate Gluon with other frameworks too, which the Galois team showed in their paper\cite{vertGalois}.
