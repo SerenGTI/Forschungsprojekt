@@ -76,6 +76,9 @@ sudo chown <username> /app/hadoop/tmp
 sudo chmod 750 /app/hadoop/tmp
 ```
 
+### Setting up access to other nodes
+*If the nodes you want to add to the cluster are available under a domain, rather than only via an IP address, you can skip this part and use that domain name in place of the hostnames you will have to put in the configuration later.*
+
 Find out the ip of all machines with
 ```
 hostname -I
