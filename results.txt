@@ -20,13 +20,14 @@ flickr galois-pagerank-pull-cpu-48thread 0.0092514 0.242312
 flickr galois-bfs-cpu-96thread 0.0059689 0.626018
 flickr galois-pagerank-pull-cpu-96thread 0.0086688 0.348663
 flickr galois-pagerank-push-cpu-96thread 0.0004816 0.552708
-flickr galois-sssp-cpu 0.0111365-96thread 0.319586
+flickr galois-sssp-cpu-96thread 0.0111365 0.319586
 flickr galois-sssp-push-dist 0.661735 2.44128
 flickr galois-sssp-pull-dist 0.621033 2.3802
 flickr galois-bfs-push-dist 0.595562 2.34541
 flickr galois-bfs-pull-dist 0.606841 2.37524
 flickr galois-pagerank-push-dist 0.817701 2.5833
 flickr galois-pagerank-pull-dist 0.866497 2.63364
+flickr giraph-sssp 9.79696 41.7102
 friendster gemini-bfs 0.782904 708.378
 friendster gemini-pagerank 5.66216 716.48
 friendster gemini-sssp 2.0866 742.649
