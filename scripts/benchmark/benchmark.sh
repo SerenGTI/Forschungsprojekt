@@ -368,7 +368,7 @@ giraph-sssp () {
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
-    local dur_calc_giraph=$(grep 'Superstep ' $result | awk -F '=' '{s += $2} END {print s*1000}')
+    local dur_calc_giraph=$(grep 'Superstep ' "$result" | awk -F '=' '{s += $2} END {print s*1000}')
     log "giraph-sssp $1 $2 $dur_init $dur_calc $dur_exec $dur_calc_giraph"
 }
 
@@ -377,7 +377,7 @@ giraph-sssp-dist () {
     $($HADOOP_HOME/bin/hadoop dfs -rmr /output/$graph)
     local time_start=$(get_time)
     # hardcoded for our current setup
-    local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -w 4 2>&1 | ts '%.s')
+    local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -w 5 2>&1 | ts '%.s')
     local time_finish=$(get_time)
     local dur_exec=$(($time_finish-$time_start))
     logv "$result"
@@ -387,7 +387,7 @@ giraph-sssp-dist () {
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
-    local dur_calc_giraph=$(grep 'Superstep ' $result | awk -F '=' '{s += $2} END {print s*1000}')
+    local dur_calc_giraph=$(grep 'Superstep ' "$result" | awk -F '=' '{s += $2} END {print s*1000}')
     log "giraph-sssp-dist $1 $2 $dur_init $dur_calc $dur_exec $dur_calc_giraph"
 }
 
@@ -403,7 +403,7 @@ giraph-pagerank () {
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
-    local dur_calc_giraph=$(grep 'Superstep ' $result | awk -F '=' '{s += $2} END {print s*1000}')
+    local dur_calc_giraph=$(grep 'Superstep ' "$result" | awk -F '=' '{s += $2} END {print s*1000}')
     log "giraph-pagerank $1 $2 $pagerank_number_of_iterations $dur_calc $dur_exec $dur_calc_giraph"
 }
 
@@ -412,13 +412,13 @@ giraph-pagerank-dist () {
     $($HADOOP_HOME/bin/hadoop dfs -rmr /output/$graph)
     local time_start=$(get_time)
     # hardcoded for our current setup
-    local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w 4 2>&1 | ts '%.s')
+    local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w 5 2>&1 | ts '%.s')
     local time_finish=$(get_time)
     local dur_exec=$(($time_finish-$time_start))
     logv "$result"
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
-    local dur_calc_giraph=$(grep 'Superstep ' $result | awk -F '=' '{s += $2} END {print s*1000}')
+    local dur_calc_giraph=$(grep 'Superstep ' "$result" | awk -F '=' '{s += $2} END {print s*1000}')
     log "giraph-pagerank-dist $1 $2 $pagerank_number_of_iterations $dur_calc $dur_exec $dur_calc_giraph"
 }
