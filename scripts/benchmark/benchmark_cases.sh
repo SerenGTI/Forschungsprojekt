@@ -64,7 +64,9 @@ benchmark_polymer_pagerank() {
   for startnode in ${startnodes_twitter[@]}; do
     polymer-pagerank twitter
   done
-  for startnode in ${startnodes_wikipedia[@]}; do polymer-pagerank wikipedia done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    polymer-pagerank wikipedia
+  done
 }
 
 benchmark_ligra_sssp() {
