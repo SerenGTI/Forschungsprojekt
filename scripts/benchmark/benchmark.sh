@@ -360,7 +360,7 @@ giraph-sssp () {
     # hardcoded for our current setup
     local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -w 1 2>&1 | ts '%.s')
     local time_finish=$(get_time)
-    local dur_exec=$(($(get_time)-$time_start))
+    local dur_exec=$(($time_finish-$time_start))
     logv "$result"
     local dur_init=$(echo "$result" | grep 'Initialize (ms)')
     local dur_init="${dur_init##*Initialize (ms)=}"
@@ -378,7 +378,7 @@ giraph-sssp-dist () {
     # hardcoded for our current setup
     local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.GeneralShortestPathsComputation $2 -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -w 4 2>&1 | ts '%.s')
     local time_finish=$(get_time)
-    local dur_exec=$(($(get_time)-$time_start))
+    local dur_exec=$(($time_finish-$time_start))
     logv "$result"
     local dur_init=$(echo "$result" | grep 'Initialize (ms)')
     local dur_init="${dur_init##*Initialize (ms)=}"
@@ -396,7 +396,7 @@ giraph-pagerank () {
     # hardcoded for our current setup
     local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w 1 2>&1 | ts '%.s')
     local time_finish=$(get_time)
-    local dur_exec=$(($(get_time)-$time_start))
+    local dur_exec=$(($time_finish-$time_start))
     logv "$result"
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
@@ -411,34 +411,10 @@ giraph-pagerank-dist () {
     # hardcoded for our current setup
     local result=$(timeout 3h $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip /input/$graph -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op /output/$graph -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w 4 2>&1 | ts '%.s')
     local time_finish=$(get_time)
-    local dur_exec=$(($(get_time)-$time_start))
+    local dur_exec=$(($time_finish-$time_start))
     logv "$result"
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
     log "giraph-pagerank-dist $1 $2 $pagerank_number_of_iterations $dur_calc $dur_exec"
-}
-
-benchmark_graph () { # graph $1, startnode $2, number_of_nodes $3, maxstartnode $4
-	local startnode=$2
-	if [[ "$startnode" == "random" ]]; then
-		startnode=$RANDOM
-		let "startnode %= $4"
-	fi
-	galois-sssp $1 $startnode
-	galois-pagerank-push $1
-	galois-pagerank-pull $1
-	polymer-sssp $1 $startnode
-	polymer-pagerank $1
-	ligra-sssp $1 $startnode
-	ligra-pagerank $1
-	gemini-sssp $1 $startnode $3
-	gemini-pagerank $1 $3
-	#distributed
-	gemini-sssp-dist $1 $startnode $3
-	gemini-pagerank-dist $1 $3
-	galois-sssp-push-dist $1 $startnode
-	galois-sssp-pull-dist $1 $startnode
-	galois-pagerank-push-dist $1
-	galois-pagerank-pull-dist $1
 }
