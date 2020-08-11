@@ -368,7 +368,7 @@ giraph-sssp () {
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
-    local dur_calc_giraph=$(grep 'Superstep ' "$result" | awk -F '=' '{s += $2} END {print s*1000}')
+    local dur_calc_giraph=$(echo "$result" | grep 'Superstep ' | awk -F '=' '{s += $2} END {print s*1000}')
     log "giraph-sssp $1 $2 $dur_init $dur_calc $dur_exec $dur_calc_giraph"
 }
 
@@ -387,7 +387,7 @@ giraph-sssp-dist () {
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
-    local dur_calc_giraph=$(grep 'Superstep ' "$result" | awk -F '=' '{s += $2} END {print s*1000}')
+    local dur_calc_giraph=$(echo "$result" | grep 'Superstep ' | awk -F '=' '{s += $2} END {print s*1000}')
     log "giraph-sssp-dist $1 $2 $dur_init $dur_calc $dur_exec $dur_calc_giraph"
 }
 
@@ -403,7 +403,7 @@ giraph-pagerank () {
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
-    local dur_calc_giraph=$(grep 'Superstep ' "$result" | awk -F '=' '{s += $2} END {print s*1000}')
+    local dur_calc_giraph=$(echo "$result" | grep 'Superstep ' | awk -F '=' '{s += $2} END {print s*1000}')
     log "giraph-pagerank $1 $2 $pagerank_number_of_iterations $dur_calc $dur_exec $dur_calc_giraph"
 }
 
@@ -419,6 +419,6 @@ giraph-pagerank-dist () {
     local start_calc=$(echo "$result" | grep 'Running job' | awk '{print $1}')
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
-    local dur_calc_giraph=$(grep 'Superstep ' "$result" | awk -F '=' '{s += $2} END {print s*1000}')
+    local dur_calc_giraph=$(echo "$result" | grep 'Superstep ' | awk -F '=' '{s += $2} END {print s*1000}')
     log "giraph-pagerank-dist $1 $2 $pagerank_number_of_iterations $dur_calc $dur_exec $dur_calc_giraph"
 }
