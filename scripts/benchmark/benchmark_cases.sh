@@ -462,14 +462,34 @@ benchmark_galois_dist_rMat28() {
   done
 }
 
+benchmark_giraph_sssp() {
+  for startnode in ${startnodes_flickr[@]}; do
+    giraph-sssp flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    giraph-sssp friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    giraph-sssp orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    giraph-sssp twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    giraph-sssp wikipedia $startnode
+  done
+  for startnode in ${startnodes_rMat27[@]}; do
+    giraph-sssp rMat27 $startnode
+  done
+  for startnode in ${startnodes_rMat28[@]}; do
+    giraph-sssp rMat28 $startnode
+  done
+}
+
 
 time_start=$(get_time)
-benchmark_galois_dist_flickr
-benchmark_galois_dist_friendster
-benchmark_galois_dist_orkut
-benchmark_galois_dist_twitter
-benchmark_galois_dist_wikipedia
-benchmark_galois_dist_rMat27
-benchmark_galois_dist_rMat28
+#benchmark_galois_dist_rMat27
+#benchmark_galois_dist_rMat28
+benchmark_giraph_sssp
 dur_exec=$((($(get_time)-$time_start)/1000000))
 echo "benchmark took $dur_exec seconds"
