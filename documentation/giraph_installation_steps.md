@@ -1,5 +1,6 @@
 
-Unfinished! May not work yet.
+We will install Hadoop on one or more machines, setup communication between the nodes and finally install Giraph.
+Additionally will show how to use our graph conversion tool and how to run SSSP and PageRank applications with the converted graphs.
 
 # Prerequisites
 First install Open JDK, git and maven
@@ -43,7 +44,7 @@ sudo chown -R <username> hadoop
 ```
 
 
-## Configuring Hadoop
+# Configuring Hadoop
 Find the name of the installed JDK folder by running 
 ```
 ls /usr/lib/jvm
@@ -76,7 +77,7 @@ sudo chown <username> /app/hadoop/tmp
 sudo chmod 750 /app/hadoop/tmp
 ```
 
-### Setting up access to other nodes
+## Setting up access to other nodes
 *If the nodes you want to add to the cluster are available under a domain, rather than only via an IP address, you can skip this part and use that domain name in place of the hostnames you will have to put in the configuration later.*
 
 Find out the ip of all machines with
@@ -95,8 +96,38 @@ Now check that the `/etc/hosts` is correctly configured for each master and slav
 make sure to replace IP and hostname. The hostnames do not need to be the same as the actual hostnames of the machine. `master` or `slave1` is allowed.
 *Use these hostnames in the configuration below.*
 
+## Setting up password-less ssh between the nodes
+*This is necessary regardless of the amount of nodes in the cluster, meaning you will need to perform this step even on a single node cluster!*
 
-### Configuring Hadoop for a single node cluster
+On the master, generate a set of ssh keys
+```
+ssh-keygen -t rsa -P ""
+```
+
+Add this key to the authorized keys to all machines.
+So first allow password-less ssh from master to master by running
+```
+cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+```
+this is the only step you will have to perform on a single node cluster.
+
+For all other slaves, run
+```
+ssh-copy-id -i $HOME/.ssh/id_rsa.pub <username>@slave
+```
+to copy the public key to the slaves. It is important that you use the same username on all machines.
+If this command does not work because access to the slaves is also only by rsa keypair, log into the slave and append the contents of `$HOME/.ssh/id_rsa.pub` to the slaves `$HOME/.ssh/authorized_keys` by hand.
+
+Now check that everything works
+```
+ssh <username>@master
+ssh <username>@slave1
+...
+```
+
+## Config files of a single-node cluster
+*Skip this if you want to set up a multi-node cluster.*
+
 We are working in the `$HADOOP_HOME/conf` directory. Add the following between the `<configuration>...</configuration>` in the files specified below. Note that `<hostname>` has to be replaced with whatever you put in `/etc/hosts` file.
 In `core-site.xml`
 ```
@@ -107,7 +138,7 @@ In `core-site.xml`
 
 <property> 
 <name>fs.default.name</name> 
-<value>hdfs://<hostname>:54310</value> 
+<value>hdfs://<master-hostname>:54310</value> 
 </property>
 ```
 
@@ -115,7 +146,7 @@ In `mapred-site.xml`
 ```
 <property>
 <name>mapred.job.tracker</name> 
-<value><hostname>:54311</value>
+<value><master-hostname>:54311</value>
 </property>
 
 <property>
@@ -128,7 +159,6 @@ In `mapred-site.xml`
 <value>4</value>
 </property>
 ```
-remember that the master is a slave as well.
 
 In `hdfs-site.xml`
 ```
@@ -138,11 +168,12 @@ In `hdfs-site.xml`
 </property>
 ```
 
-Now edit both `$HADOOP_HOME/conf/masters` and `$HADOOP_HOME/conf/slaves` to only contain the hostname.
+Now edit both `$HADOOP_HOME/conf/masters` and `$HADOOP_HOME/conf/slaves` to only contain the master's hostname.
 
 
-### Configuring Hadoop for a multi node cluster
-#### Configuration of the master
+## Config files of a multi-node cluster
+*Skip this if you want to set up a single-node cluster.*
+### Configuration of the master
 Edit `$HADOOP_HOME/conf/masters` to contain the hostname `<master-hostname` of the master.
 Edit `$HADOOP_HOME/conf/slaves` to contain the hostnames of all nodes
 ```
@@ -152,8 +183,8 @@ Edit `$HADOOP_HOME/conf/slaves` to contain the hostnames of all nodes
 ...
 ```
 
-#### Additional configuration for all nodes in the multi node cluster
-We will now need to set the configuration of all nodes by copying the properties given below between the `<configuration>...</configuration>` tags.
+### Configuration for all nodes
+We will now need to set the configuration of all nodes (including the master) by copying the properties given below between the `<configuration>...</configuration>` tags.
 
 In `$HADOOP_HOME/conf/core-site.xml` we add
 ```
@@ -181,16 +212,6 @@ Second in `$HADOOP_HOME/conf/mapred-site.xml` we add
   <name>mapred.local.dir</name>
   <value>/app/hadoop/tmp/mapred</value>
 </property>
-
-<!--<property>
-  <name>mapred.map.tasks</name>
-  <value><about 10x number of slaves></value>
-</property>
-
-<property>
-  <name>mapred.reduce.tasks</name>
-  <value><about 10x number of slaves></value>
-</property>-->
 ```
 
 
@@ -203,37 +224,7 @@ And last we edit `$HADOOP_HOME/conf/hdfs-site.xml` to contain
 ```
 where we will need to replace `<your number>` with an integer less or equal to the amount of nodes in the cluster. So for one master and one slave, put this to 2. The dfs.replication specifies the default block replication. It defines how many machines a single file should be replicated to before it becomes available. The default value is 3.
 
-### Setting up ssh between the nodes without passwords
-This is necessary regardless of the amount of nodes in the cluster, meaning you will need to perform this step even in a single node cluster!
-
-On the master, generate a set of ssh keys
-```
-ssh-keygen -t rsa -P ""
-```
-
-
-Add this key to the authorized keys to all machines.
-So first allow password-less ssh from master to master by running
-```
-cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
-```
-this is the only step you will have to perform on a single node cluster.
-
-For all other slaves, run
-```
-ssh-copy-id -i $HOME/.ssh/id_rsa.pub <username>@slave
-```
-to copy the public key to the slaves. It is important that you use the same username on all machines.
-If this command does not work because access to the slaves is also only by rsa keypair, log into the slave and append the contents of `$HOME/.ssh/id_rsa.pub` to the slaves `$HOME/.ssh/authorized_keys` by hand.
-
-Now check that everything works
-```
-ssh <username>@master
-ssh <username>@slave1
-...
-```
-
-### Formatting the Hadoop DFS
+## Formatting the Hadoop DFS
 On the master or the only node in a single node cluster, we run
 ```
 $HADOOP_HOME/bin/hadoop namenode -format
@@ -242,7 +233,7 @@ to format the file system.
 
 If this fails, check that you set the permissions to `/app/hadoop/tmp` correctly.
 
-### Starting the single node cluster
+## Starting the single node cluster
 Now start up the deamons by running
 ```
 $HADOOP_HOME/bin/start-dfs.sh
@@ -259,7 +250,9 @@ Check that everything worked by running `jps`. The output should be something li
 12985 JobTracker
 ```
 
-### Starting the multi node cluster
+To stop the deamons, run the corresponding `$HADOOP_HOME/bin/stop-*.sh` commands in *reverse order*.
+
+## Starting the multi node cluster
 On the master, run 
 ```
 $HADOOP_HOME/bin/start-dfs.sh
@@ -290,23 +283,43 @@ If you run `jps` again, there should now be a `TaskTracker` running on every nod
 To stop the deamons, run the corresponding `$HADOOP_HOME/bin/stop-*.sh` commands in *reverse order*.
 
 
-## Installing Giraph
+# Installing Giraph
 We install giraph on the master node. First clone the repository
 ```
 cd /usr/local/
 sudo git clone https://github.com/apache/giraph.git
 sudo chown -R <username> giraph
 ```
-and then install the package using maven.
+and then install the package using maven. *Note:* If you plan on using our or your own Applications, read the following subsection first.
+(Re-)Package the giraph jar using the command
 ```
 cd $GIRAPH_HOME
 mvn package -DskipTests
 ```
-You do not need to copy the resulting jar to all nodes of the cluster!
-
+You do *not* need to copy the resulting jar to all nodes of the cluster!
 Giraph can now be used to run jobs.
+
+
+## Installing our or your own Applications
+*This step is optional*
+
+Since Giraph does not provide a working SSSP application - the start node could not be parameterized, we had to modify the given example.
+
+The supplied file `GeneralShortestPathsComputation.java` will be copied in the already existing examples folder
+```
+$GIRAPH_HOME/giraph-examples/src/main/java/org/apache/giraph/examples
+```
+you will need to repackage after this.
+
+Our Conversion tool writes the vertex input graph format
+`org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat`, this is used as input format in our examples.
+
 # Running Giraph Jobs
-We have written a conversion of edge list graphs into the `AdjacencyListTextVertexInputFormat`. All vertex weights will be initialized with 1, also for an unweighted input graph, the edge weights will be set to 1.
+Running Griaph applications is relatively straight forward from this point on.
+You will need to convert input graphs into a format readable by Giraph and load all input graphs on the HDFS before attempting to start a job.
+
+## Converting Graphs
+We have written a conversion of edge list graphs into the `org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat`. All initial vertex weights will be set to 1, also for an unweighted input graph, the edge weights will be set to 1.
 In the case of an unweighted input graph, convert using
 ```
 ./sortEdgeList --in <inputGraph> -g <outputGraph>
@@ -315,6 +328,7 @@ or for a weighted input graph
 ```
 ./sortEdgeList --in <inputGraph> -g <outputGraph> --weighted
 ```
+where sortEdgeList is our conversion tool available at `scripts/sortEdgeList.cpp`.
 
 ## Copying graph files to the HDFS
 All input and output files must be copied to the hadoop dfs. Only there are they accessible through Giraph. You can copy to the HDFS with
@@ -325,33 +339,18 @@ And then check the contents of the directory with
 ```
 $HADOOP_HOME/bin/hadoop dfs -ls <path on hdfs>
 ```
+## Loading data from the HDFS
 In the same way, you can retrieve the output from HDFS by running
 ```
 $HADOOP_HOME/bin/hadoop dfs -copyToLocal <path on hdfs> <path on regular fs> 
 ```
 
-
-## Running our Applications
-Since Giraph does not provide a working SSSP application, we had to modify the given example, the start could not be parameterized.
-
-The supplied file `GeneralShortestPathsComputation.java` will be copied in the already existing examples folder
-```
-$GIRAPH_HOME/giraph-examples/src/main/java/org/apache/giraph/examples
-```
-you will need to repackage `mvn package -DskipTests`.
-
-
-Our Conversion tool writes the vertex input graph format
-`org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat`.
-
-Always remember to specify a new directory in the output path (`-op`) flag. Otherwise, the computation will crash.
-
-### SSSP
+## SSSP
 We run the computation with the following command. It specifies the input and output format, our computation class followed by the start vertex id and the paths to the input and output files.
 You will need to replace the following
 * `<start vertex id>`: The vertex id from which to start the SSSP.
 * `<input path>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
-* `output path>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS).
+* `output path>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS). Always remember to specify a new directory in the output path flag. Otherwise, the computation will crash.
 * `<cluster size>`: Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster!
 
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
@@ -361,10 +360,10 @@ $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-
 
 
 
-### PageRank
+## PageRank
 We run the computation with the following command. It specifies the input and output format, some classes required for computation and the paths to the input and output files.
 * `<input path>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
-* `<output path>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS).
+* `<output path>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS). Always remember to specify a new directory in the output path flag. Otherwise, the computation will crash.
 * `<cluster size>`: Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster!
 
 *We recommend copying this command in a text editor and editing it before putting it in the console..*
@@ -372,8 +371,8 @@ We run the computation with the following command. It specifies the input and ou
 $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip <input path> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op <output path> -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w <cluster size>
 ```
 
-#### Some problems and how to fix them:
-* The `class org.apache.giraph.examples.SimplePageRankComputation not ...` exception. In this case, you selected the inner class of the MasterCompute or WorkerContext falsely. The correct way to adress those is `packageName.OuterClass\$InnerClass`! The backslash is very important. Check the supplied command above, the WorkerContext and MasterCompute  are selected correctly.
+### Some problems and how to fix them:
+* The `class org.apache.giraph.examples.SimplePageRankComputation not <some other class>` exception. In this case, you selected the inner class of the MasterCompute or WorkerContext falsely. The correct way to adress those is `packageName.OuterClass\$InnerClass`! The backslash is very important. Check the supplied command above, the WorkerContext and MasterCompute  are selected correctly.
 * The console output is very short and the log file contains the exception
 `Tried to access reducer which wasn't registered <aggregator name>; Aggregators can be registered from MasterCompute by calling registerReducer function\. [...]`. Here you forgot to create a MasterCompute class or failed to tell giraph which one to use. Just add the `-mc` flag followed by the class name of a `MasterCompute`.
 
