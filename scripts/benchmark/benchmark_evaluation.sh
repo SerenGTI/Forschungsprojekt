@@ -23,6 +23,8 @@ for graph in ${graphs[@]}; do
   for algorithm in ${algorithms[@]}; do
     if [[ "$algorithm" == *gemini* ]]; then
       result=$(cat ${@} | grep "^#" | grep "$graph" | grep "$algorithm " | awk '{s1+=$5} {s2+=$6} END {print s1/10000000 " " (s2-5*s1)/10000000}')
+    elif [[ "$algorithm" == *giraph* ]]; then
+      result=$(cat ${@} | grep "^#" | grep "$graph" | grep "$algorithm " | awk '{s1+=$7} {s2+=$6} END {print s1/10000000 " " s2/10000000}')
     else
       result=$(cat ${@} | grep "^#" | grep "$graph" | grep "$algorithm " | awk '{s1+=$5} {s2+=$6} END {print s1/10000000 " " s2/10000000}')
     fi
