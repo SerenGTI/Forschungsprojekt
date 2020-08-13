@@ -10,16 +10,16 @@ The AdjacencyList and WeightedAdjacencyList formats\cite{adjListFormat} are used
 First the file contains the number of vertices $n$ and edges $m$, followed by an offset for each vertex. This offset specifies at what point in the following list of numbers the information for a node begins.
 Lastly the file format contains a list of target nodes.
 The numbers are all separated by newlines.
-\begin{gather*}
-n\\
-m\\
-o_1\\
-o_2\\
-\vdots\\
-o_n\\
-t_1\\
-t_2\\
-\vdots\\
+\begin{gather*}%with hacked line spacing to save some space..
+n\\[-1\jot]
+m\\[-1\jot]
+o_1\\[-1\jot]
+o_2\\[-1\jot]
+\vdots\\[-1\jot]
+o_n\\[-1\jot]
+t_1\\[-1\jot]
+t_2\\[-1\jot]
+\vdots\\[-1\jot]
 t_m
 \end{gather*}
 The offsets $o_i=k$ and $o_{i+1}=k+j$ mean that vertex $i$ has $j$ outgoing edges, these edges are
@@ -49,4 +49,18 @@ We found that Gemini requires the following input format
 where $s_i,t_i$ have \texttt{uint32} data type and the optional weights are \texttt{float32}.
 Gemini will derive the number of edges from the file size, so there is no file header or anything similar allowed.
 
-\subsubsection{Giraph's numerous I/O formats}
+\subsubsection{Giraph's I/O formats}
+Giraph is capable of parsing many different input and output formats. All of those are explained in Giraph's JavaDoc.
+Both edge- and vertex-centric input formats are possible.
+
+One can even define their own input graph representation or output format. For the purposes of this paper, we used the existing \texttt{JsonLongDoubleFloatDoubleVertexInputFormat}\cite{GiraphInputFormat}.
+Our graph conversion tool outputs this format.
+
+In this format, the vertex IDs are specified as \texttt{long} with \texttt{double} vertex values, \texttt{float} out-edge weights and the messages are of type \texttt{double} (all are Java data types).
+All this is in a JSON-like format, so each line in the graph file looks as follows
+\begin{equation*}
+	[s,v_s,[[t_1, w_{t_1}], [t_2, w_{t_2}]...]]
+\end{equation*}
+with $s$ being a vertex ID, $v_s$ the vertex value of vertex $s$. The values $t_i$ are vertices for which an edge from $s$ to $t_i$ exists. The directed edge $(s,t_i)$ has weight $w_{t_i}$.
+
+There is surrounding pair of brackets and no commas separating the lines as it would be expected in a JSON format.
