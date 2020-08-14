@@ -488,10 +488,20 @@ benchmark_giraph_sssp() {
   done
 }
 
+benchmark_giraph_pagerank_klein() {
+  for startnode in ${startnodes_flickr[@]}; do
+    giraph-pagerank-dist flickr
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    giraph-pagerank-dist orkut
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    giraph-pagerank-dist wikipedia
+  done
+}
+
 
 time_start=$(get_time)
-#benchmark_galois_dist_rMat27
-#benchmark_galois_dist_rMat28
-benchmark_giraph_sssp
+benchmark_giraph_pagerank_klein
 dur_exec=$((($(get_time)-$time_start)/1000000))
 echo "benchmark took $dur_exec seconds"
