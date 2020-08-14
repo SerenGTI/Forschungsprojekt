@@ -58,7 +58,7 @@ friendster galois-bfs-push-dist 43.4724 47.5864
 friendster galois-bfs-pull-dist 99.296 103.402
 friendster galois-pagerank-push-dist 589.117 593.287
 friendster galois-pagerank-pull-dist 804.582 808.683
-friendster giraph-sssp-dist TIMEOUT TIMEOUT
+friendster giraph-sssp-dist 9.5089 444.035
 orkut gemini-bfs 0.0785927 12.5013
 orkut gemini-pagerank 0.155593 13.1045
 orkut gemini-sssp 0.0744979 13.8801
@@ -119,7 +119,7 @@ twitter galois-bfs-push-dist 34.3449 37.8693
 twitter galois-bfs-pull-dist 91.9409 95.5053
 twitter galois-pagerank-push-dist 907.351 910.943
 twitter galois-pagerank-pull-dist 1507.18 1510.93
-twitter giraph-sssp-dist TIMEOUT TIMEOUT
+twitter giraph-sssp-dist 9.6713 349.944
 wikipedia gemini-bfs 1.36277 44.8664
 wikipedia gemini-pagerank 0.638616 44.3569
 wikipedia gemini-sssp 1.10028 48.4954
@@ -174,7 +174,6 @@ rMat27 galois-sssp-cpu-96thread 4.50218 16.0359
 rMat27 galois-bfs-cpu-96thread 5.61511 14.6172
 rMat27 galois-pagerank-push-cpu-96thread 0.0007216 239.701
 rMat27 galois-pagerank-pull-cpu-96thread 0.651387 19.2033
-rMat27 giraph-sssp-dist TIMEOUT TIMEOUT
 rMat28 gemini-sssp 2.7108 1236.73
 rMat28 gemini-bfs 0.901889 1178.71
 rMat28 gemini-pagerank 7.33944 1188.5
@@ -198,4 +197,3 @@ rMat28 galois-sssp-cpu-96thread 9.77269 27.8143
 rMat28 galois-bfs-cpu-96thread 13.1441 33.086
 rMat28 galois-pagerank-push-cpu-96thread 0.0005607 689.331
 rMat28 galois-pagerank-pull-cpu-96thread 1.14914 45.9754
-rMat28 giraph-sssp-dist TIMEOUT TIMEOUT
