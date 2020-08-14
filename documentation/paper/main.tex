@@ -9,7 +9,7 @@
 \newcommand{\todo}{{\color{red}TODO}}
 
 \bibliography{literature.bib}
-\title{Forschungsprojekt}
+\title{A Comparison of Graph Processing Systems}
 \author{\IEEEauthorblockN{Simon König}
 \IEEEauthorblockA{(3344789)\\
 st156571@stud.uni-stuttgart.de}
@@ -40,7 +40,7 @@ Furthermore we will give some insight on the complexity of writing custom applic
 \end{abstract}
 
 \begin{IEEEkeywords}
-graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon
+graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon, Gemini
 \end{IEEEkeywords}
 
 
@@ -84,7 +84,7 @@ Hier sollten wir auch evtl Vergleichsgrundlagen für Aufsetzen und Apps schreibe
 
 \section{Results}
 \subsection{Komplexität Aufsetzen}
-Systeme wie distr. Giraph bei denen man erstmal ewig suchen muss bis man überhaupt einen Guide findet sollten hier schlechter abschneiden. \emph{vorausgesetzt, wir nehmen das hier überhaupt mit auf..}
+Systeme wie distr. Galois, bei denen man erstmal ewig suchen muss bis man überhaupt einen Guide findet sollten hier schlechter abschneiden. \emph{vorausgesetzt, wir nehmen das hier überhaupt mit auf..}
 
 \subsection{Komplexität eigene Apps schreiben}
 Schwierig objektiv zu vergleichen.
@@ -96,6 +96,7 @@ Schwierig objektiv zu vergleichen.
 der offensichtliche, wichtige Vergleich
 
 \subsection{Ergebnisse exec time}
+
 hier erhoffe ich mir einen Vergleich der Ladezeiten und erwarte, dass Systeme wie Giraph, die erstmal auf irgendwas warten schlecht abschneiden.
 Aber vielleicht ist auch die setup time bei gleichen frameworks zwischen verteilt und shared memory ganz interessant zu vergleichen. 
 
@@ -114,21 +115,19 @@ The conclusion goes here.
 \section*{Acknowledgment}
 We are using the graph frameworks Galois~\cite{Galois}, Ligra~\cite{Ligra}, Polymer~\cite{Polymer}, Gemini~\cite{Gemini} as well as Apache Giraph~\cite{Giraph}.
 
-Also we use Gluon~\cite{vertGalois} for the distributed setups.
+Also we use Gluon~\cite{vertGalois} for the distributed Galois setups.
 
 Gemini~\cite{Gemini}
+
+%We would like to thank our supervisor Heiko Geppert for continued guidance and support.
 
 \section*{Supplementary Data}\label{supplementaryData}
 We have written a number of conversion tools and installation guides to help
 users or develeopers with the use of the tested frameworks.
 
-Everything can be retrieved on our GitHub repository
-\url{http://www.github.com/serengti/Forschungsprojekt}.
+Our GitHub repository: \url{http://www.github.com/serengti/Forschungsprojekt}.
 
-For each Framework, there is a 
-
-
-The graphs are downloaded from \cite{konect}.
+The graphs were downloaded from the graph database associated with the Koblenz Network Collection (KONECT)\cite{konect}.
 
 
 
