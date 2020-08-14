@@ -3,13 +3,22 @@
 \usepackage[noadjust]{cite}
 \usepackage[utf8]{inputenc}
 %\usepackage{csquotes}
+\usepackage{textcomp}
+\usepackage{pifont}
 \usepackage{hyperref}
 \usepackage{amsmath}
-
-\newcommand{\todo}{{\color{red}TODO}}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{graphics}
+\newcommand*\rot{\rotatebox{90}}
+\newcommand*\OK{\ding{51}}
 
 \bibliography{literature.bib}
+
 \title{A Comparison of Graph Processing Systems}
+
 \author{\IEEEauthorblockN{Simon König}
 \IEEEauthorblockA{(3344789)\\
 st156571@stud.uni-stuttgart.de}
@@ -25,6 +34,7 @@ st156571@stud.uni-stuttgart.de}
 \IEEEauthorblockN{Jakob Schmid}
 \IEEEauthorblockA{()\\
 @stud.uni-stuttgart.de}}
+
 \date{\today}
 
 
@@ -46,7 +56,6 @@ graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon, Gemini
 
 
 \section{Introduction}
-%\todo
 
 This paper makes the following contributions:
 \begin{itemize}
@@ -79,12 +88,9 @@ This paper makes the following contributions:
 \section{Testing methods}
 \input{sections/testingMethods}
 
-Hier sollten wir auch evtl Vergleichsgrundlagen für Aufsetzen und Apps schreiben einführen, wenn wir das mit aufnehmen.
-
-
 \section{Results}
 \subsection{Komplexität Aufsetzen}
-Systeme wie distr. Galois, bei denen man erstmal ewig suchen muss bis man überhaupt einen Guide findet sollten hier schlechter abschneiden. \emph{vorausgesetzt, wir nehmen das hier überhaupt mit auf..}
+Systeme wie Galois/Gluon, bei denen man erstmal ewig suchen muss bis man überhaupt einen Guide findet sollten hier schlechter abschneiden. \emph{vorausgesetzt, wir nehmen das hier überhaupt mit auf..}
 
 \subsection{Komplexität eigene Apps schreiben}
 Schwierig objektiv zu vergleichen.
@@ -123,11 +129,11 @@ Gemini~\cite{Gemini}
 
 \section*{Supplementary Data}\label{supplementaryData}
 We have written a number of conversion tools and installation guides to help
-users or develeopers with the use of the tested frameworks.
+users or developers with the use of the tested frameworks.
 
 Our GitHub repository: \url{http://www.github.com/serengti/Forschungsprojekt}.
 
-The graphs were downloaded from the graph database associated with the Koblenz Network Collection (KONECT)\cite{konect}.
+
 
 
 

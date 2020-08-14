@@ -12,7 +12,7 @@ Computation is vertex oriented and iterative.
 For each iteration step called superstep, the Compute method implementing the algorithm is invoked on each active vertex, with every vertex being active in the beginning.
 This method receives messages sent in the previous superstep as well as its vertex value and the values of outgoing edges.
 With this data the values are modified and messages to other vertices are sent.
-Communication between vertices is only performed via messages, so a vertex has no access to values of other vertices or edges other than it's own outgoing ones.
+Communication between vertices is only performed via messages, so a vertex has no access to values of other vertices or edges other than its own outgoing ones.
 
 Supersteps are synchronized with barriers, meaning that all messages only get delivered in the following superstep and computation for the next superstep can only begin after every vertex has finished computing the current superstep.
 Edge and vertex values are retained across supersteps.
