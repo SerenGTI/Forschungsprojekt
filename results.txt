@@ -27,7 +27,8 @@ flickr galois-bfs-push-dist 0.595562 2.34541
 flickr galois-bfs-pull-dist 0.606841 2.37524
 flickr galois-pagerank-push-dist 0.817701 2.5833
 flickr galois-pagerank-pull-dist 0.866497 2.63364
-flickr giraph-sssp-dist 0.535 41.0584
+flickr giraph-sssp-dist 0.2023 42.6218
+flickr giraph-pagerank-dist 8.4161 49.5219
 friendster gemini-bfs 0.782904 708.378
 friendster gemini-pagerank 5.66216 716.48
 friendster gemini-sssp 2.0866 742.649
@@ -57,7 +58,7 @@ friendster galois-bfs-push-dist 43.4724 47.5864
 friendster galois-bfs-pull-dist 99.296 103.402
 friendster galois-pagerank-push-dist 589.117 593.287
 friendster galois-pagerank-pull-dist 804.582 808.683
-friendster giraph-sssp-dist TIMEOUT TIMEOUT
+friendster giraph-sssp-dist 9.5089 444.035
 orkut gemini-bfs 0.0785927 12.5013
 orkut gemini-pagerank 0.155593 13.1045
 orkut gemini-sssp 0.0744979 13.8801
@@ -87,7 +88,8 @@ orkut galois-bfs-push-dist 2.11104 4.0246
 orkut galois-bfs-pull-dist 2.88733 4.88504
 orkut galois-pagerank-push-dist 6.02749 7.99147
 orkut galois-pagerank-pull-dist 10.9971 13.0133
-orkut giraph-sssp-dist 1.1744 133.955
+orkut giraph-sssp-dist 0.4502 60.4
+orkut giraph-pagerank-dist 265.672 322.149
 twitter gemini-bfs 0.481342 354.992
 twitter gemini-pagerank 3.97648 359.903
 twitter gemini-sssp 1.40974 382.978
@@ -117,6 +119,7 @@ twitter galois-bfs-push-dist 34.3449 37.8693
 twitter galois-bfs-pull-dist 91.9409 95.5053
 twitter galois-pagerank-push-dist 907.351 910.943
 twitter galois-pagerank-pull-dist 1507.18 1510.93
+twitter giraph-sssp-dist 9.6713 349.944
 wikipedia gemini-bfs 1.36277 44.8664
 wikipedia gemini-pagerank 0.638616 44.3569
 wikipedia gemini-sssp 1.10028 48.4954
@@ -146,7 +149,8 @@ wikipedia galois-bfs-push-dist 11.0599 13.2442
 wikipedia galois-bfs-pull-dist 22.6358 24.9177
 wikipedia galois-pagerank-push-dist 204.212 206.527
 wikipedia galois-pagerank-pull-dist 234.835 237.131
-wikipedia giraph-sssp-dist 7.6143 414.145
+wikipedia giraph-sssp-dist 1.3088 100.775
+wikipedia giraph-pagerank-dist 799.46 888.693
 rMat27 gemini-sssp 1.21931 563.533
 rMat27 gemini-bfs 0.459393 540.827
 rMat27 gemini-pagerank 3.49213 536.286

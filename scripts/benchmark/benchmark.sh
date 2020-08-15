@@ -404,7 +404,7 @@ giraph-pagerank () {
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
     local dur_calc_giraph=$(echo "$result" | grep 'Superstep ' | awk -F '=' '{s += $2} END {print s*1000}')
-    log "giraph-pagerank $1 $2 $pagerank_number_of_iterations $dur_calc $dur_exec $dur_calc_giraph"
+    log "giraph-pagerank $1 $pagerank_number_of_iterations - $dur_calc $dur_exec $dur_calc_giraph"
 }
 
 giraph-pagerank-dist () {
@@ -420,5 +420,5 @@ giraph-pagerank-dist () {
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
     local dur_calc_giraph=$(echo "$result" | grep 'Superstep ' | awk -F '=' '{s += $2} END {print s*1000}')
-    log "giraph-pagerank-dist $1 $2 $pagerank_number_of_iterations $dur_calc $dur_exec $dur_calc_giraph"
+    log "giraph-pagerank-dist $1 $pagerank_number_of_iterations - $dur_calc $dur_exec $dur_calc_giraph"
 }
