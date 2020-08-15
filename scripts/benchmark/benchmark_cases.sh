@@ -4,9 +4,9 @@ source benchmark.sh
 path_to_graphs=/home/fp-ss20/graph
 #graph_info=/home/ubuntu/graph/graph_info.txt
 path_to_bins=/home/fp-ss20/bin
-#host_file=/home/ubuntu/host_file
+host_file=/home/ubuntu/host_file
 #result_file=$4
-threads=1
+threads=48
 #hosts=129.69.210.223,129.69.210.224
 hosts=129.69.210.223,129.69.210.224,129.69.210.225,129.69.210.226,129.69.210.227
 pagerank_number_of_iterations=5
@@ -512,8 +512,46 @@ benchmark_giraph_sssp_dist_klein() {
   done
 }
 
+benchmark_gemini_dist() {
+  for startnode in ${startnodes_flickr[@]}; do
+    gemini-sssp-dist flickr $startnode $nodes_flickr
+    gemini-bfs-dist flickr $startnode $nodes_flickr
+    gemini-pagerank-dist flickr $nodes_flickr
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    gemini-sssp-dist orkut $startnode $nodes_orkut
+    gemini-bfs-dist orkut $startnode $nodes_orkut
+    gemini-pagerank-dist orkut $nodes_orkut
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    gemini-sssp-dist wikipedia $startnode $nodes_wikipedia
+    gemini-bfs-dist wikipedia $startnode $nodes_wikipedia
+    gemini-pagerank-dist wikipedia $nodes_wikipedia
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    gemini-sssp-dist twitter $startnode $nodes_twitter
+    gemini-bfs-dist twitter $startnode $nodes_twitter
+    gemini-pagerank-dist twitter $nodes_twitter
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    gemini-sssp-dist friendster $startnode $nodes_friendster
+    gemini-bfs-dist friendster $startnode $nodes_friendster
+    gemini-pagerank-dist friendster $nodes_friendster
+  done
+  for startnode in ${startnodes_rMat27[@]}; do
+    gemini-sssp-dist rMat27 $startnode $nodes_rMat27
+    gemini-bfs-dist rMat27 $startnode $nodes_rMat27
+    gemini-pagerank-dist rMat27 $nodes_rMat27
+  done
+  for startnode in ${startnodes_rMat28[@]}; do
+    gemini-sssp-dist rMat28 $startnode $nodes_rMat28
+    gemini-bfs-dist rMat28 $startnode $nodes_rMat28
+    gemini-pagerank-dist rMat28 $nodes_rMat28
+  done
+}
+
 
 time_start=$(get_time)
-benchmark_giraph_sssp_dist_klein
+benchmark_gemini_dist
 dur_exec=$((($(get_time)-$time_start)/1000000))
 echo "benchmark took $dur_exec seconds"
