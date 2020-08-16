@@ -11,7 +11,7 @@
 \usepackage{xcolor}
 \usepackage{multirow}
 \usepackage{booktabs}
-\usepackage{graphics}
+\usepackage{graphicx}
 \newcommand*\rot{\rotatebox{90}}
 \newcommand*\OK{\ding{51}}
 
@@ -89,23 +89,7 @@ This paper makes the following contributions:
 \input{sections/testingMethods}
 
 \section{Results}
-\subsection{Komplexität Aufsetzen}
-Systeme wie Galois/Gluon, bei denen man erstmal ewig suchen muss bis man überhaupt einen Guide findet sollten hier schlechter abschneiden. \emph{vorausgesetzt, wir nehmen das hier überhaupt mit auf..}
-
-\subsection{Komplexität eigene Apps schreiben}
-Schwierig objektiv zu vergleichen.
-
-
-\subsection{Pure Performance-Ergebnisse}
-
-\subsection{Ergebnisse Calc time}
-der offensichtliche, wichtige Vergleich
-
-\subsection{Ergebnisse exec time}
-
-hier erhoffe ich mir einen Vergleich der Ladezeiten und erwarte, dass Systeme wie Giraph, die erstmal auf irgendwas warten schlecht abschneiden.
-Aber vielleicht ist auch die setup time bei gleichen frameworks zwischen verteilt und shared memory ganz interessant zu vergleichen. 
-
+\input{sections/results/results}
 
 
 \section{Discussion}
