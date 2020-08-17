@@ -315,7 +315,7 @@ gemini-sssp-dist () {
     local bin="${path_to_bins}/gemini-sssp"
     local graph="${path_to_graphs}/$1.bin"
     local time_start=$(get_time)
-    local result=$(timeout 3h mpiexec --hostfile $host_file $bin $graph $3 $2)
+    local result=$(timeout 3h mpiexec -H $hosts $bin $graph $3 $2)
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)
@@ -329,7 +329,7 @@ gemini-pagerank-dist () {
     local bin="${path_to_bins}/gemini-pagerank"
     local graph="${path_to_graphs}/u_$1.bin"
     local time_start=$(get_time)
-    local result="$(timeout 3h mpiexec --hostfile $host_file $bin $graph $2 $pagerank_number_of_iterations)"
+    local result="$(timeout 3h mpiexec -H $hosts $bin $graph $2 $pagerank_number_of_iterations)"
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)
@@ -343,7 +343,7 @@ gemini-bfs-dist () {
     local bin="${path_to_bins}/gemini-bfs"
     local graph="${path_to_graphs}/u_$1.bin"
     local time_start=$(get_time)
-    local result=$(timeout 3h mpiexec --hostfile $host_file $bin $graph $3 $2)
+    local result=$(timeout 3h mpiexec -H $hosts $bin $graph $3 $2)
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local dur_calc=$(grep 'exec_time=' <<<"$result" | tail -1)

@@ -174,6 +174,12 @@ rMat27 galois-sssp-cpu-96thread 4.50218 16.0359
 rMat27 galois-bfs-cpu-96thread 5.61511 14.6172
 rMat27 galois-pagerank-push-cpu-96thread 0.0007216 239.701
 rMat27 galois-pagerank-pull-cpu-96thread 0.651387 19.2033
+rMat27 galois-sssp-push-dist 33.4806 38.9511
+rMat27 galois-sssp-pull-dist 149.545 154.94
+rMat27 galois-bfs-push-dist 30.4589 34.4177
+rMat27 galois-bfs-pull-dist 99.2787 103.159
+rMat27 galois-pagerank-push-dist 1283.51 1287.42
+rMat27 galois-pagerank-pull-dist 1661.46 1665.41
 rMat28 gemini-sssp 2.7108 1236.73
 rMat28 gemini-bfs 0.901889 1178.71
 rMat28 gemini-pagerank 7.33944 1188.5
