@@ -158,7 +158,13 @@ In `mapred-site.xml`
 <name>mapred.map.tasks</name>
 <value>4</value>
 </property>
+
+<property>
+  <name>mapred.child.java.opts</name>
+  <value>-Xmx<some size>G</value>
+</property>
 ```
+Replace `<some size>` with the maximum Heap Size in GB you would like a mapred task to have.
 
 In `hdfs-site.xml`
 ```
@@ -212,8 +218,13 @@ Second in `$HADOOP_HOME/conf/mapred-site.xml` we add
   <name>mapred.local.dir</name>
   <value>/app/hadoop/tmp/mapred</value>
 </property>
-```
 
+<property>
+  <name>mapred.child.java.opts</name>
+  <value>-Xmx<some size>G</value>
+</property>
+```
+Replace `<some size>` with the maximum Heap Size in GB you would like a mapred task to have.
 
 And last we edit `$HADOOP_HOME/conf/hdfs-site.xml` to contain
 ```
