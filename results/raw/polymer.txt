@@ -1,0 +1,280 @@
+#polymer-bfs flickr 16717 - 80000 473712
+#polymer-bfs flickr 23892 - 90700 474000
+#polymer-bfs flickr 25185 - 57800 455462
+#polymer-bfs flickr 30641 - 51300 432756
+#polymer-bfs flickr 31011 - 61900 448928
+#polymer-bfs flickr 38088 - 83100 475014
+#polymer-bfs flickr 42329 - 78400 474051
+#polymer-bfs flickr 5114 - 70900 457332
+#polymer-bfs flickr 68726 - 79300 471388
+#polymer-bfs flickr 73690 - 28800 419019
+#polymer-bfs friendster 10253002 - 26800000 699190662
+#polymer-bfs friendster 1794578 - 22000000 680033524
+#polymer-bfs friendster 20457996 - 15200000 663315699
+#polymer-bfs friendster 30789169 - 14600000 696055638
+#polymer-bfs friendster 35222816 - 25800000 690399330
+#polymer-bfs friendster 39797743 - 30400000 696098538
+#polymer-bfs friendster 4274039 -  657630689
+#polymer-bfs friendster 43131729 - 31700000 684791934
+#polymer-bfs friendster 490332 -  665816741
+#polymer-bfs friendster 54514110 - 29100000 734297533
+#polymer-bfs orkut 1198261 - 1800000 25166607
+#polymer-bfs orkut 1345950 - 1670000 26091540
+#polymer-bfs orkut 1407061 - 1780000 25467244
+#polymer-bfs orkut 1613980 - 2680000 26011371
+#polymer-bfs orkut 163962 - 744000 24369532
+#polymer-bfs orkut 1834214 - 2640000 26249169
+#polymer-bfs orkut 1962322 - 3250000 26557346
+#polymer-bfs orkut 1976485 - 2750000 26314111
+#polymer-bfs orkut 2350837 - 2560000 26271256
+#polymer-bfs orkut 2692187 - 1810000 25210551
+#polymer-bfs rMat27 11951675 - 9970000 521804663
+#polymer-bfs rMat27 13101874 -  527003382
+#polymer-bfs rMat27 22500259 -  524989310
+#polymer-bfs rMat27 29267577 - 9460000 522668365
+#polymer-bfs rMat27 29388743 - 11400000 543983983
+#polymer-bfs rMat27 29590628 - 12100000 523304041
+#polymer-bfs rMat27 31111039 - 13500000 523612901
+#polymer-bfs rMat27 41951863 -  525392878
+#polymer-bfs rMat27 47296074 - 12700000 527109073
+#polymer-bfs rMat27 50173050 -  524158419
+#polymer-bfs rMat28 18972996 -  1090182149
+#polymer-bfs rMat28 31365500 -  1131548218
+#polymer-bfs rMat28 34475079 -  1105327413
+#polymer-bfs rMat28 42172507 -  1115902995
+#polymer-bfs rMat28 42656526 -  1059728744
+#polymer-bfs rMat28 44933962 -  1194250073
+#polymer-bfs rMat28 62460984 -  1183211608
+#polymer-bfs rMat28 63989057 -  1115943524
+#polymer-bfs rMat28 9158728 -  1076241678
+#polymer-bfs rMat28 96481238 -  1110672100
+#polymer-bfs twitter 106660 - 11900000 461149342
+#polymer-bfs twitter 11344459 - 15600000 463995322
+#polymer-bfs twitter 19217596 - 18000000 490973263
+#polymer-bfs twitter 26370335 - 18500000 480936375
+#polymer-bfs twitter 28694596 - 18900000 468186302
+#polymer-bfs twitter 34012760 - 19500000 480984576
+#polymer-bfs twitter 38559695 - 20400000 497822335
+#polymer-bfs twitter 43840792 - 14900000 465741690
+#polymer-bfs twitter 8641427 -  466020818
+#polymer-bfs twitter 9226150 - 14700000 513867768
+#polymer-bfs wikipedia 10821044 - 11300000 87880356
+#polymer-bfs wikipedia 1761449 - 10400000 86482792
+#polymer-bfs wikipedia 3259457 - 10700000 86703808
+#polymer-bfs wikipedia 4340524 - 11500000 88190258
+#polymer-bfs wikipedia 4857604 - 10700000 87049639
+#polymer-bfs wikipedia 6241517 - 9140000 86042223
+#polymer-bfs wikipedia 6712096 - 11000000 89499276
+#polymer-bfs wikipedia 7539859 - 11000000 87629661
+#polymer-bfs wikipedia 7825079 - 9750000 86840645
+#polymer-bfs wikipedia 8277471 - 11200000 87881787
+#polymer-pagerank-delta flickr 5 - 101000 457985
+#polymer-pagerank-delta flickr 5 - 109000 469028
+#polymer-pagerank-delta flickr 5 - 111000 478492
+#polymer-pagerank-delta flickr 5 - 116000 477858
+#polymer-pagerank-delta flickr 5 - 121000 482171
+#polymer-pagerank-delta flickr 5 - 131000 492770
+#polymer-pagerank-delta flickr 5 - 88800 448483
+#polymer-pagerank-delta flickr 5 - 95400 459111
+#polymer-pagerank-delta flickr 5 - 99200 466025
+#polymer-pagerank-delta flickr 5 - 99300 460374
+#polymer-pagerank-delta friendster 5 - 12100000 564408403
+#polymer-pagerank-delta friendster 5 - 12200000 562420655
+#polymer-pagerank-delta friendster 5 - 12200000 563433201
+#polymer-pagerank-delta friendster 5 - 12200000 563555495
+#polymer-pagerank-delta friendster 5 - 12200000 564032666
+#polymer-pagerank-delta friendster 5 - 12200000 564375784
+#polymer-pagerank-delta friendster 5 - 12200000 564823960
+#polymer-pagerank-delta friendster 5 - 12200000 565605624
+#polymer-pagerank-delta friendster 5 - 12300000 565507310
+#polymer-pagerank-delta friendster 5 -  563211509
+#polymer-pagerank-delta orkut 5 - 431000 21756671
+#polymer-pagerank-delta orkut 5 - 464000 21753377
+#polymer-pagerank-delta orkut 5 - 466000 21782506
+#polymer-pagerank-delta orkut 5 - 466000 21788274
+#polymer-pagerank-delta orkut 5 - 475000 21696366
+#polymer-pagerank-delta orkut 5 - 477000 21904909
+#polymer-pagerank-delta orkut 5 - 485000 21871266
+#polymer-pagerank-delta orkut 5 - 491000 21881841
+#polymer-pagerank-delta orkut 5 - 492000 21844003
+#polymer-pagerank-delta orkut 5 - 492000 21896907
+#polymer-pagerank-delta rMat27 5 - 6930000 454943786
+#polymer-pagerank-delta rMat27 5 - 6950000 456224656
+#polymer-pagerank-delta rMat27 5 - 6970000 455608640
+#polymer-pagerank-delta rMat27 5 - 6980000 454828365
+#polymer-pagerank-delta rMat27 5 - 6980000 456076039
+#polymer-pagerank-delta rMat27 5 - 7000000 451738196
+#polymer-pagerank-delta rMat27 5 - 7010000 454156429
+#polymer-pagerank-delta rMat27 5 - 7010000 455922321
+#polymer-pagerank-delta rMat27 5 - 7240000 455012166
+#polymer-pagerank-delta rMat27 5 - 7280000 455558727
+#polymer-pagerank-delta rMat28 5 - 14400000 934233498
+#polymer-pagerank-delta rMat28 5 - 14600000 914674066
+#polymer-pagerank-delta rMat28 5 - 14600000 919811565
+#polymer-pagerank-delta rMat28 5 - 14600000 923500346
+#polymer-pagerank-delta rMat28 5 - 14600000 923942272
+#polymer-pagerank-delta rMat28 5 - 14800000 918640003
+#polymer-pagerank-delta rMat28 5 - 14800000 918975032
+#polymer-pagerank-delta rMat28 5 - 15100000 921470674
+#polymer-pagerank-delta rMat28 5 - 15100000 934141308
+#polymer-pagerank-delta rMat28 5 - 16900000 916192429
+#polymer-pagerank-delta twitter 5 - 8350000 402698636
+#polymer-pagerank-delta twitter 5 - 8350000 403100910
+#polymer-pagerank-delta twitter 5 - 8359999 402832888
+#polymer-pagerank-delta twitter 5 - 8380000 403133015
+#polymer-pagerank-delta twitter 5 - 8380000 404574268
+#polymer-pagerank-delta twitter 5 - 8390000 402143742
+#polymer-pagerank-delta twitter 5 - 8390000 403392305
+#polymer-pagerank-delta twitter 5 - 8400000 402872685
+#polymer-pagerank-delta twitter 5 - 8410000 402136169
+#polymer-pagerank-delta twitter 5 - 8430000 403266383
+#polymer-pagerank-delta wikipedia 5 - 1170000 71094888
+#polymer-pagerank-delta wikipedia 5 - 1170000 71272860
+#polymer-pagerank-delta wikipedia 5 - 1180000 70883104
+#polymer-pagerank-delta wikipedia 5 - 1180000 71029816
+#polymer-pagerank-delta wikipedia 5 - 1180000 71165031
+#polymer-pagerank-delta wikipedia 5 - 1180000 71660242
+#polymer-pagerank-delta wikipedia 5 - 1190000 71197614
+#polymer-pagerank-delta wikipedia 5 - 1200000 70976135
+#polymer-pagerank-delta wikipedia 5 - 1200000 71045096
+#polymer-pagerank-delta wikipedia 5 -  71302191
+#polymer-pagerank flickr 5 - 137000 549822
+#polymer-pagerank flickr 5 - 174000 584345
+#polymer-pagerank flickr 5 - 60300 474419
+#polymer-pagerank flickr 5 - 68100 482844
+#polymer-pagerank flickr 5 - 71100 487124
+#polymer-pagerank flickr 5 - 78200 490070
+#polymer-pagerank flickr 5 - 82600 1503605
+#polymer-pagerank flickr 5 - 88100 506880
+#polymer-pagerank flickr 5 - 91300 506910
+#polymer-pagerank flickr 5 - 95100 507401
+#polymer-pagerank friendster 5 - 10300000 620164111
+#polymer-pagerank friendster 5 - 10300000 621894371
+#polymer-pagerank friendster 5 - 10300000 622059829
+#polymer-pagerank friendster 5 - 10300000 622174789
+#polymer-pagerank friendster 5 - 10300000 622726089
+#polymer-pagerank friendster 5 - 10300000 623502172
+#polymer-pagerank friendster 5 - 10300000 628151677
+#polymer-pagerank friendster 5 - 10400000 620019225
+#polymer-pagerank friendster 5 - 10400000 623202339
+#polymer-pagerank friendster 5 - 10400000 623495315
+#polymer-pagerank orkut 5 - 354000 24805803
+#polymer-pagerank orkut 5 - 376000 24869666
+#polymer-pagerank orkut 5 - 378000 24873673
+#polymer-pagerank orkut 5 - 384000 24856020
+#polymer-pagerank orkut 5 - 387000 24644092
+#polymer-pagerank orkut 5 - 395000 24865524
+#polymer-pagerank orkut 5 - 395000 24867688
+#polymer-pagerank orkut 5 - 396000 24913086
+#polymer-pagerank orkut 5 - 399000 24928285
+#polymer-pagerank orkut 5 - 401000 24903299
+#polymer-pagerank rMat27 5 - 7840000 511139380
+#polymer-pagerank rMat27 5 - 7860000 506150740
+#polymer-pagerank rMat27 5 - 7870000 508368256
+#polymer-pagerank rMat27 5 - 7880000 508428823
+#polymer-pagerank rMat27 5 - 7890000 503402197
+#polymer-pagerank rMat27 5 - 7890000 503813700
+#polymer-pagerank rMat27 5 - 7890000 505001727
+#polymer-pagerank rMat27 5 - 7890000 505818545
+#polymer-pagerank rMat27 5 - 7910000 512059148
+#polymer-pagerank rMat27 5 - 7930000 498923400
+#polymer-pagerank rMat28 5 - 16500000 1021785009
+#polymer-pagerank rMat28 5 - 16600000 1029042947
+#polymer-pagerank rMat28 5 - 16900000 1023465334
+#polymer-pagerank rMat28 5 - 17300000 1028309886
+#polymer-pagerank rMat28 5 - 17400000 1014932880
+#polymer-pagerank rMat28 5 - 17600000 1014422861
+#polymer-pagerank rMat28 5 - 18100000 1014406283
+#polymer-pagerank rMat28 5 - 18300000 1029931955
+#polymer-pagerank rMat28 5 - 19400000 1016310454
+#polymer-pagerank rMat28 5 -  987445340
+#polymer-pagerank twitter 5 - 7560000 444832954
+#polymer-pagerank twitter 5 - 7570000 443361353
+#polymer-pagerank twitter 5 - 7580000 442801672
+#polymer-pagerank twitter 5 - 7580000 445094976
+#polymer-pagerank twitter 5 - 7590000 442159935
+#polymer-pagerank twitter 5 - 7590000 444464324
+#polymer-pagerank twitter 5 - 7600000 443159282
+#polymer-pagerank twitter 5 - 7600000 444625327
+#polymer-pagerank twitter 5 - 7620000 452437726
+#polymer-pagerank twitter 5 - 7720000 443953168
+#polymer-pagerank wikipedia 5 - 1000000 79707532
+#polymer-pagerank wikipedia 5 - 1000000 79710631
+#polymer-pagerank wikipedia 5 - 1010000 79598765
+#polymer-pagerank wikipedia 5 - 1020000 79449037
+#polymer-pagerank wikipedia 5 - 1020000 79452028
+#polymer-pagerank wikipedia 5 - 1040000 79761526
+#polymer-pagerank wikipedia 5 - 1050000 79469190
+#polymer-pagerank wikipedia 5 - 979000 79485534
+#polymer-pagerank wikipedia 5 - 980000 79571535
+#polymer-pagerank wikipedia 5 - 981000 79643386
+#polymer-sssp flickr 16717 - 30700 475580
+#polymer-sssp flickr 23892 - 50200 492960
+#polymer-sssp flickr 25185 - 36700 484055
+#polymer-sssp flickr 30641 - 39200 485784
+#polymer-sssp flickr 31011 - 31600 478932
+#polymer-sssp flickr 38088 - 53300 501043
+#polymer-sssp flickr 42329 - 36900 493512
+#polymer-sssp flickr 5114 - 55400 501254
+#polymer-sssp flickr 68726 - 53600 502005
+#polymer-sssp flickr 73690 - 60800 508522
+#polymer-sssp friendster 10253002 - 1560000 659315272
+#polymer-sssp friendster 1794578 - 1440000 671965594
+#polymer-sssp friendster 20457996 - 117000 657036401
+#polymer-sssp friendster 30789169 - 116000 660719996
+#polymer-sssp friendster 35222816 - 1690000 678626517
+#polymer-sssp friendster 39797743 - 1450000 664469843
+#polymer-sssp friendster 4274039 - 1560000 662980090
+#polymer-sssp friendster 43131729 - 1610000 662406451
+#polymer-sssp friendster 490332 - 1400000 659698389
+#polymer-sssp friendster 54514110 - 122000 658659618
+#polymer-sssp orkut 1198261 - 90000 26437413
+#polymer-sssp orkut 1345950 - 95600 27149293
+#polymer-sssp orkut 1407061 - 51200 26575755
+#polymer-sssp orkut 1613980 - 64299 26536745
+#polymer-sssp orkut 163962 - 101000 26534204
+#polymer-sssp orkut 1834214 - 67400 26591564
+#polymer-sssp orkut 1962322 - 36200 26537160
+#polymer-sssp orkut 1976485 - 102000 26594501
+#polymer-sssp orkut 2350837 - 63200 26528000
+#polymer-sssp orkut 2692187 - 53300 26564858
+#polymer-sssp rMat27 11951675 - 1160000 542204153
+#polymer-sssp rMat27 13101874 - 1090000 538222728
+#polymer-sssp rMat27 22500259 - 1100000 544861287
+#polymer-sssp rMat27 29267577 - 1130000 552557386
+#polymer-sssp rMat27 29388743 - 1350000 540172213
+#polymer-sssp rMat27 29590628 - 1090000 542472687
+#polymer-sssp rMat27 31111039 - 1100000 540388342
+#polymer-sssp rMat27 41951863 - 1100000 544844769
+#polymer-sssp rMat27 47296074 - 1100000 543422915
+#polymer-sssp rMat27 50173050 - 1040000 542370001
+#polymer-sssp rMat28 18972996 -  474124848
+#polymer-sssp rMat28 31365500 -  475461670
+#polymer-sssp rMat28 34475079 -  471632566
+#polymer-sssp rMat28 42172507 -  523422462
+#polymer-sssp rMat28 42656526 -  473991569
+#polymer-sssp rMat28 44933962 -  471435224
+#polymer-sssp rMat28 62460984 -  475525249
+#polymer-sssp rMat28 63989057 -  475002177
+#polymer-sssp rMat28 9158728 -  472266077
+#polymer-sssp rMat28 96481238 -  474130292
+#polymer-sssp twitter 106660 - 917000 463794090
+#polymer-sssp twitter 11344459 - 95400 463596226
+#polymer-sssp twitter 19217596 - 917000 466009163
+#polymer-sssp twitter 26370335 - 925000 468705838
+#polymer-sssp twitter 28694596 - 903000 463403292
+#polymer-sssp twitter 34012760 - 919000 466544421
+#polymer-sssp twitter 38559695 - 906000 463462068
+#polymer-sssp twitter 43840792 - 96800 463904137
+#polymer-sssp twitter 8641427 - 866000 467374195
+#polymer-sssp twitter 9226150 - 860000 477879955
+#polymer-sssp wikipedia 10821044 - 215000 84796752
+#polymer-sssp wikipedia 1761449 - 213000 84734642
+#polymer-sssp wikipedia 3259457 - 189000 84316258
+#polymer-sssp wikipedia 4340524 - 234000 85683104
+#polymer-sssp wikipedia 4857604 - 187000 84995202
+#polymer-sssp wikipedia 6241517 - 187000 84432201
+#polymer-sssp wikipedia 6712096 - 231000 84525933
+#polymer-sssp wikipedia 7539859 - 191000 84907875
+#polymer-sssp wikipedia 7825079 - 188000 84807394
+#polymer-sssp wikipedia 8277471 - 248000 84841841
