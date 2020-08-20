@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
+from math import sqrt
 plt.style.use('./style.mplstyle')
 
 
@@ -21,7 +22,7 @@ def insertAt(idx, val, list):
 
 #[graph, algo, calc, exec]
 data = []
-with open('../results.txt') as f:
+with open('../results/results.txt') as f:
     for line in f:
         data.append([])
         for entry in line.split():
@@ -31,6 +32,8 @@ graph = np.empty(len(data), dtype=object)
 algo = np.empty(len(data), dtype=object)
 calcTime = np.empty(len(data))
 totalTime = np.empty(len(data))
+yErrCalc = np.empty(len(data))
+yErrExec = np.empty(len(data))
 
 for i in range(len(data)):
     graph[i] = data[i][0]
@@ -43,6 +46,14 @@ for i in range(len(data)):
         totalTime[i] = float(data[i][3])
     except ValueError:
         totalTime[i] = float('nan')
+    try:
+        yErrCalc[i] = float(data[i][4])
+    except ValueError:
+        yErrCalc[i] = float('nan')
+    try:
+        yErrExec[i] = float(data[i][5])
+    except ValueError:
+        yErrExec[i] = float('nan')
 
 
 
@@ -53,11 +64,15 @@ frameworks = ('Galois', 'Gemini', 'Giraph', 'Ligra', 'Polymer')
 
 
 calcTimesSSSPByFramework = []
-execTimesSSSPByFramework = []
+yErrCalcSSSPByFramework = []
 
+execTimesSSSPByFramework = []
+yErrExecSSSPByFramework = []
 for f in frameworks:
 	tmpExec = []
 	tmpCalc = []
+	tmpYErrCalc = []
+	tmpYErrExec = []
 	fname = f.lower() + "-sssp"
 	if f == 'Galois':
 		fname += "-cpu-96thread" # select Galois thread count here
@@ -65,13 +80,19 @@ for f in frameworks:
 		for i in range(len(graph)):
 			if g == graph[i] and fname == algo[i]:
 				tmpCalc.append(calcTime[i])
+				tmpYErrCalc.append(sqrt(yErrCalc[i]))
+
 				tmpExec.append(totalTime[i])
+				tmpYErrExec.append(sqrt(yErrExec[i]))
 	calcTimesSSSPByFramework.append(tmpCalc)
+	yErrCalcSSSPByFramework.append(tmpYErrCalc)
 	execTimesSSSPByFramework.append(tmpExec)
+	yErrExecSSSPByFramework.append(tmpYErrExec)
 
 
 
 calcTimesGaloisByCPUCount = {}
+yErrsGaloisByCPUCount = {}
 x = []
 for i in range(len(graph)):
     if not 'galois-sssp' in algo[i]:
@@ -81,6 +102,7 @@ for i in range(len(graph)):
 
     if not graph[i] in calcTimesGaloisByCPUCount:
         calcTimesGaloisByCPUCount[graph[i]] = []
+        yErrsGaloisByCPUCount[graph[i]] = []
 
     xVal = int(algo[i][16:-6]) # galois-sssp- und thread abschneiden
     if not xVal in x:
@@ -98,15 +120,16 @@ for i in range(len(graph)):
     idx = -1
     for j in range(len(x)):
         if xVal == x[j]:
-            insertAt(j, calcTime[i], calcTimesGaloisByCPUCount[graph[i]])
+            insertAt(j, sqrt(calcTime[i]), calcTimesGaloisByCPUCount[graph[i]])
+            insertAt(j, sqrt(yErrCalc[i]), yErrsGaloisByCPUCount[graph[i]])
 
 
 
 
 from plotFunctions import *
 
-#grouped_bar_plot(graphs, frameworks, calcTimesSSSPByFramework, title='Single-source Shortest-path on one calculation node', yLabel='Calculation time (s)', saveToFile="singleNodeSSSP.png")
+grouped_bar_plot(graphs, frameworks, calcTimesSSSPByFramework, yErrs=yErrCalcSSSPByFramework, title='Single-source Shortest-path on one calculation node with standard deviation', yLabel='Calculation time (s)', saveToFile="singleNodeSSSP_calcTime.png")
 
-#grouped_bar_plot(graphs, frameworks, execTimesSSSPByFramework, title='Single-source Shortest-path on one calculation node', yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png")
+grouped_bar_plot(graphs, frameworks, execTimesSSSPByFramework, yErrs=yErrExecSSSPByFramework, title='Single-source Shortest-path on one calculation node with standard deviation', yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png")
 
-line_plot(graphs, x, calcTimesGaloisByCPUCount, title='Single-source Shortest-path times by thread count', yLabel='Calculation times (s)', xLabel='Thread count', yScale='log', saveToFile="singleNodeSSSPGiraphThreads.png")
+line_plot(graphs, x, calcTimesGaloisByCPUCount, title='Galois Single-source Shortest-path times by thread count with standard deviation', yErrs=yErrsGaloisByCPUCount, yLabel='Calculation times (s)', xLabel='Thread count', yScale='log', saveToFile="singleNodeSSSPGaloisThreads.png")
