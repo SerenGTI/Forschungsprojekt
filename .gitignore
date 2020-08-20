@@ -8,3 +8,6 @@
 *.out
 *.run.xml
 *.synctex.gz
+plots/__pycache__
+plots/.DS_Store
+.DS_Store

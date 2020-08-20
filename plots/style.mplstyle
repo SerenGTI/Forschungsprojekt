@@ -1,0 +1,11 @@
+axes.titlesize: 13
+axes.labelsize: 11
+axes.linewidth: 1
+
+savefig.bbox: tight
+savefig.dpi: 300
+
+xtick.labelsize: medium
+ytick.labelsize: medium
+font.family: sans-serif
+font.sans-serif: Helvetica
