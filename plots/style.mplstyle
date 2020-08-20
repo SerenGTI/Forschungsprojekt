@@ -4,8 +4,6 @@ axes.linewidth: 1
 
 savefig.bbox: tight
 savefig.dpi: 300
-#lines.linewidth: 2
-#lines.markersize: 3
 
 xtick.labelsize: medium
 ytick.labelsize: medium

@@ -105,8 +105,8 @@ for i in range(len(graph)):
 
 from plotFunctions import *
 
-grouped_bar_plot(graphs, frameworks, calcTimesSSSPByFramework, title='Single-source Shortest-path on one calculation node', yLabel='Calculation time (s)', saveToFile="singleNodeSSSP.png")
+#grouped_bar_plot(graphs, frameworks, calcTimesSSSPByFramework, title='Single-source Shortest-path on one calculation node', yLabel='Calculation time (s)', saveToFile="singleNodeSSSP.png")
 
 #grouped_bar_plot(graphs, frameworks, execTimesSSSPByFramework, title='Single-source Shortest-path on one calculation node', yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png")
 
-#line_plot(graphs, x, calcTimesGaloisByCPUCount, title='Single-source Shortest-path times by thread count', yLabel='Calculation times (s)', xLabel='Thread count', yScale='log')
+line_plot(graphs, x, calcTimesGaloisByCPUCount, title='Single-source Shortest-path times by thread count', yLabel='Calculation times (s)', xLabel='Thread count', yScale='log', saveToFile="singleNodeSSSPGiraphThreads.png")
