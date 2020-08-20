@@ -17,7 +17,7 @@ rMat27 ligra-sssp 7.934 82.285 0.174738 36.1699
 rMat28 ligra-bfs 0.20636 114.763 0.0250263 50.0192
 rMat28 ligra-pagerank-delta 107.04 310.992 67.6627 234.586
 rMat28 ligra-pagerank 0.5021 99.2197 0.0191665 9.45299
-rMat28 ligra-sssp 114.553 0 43.7585 0
+rMat28 ligra-sssp ERROR ERROR ERROR ERROR
 twitter ligra-bfs 0.479003 74.0176 0.0765445 2.02633
 twitter ligra-pagerank-delta 101.23 274.516 127.616 668.825
 twitter ligra-pagerank 130.5 338.875 61.8333 263.204

@@ -147,11 +147,11 @@ rMat28 gemini-sssp-dist 32.3533 791.999 10.5948 39.7595
 rMat28 ligra-bfs 0.20636 114.763 0.0250263 50.0192
 rMat28 ligra-pagerank 0.5021 99.2197 0.0191665 9.45299
 rMat28 ligra-pagerank-delta 107.04 310.992 67.6627 234.586
-rMat28 ligra-sssp 114.553 0 43.7585 0
-rMat28 polymer-bfs 1118.3 0 1820.59 0
+rMat28 ligra-sssp ERROR ERROR ERROR ERROR
+rMat28 polymer-bfs ERROR ERROR ERROR ERROR
 rMat28 polymer-pagerank 114.555 919.261 94067.2 104365
 rMat28 polymer-pagerank-delta 14.95 922.558 0.520556 45.8761
-rMat28 polymer-sssp 478.699 0 249.16 0
+rMat28 polymer-sssp ERROR ERROR ERROR ERROR
 twitter galois-bfs-cpu-1thread 18.4353 83.1387 90.6035 1312.3
 twitter galois-bfs-cpu-48thread 9.14464 16.4908 20.6838 30.16
 twitter galois-bfs-cpu-96thread 7.52205 14.1857 13.549 21.2903
