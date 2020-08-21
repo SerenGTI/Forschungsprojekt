@@ -22,6 +22,12 @@ rMat27 galois-pagerank-pull-dist 1661.46 1665.41 1471.68 1468.51
 rMat27 galois-pagerank-push-dist 1283.51 1287.42 3826.05 3826.54
 rMat27 galois-sssp-pull-dist 149.545 154.94 1.0784 1.01893
 rMat27 galois-sssp-push-dist 33.4806 38.9511 0.468656 0.525603
+rMat28 galois-bfs-pull-dist 250.495 256.363 47.7631 47.9766
+rMat28 galois-bfs-push-dist 61.1679 67.1329 1.33154 1.31978
+rMat28 galois-pagerank-pull-dist 3310.15 3316.15 17013.6 17025.2
+rMat28 galois-pagerank-push-dist 2534.4 2540.21 2412.1 2424.1
+rMat28 galois-sssp-pull-dist 397.801 407.851 7.76607 7.49262
+rMat28 galois-sssp-push-dist 61.1649 71.5165 5.82591 9.44063
 twitter galois-bfs-pull-dist 91.9409 95.5053 72.6179 73.0447
 twitter galois-bfs-push-dist 34.3449 37.8693 37.8478 38.5526
 twitter galois-pagerank-pull-dist 1507.18 1510.93 704.533 707.102
