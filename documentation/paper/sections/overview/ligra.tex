@@ -1,1 +1,6 @@
 %!TEX root=../../main.tex
+
+Ligra\cite{Ligra} is a lightweight parallel graph processing framework for shared memory machines. It offers a programming inteface that allows expressing graph traversal algorithms in a simple way.
+
+Algorithms can use the \texttt{EdgeMap} to make computations based on edges or the \texttt{VertexMap} to make computations based on vertices. Those mappings can be applied only to a subset of vertices. Based on the size of the vertex subset the framework automatically switches between a sparse and a dense representation to optimize speed and memory.
+
