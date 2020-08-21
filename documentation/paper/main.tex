@@ -12,8 +12,16 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{graphicx}
-\newcommand*\rot{\rotatebox{90}}
-\newcommand*\OK{\ding{51}}
+
+
+\usepackage{tabularx}
+\def\tabularxcolumn#1{m{#1}} % vertical centering in tabularx cells
+\newcolumntype{Y}{>{\centering\arraybackslash}X} % cell type Y for centered text with automatic line breaks
+\newcommand*\rot{\rotatebox{90}} % rotates content 90deg ccw, mainly for table headers
+\newcommand*\OK{\ding{51}} % a checkmark-style sign
+
+
+
 
 \bibliography{literature.bib}
 

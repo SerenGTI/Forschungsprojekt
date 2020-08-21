@@ -6,7 +6,7 @@ All servers were running Ubuntu 19.x.
 Setup of each framework was performed according to our provided installation guides.
 
 All benchmarks were initiated by our benchmark script that is available in our repository. Galois, Gemini and Giraph were benchmarked on both the 5-node cluster and a singe machine.
-Furthermore, -- since Galois supports this parameter -- we ran multiple tests comparing Galois' performance with different core counts on a single machine.
+Since Galois supports this parameter, we ran multiple tests comparing Galois' performance with different thread counts on a single machine.
 
 The complete benchmark log files and extracted raw results will be available in our repository as well.
 
@@ -48,22 +48,24 @@ Both the rMat27 and rMat28 were created with a modified version (we changed the 
 \subsection{Algorithms}
 We ran Breadth-first search (BFS), PageRank (PR) and Single-source shortest-path (SSSP) algorithms on each framework and graph.
 For frameworks that support multiple implementations (e.g. PageRank in push and pull modes), we included the alternatives in our testing. 
-
+\autoref{tbl:algorithms} shows the tested algorithms in detail.
+\newcommand{\txtdag}{\textsuperscript{\textdagger}}
 \begin{table}
-	\caption{Natively supported algorithms of the Frameworks}
+	\caption{Tested algorithms of the frameworks}
 	\label{tbl:algorithms}
 	\centering
-	\begin{tabular}{ccccccc}
-		\multicolumn{2}{c}{\bf{Algorithm}}&\rot{Galois}&\rot{Gemini}&\rot{Giraph}&\rot{Ligra}&\rot{Polymer}\\\hline
-		\multirow{3}{*}{\rot{PageRank}}	&Push&\OK&&&?&\OK\\
-										&Pull&\OK&&&?&\\
-										&Delta&?&&&\OK&\OK\\
+	\begin{tabularx}{\columnwidth}{cYYYYY}
+		\bf{Algorithm}&\rot{Galois}&\rot{Gemini}&\rot{Giraph}&\rot{Ligra}&\rot{Polymer}\\\hline
+		PageRank&$\Delta$Push, $\Delta$Pull&&&&\\
+		SSSP&?, Push, Pull&&&&\\
+		BFS&Yes&&*&&\\
 		\hline
-	\end{tabular}
+	\end{tabularx}
+
+	* Algorithm not natively supported
+
 \end{table}
 
 
 \subsection{Comparison of setup}
-
-\subsection{Implementing new applications}
 
