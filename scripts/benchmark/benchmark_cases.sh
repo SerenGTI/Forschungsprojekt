@@ -6,7 +6,7 @@ path_to_graphs=/home/fp-ss20/graph
 path_to_bins=/home/fp-ss20/bin
 host_file=/home/ubuntu/host_file
 #result_file=$4
-threads=48
+threads=2
 #hosts=129.69.210.223,129.69.210.224
 hosts=129.69.210.223,129.69.210.224,129.69.210.225,129.69.210.226,129.69.210.227
 pagerank_number_of_iterations=5
@@ -550,8 +550,54 @@ benchmark_gemini_dist() {
   done
 }
 
+benchmark_galois_cpu() {
+  for startnode in ${startnodes_flickr[@]}; do
+    galois-sssp-cpu flickr $startnode
+    galois-bfs-cpu flickr $startnode
+    galois-pagerank-push-cpu flickr
+    galois-pagerank-pull-cpu flickr
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    galois-sssp-cpu orkut $startnode
+    galois-bfs-cpu orkut $startnode
+    galois-pagerank-push-cpu orkut
+    galois-pagerank-pull-cpu orkut
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    galois-sssp-cpu wikipedia $startnode
+    galois-bfs-cpu wikipedia $startnode
+    galois-pagerank-push-cpu wikipedia
+    galois-pagerank-pull-cpu wikipedia
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    galois-sssp-cpu twitter $startnode
+    galois-bfs-cpu twitter $startnode
+    galois-pagerank-push-cpu twitter
+    galois-pagerank-pull-cpu twitter
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    galois-sssp-cpu friendster $startnode
+    galois-bfs-cpu friendster $startnode
+    galois-pagerank-push-cpu friendster
+    galois-pagerank-pull-cpu friendster
+  done
+  for startnode in ${startnodes_rMat27[@]}; do
+    galois-sssp-cpu rMat27 $startnode
+    galois-bfs-cpu rMat27 $startnode
+    galois-pagerank-push-cpu rMat27
+    galois-pagerank-pull-cpu rMat27
+  done
+  for startnode in ${startnodes_rMat28[@]}; do
+    galois-sssp-cpu rMat28 $startnode
+    galois-bfs-cpu rMat28 $startnode
+    galois-pagerank-push-cpu rMat28
+    galois-pagerank-pull-cpu rMat28
+  done
+}
+
+
 
 time_start=$(get_time)
-benchmark_gemini_dist
+benchmark_galois_cpu
 dur_exec=$((($(get_time)-$time_start)/1000000))
 echo "benchmark took $dur_exec seconds"
