@@ -194,23 +194,23 @@ from plotFunctions import *
 
 ## CALC TIME
 #SSSP
-#grouped_bar_plot(graphs, frameworks, calcTimesSSSPByFramework, yErrs=yErrCalcSSSPByFramework, title='Single-source Shortest-path on one calculation node with standard deviation', yLabel='Calculation time (s)', saveToFile="singleNodeSSSP_calcTime.png")
+grouped_bar_plot(graphs, frameworks, calcTimesSSSPByFramework, yErrs=yErrCalcSSSPByFramework, title='Single-source Shortest-path on one calculation node with standard deviation', yLabel='Calculation time (s)', saveToFile="singleNodeSSSP_calcTime.png")
 
 #BFS
 grouped_bar_plot(graphs, frameworks, calcTimesBFSByFramework, yErrs=yErrCalcBFSByFramework, title='Breadth-first search on one calculation node with standard deviation', yLabel='Calculation time (s)', saveToFile="singleNodeBFS_calcTime.png")
 
 ## EXEC TIME
 #SSSP
-#grouped_bar_plot(graphs, frameworks, execTimesSSSPByFramework, yErrs=yErrExecSSSPByFramework, title='Single-source Shortest-path on one calculation node with standard deviation', yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png")
+grouped_bar_plot(graphs, frameworks, execTimesSSSPByFramework, yErrs=yErrExecSSSPByFramework, title='Single-source Shortest-path on one calculation node with standard deviation', yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png")
 
 #BFS
 grouped_bar_plot(graphs, frameworks, execTimesBFSByFramework, yErrs=yErrExecBFSByFramework, title='Breadth-first search on one calculation node with standard deviation', yLabel='Execution time (s)', saveToFile="singleNodeBFS_execTime.png")
 
 ## OVERHEAD
 #SSSP
-#grouped_bar_plot(graphs, frameworks, overheadTimesSSSPByFramework, title='Overhead time of each framework during SSSP', yLabel='Overhead time (s)', saveToFile="singleNodeSSSP_overheadTime.png")
+grouped_bar_plot(graphs, frameworks, overheadTimesSSSPByFramework, title='Overhead time of each framework during SSSP', yLabel='Overhead time (s)', saveToFile="singleNodeSSSP_overheadTime.png")
 
-#grouped_bar_plot(graphs, frameworks, overheadTimesSSSPByFrameworkNormalized, title='Normalized overhead time of each framework during SSSP', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeSSSP_overheadTimeNormalized.png", yScale='linear')
+grouped_bar_plot(graphs, frameworks, overheadTimesSSSPByFrameworkNormalized, title='Normalized overhead time of each framework during SSSP', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeSSSP_overheadTimeNormalized.png", yScale='linear')
 
 #BFS
 grouped_bar_plot(graphs, frameworks, overheadTimesBFSByFramework, title='Overhead time of each framework during BFS', yLabel='Overhead time (s)', saveToFile="singleNodeBFS_overheadTime.png")
@@ -218,4 +218,4 @@ grouped_bar_plot(graphs, frameworks, overheadTimesBFSByFramework, title='Overhea
 grouped_bar_plot(graphs, frameworks, overheadTimesBFSByFrameworkNormalized, title='Normalized overhead time of each framework during BFS', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeBFS_overheadTimeNormalized.png", yScale='linear')
 
 ## GALOIS THREAD COUNT
-#line_plot(graphs, x, calcTimesGaloisByCPUCount, title='Galois Single-source Shortest-path times by thread count with standard deviation', yErrs=yErrsGaloisByCPUCount, yLabel='Calculation times (s)', xLabel='Thread count', yScale='log', saveToFile="singleNodeSSSPGaloisThreads.png")
+line_plot(graphs, x, calcTimesGaloisByCPUCount, title='Galois Single-source Shortest-path times by thread count with standard deviation', yErrs=yErrsGaloisByCPUCount, yLabel='Calculation times (s)', xLabel='Thread count', yScale='log', saveToFile="singleNodeSSSPGaloisThreads.png")
