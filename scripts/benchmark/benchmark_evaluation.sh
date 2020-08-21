@@ -38,7 +38,11 @@ for graph in ${graphs[@]}; do
       vars=$(cat ${@} | grep "^#" | grep "$graph" | grep "$algorithm " | awk -v m1="$mean1" -v m2="$mean2" '{s1+=($5/1000000-m1)**2} {s2+=($6/1000000-m2)**2} END {print s1/9 " " s2/9}')
     fi
     if [[ "$result" != "0 0" ]]; then
-      echo "$graph $algorithm $means $vars"
+      if [[ $mean1 == 0 ]] || [[ $mean2 == 0 ]]; then
+        echo "$graph $algorithm ERROR ERROR ERROR ERROR"
+      else
+        echo "$graph $algorithm $means $vars"
+      fi
     fi
   done
 done
