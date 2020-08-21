@@ -37,7 +37,7 @@ galois-sssp-cpu () {
     local bin="$path_to_bins/galois-sssp-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin -t=$threads --runs=1 --startNode=$2 $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h $bin -t=$threads --startNode=$2 $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'Verification' | awk '{print $1}')
@@ -79,7 +79,7 @@ galois-pagerank-push-cpu () {
     local bin="$path_to_bins/galois-pagerank-push-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin -t=$threads --runs=1 --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h $bin -t=$threads --maxIterations=$pagerank_number_of_iterations $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
@@ -107,7 +107,7 @@ galois-pagerank-pull-cpu () {
     local bin="$path_to_bins/galois-pagerank-pull-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin -t=$threads --runs=1 --maxIterations=$pagerank_number_of_iterations --transposedGraph  $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h $bin -t=$threads --maxIterations=$pagerank_number_of_iterations --transposedGraph  $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'STAT_TYPE' | awk '{print $1}')
@@ -135,7 +135,7 @@ galois-bfs-cpu () {
     local bin="$path_to_bins/galois-bfs-cpu"
     local graph="$path_to_graphs/$1.gr"
     local time_start=$(get_time)
-    local result=$(timeout 3h $bin -t=$threads --runs=1 --startNode=$2 $graph 2> /dev/null | ts '%.s')
+    local result=$(timeout 3h $bin -t=$threads --startNode=$2 $graph 2> /dev/null | ts '%.s')
     local dur_exec=$(($(get_time)-$time_start))
     logv "$result"
     local time_finished_calc=$(echo "$result" | grep 'Verification' | awk '{print $1}')
