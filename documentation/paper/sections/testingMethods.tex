@@ -27,8 +27,6 @@ Each test case consisting of graph, framework and algorithm was run 10 times, al
 The graphs used in our testing can be seen in detail in \autoref{tbl:graphs}. We included a variaty of different graph sizes, from relatively small graphs like the flickr graph up to an rMat28 with $4.2$ billion edges. All graphs except the rMat27 and rMat28 are exemplary real-world graphs and were retrieved from the graph database\footnote{\url{http://konect.uni-koblenz.de/}} associated with the Koblenz Network Collection (KONECT)\cite{konect}.
 Both the rMat27 and rMat28 were created with a modified version (we changed the output format to EdgeList) of a graph generator provided by Ligra.
 \begin{table}
-	\caption{Size comparison of the used graphs}
-	\label{tbl:graphs}
 	\centering
 	\begin{tabular}{crr}
 		\hline
@@ -42,6 +40,8 @@ Both the rMat27 and rMat28 were created with a modified version (we changed the 
 		rMat28&         121&  4294\\
 		\hline
 	\end{tabular}
+	\caption{Size comparison of the used graphs}
+	\label{tbl:graphs}
 \end{table}
 
 
@@ -51,16 +51,16 @@ For frameworks that support multiple implementations (e.g. PageRank in push and 
 \autoref{tbl:algorithms} shows the tested algorithms in detail.
 \newcommand{\txtdag}{\textsuperscript{\textdagger}}
 \begin{table}
-	\caption{Tested algorithms of the frameworks}
-	\label{tbl:algorithms}
 	\centering
-	\begin{tabularx}{\columnwidth}{cYYYYY}
-		\bf{Algorithm}&\rot{Galois}&\rot{Gemini}&\rot{Giraph}&\rot{Ligra}&\rot{Polymer}\\\hline
+	\begin{tabularx}{0.9\columnwidth}{cYYYYY}
+		\bf{Algorithm}&Galois&Gemini&Giraph&Ligra&Polymer\\\hline
 		PageRank&$\Delta$Push, $\Delta$Pull&&&&\\
 		SSSP&?, Push, Pull&&&&\\
 		BFS&Yes&&*&&\\
 		\hline
 	\end{tabularx}
+	\caption{Tested algorithms of the frameworks}
+	\label{tbl:algorithms}
 
 	* Algorithm not natively supported
 
