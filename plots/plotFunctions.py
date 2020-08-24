@@ -10,7 +10,7 @@ def grouped_bar_plot(group_names, legend_names, values, yErrs=None, width=0.35, 
 	group_count = len(group_names)
 
 	if len(legend_names) != len(values):
-		raise "Size mismatch: Expected " + str(len(legend_names)) + " categories, got " + str(len(values))
+		raise Exception("Size mismatch: Expected " + str(len(legend_names)) + " categories, got " + str(len(values)))
 
 
 	if scaleFactor == None:
@@ -55,7 +55,7 @@ def grouped_bar_plot(group_names, legend_names, values, yErrs=None, width=0.35, 
 def line_plot(legend_names, x, values, yErrs=None, title='', yLabel='', xLabel='', yScale=None, saveToFile=None):
 
 	if len(legend_names) != len(values):
-		raise "Size mismatch: Expected " + str(len(legend_names)) + " categories, got " + str(len(values))
+		raise Exception("Size mismatch: Expected " + str(len(legend_names)) + " categories, got " + str(len(values)))
 
 	fig, ax = plt.subplots()
 
