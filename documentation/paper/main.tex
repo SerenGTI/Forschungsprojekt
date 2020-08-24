@@ -12,8 +12,17 @@
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{graphicx}
-\newcommand*\rot{\rotatebox{90}}
-\newcommand*\OK{\ding{51}}
+\usepackage{subcaption}
+
+
+\usepackage{tabularx}
+\def\tabularxcolumn#1{m{#1}} % vertical centering in tabularx cells
+\newcolumntype{Y}{>{\centering\arraybackslash}X} % cell type Y for centered text with automatic line breaks
+\newcommand*\rot{\rotatebox{90}} % rotates content 90deg ccw, mainly for table headers
+\newcommand*\OK{\ding{51}} % a checkmark-style sign
+
+
+
 
 \bibliography{literature.bib}
 
@@ -33,7 +42,7 @@ st154960@stud.uni-stuttgart.de}
 \and
 \IEEEauthorblockN{Jakob Schmid}
 \IEEEauthorblockA{(3341630)\\
-@stud.uni-stuttgart.de}}
+st157100@stud.uni-stuttgart.de}}
 
 \date{\today}
 
@@ -45,8 +54,14 @@ st154960@stud.uni-stuttgart.de}
 
 
 \begin{abstract}
-In this paper we will analyze and compare the graph frameworks Galois, Ligra, Polymer, Gemini and Giraph in their parformance. All the frameworks will be tested in shared memory and Galois, Gemini and Giraph are tested on a distributed cluster as well.
-Furthermore we will give some insight on the complexity of writing custom applications based on these frameworks.
+In this paper we will analyze and compare the non-uniform memory access (NUMA) aware graph frameworks Galois, Ligra, Polymer and Gemini in their parformance.
+
+
+Giraph
+
+
+All the frameworks will be tested in shared memory. Galois, Gemini and Giraph are tested on a distributed cluster as well.
+We will give some insight on the calculation performance and associated time overhead of each framework. For this we compare the frameworks in their performance with Single-source shortest-paths, Breadth-first search and PageRank algorithms.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -56,8 +71,22 @@ graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon, Gemini
 
 
 \section{Introduction}
-%\todo
-In recent years graph sizes have increased significantly, thus performance and memory efficiency of the graph analysis applications is now more important than ever.
+In recent years graph sizes have increased significantly, thus performance and memory efficiency of the graph analysis applications is now more important than ever. 
+
+We will compare several non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).
+The comparison is performed on both real world data sets and synthetic graphs. 
+
+To provide a comparison to a non-NUMA aware system, Giraph\cite{Giraph} is included in the testing. Giraph itself has often been compared to other state of the art systems like Pregel or GraphX.
+
+
+
+%One of the most famous is the (closed source) distributed graph processing system Pregel. Pregel and several open source versions of .
+%This results in suboptimal performance, due to missing cache locality, because the Pregel like systems are written in an object oriented manner relying on pointer chasing mechanisms. 
+
+
+To this end several non-uniform memory access (NUMA) aware systems were proposed like Polymer \cite{Polymer}, Galois \cite{Galois} or Ligra \cite{Ligra}.
+
+
 
 This paper makes the following contributions:
 \begin{itemize}
@@ -102,6 +131,8 @@ This paper makes the following contributions:
 \section{Conclusion}
 The conclusion goes here.
 
+
+\clearpage
 
 
 \section*{Acknowledgment}

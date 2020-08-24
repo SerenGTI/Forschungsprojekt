@@ -1,9 +1,10 @@
 %!TEX root=../../main.tex
 
 
-Apache Giraph\cite{Giraph} is an iterative graph processing framework, built on top of Apache Hadoop. Because of this, expanding shared memory processing to a multi-node cluster is almost seamless.
+Apache Giraph is an iterative graph processing framework, built on top of Apache Hadoop\cite{Giraph}. Hadoop as a large MapReduce infrastructure provides a reliable (fault tolerant) basis for large scale graph processing.
+Because of the underlying Hadoop MapReduce infrastructure, expanding single-node processing to a multi-node cluster is almost seamless.
 
-Giraph is inspired by the Bulk Synchronous Parallel model of distributed computation introduced by Leslie Valiant\cite{BSPforGiraph}. Meaning that it is based on computation units that communicate using messages and are synchonized with barriers.
+Giraph is based on computation units that communicate using messages and are synchonized with barriers.
 
 The input to a Giraph computation is always a directed graph. Not only the edges but also the vertices have a value attached to them. The graph topology is thus not only defined by the vertices and edges but also their initial values.
 Furthermore, one can mutate the graph by adding or removing vertices and edges during computation.
