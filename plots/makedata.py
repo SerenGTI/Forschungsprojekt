@@ -269,6 +269,113 @@ for f in dist_frameworks_bfs:
 
 
 
+
+#### PAGERANK SINGLE NODE
+singleNode_frameworks_pr = {
+    "galois-pagerank-push-cpu-96thread":"Galois Push",
+    "galois-pagerank-pull-cpu-96thread":"Galois Pull",
+    "gemini-pagerank":"Gemini",
+    "giraph-pagerank":"Giraph",
+    "ligra-pagerank":"Ligra",
+    "ligra-pagerank-delta":"Ligra Delta",
+    "polymer-pagerank":"Polymer",
+    "polymer-pagerank-delta":"Polymer Delta"}
+
+calcTimePR_singleNode = []
+yErrCalcPR_singleNode = []
+
+execTimePR_singleNode = []
+yErrExecPR_singleNode = []
+
+overheadPR_singleNode = []
+overheadPRNormalized_singleNode = []
+for f in singleNode_frameworks_pr:
+    tmpExec = []
+    tmpCalc = []
+    tmpYErrCalc = []
+    tmpYErrExec = []
+    overhead = []
+    overheadNormalized = []
+    
+    k = 0 # graph index
+    for g in graphs:
+        for i in range(len(graph)):
+            if g == graph[i] and f == algo[i]:
+                tmpCalc.append(calcTime[i])
+                tmpYErrCalc.append(sqrt(yErrCalc[i]))
+
+                tmpExec.append(totalTime[i])
+                tmpYErrExec.append(sqrt(yErrExec[i]))
+
+                overhead.append(totalTime[i] - calcTime[i])
+                overheadNormalized.append((totalTime[i] - calcTime[i])/graphSize[k])
+        k += 1 # graph index
+
+
+    calcTimePR_singleNode.append(tmpCalc)
+    yErrCalcPR_singleNode.append(tmpYErrCalc)
+    execTimePR_singleNode.append(tmpExec)
+    yErrExecPR_singleNode.append(tmpYErrExec)
+    overheadPR_singleNode.append(overhead)
+    overheadPRNormalized_singleNode.append(overheadNormalized)
+
+
+
+### PR DISTRIBUTED
+dist_frameworks_pr = {
+    "galois-pagerank-push-dist":"Galois Push",
+    "galois-pagerank-pull-dist":"Galois Pull",
+    "gemini-pagerank-dist":"Gemini",
+    "giraph-pagerank-dist":"Giraph"}
+
+calcTimePR_distributed = []
+yErrCalcPR_distributed = []
+
+execTimePR_distributed = []
+yErrExecPR_distributed = []
+
+overheadPR_distributed = []
+overheadPRNormalized_distributed = []
+for f in dist_frameworks_pr:
+    tmpExec = []
+    tmpCalc = []
+    tmpYErrCalc = []
+    tmpYErrExec = []
+    overhead = []
+    overheadNormalized = []
+    
+    k = 0 # graph index
+    for g in graphs:
+        for i in range(len(graph)):
+            if g == graph[i] and f == algo[i]:
+                tmpCalc.append(calcTime[i])
+                tmpYErrCalc.append(sqrt(yErrCalc[i]))
+
+                tmpExec.append(totalTime[i])
+                tmpYErrExec.append(sqrt(yErrExec[i]))
+
+                overhead.append(totalTime[i] - calcTime[i])
+                overheadNormalized.append((totalTime[i] - calcTime[i])/graphSize[k])
+        k += 1 # graph index
+
+
+    calcTimePR_distributed.append(tmpCalc)
+    yErrCalcPR_distributed.append(tmpYErrCalc)
+    execTimePR_distributed.append(tmpExec)
+    yErrExecPR_distributed.append(tmpYErrExec)
+    overheadPR_distributed.append(overhead)
+    overheadPRNormalized_distributed.append(overheadNormalized)
+
+
+
+
+
+
+
+
+
+
+
 ### GALOIS CALC TIME SPEEDUP
 speedupGaloisSSSP = {}
 speedupGaloisBFS = {}
