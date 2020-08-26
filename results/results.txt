@@ -42,6 +42,8 @@ flickr gemini-pagerank 0.0284881 0.669366 0.000463618 0.00800228
 flickr gemini-pagerank-dist 0.232048 2.19459 6.6606e-05 0.0898145
 flickr gemini-sssp 0.0227664 0.623266 0.000365605 0.10362
 flickr gemini-sssp-dist 0.349375 2.48658 0.0277757 0.0409528
+flickr giraph-pagerank-dist 8.4161 49.5219 0.0383372 1.25006
+flickr giraph-sssp-dist 0.2023 42.6218 0.00763334 3.51075
 flickr ligra-bfs 0.044494 0.194172 0.00146027 0.00605582
 flickr ligra-pagerank 0.05892 0.231507 0.000132075 0.000204107
 flickr ligra-pagerank-delta 0.1779 0.470844 0.000407656 0.000640753
@@ -94,6 +96,8 @@ friendster gemini-pagerank 5.66216 716.48 0.00025732 13.0732
 friendster gemini-pagerank-dist 136.016 591.137 2.20666 11.1417
 friendster gemini-sssp 2.0866 742.649 1.26373 62.9239
 friendster gemini-sssp-dist 31.2342 568.913 293.056 348.246
+friendster giraph-pagerank-dist TIMEOUT TIMEOUT TIMEOUT TIMEOUT
+friendster giraph-sssp-dist 9.5089 444.035 7.79643 74.0239
 friendster ligra-bfs 0.631105 60.0625 0.12665 1.70982
 friendster ligra-pagerank 52.76 159.677 11.7827 61.7789
 friendster ligra-pagerank-delta 46.71 149.412 63.6788 361.882
@@ -146,6 +150,8 @@ orkut gemini-pagerank 0.155593 13.1045 2.9164e-06 0.0690223
 orkut gemini-pagerank-dist 6.16978 19.4114 0.00159019 0.0180888
 orkut gemini-sssp 0.0744979 13.8801 0.000544894 0.0884856
 orkut gemini-sssp-dist 1.05412 17.3037 0.111515 0.128223
+orkut giraph-pagerank-dist 265.672 322.149 18.6311 27.8034
+orkut giraph-sssp-dist 0.4502 60.4 0.00124707 5.43481
 orkut ligra-bfs 0.039294 1.81628 0.000561846 0.00846715
 orkut ligra-pagerank 0.7195 3.10409 0.00337094 0.147941
 orkut ligra-pagerank-delta 1.708 5.59731 0.00310667 0.0642674
@@ -198,6 +204,8 @@ rMat27 gemini-pagerank 3.49213 536.286 7.11982e-05 2.61759
 rMat27 gemini-pagerank-dist 67.6359 376.297 0.138052 1.75549
 rMat27 gemini-sssp 1.21931 563.533 0.000102184 59.7843
 rMat27 gemini-sssp-dist 16.941 385.995 1.34069 8.98235
+rMat27 giraph-pagerank-dist ERROR ERROR ERROR ERROR
+rMat27 giraph-sssp-dist 206.889 565.759 73.6337 175.928
 rMat27 ligra-bfs 0.4092 48.8211 0.00699951 7.42126
 rMat27 ligra-pagerank 71.5 191.443 24.8933 59.9297
 rMat27 ligra-pagerank-delta 52.55 158.987 24.6828 98.1579
@@ -250,6 +258,8 @@ rMat28 gemini-pagerank 7.33944 1188.5 0.000162445 36.356
 rMat28 gemini-pagerank-dist 129.425 774.173 0.636726 5.40645
 rMat28 gemini-sssp 2.7108 1236.73 0.0816183 113.879
 rMat28 gemini-sssp-dist 32.3533 791.999 10.5948 39.7595
+rMat28 giraph-pagerank-dist ERROR ERROR ERROR ERROR
+rMat28 giraph-sssp-dist 504.285 1180.2 1566.57 2101.86
 rMat28 ligra-bfs 0.20636 114.763 0.0250263 50.0192
 rMat28 ligra-pagerank 0.5021 99.2197 0.0191665 9.45299
 rMat28 ligra-pagerank-delta 107.04 310.992 67.6627 234.586
@@ -302,6 +312,8 @@ twitter gemini-pagerank 3.97648 359.903 0.00366527 1.4496
 twitter gemini-pagerank-dist 66.9632 363.48 3.21968 5.6657
 twitter gemini-sssp 1.40974 382.978 0.578226 79.1839
 twitter gemini-sssp-dist 14.8946 391.052 64.8968 111.488
+twitter giraph-pagerank-dist TIMEOUT TIMEOUT TIMEOUT TIMEOUT
+twitter giraph-sssp-dist 9.6713 349.944 14.301 116.3
 twitter ligra-bfs 0.479003 74.0176 0.0765445 2.02633
 twitter ligra-pagerank 130.5 338.875 61.8333 263.204
 twitter ligra-pagerank-delta 101.23 274.516 127.616 668.825
@@ -354,6 +366,8 @@ wikipedia gemini-pagerank 0.638616 44.3569 9.57458e-06 0.366033
 wikipedia gemini-pagerank-dist 7.52029 54.3829 0.0118246 0.0756791
 wikipedia gemini-sssp 1.10028 48.4954 0.0106967 3.4404
 wikipedia gemini-sssp-dist 14.0074 74.4825 0.0212831 3.01952
+wikipedia giraph-pagerank-dist TIMEOUT TIMEOUT TIMEOUT TIMEOUT
+wikipedia giraph-sssp-dist 1.3088 100.775 0.016512 3.57779
 wikipedia ligra-bfs 0.1752 6.49888 0.00990418 0.0183134
 wikipedia ligra-pagerank 3.41 12.1676 0.00995556 0.706594
 wikipedia ligra-pagerank-delta 3.829 13.9799 0.0131656 0.509964

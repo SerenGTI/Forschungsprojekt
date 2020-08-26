@@ -1,0 +1,14 @@
+flickr giraph-pagerank-dist 8.4161 49.5219 0.0383372 1.25006
+flickr giraph-sssp-dist 0.2023 42.6218 0.00763334 3.51075
+friendster giraph-pagerank-dist TIMEOUT TIMEOUT TIMEOUT TIMEOUT
+friendster giraph-sssp-dist 9.5089 444.035 7.79643 74.0239
+orkut giraph-pagerank-dist 265.672 322.149 18.6311 27.8034
+orkut giraph-sssp-dist 0.4502 60.4 0.00124707 5.43481
+rMat27 giraph-pagerank-dist ERROR ERROR ERROR ERROR
+rMat27 giraph-sssp-dist 206.889 565.759 73.6337 175.928
+rMat28 giraph-pagerank-dist ERROR ERROR ERROR ERROR
+rMat28 giraph-sssp-dist 504.285 1180.2 1566.57 2101.86
+twitter giraph-pagerank-dist TIMEOUT TIMEOUT TIMEOUT TIMEOUT
+twitter giraph-sssp-dist 9.6713 349.944 14.301 116.3
+wikipedia giraph-pagerank-dist TIMEOUT TIMEOUT TIMEOUT TIMEOUT
+wikipedia giraph-sssp-dist 1.3088 100.775 0.016512 3.57779
