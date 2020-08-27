@@ -4,15 +4,15 @@ from plotFunctions import *
 
 
 
-distributed = False
-singleNode = False
+distributed = True
+singleNode = True
 
-sssp = False
-bfs = False
+sssp = True
+bfs = True
 pr = True
 
-calcTimes = False
-execTimes = False
+calcTimes = True
+execTimes = True
 overheads = True
 
 

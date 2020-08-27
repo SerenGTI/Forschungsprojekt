@@ -191,10 +191,10 @@ for f in frameworks:
         for i in range(len(graph)):
             if g == graph[i] and fname == algo[i]:
                 tmpCalc.append(calcTime[i])
-                tmpYErrCalc.append(sqrt(yErrCalc[i]))
+                tmpYErrCalc.append(yErrCalc[i])
 
                 tmpExec.append(totalTime[i])
-                tmpYErrExec.append(sqrt(yErrExec[i]))
+                tmpYErrExec.append(yErrExec[i])
 
                 overhead.append(totalTime[i] - calcTime[i])
                 overheadNormalized.append((totalTime[i] - calcTime[i])/graphSize[k])
@@ -238,10 +238,10 @@ for f in dist_frameworks_bfs:
         for i in range(len(graph)):
             if g == graph[i] and f == algo[i]:
                 tmpCalc.append(calcTime[i])
-                tmpYErrCalc.append(sqrt(yErrCalc[i]))
+                tmpYErrCalc.append(yErrCalc[i])
 
                 tmpExec.append(totalTime[i])
-                tmpYErrExec.append(sqrt(yErrExec[i]))
+                tmpYErrExec.append(yErrExec[i])
 
                 overhead.append(totalTime[i] - calcTime[i])
                 overheadNormalized.append((totalTime[i] - calcTime[i])/graphSize[k])
@@ -298,10 +298,10 @@ for f in singleNode_frameworks_pr:
         for i in range(len(graph)):
             if g == graph[i] and f == algo[i]:
                 tmpCalc.append(calcTime[i])
-                tmpYErrCalc.append(sqrt(yErrCalc[i]))
+                tmpYErrCalc.append(yErrCalc[i])
 
                 tmpExec.append(totalTime[i])
-                tmpYErrExec.append(sqrt(yErrExec[i]))
+                tmpYErrExec.append(yErrExec[i])
 
                 overhead.append(totalTime[i] - calcTime[i])
                 overheadNormalized.append((totalTime[i] - calcTime[i])/graphSize[k])
@@ -345,10 +345,10 @@ for f in dist_frameworks_pr:
         for i in range(len(graph)):
             if g == graph[i] and f == algo[i]:
                 tmpCalc.append(calcTime[i])
-                tmpYErrCalc.append(sqrt(yErrCalc[i]))
+                tmpYErrCalc.append(yErrCalc[i])
 
                 tmpExec.append(totalTime[i])
-                tmpYErrExec.append(sqrt(yErrExec[i]))
+                tmpYErrExec.append(yErrExec[i])
 
                 overhead.append(totalTime[i] - calcTime[i])
                 overheadNormalized.append((totalTime[i] - calcTime[i])/graphSize[k])
