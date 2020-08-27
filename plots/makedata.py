@@ -14,17 +14,6 @@ graphSize = (2, 117, 378, 1963, 2147, 2586, 4294)
 frameworks = ('Galois', 'Gemini', 'Giraph', 'Ligra', 'Polymer')
 
 
-def insertAt(idx, val, list):
-    if idx < 0:
-        return
-    if idx >= len(list):
-        while idx > len(list):
-            list.append(float('nan'))
-        list.append(val)
-        return
-    else:
-        list[idx] = val
-        return 
 
 
 ## RAW DATA
@@ -162,13 +151,13 @@ for f in dist_frameworks_sssp:
 
 overheadSSSP_distributed_normalizedToGalois = []
 
-print("Overhead comparison distributed SSSP")
+#print("Overhead comparison distributed SSSP")
 i = 0
 for k in dist_frameworks_sssp:
     overheadSSSP_distributed_normalizedToGalois.append([])
-    print(dist_frameworks_sssp[k])
+    #print(dist_frameworks_sssp[k])
     for j in range(len(overheadSSSP_distributed[i])):
-        print(graphs[j] + ": ", calcTimeSSSP_distributed[i][j]/calcTimeSSSP_distributed[2][j])
+        #print(graphs[j] + ": ", calcTimeSSSP_distributed[i][j]/calcTimeSSSP_distributed[2][j])
         overheadSSSP_distributed_normalizedToGalois[i].append(overheadSSSP_distributed[i][j]/overheadSSSP_distributed[0][j]) 
     i += 1
 
@@ -390,10 +379,10 @@ speedupGaloisPRPush = {}
 speedupGaloisPRPull = {}
 x = []
 for g in graphs:
-    speedupGaloisSSSP[g] = []
-    speedupGaloisBFS[g] = []
-    speedupGaloisPRPush[g] = []
-    speedupGaloisPRPull[g] = []
+    speedupGaloisSSSP[g] = {}
+    speedupGaloisBFS[g] = {}
+    speedupGaloisPRPush[g] = {}
+    speedupGaloisPRPull[g] = {}
 
 for i in range(len(graph)):
     if not 'galois' in algo[i]:
@@ -414,26 +403,27 @@ for i in range(len(graph)):
     
     xVal = int(re.sub('\D', '', algo[i]))
 
-    for j in range(len(x)):
-        if xVal == x[j]:
-            if 'sssp' in algo[i]:
-                insertAt(j, sqrt(calcTime[i]), speedupGaloisSSSP[graph[i]])
-            elif 'bfs' in algo[i]:
-                insertAt(j, sqrt(calcTime[i]), speedupGaloisBFS[graph[i]])
-            elif 'pagerank-push' in algo[i]:
-                insertAt(j, sqrt(calcTime[i]), speedupGaloisPRPush[graph[i]])
-            elif 'pagerank-pull' in algo[i]:
-                insertAt(j, sqrt(calcTime[i]), speedupGaloisPRPull[graph[i]])
-            break
+    
+    if 'sssp' in algo[i]:
+        speedupGaloisSSSP[graph[i]][xVal] = calcTime[i]
+    elif 'bfs' in algo[i]:
+        speedupGaloisBFS[graph[i]][xVal] = calcTime[i]
+    elif 'pagerank-push' in algo[i]:
+        speedupGaloisPRPush[graph[i]][xVal] = calcTime[i]
+    elif 'pagerank-pull' in algo[i]:
+        speedupGaloisPRPull[graph[i]][xVal] = calcTime[i]
 
+
+#print(speedupGaloisPRPush)
 # Calculations for speedup
 for g in graphs:
-    tSSSP = speedupGaloisSSSP[g][0]
-    tBFS = speedupGaloisBFS[g][0]
-    tPRPush = speedupGaloisPRPush[g][0]
-    tPRPull = speedupGaloisPRPull[g][0]
-    for i in range(len(speedupGaloisSSSP[g])):
-        speedupGaloisSSSP[g][i] = tSSSP / speedupGaloisSSSP[g][i]
-        speedupGaloisBFS[g][i] = tBFS / speedupGaloisBFS[g][i]
-        speedupGaloisPRPush[g][i] = tPRPush / speedupGaloisPRPush[g][i]
-        speedupGaloisPRPull[g][i] = tPRPull / speedupGaloisPRPull[g][i]
+    tSSSP = speedupGaloisSSSP[g][1]
+    tBFS = speedupGaloisBFS[g][1]
+    tPRPush = speedupGaloisPRPush[g][1]
+    tPRPull = speedupGaloisPRPull[g][1]
+    for x_ in x:
+        speedupGaloisSSSP[g][x_] = tSSSP / speedupGaloisSSSP[g][x_]
+        speedupGaloisBFS[g][x_] = tBFS / speedupGaloisBFS[g][x_]
+        speedupGaloisPRPush[g][x_] = tPRPush / speedupGaloisPRPush[g][x_]
+        speedupGaloisPRPull[g][x_] = tPRPull / speedupGaloisPRPull[g][x_]
+

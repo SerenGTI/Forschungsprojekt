@@ -52,7 +52,7 @@ def grouped_bar_plot(group_names, legend_names, values, yErrs=None, width=0.35, 
 
 #
 # values is a dictionary
-def line_plot(legend_names, x, values, yErrs=None, title='', yLabel='', xLabel='', yScale=None, saveToFile=None):
+def line_plot(legend_names, x, values, title='', yLabel='', xLabel='', yScale=None, saveToFile=None):
 
 	if len(legend_names) != len(values):
 		raise Exception("Size mismatch: Expected " + str(len(legend_names)) + " categories, got " + str(len(values)))
@@ -61,21 +61,13 @@ def line_plot(legend_names, x, values, yErrs=None, title='', yLabel='', xLabel='
 
 	ps = []
 	for element in legend_names: 
-		tmp = values[element].copy()
-		yErr = None
-		if not yErrs == None:
-			yErr = yErrs[element].copy()
-			while len(x) > len(yErr):
-				yErr.append(float('nan'))
-		while len(x) > len(tmp):
-			tmp.append(float('nan'))
+		x.sort()
+		tmp = []
+		for x_ in x:
+			tmp.append(values[element][x_])
 
-		if not yErr == None:
-			l = ax.errorbar(x, tmp, yerr=yErr, fmt='--o')
-			ps.append(l)
-		else:
-			l, = ax.plot(x, tmp, 'o--')
-			ps.append(l)
+		l, = ax.plot(x, tmp, 'o--')
+		ps.append(l)
 
 	if yScale != None:
 		ax.set_yscale(yScale)

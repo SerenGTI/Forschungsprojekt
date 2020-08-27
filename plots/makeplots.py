@@ -4,7 +4,7 @@ from plotFunctions import *
 
 
 
-distributed = True
+distributed = False
 singleNode = False
 
 sssp = False
@@ -16,7 +16,7 @@ execTimes = False
 overheads = True
 
 
-galoisSpeedup = False
+galoisSpeedup = True
 
 ### PLOTS
 #SINGLE NODE
