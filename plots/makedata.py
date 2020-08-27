@@ -402,7 +402,6 @@ for i in range(len(graph)):
         continue
     
     xVal = int(re.sub('\D', '', algo[i]))
-
     
     if 'sssp' in algo[i]:
         speedupGaloisSSSP[graph[i]][xVal] = calcTime[i]
@@ -412,6 +411,7 @@ for i in range(len(graph)):
         speedupGaloisPRPush[graph[i]][xVal] = calcTime[i]
     elif 'pagerank-pull' in algo[i]:
         speedupGaloisPRPull[graph[i]][xVal] = calcTime[i]
+
 
 
 #print(speedupGaloisPRPush)
@@ -427,3 +427,18 @@ for g in graphs:
         speedupGaloisPRPush[g][x_] = tPRPush / speedupGaloisPRPush[g][x_]
         speedupGaloisPRPull[g][x_] = tPRPull / speedupGaloisPRPull[g][x_]
 
+
+if False:
+    for g in graphs:
+        if g == 'flickr' or g == 'orkut':
+            continue
+        tmp = speedupGaloisBFS[g]
+        print(g)
+        last = 1
+        xs = []
+        for k in tmp:
+            xs.append(k)
+        xs.sort()
+        for k in xs:
+            print(k, tmp[k], tmp[k] / tmp[last])
+            #last = k

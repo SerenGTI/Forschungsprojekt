@@ -20,12 +20,14 @@ We would like to raise some issues we encountered first while installing and con
 On a plus side, setup of frameworks like Polymer or Ligra was straight forward and did not require any special treatment. 
 
 
+
+\clearpage
+
 \subsection{Single-source Shortest-paths}
 
 \subsubsection{Single-node}
-
 \autoref{fig:singleNodeSSSP} shows the average calculation times (time without initialization overhead), execution time and the normalized overhead for SSSP on the different frameworks. In these figures, Galois with 96 threads is shown. We show the impact of Galois' thread count in \autoref{sec:galois_speedup}.
-\begin{figure*}[t!]
+\begin{figure*}[ht!]
 	\begin{subfigure}{0.3\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSP_calcTime.png}
 		\caption{Calculation times for SSSP on a single node}
@@ -56,7 +58,7 @@ On a plus side, setup of frameworks like Polymer or Ligra was straight forward a
 
 
 \subsubsection{Distributed}
-\begin{figure}[t!]
+\begin{figure}
 	\begin{subfigure}{\columnwidth}
 		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_calcTime.png}
 		\caption{Calculation times for distributed SSSP}
@@ -210,22 +212,37 @@ In these figures, Galois with 96 threads is shown. Again, we show the impact of 
 
 \subsection{Galois speedup}
 \label{sec:galois_speedup}
-For Galois we 
+Analyzing the calculation time speedups for Galois, we can compare how or if the different algorithms benefit from increasing thread numbers.
 
-
+\subsubsection{Single-source Shortest-path}
 \begin{figure}
-	\begin{subfigure}{\columnwidth}
-		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisThreads.png}
-		\caption{Single-source Shortest-paths}
-		\label{fig:singleNodeSSSPGaloisThreads}
-	\end{subfigure}
-	\begin{subfigure}{\columnwidth}
-		\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisThreads.png}
-		\caption{Breadth-first search}
-		\label{fig:singleNodeBFSGaloisThreads}
-	\end{subfigure}
-	\caption{Calculation time speedup with increasing thread count for Galois Single-source Shortest-paths and Breadth-first search algorithms.}
+	\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisThreads.png}
+	\caption{Calculation time speedup with increasing thread count for Galois Single-source Shortest-paths}
+	\label{fig:galoisSpeedupSSSP}
 \end{figure}
+Starting with SSSP which is the algorithm that really is at an advantage when using many threads in \autoref{fig:galoisSpeedupSSSP}.
+
+For all larger graphs, speedup is in most cases very close to optimal up to about 8 threads. 
+Twitter has the best speedup, requiring only 38\%\ the calculation time with 2 threads compared to one, 25\%\ using 4 and 12.9\%\ using 8 threads.
+Behaviour on friendster is similar with 52\%\ at 2 threads, 29\%\ at 4 and 16\%\ at 8 threads compared to one.
+
+Anything above 32 threads however no longer helps decrease the computation time, in some cases even the opposite e.g. calculation on rMat28 is actually slower with 48 (13\% slower) or 96 threads (28\% slower) compared to 40 threads.
+
+Small graphs like flickr or orkut, neither benefit from more threads nor is the performance held up by synchronization overhead. 
+
+
+
+\subsubsection{Breadth-first search}
+\begin{figure}
+	\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisThreads.png}
+	\caption{Calculation time speedup with increasing thread count for Galois Breadth-first search}
+	\label{fig:galoisSpeedupBFS}
+\end{figure}
+
+
+
+
+
 
 
 
@@ -233,12 +250,12 @@ For Galois we
 	\begin{subfigure}{\columnwidth}
 		\includegraphics[width=\columnwidth]{../../plots/singleNodePRPullGaloisThreads.png}
 		\caption{PageRank Pull}
-		\label{fig:singleNodePRPullGaloisThreads}
+		\label{fig:galoisSpeedupPRPull}
 	\end{subfigure}
 	\begin{subfigure}{\columnwidth}
 		\includegraphics[width=\columnwidth]{../../plots/singleNodePRPushGaloisThreads.png}
 		\caption{PageRank Push}
-		\label{fig:singleNodePRPushGaloisThreads}
+		\label{fig:galoisSpeedupPRPush}
 	\end{subfigure}
 	\caption{Calculation time speedup with increasing thread count for Galois PageRank Push and Pull algorithms.}
 \end{figure}
