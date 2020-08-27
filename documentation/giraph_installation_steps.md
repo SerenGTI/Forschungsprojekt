@@ -314,16 +314,23 @@ Giraph can now be used to run jobs.
 ## Installing our or your own Applications
 *This step is optional*
 
-Since Giraph does not provide a working SSSP application - the start node could not be parameterized, we had to modify the given example.
-
-The supplied file `GeneralShortestPathsComputation.java` will be copied in the already existing examples folder
+Since Giraph does not provide a useful SSSP application - the start node could not be parameterized, we had to modify the given example.
+The supplied file `GeneralShortestPathsComputation.java` is copied in the already existing examples folder
 ```
 $GIRAPH_HOME/giraph-examples/src/main/java/org/apache/giraph/examples
 ```
-you will need to repackage after this.
+
+For the BFS application we used, the supplied file `SimpleBFSStructureComputation.java` is copied in the examples folder as well.
+
+You will need to repackage after adding applications.
+```
+cd $GIRAPH_HOME
+mvn package -DskipTests
+```
 
 Our Conversion tool writes the vertex input graph format
 `org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat`, this is used as input format in our examples.
+
 
 # Running Giraph Jobs
 Running Griaph applications is relatively straight forward from this point on.
@@ -370,7 +377,6 @@ $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-
 ```
 
 
-
 ## PageRank
 We run the computation with the following command. It specifies the input and output format, some classes required for computation and the paths to the input and output files.
 * `<input path>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
@@ -381,6 +387,18 @@ We run the computation with the following command. It specifies the input and ou
 ```
 $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimplePageRankComputation -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip <input path> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op <output path> -mc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankMasterCompute -wc org.apache.giraph.examples.SimplePageRankComputation\$SimplePageRankWorkerContext -w <cluster size>
 ```
+
+## BFS
+We run the computation with the following command. It specifies the input and output format and the paths to the input and output files.
+* `<start vertex id>`: The vertex id from which to start the BFS.
+* `<input path>`: The input graph filename/path to the input graph. Remember that this path is on the HDFS (check above on how to copy to HDFS).
+* `<output path>`: The output folder name/output path. Remember that this path is on the HDFS (check above on how to copy from the HDFS). Always remember to specify a new directory in the output path flag. Otherwise, the computation will crash.
+* `<cluster size>`: Make sure to set the `-w` flag to the amount of workers i.e. the amount of nodes in the cluster!
+
+```
+$HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-1.3.0-SNAPSHOT-for-hadoop-1.2.1-jar-with-dependencies.jar org.apache.giraph.GiraphRunner org.apache.giraph.examples.SimpleBFSStructureComputation <start node> -vif org.apache.giraph.io.formats.JsonLongDoubleFloatDoubleVertexInputFormat -vip <input path> -vof org.apache.giraph.io.formats.IdWithValueTextOutputFormat -op <output path> -w <cluster size>
+```
+
 
 ### Some problems and how to fix them:
 * The `class org.apache.giraph.examples.SimplePageRankComputation not <some other class>` exception. In this case, you selected the inner class of the MasterCompute or WorkerContext falsely. The correct way to adress those is `packageName.OuterClass\$InnerClass`! The backslash is very important. Check the supplied command above, the WorkerContext and MasterCompute  are selected correctly.

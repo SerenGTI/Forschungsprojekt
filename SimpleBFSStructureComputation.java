@@ -22,6 +22,7 @@
  */
 
 //package uk.co.qmul.giraph.structurebfs; //removed
+package org.apache.giraph.examples;
 
 import org.apache.giraph.Algorithm;
 import org.apache.giraph.graph.BasicComputation;
