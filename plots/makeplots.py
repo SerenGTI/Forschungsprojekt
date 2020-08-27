@@ -11,9 +11,9 @@ sssp = False
 bfs = False
 pr = True
 
-calcTimes = False
-execTimes = False
-overheads = False
+calcTimes = True
+execTimes = True
+overheads = True
 
 
 galoisSpeedup = False
