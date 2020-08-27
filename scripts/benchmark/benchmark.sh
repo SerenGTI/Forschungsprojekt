@@ -439,7 +439,7 @@ giraph-bfs-dist () {
     log "giraph-bfs-dist $1 $pagerank_number_of_iterations - $dur_calc $dur_exec $dur_calc_giraph"
 }
 
-giraph-bfs-dist () {
+giraph-bfs () {
     local graph="$1.gir"
     $($HADOOP_HOME/bin/hadoop dfs -rmr -skipTrash /output/$graph)
     local time_start=$(get_time)

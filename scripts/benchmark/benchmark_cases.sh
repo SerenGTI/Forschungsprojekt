@@ -488,7 +488,7 @@ benchmark_giraph_sssp() {
   done
 }
 
-benchmark_giraph_pagerank_dist_klein() {
+benchmark_giraph_pagerank_dist() {
   for startnode in ${startnodes_flickr[@]}; do
     giraph-pagerank-dist flickr
   done
@@ -497,6 +497,18 @@ benchmark_giraph_pagerank_dist_klein() {
   done
   for startnode in ${startnodes_wikipedia[@]}; do
     giraph-pagerank-dist wikipedia
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    giraph-pagerank-dist twitter
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    giraph-pagerank-dist friendster
+  done
+  for startnode in ${startnodes_rMat27[@]}; do
+    giraph-pagerank-dist rMat27
+  done
+  for startnode in ${startnodes_rMat28[@]}; do
+    giraph-pagerank-dist rMat28
   done
 }
 
@@ -598,6 +610,6 @@ benchmark_galois_cpu() {
 
 
 time_start=$(get_time)
-benchmark_galois_cpu
+benchmark_giraph_pagerank_dist
 dur_exec=$((($(get_time)-$time_start)/1000000))
 echo "benchmark took $dur_exec seconds"
