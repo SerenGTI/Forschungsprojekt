@@ -11,8 +11,8 @@ sssp = False
 bfs = False
 pr = True
 
-calcTimes = True
-execTimes = True
+calcTimes = False
+execTimes = False
 overheads = True
 
 
@@ -125,6 +125,8 @@ if distributed and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 		grouped_bar_plot(graphs, dist_frameworks_sssp.values(), overheadSSSP_distributed, title='Overhead time of each framework during SSSP', yLabel='Overhead time (s)', saveToFile="distributedSSSP_overheadTime.png")
 
 		grouped_bar_plot(graphs, dist_frameworks_sssp.values(), overheadSSSPNormalized_distributed, title='SSSP distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedSSSP_overheadTimeNormalized.png", yScale='linear')
+
+		grouped_bar_plot(graphs, dist_frameworks_sssp.values(), overheadSSSP_distributed_normalizedToGalois, title='SSSP distributed', yLabel='Galois Push overhead times', saveToFile="distributedSSSP_overheadTimeNormalizedToGalois.png", yScale='linear')
 
 	#BFS
 	if bfs or overheads:

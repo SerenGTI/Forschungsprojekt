@@ -160,10 +160,17 @@ for f in dist_frameworks_sssp:
     overheadSSSP_distributed.append(overhead)
     overheadSSSPNormalized_distributed.append(overheadNormalized)
 
+overheadSSSP_distributed_normalizedToGalois = []
 
-
-
-
+print("Overhead comparison distributed SSSP")
+i = 0
+for k in dist_frameworks_sssp:
+    overheadSSSP_distributed_normalizedToGalois.append([])
+    print(dist_frameworks_sssp[k])
+    for j in range(len(overheadSSSP_distributed[i])):
+        print(graphs[j] + ": ", calcTimeSSSP_distributed[i][j]/calcTimeSSSP_distributed[2][j])
+        overheadSSSP_distributed_normalizedToGalois[i].append(overheadSSSP_distributed[i][j]/overheadSSSP_distributed[0][j]) 
+    i += 1
 
 
 
