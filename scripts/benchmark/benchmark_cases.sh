@@ -607,9 +607,33 @@ benchmark_galois_cpu() {
   done
 }
 
+benchmark_giraph_bfs_dist() {
+  for startnode in ${startnodes_flickr[@]}; do
+    giraph-bfs-dist flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    giraph-bfs-dist friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    giraph-bfs-dist orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    giraph-bfs-dist twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    giraph-bfs-dist wikipedia $startnode
+  done
+  for startnode in ${startnodes_rMat27[@]}; do
+    giraph-bfs-dist rMat27 $startnode
+  done
+  for startnode in ${startnodes_rMat28[@]}; do
+    giraph-bfs-dist rMat28 $startnode
+  done
+}
+
 
 
 time_start=$(get_time)
-benchmark_giraph_pagerank_dist
+benchmark_giraph_bfs_dist
 dur_exec=$((($(get_time)-$time_start)/1000000))
 echo "benchmark took $dur_exec seconds"
