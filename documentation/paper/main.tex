@@ -13,6 +13,7 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage{amssymb}
 
 
 \usepackage{tabularx}
@@ -54,14 +55,7 @@ st157100@stud.uni-stuttgart.de}}
 
 
 \begin{abstract}
-In this paper we will analyze and compare the non-uniform memory access (NUMA) aware graph frameworks Galois, Ligra, Polymer and Gemini in their parformance.
-
-
-Giraph
-
-
-All the frameworks will be tested in shared memory. Galois, Gemini and Giraph are tested on a distributed cluster as well.
-We will give some insight on the calculation performance and associated time overhead of each framework. For this we compare the frameworks in their performance with Single-source shortest-paths, Breadth-first search and PageRank algorithms.
+TODO
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -71,9 +65,21 @@ graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon, Gemini
 
 
 \section{Introduction}
-In recent years graph sizes have increased significantly, thus performance and memory efficiency of the graph analysis applications is now more important than ever. 
+In recent years graph sizes have increased significantly [?] .
+Thus performance and memory efficiency of the graph analysis applications is now more important than ever. 
 
-We will compare several non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).
+Many applications like 
+
+Wachsende graphen,
+benötigt für folgende Applikationen,
+verwenden graph algorithmen,
+diese müssen schnell und verteilt laufen
+dafür wurden Frameworks entwickelt...
+
+und das noch schön formulieren
+
+
+We compare several non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).
 The comparison is performed on both real world data sets and synthetic graphs. 
 
 To provide a comparison to a non-NUMA aware system, Giraph\cite{Giraph} is included in the testing. Giraph itself has often been compared to other state of the art systems like Pregel or GraphX.
@@ -90,11 +96,71 @@ To this end several non-uniform memory access (NUMA) aware systems were proposed
 
 This paper makes the following contributions:
 \begin{itemize}
-  \item Comparison of some of the most widely used graph based calculation frameworks
+  \item Comparison of several state-of-the-art graph processing frameworks
   \item
   \item
   \item
 \end{itemize}
+
+\section{Preliminaries}
+
+\paragraph{Graphs and Paths}
+An \emph{unweighted graph} is the pair $G=(V,E)$ where the \emph{vertex set} is $V\subseteq\mathbb N$ and the $E$ is the \emph{edge set}.
+The edge set describes a number of connections or relations between two vertices. Depending on these relations, a graph can be directed or undirected. For a \emph{directed graph} the edge set becomes 
+\begin{equation*}
+  E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
+\end{equation*}
+and in the \emph{undirected} case $E$ is a set of two-sets 
+\begin{equation*}
+  E\subseteq\{\{x,y\}\,|\, x,y\in V, x\neq y\}.
+\end{equation*}
+
+The main difference is thus, that in the case of a directed graph a connection between $s$ and $t$ is not the same as a connection between $t$ and $s$ -- the direction matters.
+
+Independently of the graph being directed or not, a graph can be \emph{weighted}. In this case the edge set is expanded by a numerical value $E_{\text{weighted}}=E_{\text{unweighted}}\times \mathbb R$ further describing the relation.
+
+The size of a graph is often described in the number of edges $|E|$ because this number is typically much larger than the number of vertices $|V|$.
+
+A \emph{Path} from start $s$ to target $t$ is a set of edges $P\subseteq E^n$ with
+\begin{equation*}
+   P=((x_0,x_1),(x_1,x_2),\ldots, (x_{n-1},x_n))
+\end{equation*}
+where all $(x_i,x_{i+1})\in E$ and $x_0=s, x_n=t$.
+
+Thus we call a target $t$ \emph{accessible} from $s$ if a Path from $s$ to $t$ exists.
+
+\paragraph{Single-Source Shortest-Paths}
+Single-Source Shortest-Paths (SSSP) describes the problem of finding a path along some edges of the input graph from a given start node to a target.
+
+Input to the problem is a weighted graph $G=(V,E)$ and a start node $s\in V$. Output is the shortest possible distance from $s$ to each node in $V$. 
+The distance is defined as the sum of edge weights $w_i$ on a path from $s$ to the target.
+In the case of a unweighted graph, the distance is often described in \emph{hops}, i.e. the number of edges on a path.
+
+The most common implementations are Dijkstra's algorithm or BellmanFord.
+
+\paragraph{Breadth-First Search}
+Breadth-first search (BFS) is a search problem on a graph. It usually requires an unweighted graph and a start vertex as input. In some cases a target vertex is also given.
+
+The output is usually a set of vertices that are accessible from the start vertex. In the case of a target being given, the output is true if a path from start to target exists or false otherwise.
+
+\paragraph{PageRank}
+
+
+
+\paragraph{Pregel Model}
+
+
+
+
+% Google, to overcome, these challenges came up with Pregel.
+% Provides scalability
+% Fault-tolerance
+% Flexibility to express arbitrary algorithms
+% The high level organization of Pregel programs
+% is inspired by Valiant’s Bulk Synchronous
+%  Parallel model 
+\paragraph{Congest Model}
+
 
 \section{Overview of the framworks}
 \subsection{Galois and Gluon}

@@ -1,7 +1,7 @@
 %!TEX root=../../main.tex
 
 
-Apache Giraph is an iterative graph processing framework, built on top of Apache Hadoop\cite{Giraph}. Hadoop as a large MapReduce infrastructure provides a reliable (fault tolerant) basis for large scale graph processing.
+Apache Giraph is an iterative graph processing framework, built on top of Apache Hadoop\cite{Giraph}. Hadoop as a large MapReduce infrastructure providing a reliable (fault tolerant) basis for large scale graph processing.
 Because of the underlying Hadoop MapReduce infrastructure, expanding single-node processing to a multi-node cluster is almost seamless.
 
 Giraph is based on computation units that communicate using messages and are synchonized with barriers.
@@ -18,7 +18,11 @@ Communication between vertices is only performed via messages, so a vertex has n
 Supersteps are synchronized with barriers, meaning that all messages only get delivered in the following superstep and computation for the next superstep can only begin after every vertex has finished computing the current superstep.
 Edge and vertex values are retained across supersteps.
 
-Any vertex can stop computing (i.e. setting its state to inactive) at any time but incoming messages will make the vertex active again.
-To end computation, a vote-to-halt method is applied. Each vertex outputs some local information (e.g. the final vertex value) as result.
+Any vertex can stop computing (i.e. setting its state to inactive) at any time but incoming messages will reactivate the vertex again.
+A vote-to-halt method is applied, i.e. if all vertices are inactive or if a user defined superstep is reached the computation ends.
 
-Giraph is next to Galois probably the most actively developed framework in our comparison.
+Each vertex outputs some local information (e.g. the final vertex value) as result.
+
+Giraph being an Apache project makes it the most actively maintained and tested project in our comparison. Over the course of this project, several new updates were pushed to Giraph's source repository\footnote{https://gitbox.apache.org/repos/asf?p=giraph.git}.
+
+TODO: Facebook?
