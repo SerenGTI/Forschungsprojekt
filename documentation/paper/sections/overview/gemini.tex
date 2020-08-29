@@ -1,8 +1,5 @@
 %!TEX root=../../main.tex
 
-Gemini is a framework for parallel graph processing\cite{Gemini}.
-In comparison to the other NUMA-aware frameworks we discuss here, Gemini does not support shared memory parallel processing.
-Computation is entirely message based using MPI.
-Gemini is lightweight and only provides basic functionality.
-A basic API hides data and computation distribution details from the user writing applications.
-There are five algorithms (which ones?) already implemented.
+Gemini is a framework for parallel graph processing \cite{Gemini}. It was developed with the goal to deliver a generally better performance through efficient communication. While most other distributed graph processing systems achieve very good results in the shared-memory area, they often deliver unsatisfactory results in distributed computing. Furthermore, a well optimized single-threaded implementation often outperforms a distributed system. Therefore it is necessary to not only focus on the performance of the computation but also of the performance of the communication. Gemini tries to bridge the gap between efficient shared-memory and scalable distributed systems. To achieve this goal, Gemini, in contrast to the other NUMA-aware frameworks discussed here, does not support shared-memory calculation, but chooses the distributed message-based approach from scratch.
+
+Gemini is fairly lightweight and seems well structured with a clearly defined API between the core framework and the implementations of the individual algorithms. The five already implemented algorithms are single source shortest path (sssp), breath first search (bfs), pagerank, connected components (cc) and biconnected components (bc).
