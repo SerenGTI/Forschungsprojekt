@@ -155,14 +155,14 @@ overheadSSSP_distributed_normalizedToGalois = []
 i = 0
 for k in dist_frameworks_sssp:
     overheadSSSP_distributed_normalizedToGalois.append([])
-    #print(dist_frameworks_sssp[k])
+    #print(dist_frameworks_sssp[k], end='')
     for j in range(len(overheadSSSP_distributed[i])):
-        #print(graphs[j] + ": ", calcTimeSSSP_distributed[i][j]/calcTimeSSSP_distributed[2][j])
+        #print("&", round(execTimeSSSP_distributed[i][j]/execTimeSSSP_distributed[0][j] * 100) / 100, end='')
         overheadSSSP_distributed_normalizedToGalois[i].append(overheadSSSP_distributed[i][j]/overheadSSSP_distributed[0][j]) 
     i += 1
+    #print("\\\\")
 
-
-
+#print(graphs)
 
 
 
