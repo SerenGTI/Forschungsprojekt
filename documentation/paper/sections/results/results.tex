@@ -1,5 +1,8 @@
 %!TEX root=../../main.tex
 
+\section{Results}
+
+
 
 \subsection{The frameworks during setup and benchmark}
 We would like to raise some issues we encountered first while installing and configuring and second while running the different frameworks.
@@ -7,7 +10,7 @@ We would like to raise some issues we encountered first while installing and con
 \begin{enumerate}
 	\item During setup and benchmark of Gemini, we encountered several bugs in the cloned repository. These include non zero-terminated strings or even missing return statements.
 
-	The errors rendered the code as-is unable to perform calculations, forcing us to fork the repository and modify the source code. A repository with our changes can be found \href{https://github.com/jasc7636/GeminiGraph}{here}\footnote{\url{https://github.com/jasc7636/GeminiGraph}}.
+	The errors rendered the code as-is unable to perform calculations, forcing us to fork the repository and modify the source code. Our changes can be found in one of our repositories\footnote{\url{https://github.com/jasc7636/GeminiGraph}}.
 
 	\item Furthermore, we would like to address the setup of Hadoop for Giraph. It requires multiple edits in \texttt{xml} files that aren't easily automized. This makes the setup rather time consuming, especially if reconfiguration is needed later on.
 	\item In order for Giraph to run, several Java tasks (the Hadoop infrastructure) have to be constantly running in the background. While we don't expect this to have a significant performance impact on other tasks, it is still suboptimal.
@@ -21,7 +24,6 @@ On a plus side, setup of frameworks like Polymer or Ligra was straight forward a
 
 
 
-\clearpage
 
 
 \input{sections/results/sssp}

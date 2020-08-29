@@ -1,0 +1,91 @@
+%!TEX root=../main.tex
+
+\section{Preliminaries}
+TODO //
+
+\subsection{Graphs and Paths}
+An \emph{unweighted graph} is the pair $G=(V,E)$ where the \emph{vertex set} is $V\subseteq\mathbb N$ and the $E$ is the \emph{edge set}.
+The edge set describes a number of connections or relations between two vertices. Depending on these relations, a graph can be directed or undirected. For a \emph{directed graph} the edge set becomes 
+\begin{equation*}
+  E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
+\end{equation*}
+and in the \emph{undirected} case $E$ is a set of two-sets 
+\begin{equation*}
+  E\subseteq\{\{x,y\}\,|\, x,y\in V, x\neq y\}.
+\end{equation*}
+
+The main difference is thus, that in the case of a directed graph a connection between $s$ and $t$ is not the same as a connection between $t$ and $s$ -- the direction matters.
+
+Independently of the graph being directed or not, a graph can be \emph{weighted}. In this case the edge set is expanded by a numerical value $E_{\text{weighted}}=E_{\text{unweighted}}\times \mathbb R$ further describing the relation.
+
+The size of a graph is often described in the number of edges $|E|$ because this number is typically much larger than the number of vertices $|V|$.
+
+A \emph{Path} from start $s$ to target $t$ is a set of edges $P\subseteq E^n$ with
+\begin{equation*}
+   P=((x_0,x_1),(x_1,x_2),\ldots, (x_{n-1},x_n))
+\end{equation*}
+where all $(x_i,x_{i+1})\in E$ and $x_0=s, x_n=t$.
+
+Thus we call a target $t$ \emph{accessible} from $s$ if a Path from $s$ to $t$ exists.
+
+\subsection{Single-Source Shortest-Paths}
+Single-Source Shortest-Paths (SSSP) describes the problem of finding a path along some edges of the input graph from a given start node to a target.
+
+Input to the problem is a weighted graph $G=(V,E)$ and a start node $s\in V$. Output is the shortest possible distance from $s$ to each node in $V$. 
+The distance is defined as the sum of edge weights $w_i$ on a path from $s$ to the target.
+In the case of a unweighted graph, the distance is often described in \emph{hops}, i.e. the number of edges on a path.
+
+The most common implementations are Dijkstra's algorithm or BellmanFord.
+
+\subsection{Breadth-First Search}
+Breadth-first search (BFS) is a search problem on a graph. It usually requires an unweighted graph and a start vertex as input. In some cases a target vertex is also given.
+
+The output is usually a set of vertices that are accessible from the start vertex. In the case of a target being given, the output is true if a path from start to target exists or false otherwise.
+
+It is called breadth-first search because the algorithm searches in a path length-based way. First all paths of length 1 i.e. all neighbors of the start node are checked before checking paths of length 2 and so on.
+
+The search algorithm, where the paths of maximum length are checked first is called Depth-First Search. 
+
+\subsection{PageRank}
+\emph{PageRank} (PR) is a link analysis algorithm that weighs the vertices of a graph, measuring the vertices relative importance within the graph.
+
+The analogy is that the graph represents website pages of the Word Wide Web, that are hyperlinked between one another. A website that is more important is likely to receive more links from other webiste.
+PageRank counts the number and quality of links to a page to estimate the importance of a page.
+
+For example, Google Search uses PageRank to rank web pages in their search engine results.
+
+The output of PageRank is a percentage for each vertex. This percentage, called the PageRank of the vertex, is the probability with which a web surfer starting at a random web page reaches this webpage (vertex). 
+With a high probability the web surfer uses a random link from the web page they are currently on and with a smaller probability (called damping factor) they jump to a completely random web page.
+
+\paragraph{Delta-PageRank}
+?
+
+\subsection{Bulk-Synchronous Parallel Model}
+\label{sec:bsp}
+The Bulk-Synchronous Parallel (BSP) model is a computation model developed by Leslie Valiant \cite{bsp}. It is commonly used in computation environment with large amounts of synchronous computation, for example Giraph is based on this model.
+
+This model describes components, a communication network between those components and a method of synchronization.
+The components are capable of performing computations and transactions on \emph{local} memory. Pairs of components can only communicate using messages, thus remote memory access is also only possible in this way.
+Synchronization is realized through barriers for some or all processes.
+
+BSP algorithms are performed in a series of global supersteps. These consist of three steps, beginng with the processors performing local computations concurrently.
+This step can overlap with the second, the communication between components. Processes can exchange information to access remote data.
+Lastly, processes reaching a barrier wait until all other processes have reached the same barrier.
+
+\subsection{Pregel Model}
+
+
+
+
+% Google, to overcome, these challenges came up with Pregel.
+% Provides scalability
+% Fault-tolerance
+% Flexibility to express arbitrary algorithms
+% The high level organization of Pregel programs
+% is inspired by Valiant’s Bulk Synchronous
+%  Parallel model 
+\subsection{Congest Model}
+
+
+
+\subsection{Push/Pull Differences}
