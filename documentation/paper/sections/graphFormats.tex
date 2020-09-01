@@ -5,8 +5,10 @@ Since every frameworks uses different graph input formats, we supply a conversio
 Data Sets retreived from KONECT can be directly read and translated.
 
 The following sections explain the output formats of our conversion tool.
-\subsubsection{AdjacencyList}
-The AdjacencyList and WeightedAdjacencyList formats are used by Ligra and Polymer. The format was initially specified for the Problem Based Benchmark Suite, an open source repository to compare different parallel programming methodologies in terms of performance and code quality \cite{pbbs}.
+\subsubsection{AdjacencyGraph}
+The AdjacencyGraph and WeightedAdjacencyGraph formats used by Ligra and Polymer are similar to the more popular \emph{compressed sparse rows} format.
+
+The  The format was initially specified for the Problem Based Benchmark Suite, an open source repository to compare different parallel programming methodologies in terms of performance and code quality \cite{pbbs}.
 
 The file looks as follows
 \begin{equation*}
@@ -21,7 +23,9 @@ The index $o_k$ in the list of target nodes is the point where edges outgoing fr
 	(k, t_{o_k}), (k, t_{o_k+1}),\ldots, (k, t_{o_{k+1}-1}).
 \end{equation*}
 
-For the WeightedAdjacencyList format, the weights are appended to the end of the file in an order corresponding to the target nodes.
+For the WeightedAdjacencyGraph format, the weights are appended to the end of the file in an order corresponding to the target nodes.
+
+The files always start with the name of the format i.e. AdjacencyGraph or WeightedAdjacencyGraph in the first line.
 
 \subsubsection{EdgeList}
 The EdgeList format is the most intuitive and one of the most commonly used in online data set repositories. The KONECT database uses this format and thus it is the input format for our conversion tool.
