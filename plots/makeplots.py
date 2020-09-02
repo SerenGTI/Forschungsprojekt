@@ -7,7 +7,7 @@ from plotFunctions import *
 distributed = True
 singleNode = False
 
-sssp = False
+sssp = True
 bfs = True
 pr = True
 
@@ -101,11 +101,11 @@ if distributed and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 
 	#BFS
 	if bfs or calcTimes:
-		grouped_bar_plot(graphs, dist_frameworks_bfs.values(), calcTimeBFS_distributed, yErrs=yErrCalcBFS_distributed, title='BFS distributed', yLabel='Calculation time (s)', saveToFile="distributedBFS_calcTime.png")
+		grouped_bar_plot(graphs, dist_frameworks_bfs.values(), calcTimeBFS_distributed, yErrs=yErrCalcBFS_distributed, yLabel='Calculation time (s)', saveToFile="distributedBFS_calcTime.png")
 
 	#PR
 	if pr or calcTimes:
-		grouped_bar_plot(graphs, dist_frameworks_pr.values(), calcTimePR_distributed, yErrs=yErrCalcPR_distributed, title='PR distributed', yLabel='Calculation time (s)', saveToFile="distributedPR_calcTime.png")
+		grouped_bar_plot(graphs, dist_frameworks_pr.values(), calcTimePR_distributed, yErrs=yErrCalcPR_distributed, yLabel='Calculation time (s)', saveToFile="distributedPR_calcTime.png")
 
 
 	## EXEC TIME
@@ -115,11 +115,11 @@ if distributed and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 
 	#BFS
 	if bfs or execTimes:
-		grouped_bar_plot(graphs, dist_frameworks_bfs.values(), execTimeBFS_distributed, yErrs=yErrExecBFS_distributed, title='BFS distributed', yLabel='Execution time (s)', saveToFile="distributedBFS_execTime.png")
+		grouped_bar_plot(graphs, dist_frameworks_bfs.values(), execTimeBFS_distributed, yErrs=yErrExecBFS_distributed, yLabel='Execution time (s)', saveToFile="distributedBFS_execTime.png")
 
 	#PR
 	if pr or calcTimes:
-		grouped_bar_plot(graphs, dist_frameworks_pr.values(), execTimePR_distributed, yErrs=yErrExecPR_distributed, title='PR distributed', yLabel='Calculation time (s)', saveToFile="distributedPR_execTime.png")
+		grouped_bar_plot(graphs, dist_frameworks_pr.values(), execTimePR_distributed, yErrs=yErrExecPR_distributed, yLabel='Calculation time (s)', saveToFile="distributedPR_execTime.png")
 
 	## OVERHEAD
 	#SSSP
