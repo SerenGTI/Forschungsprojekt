@@ -58,7 +58,7 @@ The output of PageRank is a percentage for each vertex. This percentage, called 
 With a high probability the web surfer uses a random link from the web page they are currently on and with a smaller probability (called damping factor) they jump to a completely random web page.
 
 \paragraph{Delta-PageRank}
-?
+This is a optimization of the traditional PageRank algorithm. The PageRank score of a vertex is only updated if the relative change of the PageRank is larger than some delta. In the next iteration only a subset of PageRanks has to be recalculated.
 
 \subsection{Bulk-Synchronous Parallel Model}
 \label{sec:bsp}
