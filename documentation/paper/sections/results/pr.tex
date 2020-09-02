@@ -28,6 +28,12 @@
 
 
 \subsubsection{Distributed}
+The \autoref{fig:distributedPR} shows our results of PageRank on the distributed cluster.
+
+First of all, Giraph was unable to complete the test because it required more than 250GB of RAM for rMat28. Thus this results is missing.
+
+When comparing the calculation times in \autoref{fig:distributedPR_calc} to the execution times in \autoref{fig:distributedPR_exec}, we see similar behaviour of all frameworks. This means that unlike with SSSP or BFS, the calculation times and execution times are similar with respect to the relations of the frameworks to one another. More specifically, there are no overhead outliers like it was the case with Giraph on SSSP.
+
 \begin{figure*}
 	\begin{subfigure}{0.3\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/distributedPR_calcTime.png}
@@ -42,12 +48,13 @@
 	\end{subfigure}
 	\hfil
 	\begin{subfigure}{0.3\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/distributedPR_overheadTimeNormalized.png}
-		\caption{Overhead time normalized by the graph size in million edges}
+		\includegraphics[width=\linewidth]{../../plots/distributedPR_overheadTime.png}
+		\caption{Overhead time}
 		\label{fig:distributedPR_overheadNormalized}
 	\end{subfigure}
 	
 	\caption{Average times on the distributed cluster, black bars represent one standard deviation in our testing}
+	\label{fig:distributedPR}
 \end{figure*}
 
 

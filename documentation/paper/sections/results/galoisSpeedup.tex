@@ -50,14 +50,32 @@ For the other two graphs, computation on friendster with 8 threads is just as fa
 
 
 \subsubsection{PageRank}
+We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. This is a perfect example for an algorithm that does not benefit from multithreaded computation. 
+Computation is hardly sped up on any graph other than flicker, where the reached maximum is 64\%. This maximum is reached at two threads, with speedup steadily declining above that.
+The rMat28 is the only other graph of one could say computation was sped up. Here we reached a maximum speedup of 31\%\ at 96 threads.
+All 5 other graphs only reach a speedup greater or equal to 1 in just one or two cases and if so only by a small margin.
+Computation on Orkut and Twitter reaches a speedup maximum of 12\%\ and 5\%\ at 4 threads, while being less or equal to 1 in all other cases.
+The wikipedia graph is never sped up.
+Friendster and rMat27 can be sped up by 6.5\%\ or 10\%\ respectively on 8 threads.
+
+Speedup results on PageRank show odd behaviour in the Galois implementation.
+There is a significant performance loss on 4, 24 and 40 threads that is far from the expected behaviour. This is most visible for the Push variant seen in \autoref{fig:galoisSpeedupPRPush}, we validated the shown results two times.
+Especially, the speedup for 24 threads is (by interpolating between 16 and 32 threads) expected to be anywhere between 25\% and 94\%.
+Actually however, the system does not reach a speedup of more than 4\%\ on any graph, with only rMat27 actually reaching a value greater than 1. 
+On all other graphs, using 24 threads is anywhere from 3\% (flickr) to 9\%\ (wikipedia) slower than using just one thread.
+
+Similar yet less pronounced behaviour is oberservable for Pull in \autoref{fig:galoisSpeedupPRPull}. 
+Here especially the values for 24 and 40 threads show a loss in performance.
+It is most visible on the values for twitter and friendster, where both values drop significantly compared to the neighbouring 32 and 48 thread results.
+
 \begin{figure}
 	\begin{subfigure}{\columnwidth}
-		\includegraphics[width=\columnwidth]{../../plots/singleNodePRPullGaloisThreads.png}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisThreads.png}
 		\caption{PageRank Pull}
 		\label{fig:galoisSpeedupPRPull}
 	\end{subfigure}
 	\begin{subfigure}{\columnwidth}
-		\includegraphics[width=\columnwidth]{../../plots/singleNodePRPushGaloisThreads.png}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePRPushGaloisThreads.png}
 		\caption{PageRank Push}
 		\label{fig:galoisSpeedupPRPush}
 	\end{subfigure}
