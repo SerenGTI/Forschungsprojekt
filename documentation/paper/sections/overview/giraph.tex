@@ -1,15 +1,9 @@
 %!TEX root=../../main.tex
 
 
-Apache Giraph is an iterative graph processing framework, built on top of Apache Hadoop \cite{Giraph}. Hadoop is a large MapReduce infrastructure providing a reliable (fault tolerant) basis for large scale graph processing.
-
-Giraph is an example for an open-source system similar to Pregel.
+Apache Giraph is an example for an open-source system similar to Pregel.
 Thus, Giraph's computation model is closely related to the BSP model discussed in \autoref{sec:bsp}. 
-//TODO: Hier wiederholt sich jetzt einiges.. ärgerlich.
-
-// Mapreduce: Giraph uses the Map functionality of Hadoop to run the algorithms, Reduce is only used as an identity function.
-
-This means that Giraph is based on computation units that communicate using messages and are synchonized with barriers.
+This means that Giraph is based on computation units that communicate using messages and are synchonized with barriers \cite{Giraph}.
 
 The input to a Giraph computation is always a directed graph. Not only the edges but also the vertices have a value attached to them. The graph topology is thus not only defined by the vertices and edges but also their initial values.
 Furthermore, one can mutate the graph by adding or removing vertices and edges during computation.
@@ -19,16 +13,17 @@ For each iteration step called superstep, the Compute method implementing the al
 This method receives messages sent in the previous superstep as well as its vertex value and the values of outgoing edges.
 With this data the values are modified and messages to other vertices are sent.
 Communication between vertices is only performed via messages, so a vertex has no access to values of other vertices or edges other than its own outgoing ones.
-
 Supersteps are synchronized with barriers, meaning that all messages only get delivered in the following superstep and computation for the next superstep can only begin after every vertex has finished computing the current superstep.
 Edge and vertex values are retained across supersteps.
-
 Any vertex can stop computing (i.e. setting its state to inactive) at any time but incoming messages will reactivate the vertex again.
 A vote-to-halt method is applied, i.e. if all vertices are inactive or if a user defined superstep is reached the computation ends.
 Once calculation is finished, each vertex outputs some local information (e.g. the final vertex value) as result.
 
-Because of the underlying Hadoop infrastructure, expanding single-node processing to a multi-node cluster is seamless. Hadoop supplies a distributed file system (HDFS), on which all computation is performed. Giraph is thus, even when only using a single node, running in a distributed manner.
+In order for Giraph a achieve scalability and parallelization, it is built on top of Apache Hadoop \cite{Giraph}.
+Hadoop is a MapReduce infrastructure providing a fault tolerant basis for large scale graph processing.
+Hadoop supplies a distributed file system (HDFS), on which all computation is performed.
+Giraph is thus, even when only using a single node, running in a distributed manner.
+But expanding single-node processing to a multi-node cluster is seamless.
+Giraph uses the Map functionality of Hadoop to run the algorithms, Reduce is only used as the identity function.
 
 Giraph being an Apache project makes it the most actively maintained and tested project in our comparison. Over the course of this project, several new updates were pushed to Giraph's source repository\footnote{\url{https://gitbox.apache.org/repos/asf?p=giraph.git}}.
-
-TODO: Facebook?
