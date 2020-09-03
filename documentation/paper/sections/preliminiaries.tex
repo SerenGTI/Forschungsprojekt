@@ -72,18 +72,25 @@ BSP algorithms are performed in a series of global supersteps. These consist of 
 This step can overlap with the second, the communication between components. Processes can exchange information to access remote data.
 Lastly, processes reaching a barrier wait until all other processes have reached the same barrier.
 
-\subsection{Pregel Model}
+One of the most famous state-of-the-art graph processing systems is Pregel \cite{pregel}. It is based on the BSP computation model.
+Pregel and many open-source versions similar to it were built to process large graphs reliably (offering fault tolerance) on large MapReduce infrastructures.
 
+\subsection{MapReduce}
+The MapReduce model is a computation infrastructure developed by Google to reliably handle large data sets on distributed clusters \cite{mapreduce}.
 
+A user specifies just the two functions Map and Reduce.
+The system hides the details of parallelization, fault-tolerance, data distribution and load balancing away from the application logic.
+All of these features are automatically provided.
 
+Execution is performed in three phases:
+\begin{enumerate}
+	\item Map phase: The input data is distributed between a set of Map processes, the Map functionality is specified by the user. Ideally all Map processes run in parallel so the map processes need to be independent. Results from this phase are written into (multiple) intermediate storage points.
+	\item Shuffle phase: The results are grouped according to a key provided by the Map algorithm. Each set of results is then handed to one system for the next phase.
+	\item Reduce phase: Every set of intermediate results is input to exactly one reduce process. The Reduce functionality is again specified by the user and ideally runs in parallel.
+\end{enumerate}
 
-% Google, to overcome, these challenges came up with Pregel.
-% Provides scalability
-% Fault-tolerance
-% Flexibility to express arbitrary algorithms
-% The high level organization of Pregel programs
-% is inspired by Valiant’s Bulk Synchronous
-%  Parallel model 
+We show Giraph \cite{Giraph} as an example of a system using this framework.
+
 \subsection{Congest Model}
 
 

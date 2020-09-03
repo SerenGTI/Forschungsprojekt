@@ -3,16 +3,13 @@
 
 Apache Giraph is an iterative graph processing framework, built on top of Apache Hadoop \cite{Giraph}. Hadoop is a large MapReduce infrastructure providing a reliable (fault tolerant) basis for large scale graph processing.
 
-TODO // MapReduce hier oder wo anders erklären?
-MapReduce is a in three phases
-\begin{enumerate}
-	\item Map phase: The input data is distributed between a set of map processes, the map functionality is specified by the user. Ideally all map processes run in parallel so the map processes need to be independent. Results from this phase are written into (multiple) intermediate storage points.
-	\item Shuffle phase: The results are grouped according to a key provided by the map algorithm. Each set of results is then handed to one system for the next phase.
-	\item Reduce phase: Every set of intermediate results is input to exactly one reduce process. The reduce functionality is again specified by the user and ideally runs in parallel.
-\end{enumerate}
-Giraph uses the Map functionality of Hadoop to run the algorithms, Reduce is only used as an identity function.
+Giraph is an example for an open-source system similar to Pregel.
+Thus, Giraph's computation model is closely related to the BSP model discussed in \autoref{sec:bsp}. 
+//TODO: Hier wiederholt sich jetzt einiges.. ärgerlich.
 
-Giraph's computation model is closely related to the BSP model discussed in \autoref{sec:bsp}. This means that Giraph is based on computation units that communicate using messages and are synchonized with barriers.
+// Mapreduce: Giraph uses the Map functionality of Hadoop to run the algorithms, Reduce is only used as an identity function.
+
+This means that Giraph is based on computation units that communicate using messages and are synchonized with barriers.
 
 The input to a Giraph computation is always a directed graph. Not only the edges but also the vertices have a value attached to them. The graph topology is thus not only defined by the vertices and edges but also their initial values.
 Furthermore, one can mutate the graph by adding or removing vertices and edges during computation.
