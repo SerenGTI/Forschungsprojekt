@@ -12,6 +12,7 @@ All benchmark cases were initiated by our benchmark script available in our repo
 All five frameworks are tested on a single server. 
 Galois, Gemini and Giraph were benchmarked in on the distributed 5-node cluster as well.
 Since Galois supports this parameter, we ran multiple tests comparing Galois' performance with different thread counts on a single machine.
+Furthermore, Galois is a framework capable of utilizing hugepages. We include an evaluation using those on the single node as well.
 Unless mentioned otherwise, we always show results of each framework utilizing 96 threads (i.e. the maximum on our machines) for the single-node evaluation.
 
 The complete benchmark log files and extracted raw results are available in our repository\footnote{\url{https://github.com/SerenGTI/Forschungsprojekt} // das ist hier unschön.}.

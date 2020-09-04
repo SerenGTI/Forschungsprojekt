@@ -273,9 +273,10 @@ singleNode_frameworks_pr = {
     "gemini-pagerank":"Gemini",
     "giraph-pagerank":"Giraph",
     "ligra-pagerank":"Ligra",
-    "ligra-pagerank-delta":"Ligra Delta",
-    "polymer-pagerank":"Polymer",
-    "polymer-pagerank-delta":"Polymer Delta"}
+    #"ligra-pagerank-delta":"Ligra Delta",
+    #"polymer-pagerank":"Polymer",
+    "polymer-pagerank-delta":"Polymer Delta"
+    }
 
 calcTimePR_singleNode = []
 yErrCalcPR_singleNode = []
@@ -314,6 +315,44 @@ for f in singleNode_frameworks_pr:
     yErrExecPR_singleNode.append(tmpYErrExec)
     overheadPR_singleNode.append(overhead)
     overheadPRNormalized_singleNode.append(overheadNormalized)
+
+
+if False:
+    k = 0
+    values = {}
+    for f in singleNode_frameworks_pr:
+        if 'ligra' in f or 'polymer' in f:
+            values[f] = execTimePR_singleNode[k]
+        k += 1
+
+    ligra = []
+    polymer = []
+
+    for l in range(len(values["ligra-pagerank"])):
+        v1 = values["ligra-pagerank"][l]
+        v2 = values["ligra-pagerank-delta"][l]
+        v = abs((v1-v2) / max(v1,v2))
+        ligra.append(v)
+    # print(ligra)
+    # print(sum(ligra) / len(ligra))
+
+    for l in range(len(values["polymer-pagerank"])):
+        v1 = values["polymer-pagerank"][l]
+        v2 = values["polymer-pagerank-delta"][l]
+        if v1>v2:
+            print("delta")
+        else:
+            print("reg")
+        v = abs((v1-v2) / max(v1,v2))
+        polymer.append(v)
+
+    print(polymer)
+    print(sum(polymer[:-1]) / len(polymer[:-1])) 
+
+    
+
+
+
 
 
 

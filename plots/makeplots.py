@@ -4,11 +4,11 @@ from plotFunctions import *
 
 
 
-distributed = True
-singleNode = False
+distributed = False
+singleNode = True
 
-sssp = True
-bfs = True
+sssp = False
+bfs = False
 pr = True
 
 calcTimes = False
@@ -46,7 +46,7 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 		grouped_bar_plot(graphs, frameworks, execTimeBFS_singleNode, yErrs=yErrExecBFS_singleNode, title='BFS single node', yLabel='Execution time (s)', saveToFile="singleNodeBFS_execTime.png")
 
 	if pr or execTimes:
-		grouped_bar_plot(graphs, singleNode_frameworks_pr.values(), execTimePR_singleNode, yErrs=yErrExecPR_singleNode, title='PR single node (ugly)', yLabel='Execution time (s)', saveToFile="singleNodePR_execTime.png", scaleFactor=3.25)
+		grouped_bar_plot(graphs, singleNode_frameworks_pr.values(), execTimePR_singleNode, yErrs=yErrExecPR_singleNode, title='PR single node (ugly)', yLabel='Execution time (s)', saveToFile="singleNodePR_execTime.png")
 
 
 
