@@ -1,21 +1,22 @@
 %!TEX root = ../main.tex
 
-\subsection{Important Graph Formats}
+\section{Important Graph Formats}
 Since every frameworks uses different graph input formats, we supply a conversion tool capable of translating from EdgeList to the required formats.
 Data Sets retreived from KONECT can be directly read and translated.
 
-The following sections explain the output formats of our conversion tool.
-\subsubsection{AdjacencyGraph}
-The AdjacencyGraph and WeightedAdjacencyGraph formats used by Ligra and Polymer are similar to the more popular \emph{compressed sparse rows} format.
+//SNAP
 
-The  The format was initially specified for the Problem Based Benchmark Suite, an open source repository to compare different parallel programming methodologies in terms of performance and code quality \cite{pbbs}.
+The following sections explain the output formats of our conversion tool.
+\subsection{AdjacencyGraph}
+The AdjacencyGraph and WeightedAdjacencyGraph formats used by Ligra and Polymer are similar to the more popular \emph{compressed sparse rows} format.
+The format was initially specified for the Problem Based Benchmark Suite, an open source repository to compare different parallel programming methodologies in terms of performance and code quality \cite{pbbs}.
 
 The file looks as follows
 \begin{equation*}
-	n, m, o_1, \ldots, o_n, t_1, \ldots, t_m
+	x, n, m, o_1, \ldots, o_n, t_1, \ldots, t_m
 \end{equation*}
-where commas are \texttt{\textbackslash n}. First, $n$ is the number of vertices and $m$ the number of edges in the graph.
-
+where commas are newlines. The files always start with the name of the format i.e. AdjacencyGraph or WeightedAdjacencyGraph in the first line, here shown as $x$.
+Followed by $n$, the number of vertices and $m$ the number of edges in the graph.
 The $o_k$ are the so-called offsets. Each vertex $k$ has an offset $o_k$, that describes an index in the following list of the $t_i$.
 The $t_i$ are vertex IDs describing target nodes of a directed edge. 
 The index $o_k$ in the list of target nodes is the point where edges outgoing from vertex $k$ begin to be declared. So vertex $k$ has the outgoing edges
@@ -25,37 +26,33 @@ The index $o_k$ in the list of target nodes is the point where edges outgoing fr
 
 For the WeightedAdjacencyGraph format, the weights are appended to the end of the file in an order corresponding to the target nodes.
 
-The files always start with the name of the format i.e. AdjacencyGraph or WeightedAdjacencyGraph in the first line.
 
-\subsubsection{EdgeList}
-The EdgeList format is the most intuitive and one of the most commonly used in online data set repositories. The KONECT database uses this format and thus it is the input format for our conversion tool.
+\subsection{EdgeList}
+The EdgeList format is one of the most commonly used in online data set repositories. The KONECT database uses this format and thus it is the input format for our conversion tool.
 
-An edge list is a set of directed eges $(s_1,t_1),(s_2,t_2),\ldots$ where $s_i$ is a vertex ID representing the start vertex and $t_i$ is a vertex ID representing the target vertex.
-In the format, there is one edges per line and the vertex IDs $s_i, t_i$ are separated with any whitespace character.
+An edge list is a set of directed edges $(s_1,t_1),(s_2,t_2),\ldots$ where $s_i$ is a vertex ID representing the start vertex and $t_i$ is a vertex ID representing the target vertex.
+In the format, there is one edge per line and the vertex IDs $s_i, t_i$ are separated with any whitespace character.
 
-For a WeightedEdgeList, the edge weights are appended to each line, again separated by a whitespace character.
+For a WeightedEdgeList, the edge weights are appended to each line, again separated by any number of whitespace characters.
 
-\subsubsection{Binary EdgeList}
+\subsection{Binary EdgeList}
 The binary EdgeList format is used by Gemini.
-
 For $s_i, t_i$ some vertex IDs and $w_i$ the weight of a directed edge $(s_i,t_i, w_i)$, Gemini requires the following input format
 \begin{equation*}
 	s_1t_1w_1s_2t_2w_2\ldots
 \end{equation*}
 where $s_i,t_i$ have \texttt{uint32} data type and the optional weights are \texttt{float32}.
-Gemini will derive the number of edges from the file size, so there is no file header or anything similar allowed.
+Gemini derives the number of edges from the file size, so there is no file header or anything similar allowed.
 
-\subsubsection{Giraph's I/O formats}
+\subsection{Giraph's I/O formats}
 Giraph is capable of parsing many different input and output formats. All of those are explained in Giraph's JavaDoc\footnote{\url{http://giraph.apache.org/apidocs/index.html}}.
 Both edge- and vertex-centric input formats are possible.
-
 One can even define their own input graph representation or output format. For the purposes of this paper, we used an existing format similar to AdjacencyList but represented in a JSON-like manner.
 
-In this format, the vertex IDs are specified as \texttt{long} with \texttt{double} vertex values, \texttt{float} out-edge weights.
+In this format, the vertex IDs are specified as \texttt{long} with \texttt{double} vertex values and \texttt{float} out-edge weights.
 Each line in the graph file looks as follows
 \begin{equation*}
 	[s,v_s,[[t_1, w_{t_1}], [t_2, w_{t_2}]...]]
 \end{equation*}
 with $s$ being a vertex ID, $v_s$ the vertex value of vertex $s$. The values $t_i$ are vertices for which an edge from $s$ to $t_i$ exists. The directed edge $(s,t_i)$ has weight $w_{t_i}$.
-
 There is no surrounding pair of brackets and no commas separating the lines as it would be expected in a JSON format.

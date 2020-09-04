@@ -2,6 +2,8 @@
 
 
 \subsection{PageRank}
+\subsubsection{Single-Node}
+TODO // Hier fehlt noch Giraph, daher noch keine vollständige Auswertung.
 
 \begin{figure*}
 	\begin{subfigure}{0.3\textwidth}
@@ -29,9 +31,7 @@
 
 \subsubsection{Distributed}
 The \autoref{fig:distributedPR} shows our results of PageRank on the distributed cluster.
-
 First of all, Giraph was unable to complete the test because it required more than 250GB of RAM for rMat28. Thus this results is missing.
-
 When comparing the calculation times in \autoref{fig:distributedPR_calc} to the execution times in \autoref{fig:distributedPR_exec}, we see similar behaviour of all frameworks. This means that unlike with SSSP or BFS, the calculation times and execution times are similar with respect to the relations of the frameworks to one another. More specifically, there are no overhead outliers like it was the case with Giraph on SSSP.
 
 \begin{figure*}

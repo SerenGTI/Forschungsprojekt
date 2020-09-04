@@ -64,8 +64,8 @@ TODO // Hier fehlt noch Giraph, daher noch keine vollständige Auswertung.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\linewidth]{../../plots/distributedSSSP_overheadTimeNormalizedToGalois.png}
-	\caption{Distributed Single-Source Shortest-Paths overhead times of each framework normalized by the overhead time of Galois Push}
+	\includegraphics[width=\linewidth]{../../plots/distributedSSSP_overheadTime.png}
+	\caption{Distributed Single-Source Shortest-Paths overhead times of each framework}
 	\label{fig:distributedSSSP_overhead}
 \end{figure}
 
@@ -73,7 +73,7 @@ Moving on to the distributed cluster, \autoref{fig:distributedSSSP} shows the be
 
 Comparing the two Galois implementations, we find the calculation and execution times to be similar on smaller graphs and Push being the superior implementation for SSSP on larger data sets. Galois Pull being anywhere from just as fast to 3.5$\times$ slower on real-world data sets compared to the Push variant. The synthetic graphs are more extreme, execution times are close to 4$\times$ (rMat27) and 5$\times$ (rMat28) longer.
 
-Both Galois implementations have significantly smaller execution times compared to Gemini or Giraph on all graphs, see \autoref{tbl:ssspexec}.
+Both Galois implementations have significantly smaller execution times compared to Gemini or Giraph on all graphs (cf. \autoref{tbl:ssspexec}).
 You can see Gemini being worse by at least a factor of 4 compared to Galois Push on all graphs except flickr.
 Giraph's execution times in comparison to this are even worse, taking at least 7$\times$ longer than Galois Push on all graphs.
 

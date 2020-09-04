@@ -1,6 +1,10 @@
 %!TEX root=../../main.tex
 
 \subsection{Breadth-first search}
+\subsubsection{Single-Node}
+TODO // Hier fehlt noch Giraph, daher noch keine vollständige Auswertung.
+
+
 In these figures, Galois with 96 threads is shown. Again, we show the impact of Galois' thread count in \autoref{sec:galois_speedup}.
 \begin{figure*}
 	\begin{subfigure}{0.3\textwidth}
@@ -48,7 +52,9 @@ In these figures, Galois with 96 threads is shown. Again, we show the impact of 
 	\caption{Average times on the distributed cluster, black bars represent one standard deviation in our testing}
 	\label{fig:distributedBFS}
 \end{figure}
-For both the calculation and the execution times, Breadth-First Search shows similar behaviour as the distributed SSSP test case. All measurements can be seen in \autoref{fig:distributedBFS}.
+For both the calculation and the execution times, Breadth-First Search shows similar behaviour as the distributed SSSP test case. This is expected since both are graph traversal algorithms starting in one source vertex.
+Hence, calculation complexity for each node and communication overhead is similar.
+All measurements can be seen in \autoref{fig:distributedBFS}.
 
 First, the calculation times in \autoref{fig:distributedBFS_calc}. It shows Giraph having the shortest calculation times on the real-world graphs, while Giraph's calculatin times on both rMat27 and rMat28 are the worst of all frameworks. 
 
