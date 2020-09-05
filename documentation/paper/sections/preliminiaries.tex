@@ -5,21 +5,17 @@ TODO //
 
 \subsection{Graphs and Paths}
 An \emph{unweighted graph} is the pair $G=(V,E)$ where the \emph{vertex set} is $V\subseteq\mathbb N$ and the $E$ is the \emph{edge set}.
-The edge set describes a number of connections or relations between two vertices. Depending on these relations, a graph can be directed or undirected. For a \emph{directed graph} the edge set becomes 
+The edge set describes a number of connections or relations between two vertices. Depending on these relations, a graph can be directed or undirected. For a \emph{directed graph} the edge set is defined as 
 \begin{equation*}
   E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
 \end{equation*}
-and in the \emph{undirected} case $E$ is a set of two-sets 
-\begin{equation*}
-  E\subseteq\{\{x,y\}\,|\, x,y\in V, x\neq y\}.
-\end{equation*}
-The main difference is thus, that in the case of a directed graph a connection between $s$ and $t$ is not the same as a connection between $t$ and $s$ -- the direction matters.
-The size of a graph is defined as the number of edges $|E|$ // CITATION?.
+and in the \emph{undirected} case, the direction is no longer relevant. Thus, in an undirected graph for each $(x,y)\in E$, it holds $(x,y)=(y,x)$. 
+The size of a graph is defined as the number of edges $|E|$\todo{citation?}.
 Independently of the graph being directed or not, a graph can be \emph{weighted}. In this case a function $w:E\rightarrow \mathbb R$ is introduced, that maps an edge to a numerical value, further describing the relation.
 
 A \emph{Path} from starting vertex $s$ to target vertex $t$ is a sequence of vertices
 \begin{equation*}
-	P=(x_1,x_2,\ldots,x_n)\subseteq V^n
+	P=(x_1,x_2,\ldots,x_n)\in V^n
 \end{equation*}
 with the condition $(x_i,x_{i+1})\in E$ for each $i\in\{1,\ldots,n-1\}$ and $x_1=s, x_n=t$.
 Thus we call a target $t$ \emph{reachable} from $s$ if a Path from $s$ to $t$ exists.
@@ -29,27 +25,31 @@ Single-Source Shortest-Paths (SSSP) describes the problem of finding the shortes
 Input to the problem is a weighted graph $G=(V,E)$ and a start node $s\in V$. Output is the shortest possible distance from $s$ to each node in $V$. 
 The distance is defined as the sum of edge weights $w_i$ on a path from $s$ to the target.
 In the case of a unweighted graph, the distance is often described in \emph{hops}, i.e. the number of edges on a path.
-The most common implementations are Dijkstra's algorithm or BellmanFord.
+The most common sequential implementations are Dijkstra's algorithm or BellmanFord \cite{Polymer, Ligra, pregel}.
 
 \subsection{Breadth-First Search}
-Breadth-first search (BFS) is a search problem on a graph. It usually requires an unweighted graph and a start vertex as input.
+Breadth-first search (BFS) is a search problem on a graph.
+It requires an unweighted graph and a start vertex as input.
 The output is a set of vertices that are reachable from the start vertex.
 In some special cases, a target vertex is also given. In the case of a target being given, the output is true if a path from start to target exists or false otherwise.
-It is called breadth-first search because the algorithm searches in a path length-based way. First all paths of length 1 i.e. all neighbors of the start node are checked before checking paths of length 2 and so on.
-The search algorithm, where the paths of maximum length are checked first is called Depth-First Search. 
+It is called Breadth-First search because the algorithm searches in a path length-based way. First all paths of length one i.e. all neighbors of the start vertex are checked before checking paths of length two and so on.
+The search algorithm, where the paths of maximum length are checked first is called Depth-First search. 
 
 \subsection{PageRank}
-\emph{PageRank} (PR) is a link analysis algorithm that weighs the vertices of a graph, measuring the vertices relative importance within the graph.
-
+\emph{PageRank} (PR) is a link analysis algorithm that weighs the vertices of a graph, measuring the vertices relative importance within the graph \cite{pagerank}. This represents a centrality metric of the vertices.
 The analogy is that the graph represents website pages of the Word Wide Web, that are hyperlinked between one another. A website that is more important is likely to receive more links from other webiste.
 PageRank counts the number and quality of links to a page to estimate the importance of a page.
-
 The output of PageRank is a percentage for each vertex. This percentage, called the PageRank of the vertex, is the probability with which a web surfer starting at a random web page reaches this webpage (vertex). 
 With a high probability the web surfer uses a random link from the web page they are currently on and with a smaller probability (called damping factor) they jump to a completely random web page.
 
-For example, Google Search uses PageRank to rank web pages in their search engine results.
-\paragraph{Delta-PageRank}
-This is a optimization of the traditional PageRank algorithm. The PageRank score of a vertex is only updated if the relative change of the PageRank is larger than some delta. In the next iteration only a subset of PageRanks has to be recalculated.
+The algorithm was invented by Sergey Brin and Larry Page, the founders of Google. To this date, Google Search uses PageRank to rank web pages in their search engine results.
+
+An optimization to the traditional PageRank implementation is called \emph{Delta-PageRank}.
+The PageRank score of a vertex is only updated if the relative change of the PageRank is larger than some user-defined delta.
+This effectively reduces the amount of vertices for which the PageRank has to be recalculated in following iterations.
+
+\subsection{Push and Pull Variants}
+\todo{}
 
 \subsection{Bulk-Synchronous Parallel Model}
 \label{sec:bsp}
@@ -57,14 +57,14 @@ The Bulk-Synchronous Parallel (BSP) model is a computation model developed by Le
 
 This model describes components, a communication network between those components and a method of synchronization.
 The components are capable of performing computations and transactions on \emph{local} memory. Pairs of components can only communicate using messages, thus remote memory access is also only possible in this way.
+The Messages have a user-defined form and should be as small as possible to keep the network traffic low. \todo{Congest Model, log limit in was?}
 Synchronization is realized through barriers for some or all processes.
-
 BSP algorithms are performed in a series of global supersteps. These consist of three steps, beginng with the processors performing local computations concurrently.
 This step can overlap with the second, the communication between components. Processes can exchange information to access remote data.
 Lastly, processes reaching a barrier wait until all other processes have reached the same barrier.
 
-One of the most famous graph processing systems, Pregel \cite{pregel} is based on the BSP computation model.
-Pregel and many open-source versions similar to it were built to process large graphs reliably (offering fault tolerance) on large MapReduce infrastructures \cite{Giraph}.
+One of the most famous graph processing systems, Pregel \cite{pregel} is based on the BSP computation model. We include Giraph, an open-source variant of Pregel in our evaluation.
+Pregel, Giraph and many frameworks similar to those were built to process large graphs reliably (offering fault tolerance) on large MapReduce infrastructures \cite{Giraph,graphx,powergraph}.
 
 \subsection{MapReduce}
 The MapReduce model is a computation infrastructure developed by Google to reliably handle large data sets on distributed clusters \cite{mapreduce}.
@@ -72,18 +72,10 @@ The MapReduce model is a computation infrastructure developed by Google to relia
 A user specifies just the two functions Map and Reduce.
 The system hides the details of parallelization, fault-tolerance, data distribution and load balancing away from the application logic.
 All of these features are automatically provided.
-
 Execution is performed in three phases:
 \begin{enumerate}
 	\item Map phase: The input data is distributed between a set of Map processes, the Map functionality is specified by the user. Ideally all Map processes run in parallel so the map processes need to be independent. Results from this phase are written into (multiple) intermediate storage points.
 	\item Shuffle phase: The results are grouped according to a key provided by the Map algorithm. Each set of results is then handed to one system for the next phase.
 	\item Reduce phase: Every set of intermediate results is input to exactly one reduce process. The Reduce functionality is again specified by the user and ideally runs in parallel.
 \end{enumerate}
-
 Giraph \cite{Giraph} is an example of a system using this framework.
-
-\subsection{Congest Model}
-
-
-
-\subsection{Push/Pull Differences}
