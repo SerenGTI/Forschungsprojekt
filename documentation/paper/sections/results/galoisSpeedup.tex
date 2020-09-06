@@ -25,7 +25,6 @@ Performance on flickr can not be sped up at all, with speedup on flickr being ve
 Orkut reaches maximum speedup of 1.6$\times$ at 16 threads. However on orkut, the speedup is always greater or equal to 1.
 
 
-
 \subsubsection{Breadth-first search}
 \begin{figure}
 	\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisThreads.png}
@@ -34,26 +33,16 @@ Orkut reaches maximum speedup of 1.6$\times$ at 16 threads. However on orkut, th
 \end{figure}
 
 For our speedup results on BFS, \autoref{fig:galoisSpeedupBFS} shows the calculation time speedup of Galois' BFS.
-
-Flickr is sped up by about 5\%\ with 4 threads, any more than that will actually decrease performance, making computation time up to 15\%\ (96 threads) longer.
-
 On all graphs, the speedup never exceeds 6$\times$ even when using 96 threads.
-The initial speedup when switching from one to two threads is actually smaller than one, thus decreasing performance, on 4 of 7 graphs. Only flickr, twitter and rMat28 can benefit slightly by a speedup of 2\%, 41\%\ and 5\%\ respectively.
-
-When comparing four threads to one, BFS on all but two graphs can be sped up by anywhere from 5\%\ (flickr) to 68\% (rMat28). The speedup is thus only possible to a very small degree.
-For the other two graphs, computation on friendster with 8 threads is just as fast as one thread and computation on rMat27 is actually 19\% slower.
-
-
-
-
-
-
+For the smaller graphs (flickr, orkut), we have the same behaviour as on SSSP. Speedup is close to 1 in all cases, with orkut reaching a maximum speedup of 1.6$\times$ at 24 threads.
+On the larger graphs, speedup is possible but only to a very small degree.
+Wikipedia has a maximum speedup of 4.9$\times$ at 96 threads, for twitter it is 2.5$\times$ at 96 threads and 5.6$\times$ on friendster. The two synthetic data sets reach speedups of 4.2$\times$ and 4.7$\times$ for rMat27 and rMat28 on 96 threads.
 
 
 \subsubsection{PageRank}
 We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. This is a perfect example for an algorithm that does not benefit from multithreaded computation. 
 Computation is hardly sped up on any graph other than flicker, where the reached maximum is 64\%. This maximum is reached at two threads, with speedup steadily declining above that.
-The rMat28 is the only other graph of one could say computation was sped up. Here we reached a maximum speedup of 31\%\ at 96 threads.
+The rMat28 is the only other graph of one could say computation was sped up at large thread counts. Here we reached a maximum speedup of 31\%\ at 96 threads.
 All 5 other graphs only reach a speedup greater or equal to 1 in just one or two cases and if so only by a small margin.
 Computation on Orkut and Twitter reaches a speedup maximum of 12\%\ and 5\%\ at 4 threads, while being less or equal to 1 in all other cases.
 The wikipedia graph is never sped up.
