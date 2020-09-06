@@ -15,12 +15,14 @@ Analyzing the calculation time speedups for Galois, we can compare how or if the
 \end{figure}
 Starting with SSSP, we see an algorithm that benefits from many available threads in \autoref{fig:galoisSpeedupSSSP}.
 For all larger graphs, speedup is in most cases very close to optimal up to about 8 threads. 
-Twitter has the best speedup, requiring only 38\%\ the calculation time with 2 threads compared to one, 25\%\ using 4 and 12.9\%\ using 8 threads.
-Behaviour on friendster is similar with 52\%\ at 2 threads, 29\%\ at 4 and 16\%\ at 8 threads compared to one.
+Twitter has the best speedup overall. It is 2.6$\times$ with 2 threads compared to one, 4$\times$ with 4, 7.7$\times$ with 8 and 9.7$\times$ using 16 threads.
+Behaviour on friendster is similarly good. Here speedup is 1.9$\times$ at 2 threads compared to one, 3.5$\times$ at 4, 6.1$\times$ at 8 threads and 9.7$\times$ at 16 threads.
+Anything above 16 threads however no longer helps decrease the computation time significantly on any graph. Speedup above 16 threads is always less than double the speedup of 16 threads. The maximum measured speedups are 10$\times$ (96 threads) for wikipedia, 17$\times$ (96 threads) for twitter, 11$\times$ (96 threads) for rMat27, 16$\times$ (48 threads) for friendster and 19$\times$ (40 threads) for rMat28.
+In some cases increasing thread counts even prolongues calculation time. For example calculation on rMat28 is actually slower with 48 or 96 threads compared to 40 threads. For 40 threads, the speedup is nearly 19$\times$, on 48 threads 17$\times$ and with 96 threads only 15$\times$ compared to one thread.
 
-Anything above 32 threads however no longer helps decrease the computation time, in some cases even the opposite e.g. calculation on rMat28 is actually slower with 48 (13\% slower) or 96 threads (28\% slower) compared to 40 threads.
-
-Small graphs like flickr or orkut, neither benefit from more threads nor is the performance held up by synchronization overhead. 
+Small graphs, i.e. flickr and orkut neither benefit from more threads nor is the performance significantly held up by synchronization overhead.
+Performance on flickr can not be sped up at all, with speedup on flickr being very close to 1 for 1 to 8 threads and between 0.7$\times$ to 0.9$\times$ from 16 to 96 threads.
+Orkut reaches maximum speedup of 1.6$\times$ at 16 threads. However on orkut, the speedup is always greater or equal to 1.
 
 
 
