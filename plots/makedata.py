@@ -428,6 +428,8 @@ for i in range(len(graph)):
         continue
     if '-dist' in algo[i]:
         continue
+    if '-hp-' in algo[i]:
+        continue
     
     num = int(re.sub('\D', '', algo[i]))
     if not num in x:
@@ -439,7 +441,9 @@ for i in range(len(graph)):
         continue
     if '-dist' in algo[i]:
         continue
-    
+    if '-hp-' in algo[i]:
+        continue
+
     xVal = int(re.sub('\D', '', algo[i]))
     
     if 'sssp' in algo[i]:
@@ -488,4 +492,66 @@ if False:
         #print("inter: ", (tmp[32] - tmp[16])/(32-16) * (24-16) + tmp[16])
             #last = k
     print(maxs)
+
+
+
+
+###SPEEDUP GALOIS HP
+speedupGaloisSSSP_HP = {}
+speedupGaloisBFS_HP = {}
+speedupGaloisPRPush_HP = {}
+speedupGaloisPRPull_HP = {}
+xHP = []
+for g in graphs:
+    speedupGaloisSSSP_HP[g] = {}
+    speedupGaloisBFS_HP[g] = {}
+    speedupGaloisPRPush_HP[g] = {}
+    speedupGaloisPRPull_HP[g] = {}
+
+for i in range(len(graph)):
+    if not 'galois' in algo[i]:
+        continue
+    if '-dist' in algo[i]:
+        continue
+    if not '-hp-' in algo[i]:
+        continue
+    
+    num = int(re.sub('\D', '', algo[i]))
+    if not num in xHP:
+        xHP.append(num)
+xHP.sort()
+
+for i in range(len(graph)):
+    if not 'galois' in algo[i]:
+        continue
+    if '-dist' in algo[i]:
+        continue
+    if not '-hp-' in algo[i]:
+        continue
+    
+    xVal = int(re.sub('\D', '', algo[i]))
+    
+    if 'sssp' in algo[i]:
+        speedupGaloisSSSP_HP[graph[i]][xVal] = calcTime[i]
+    elif 'bfs' in algo[i]:
+        speedupGaloisBFS_HP[graph[i]][xVal] = calcTime[i]
+    elif 'pagerank-push' in algo[i]:
+        speedupGaloisPRPush_HP[graph[i]][xVal] = calcTime[i]
+    elif 'pagerank-pull' in algo[i]:
+        speedupGaloisPRPull_HP[graph[i]][xVal] = calcTime[i]
+
+
+
+#print(speedupGaloisPRPush_HP)
+# Calculations for speedup
+for g in graphs:
+    tSSSP = speedupGaloisSSSP_HP[g][1]
+    tBFS = speedupGaloisBFS_HP[g][1]
+    tPRPush = speedupGaloisPRPush_HP[g][1]
+    tPRPull = speedupGaloisPRPull_HP[g][1]
+    for x_ in xHP:
+        speedupGaloisSSSP_HP[g][x_] = tSSSP / speedupGaloisSSSP_HP[g][x_]
+        speedupGaloisBFS_HP[g][x_] = tBFS / speedupGaloisBFS_HP[g][x_]
+        speedupGaloisPRPush_HP[g][x_] = tPRPush / speedupGaloisPRPush_HP[g][x_]
+        speedupGaloisPRPull_HP[g][x_] = tPRPull / speedupGaloisPRPull_HP[g][x_]
 

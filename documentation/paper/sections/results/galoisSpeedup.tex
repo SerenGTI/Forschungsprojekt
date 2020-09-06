@@ -81,3 +81,30 @@ It is most visible on the values for twitter and friendster, where both values d
 	\caption{Calculation time speedup with increasing thread count for Galois PageRank Push and Pull algorithms.}
 \end{figure}
 
+
+\section{Hugepages}
+\begin{figure}
+	\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisHPThreads.png}
+	\caption{Calculation time speedup with increasing thread count for Galois Single-source Shortest-paths with Hugepages}
+	\label{fig:galoisHPSpeedupSSSP}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisHPThreads.png}
+	\caption{Calculation time speedup with increasing thread count for Galois Breadth-first search with Hugepages}
+	\label{fig:galoisHPSpeedupBFS}
+\end{figure}
+
+\begin{figure}
+	\begin{subfigure}{\columnwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
+		\caption{PageRank Pull}
+		\label{fig:galoisHPSpeedupPRPull}
+	\end{subfigure}
+	\begin{subfigure}{\columnwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePRPushGaloisHPThreads.png}
+		\caption{PageRank Push}
+		\label{fig:galoisHPSpeedupPRPush}
+	\end{subfigure}
+	\caption{Calculation time speedup with increasing thread count for Galois PageRank Push and Pull algorithms using Hugepages.}
+\end{figure}
