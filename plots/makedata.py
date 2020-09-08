@@ -474,9 +474,9 @@ for g in graphs:
 if False:
     maxs = []
     for g in graphs:
-        if g == "flickr":
+        if g == "flickr" or g == 'orkut':
             continue
-        tmp = speedupGaloisPRPull[g]
+        tmp = speedupGaloisBFS[g]
         print(g)
         last = 1
         xs = []
@@ -486,11 +486,13 @@ if False:
         tmps = []
         for k in xs:
             tmps.append(tmp[k])
-            if(tmp[k] > 1):
-                print(k, tmp[k])
+            print(k, round(tmp[k]*10)/10)
         maxs.append(max(tmps))
         #print("inter: ", (tmp[32] - tmp[16])/(32-16) * (24-16) + tmp[16])
             #last = k
+            #
+        # for k in (16,32,40,48,96):
+        #      print(k ,speedupGaloisSSSP[g][k])
     print(maxs)
 
 
