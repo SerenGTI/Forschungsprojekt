@@ -1,6 +1,6 @@
 %!TEX root = ../main.tex
 
-\section{Important Graph Formats}
+\section{Graph Formats}
 Since every frameworks uses different graph input formats, we supply a conversion tool capable of translating from EdgeList to the required formats.
 
 The two most popular graph databases are those associated with the Koblenz Network Collection (KONECT) \cite{konect} and Stanford Network Analysis Project (SNAP) \cite{snap}.
@@ -58,4 +58,4 @@ Each line in the graph file looks as follows
 	[s,v_s,[[t_1, w_{t_1}], [t_2, w_{t_2}]...]]
 \end{equation*}
 with $s$ being a vertex ID, $v_s$ the vertex value of vertex $s$. The values $t_i$ are vertices for which an edge from $s$ to $t_i$ exists. The directed edge $(s,t_i)$ has weight $w_{t_i}$.
-There is no surrounding pair of brackets and no commas separating the lines as it would be expected in a JSON format.
+%There is no surrounding pair of brackets and no commas separating the lines as it would be expected in a JSON format.

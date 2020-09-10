@@ -1,9 +1,30 @@
 %!TEX root=../../main.tex
 
-Polymer is very similar to Ligra, in fact Polymer inherits the programming interfaces \texttt{EdgeMap} and \texttt{VertexMap} from Ligra as its main interface.\cite{Polymer}
+Polymer is a NUMA-aware graph-analytics system that inherits the scatter- gather programming interface from Ligra \cite{Ligra}. 
+Key differences are the data layout and access strategies, Polymer implements.
+The goal is to minimize random and remote memory accesses to improve performance. 
+%Computation is performed in a vertex-centric manner.
 
-Polymer is a vertex-centric framework, that tries to circumvent some of the random memory access drawbacks of such a design. It treats a NUMA machine as a distributed cluster and splits work and graph data accordingly between the nodes.
-Application-defined data is not distributed. Other runtime state data is allocated in a distributed way but only accessed through a global lookup table.
+The first optimization Polymer applies is data locality and access methods across NUMA nodes \cite{Polymer}.
+A general design principle for NUMA machines is to partition the input data so that computation can be grouped with the corresponding data on one node.
+Polymer adopts this and allocates graph data according to the access patterns.
+It treats a NUMA machine like a distributed cluster and splits work and graph data accordingly between the nodes. 
+Vertices and Edges are partitioned and then allocated across the corresponding memory nodes of the threads, eliminating most remote memory accesses.
+However, some computation requires vertices to perform computations on edges that are not in the local NUMA-node.
+For this case, Polymer introduces lightweight vertex replicas that are used to initiate computation on remote edges.
 
+Polymer furthermore has custom storage principles for application-defined data.
+For such data, the memory locations are static but the data undergo frequent dynamic updates. Due to frequent exchanges of application-defined data between the nodes, remote memory accesses are inevitable.
+Hence, Polymer allocates application-defined data with virtual adresses, while distributing the actual memory locations across the nodes. Thus, all updates are applied on a single copy of application-defined data.
 
+Runtime states that are dynamically allocated in each iteration would however create overhead due to repeated construction of a virtual address space.
+These states are thus stored in a custom lock-less (i.e. avoiding contention) lookup table.
 
+Polymer does not only optimize data locality but also its scheduling is custom.
+Time to synchronize threads on different cores increases dramatically with the growing number of involved sockets. Inter-node synchronization takes one order of magnitude longer time than intra-node synchronization \cite{Polymer}.
+Thus, Polymer implements a topology-aware hierarchical synchronization barrier.
+A group of threads on the same NUMA-node shares a partition of data. This allows them to first only synchronize with threads on the same NUMA-node. Only the last thread of each group sychronizes across groups (i.e. nodes). This behaviour decreases the amount of needed cache coherence broadcasts across the nodes.
+
+Furthermore, Polymer switches between different data structures representing the runtime state, similiar to Ligra's behaviour. The main deciding factor to switch is the amount of active vertices relative to an application-defined threshold. Polymer uses a lock-less tree structure representing the active vertices. The leaves use bitmaps, which are efficient for a large proportion of active vertices. When only a small amount of vertices is active, the drawbacks of traversing through sparse bitmaps can be avoided by switching data structures. 
+
+Polymer inherits the programming interfaces \texttt{EdgeMap} and \texttt{VertexMap} from Ligra as its main interface.

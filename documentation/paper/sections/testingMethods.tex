@@ -3,7 +3,7 @@
 \section{Evaluation}
 Einleitung
 
-\subsection{Testing Methods}
+\subsection{Environment}
 For testing the graph processing systems, we used 5 machines with two AMD EPYC 7401 (24-Cores) and 256 GB of RAM each. One of those machines was only used as part of the distributed cluster, since it only has 128 GB of RAM.
 All five machines were running Ubuntu 18.04.2 LTS.
 
@@ -16,6 +16,7 @@ Furthermore, Galois is a framework capable of utilizing hugepages. We include an
 Unless mentioned otherwise, we always show results of each framework utilizing 96 threads (i.e. the maximum on our machines) for the single-node evaluation.
 
 The complete benchmark log files and extracted raw results are available in our repository\footnote{\url{https://github.com/SerenGTI/Forschungsprojekt} // das ist hier unschön.}.
+
 
 \subsection{Data Sets}
 The graphs used in our testing can be seen in detail in \autoref{tbl:graphs}. We included a variaty of different graph sizes, from relatively small graphs like the flickr graph with 2 million edges up to an rMat28 with 4.2 billion edges. All graphs except the rMat27 and rMat28 are exemplary real-world graphs and were retrieved from the graph database\footnote{\url{http://konect.uni-koblenz.de/}} associated with the Koblenz Network Collection (KONECT)\cite{konect}.

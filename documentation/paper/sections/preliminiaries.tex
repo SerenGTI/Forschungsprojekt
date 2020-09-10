@@ -10,7 +10,7 @@ The edge set describes a number of connections or relations between two vertices
   E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
 \end{equation*}
 and in the \emph{undirected} case, the direction is no longer relevant. Thus, in an undirected graph for each $(x,y)\in E$, it holds $(x,y)=(y,x)$. 
-The size of a graph is defined as the number of edges $|E|$\todo{citation?}.
+The size of a graph is defined as the number of edges $|E|$ \cite{newman2010networks}.
 Independently of the graph being directed or not, a graph can be \emph{weighted}. In this case a function $w:E\rightarrow \mathbb R$ is introduced, that maps an edge to a numerical value, further describing the relation.
 
 A \emph{Path} from starting vertex $s$ to target vertex $t$ is a sequence of vertices
@@ -22,7 +22,7 @@ Thus we call a target $t$ \emph{reachable} from $s$ if a Path from $s$ to $t$ ex
 
 \subsection{Single-Source Shortest-Paths}
 Single-Source Shortest-Paths (SSSP) describes the problem of finding the shortest path from a starting vertex to every other vertex in the input graph.
-Input to the problem is a weighted graph $G=(V,E)$ and a start node $s\in V$. Output is the shortest possible distance from $s$ to each node in $V$. 
+Input to the problem is a weighted graph $G=(V,E)$ and a start vertex $s\in V$. Output is the shortest possible distance from $s$ to each vertex in $V$. 
 The distance is defined as the sum of edge weights $w_i$ on a path from $s$ to the target.
 In the case of a unweighted graph, the distance is often described in \emph{hops}, i.e. the number of edges on a path.
 The most common sequential implementations are Dijkstra's algorithm or BellmanFord \cite{Polymer, Ligra, pregel}.
@@ -36,13 +36,19 @@ It is called Breadth-First search because the algorithm searches in a path lengt
 The search algorithm, where the paths of maximum length are checked first is called Depth-First search. 
 
 \subsection{PageRank}
-\emph{PageRank} (PR) is a link analysis algorithm that weighs the vertices of a graph, measuring the vertices relative importance within the graph \cite{pagerank}. This represents a centrality metric of the vertices.
+\todo{Aufbau unschön, Formel fehlt}
+\emph{PageRank} (PR) is a link analysis algorithm that weighs the vertices of a graph, measuring the vertices relative importance within the graph \cite{pagerank}. 
+The algorithm was invented by Sergey Brin and Larry Page, the founders of Google. To this date, Google Search uses PageRank to rank web pages in their search engine results.
+
+
+
+This represents a centrality metric of the vertices.
 The analogy is that the graph represents website pages of the Word Wide Web, that are hyperlinked between one another. A website that is more important is likely to receive more links from other webiste.
 PageRank counts the number and quality of links to a page to estimate the importance of a page.
 The output of PageRank is a percentage for each vertex. This percentage, called the PageRank of the vertex, is the probability with which a web surfer starting at a random web page reaches this webpage (vertex). 
 With a high probability the web surfer uses a random link from the web page they are currently on and with a smaller probability (called damping factor) they jump to a completely random web page.
 
-The algorithm was invented by Sergey Brin and Larry Page, the founders of Google. To this date, Google Search uses PageRank to rank web pages in their search engine results.
+
 
 An optimization to the traditional PageRank implementation is called \emph{Delta-PageRank}.
 The PageRank score of a vertex is only updated if the relative change of the PageRank is larger than some user-defined delta.
