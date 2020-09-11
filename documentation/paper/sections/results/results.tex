@@ -1,6 +1,7 @@
 %!TEX root=../../main.tex
 
 \section{Results}
+\todo{Rename Section???}
 
 
 
@@ -16,11 +17,11 @@ We would like to raise some issues we encountered first while installing and con
 	\item In order for Giraph to run, several Java tasks (the Hadoop infrastructure) have to be constantly running in the background. While we don't expect this to have a significant performance impact on other tasks, it is still suboptimal.
 	%\item The Hadoop distributed file system (HDFS) ran us into disk space problems on multiple occasions. First, unless configured otherwise, the standard implementation replicates all data three times, distributed over all participating nodes. Second, deleting files on the HDFS does not immediately free up disk space because the files are moved to a \emph{recycling bin}-like location.
 
-	\item 
+	\item
 \end{enumerate}
 
 
-On a plus side, setup of the frameworks Polymer and Ligra was straight forward and did not require any special treatment. 
+On a plus side, setup of the frameworks Polymer and Ligra was straight forward and did not require any special treatment.
 
 
 

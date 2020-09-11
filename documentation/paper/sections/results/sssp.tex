@@ -7,13 +7,13 @@ For the results of our SSSP runs, we first analyze the single-node and distribut
 \subsubsection{Single-node}
 Beginning with the single-node performance, \autoref{fig:singleNodeSSSP} shows the average calculation and execution times for SSSP on the different frameworks.
 
-Because we did not see the perfomance going down when increasing thread counts on Galois, we always refer to Galois with 96 threads in this section (including the figures). 
-For a more detailed analysis of Galois' behaviour with different thread counts, see \autoref{sec:galois_speedup}. 
+Because we did not see the perfomance going down when increasing thread counts on Galois, we always refer to Galois with 96 threads in this section (including the figures).
+For a more detailed analysis of Galois' behaviour with different thread counts, see \autoref{sec:galois_speedup}.
 
 
 
 
-TODO // Hier fehlt noch Giraph, daher noch keine vollständige Auswertung.
+\todo{Hier fehlt noch Giraph, daher noch keine vollständige Auswertung.}
 \begin{figure}
 	\begin{subfigure}{0.3\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSP_calcTime.png}
@@ -69,7 +69,7 @@ TODO // Hier fehlt noch Giraph, daher noch keine vollständige Auswertung.
 	\label{fig:distributedSSSP_overhead}
 \end{figure}
 
-Moving on to the distributed cluster, \autoref{fig:distributedSSSP} shows the benchmark results as calculation and execution times. 
+Moving on to the distributed cluster, \autoref{fig:distributedSSSP} shows the benchmark results as calculation and execution times.
 
 Comparing the two Galois implementations, we find the calculation and execution times to be similar on smaller graphs and Push being the superior implementation for SSSP on larger data sets. Galois Pull being anywhere from just as fast to 3.5$\times$ slower on real-world data sets compared to the Push variant. The synthetic graphs are more extreme, execution times are close to 4$\times$ (rMat27) and 5$\times$ (rMat28) longer.
 
@@ -77,7 +77,7 @@ Both Galois implementations have significantly smaller execution times compared 
 You can see Gemini being worse by at least a factor of 4 compared to Galois Push on all graphs except flickr.
 Giraph's execution times in comparison to this are even worse, taking at least 7$\times$ longer than Galois Push on all graphs.
 
-Evidently, Galois Push is the fastest algorithm in our lineup on 6 out of 7 graphs. With the exception being flickr, where Galois Push takes negligibly longer than the Pull counterpart. 
+Evidently, Galois Push is the fastest algorithm in our lineup on 6 out of 7 graphs. With the exception being flickr, where Galois Push takes negligibly longer than the Pull counterpart.
 
 
 
@@ -101,7 +101,7 @@ rMat28&1.0&5.70&11.07&16.5\\\hline
 
 
 
-When taking a closer look at Giraph, it seems to not cope well with synthetic data sets. Analyzing the computation times in \autoref{fig:distributedSSSP_calc}, we see that it is the fastest framework on our real-world graphs. And that with a considerable margin of other frameworks always taking at least 50\% longer (lower bound here is Gemini on flickr) up to Galois Pull needing 18$\times$ more time on wikipedia.  
+When taking a closer look at Giraph, it seems to not cope well with synthetic data sets. Analyzing the computation times in \autoref{fig:distributedSSSP_calc}, we see that it is the fastest framework on our real-world graphs. And that with a considerable margin of other frameworks always taking at least 50\% longer (lower bound here is Gemini on flickr) up to Galois Pull needing 18$\times$ more time on wikipedia.
 On both synthetic graphs however, Giraph is actually the slowest to compute. Giraph requires 12$\times$ or even 15$\times$ the computation time of Gemini on rMat27 or rMat28 respectively.
 
 While Giraph's computation times are very competitive, when comparing the execution times in \autoref{fig:distributedSSSP_exec} we see that Giraph is actually the slowest framework on 5 out of 7 graphs. For the other two, namely twitter and friendster, Giraph is second slowest with only Gemini taking longer to complete.
@@ -113,7 +113,7 @@ For Giraph the overhead times are not as extreme but still generally worse. Even
 
 
 \subsubsection{Single-Node vs. Distributed}
-TODO
+\todo{Vergleich}
 \begin{itemize}
 	\item GaloisPush vs Galois CPU // Galois Pull verliert bei Dist.
 	\item Giraph vs. Giraph

@@ -1,5 +1,7 @@
 %!TEX root=../../main.tex
 
+\todo{Rückmeldung 2 umsetzen}
+
 Ligra is a lightweight graph processing framework for shared memory machines \cite{Ligra}. It offers a vertex-centric programming interface which can be used to apply a function to each vertex or outgoing edge of a set of vertices in parallel. While doing so the framework can generate a set of active vertices for the next iteration. This abstraction makes it well suited for writing graph traversal algorithms.
 
 When mapping over edges Ligra optimizes algorithms by switching between a push-based and a pull-based approach based on the size of the set. When the size of the set is above a threshold a pull approach is used. If the threshold is not reached a push approach is used.
