@@ -1,6 +1,6 @@
 cd raw
 for file in *; do
-  if [[ "$file" =~ ^(.*)-([1-9]+)(.*)$ ]]; then
+  if [[ "$file" =~ ^(.*)-([0-9]+)(.*)$ ]]; then
     if [[ "$file" =~ ^(.*)-hp-(.*)$ ]]; then
       number=$(echo "$file" | awk -F "-" '{print $3}' | awk -F "." '{print $1}')
       ../../scripts/benchmark/benchmark_evaluation.sh "$file" | awk -v number=$number '{print $1 " " $2  "-hp-" number "hread " $3 " " $4 " " $5 " " $6}' > "../eval/$file"

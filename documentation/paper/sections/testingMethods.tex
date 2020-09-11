@@ -1,15 +1,15 @@
 %!TEX root=../main.tex
 
 \section{Evaluation}
-Einleitung
+\todo{Einleitung}
 
 \subsection{Environment}
 For testing the graph processing systems, we used 5 machines with two AMD EPYC 7401 (24-Cores) and 256 GB of RAM each. One of those machines was only used as part of the distributed cluster, since it only has 128 GB of RAM.
 All five machines were running Ubuntu 18.04.2 LTS.
 
 Setup of each framework was performed according to our provided installation guides available in Appendix \ref{app:installationGuides}.
-All benchmark cases were initiated by our benchmark script available in our repository. 
-All five frameworks are tested on a single server. 
+All benchmark cases were initiated by our benchmark script available in our repository.
+All five frameworks are tested on a single server.
 Galois, Gemini and Giraph were benchmarked in on the distributed 5-node cluster as well.
 Since Galois supports this parameter, we ran multiple tests comparing Galois' performance with different thread counts on a single machine.
 Furthermore, Galois is a framework capable of utilizing hugepages. We include an evaluation using those on the single node as well.
@@ -42,13 +42,13 @@ Both the rMat27 and rMat28 were created with a modified version (we changed the 
 
 \subsection{Measurements}
 For every framework, we measured the \emph{execution time} as the time from start to finish of the console command.
-For the \emph{calculation time}, we tried to extract only the time the framework actually executed the algorithm. 
+For the \emph{calculation time}, we tried to extract only the time the framework actually executed the algorithm.
 Furthermore, the \emph{overhead} is the time difference between execution time and calculation time.
 For measuring the calculation time, came up with the following:
 \begin{itemize}
 	\item For Galois, we extract console log time stamps. Galois outputs \enquote{\texttt{Reading graph complete.}}. Calculation time is the time from this output to the end of execution.
 
-	This is not the most realiable way for measuring the calculation times. 
+	This is not the most realiable way for measuring the calculation times.
 	Not only due to unavoidable buffering in the console output we expect the measured time to be larger than the actual.
 	First, it is not clear that all initialization is in fact complete after reading the graph. Second, we include time in the measurement that is used for cleanup after calculation.
 
@@ -70,7 +70,7 @@ Later on, we provide the mean values of the individual times as well as the stan
 \subsection{Algorithms}
 The three problems Breadth-first search (BFS), PageRank (PR) and Single-source shortest-path (SSSP) were used to benchmark framework with every graph.
 We always show the results of PageRank with a maximum of five iterations.
-For frameworks that support multiple implementations (i.e. PageRank in push and pull modes), we included both in our evaluation. 
+For frameworks that support multiple implementations (i.e. PageRank in push and pull modes), we included both in our evaluation.
 
 In detail, the algorithms for each framework are:
 \begin{itemize}
