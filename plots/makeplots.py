@@ -4,19 +4,29 @@ from plotFunctions import *
 
 
 
-distributed = False
-singleNode = False
+distributed = True
+singleNode = True
 
-sssp = False
-bfs = False
-pr = False
+sssp = True
+bfs = True
+pr = True
 
 calcTimes = False
 execTimes = False
-overheads = True
+overheads = False
 
 
-galoisSpeedup = True
+galoisSpeedup = False
+
+
+colors = {"Galois":"#1f77b4",
+"Galois Push":"#1e2bb5",
+"Galois Pull":"#1eb5a8",
+"Gemini":"#ff7f0e",
+"Giraph":"#2ca02c",
+"Ligra":"#d62728",
+"Polymer":"#9467bd",
+"Polymer Delta":"#bc65bb"}
 
 ### PLOTS
 #SINGLE NODE
@@ -24,14 +34,15 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	## CALC TIME
 	#SSSP
 	if sssp or calcTimes:
-		grouped_bar_plot(graphs, frameworks, calcTimeSSSP_singleNode, yErrs=yErrCalcSSSP_singleNode, title='SSSP single node', yLabel='Calculation time (s)', saveToFile="singleNodeSSSP_calcTime.png")
+		grouped_bar_plot(graphs[:-1], frameworks, calcTimeSSSP_singleNode, yErrs=yErrCalcSSSP_singleNode, yLabel='Calculation time (s)', saveToFile="singleNodeSSSP_calcTime.png", colors_=colors)
 
 	#BFS
 	if bfs or calcTimes:
-		grouped_bar_plot(graphs, frameworks, calcTimeBFS_singleNode, yErrs=yErrCalcBFS_singleNode, title='BFS single node', yLabel='Calculation time (s)', saveToFile="singleNodeBFS_calcTime.png")
+		grouped_bar_plot(graphs, frameworks, calcTimeBFS_singleNode, yErrs=yErrCalcBFS_singleNode, title='BFS single node', yLabel='Calculation time (s)', saveToFile="singleNodeBFS_calcTime.png", colors_=colors)
 
+	#PR
 	if pr or calcTimes:
-		grouped_bar_plot(graphs, singleNode_frameworks_pr.values(), calcTimePR_singleNode, yErrs=yErrCalcPR_singleNode, title='PR single node (ugly)', yLabel='Calculation time (s)', saveToFile="singleNodePR_calcTime.png", scaleFactor=3.25)
+		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), calcTimePR_singleNode, yErrs=yErrCalcPR_singleNode, title='PR single node (ugly)', yLabel='Calculation time (s)', saveToFile="singleNodePR_calcTime.png", colors_=colors)
 
 
 
@@ -39,14 +50,15 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	## EXEC TIME
 	#SSSP
 	if sssp or execTimes:
-		grouped_bar_plot(graphs, frameworks, execTimeSSSP_singleNode, yErrs=yErrExecSSSP_singleNode, title='SSSP single node', yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png")
+		grouped_bar_plot(graphs[:-1], frameworks, execTimeSSSP_singleNode, yErrs=yErrExecSSSP_singleNode, yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png", colors_=colors)
 
 	#BFS
 	if bfs or execTimes:
-		grouped_bar_plot(graphs, frameworks, execTimeBFS_singleNode, yErrs=yErrExecBFS_singleNode, title='BFS single node', yLabel='Execution time (s)', saveToFile="singleNodeBFS_execTime.png")
+		grouped_bar_plot(graphs, frameworks, execTimeBFS_singleNode, yErrs=yErrExecBFS_singleNode, title='BFS single node', yLabel='Execution time (s)', saveToFile="singleNodeBFS_execTime.png", colors_=colors)
 
+	#PR
 	if pr or execTimes:
-		grouped_bar_plot(graphs, singleNode_frameworks_pr.values(), execTimePR_singleNode, yErrs=yErrExecPR_singleNode, title='PR single node (ugly)', yLabel='Execution time (s)', saveToFile="singleNodePR_execTime.png")
+		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), execTimePR_singleNode, yErrs=yErrExecPR_singleNode, title='PR single node (ugly)', yLabel='Execution time (s)', saveToFile="singleNodePR_execTime.png", colors_=colors)
 
 
 
@@ -56,20 +68,20 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	## OVERHEAD
 	#SSSP
 	if sssp or overheads:
-		grouped_bar_plot(graphs, frameworks, overheadSSSP_singleNode, title='Overhead time of each framework during SSSP', yLabel='Overhead time (s)', saveToFile="singleNodeSSSP_overheadTime.png")
+		grouped_bar_plot(graphs[:-1], frameworks, overheadSSSP_singleNode, yLabel='Overhead time (s)', saveToFile="singleNodeSSSP_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, frameworks, overheadSSSPNormalized_singleNode, title='SSSP single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeSSSP_overheadTimeNormalized.png", yScale='linear')
+		grouped_bar_plot(graphs[:-1], frameworks, overheadSSSPNormalized_singleNode, title='SSSP single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 	#BFS
 	if bfs or overheads:
-		grouped_bar_plot(graphs, frameworks, overheadBFS_singleNode, title='Overhead time of each framework during BFS', yLabel='Overhead time (s)', saveToFile="singleNodeBFS_overheadTime.png")
+		grouped_bar_plot(graphs, frameworks, overheadBFS_singleNode, title='Overhead time of each framework during BFS', yLabel='Overhead time (s)', saveToFile="singleNodeBFS_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, frameworks, overheadBFSNormalized_singleNode, title='BFS single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeBFS_overheadTimeNormalized.png", yScale='linear')
+		grouped_bar_plot(graphs, frameworks, overheadBFSNormalized_singleNode, title='BFS single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeBFS_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 	if pr or overheads:
-		grouped_bar_plot(graphs, singleNode_frameworks_pr.values(), overheadPR_singleNode, title='Overhead time of each framework during PR', yLabel='Overhead time (s)', saveToFile="singleNodePR_overheadTime.png", scaleFactor=3.25)
+		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), overheadPR_singleNode, title='Overhead time of each framework during PR', yLabel='Overhead time (s)', saveToFile="singleNodePR_overheadTime.png", scaleFactor=3.25, colors_=colors)
 
-		grouped_bar_plot(graphs, singleNode_frameworks_pr.values(), overheadPRNormalized_singleNode, title='PR single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodePR_overheadTimeNormalized.png", yScale='linear', scaleFactor=3.25)
+		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), overheadPRNormalized_singleNode, title='PR single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodePR_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 
 
@@ -109,49 +121,50 @@ if distributed and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	## CALC TIME
 	#SSSP
 
+
 	if sssp or calcTimes:
-		grouped_bar_plot(graphs, dist_frameworks_sssp.values(), calcTimeSSSP_distributed, yErrs=yErrCalcSSSP_distributed, yLabel='Calculation time (s)', saveToFile="distributedSSSP_calcTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), calcTimeSSSP_distributed, yErrs=yErrCalcSSSP_distributed, yLabel='Calculation time (s)', saveToFile="distributedSSSP_calcTime.png", colors_=colors)
 
 	#BFS
 	if bfs or calcTimes:
-		grouped_bar_plot(graphs, dist_frameworks_bfs.values(), calcTimeBFS_distributed, yErrs=yErrCalcBFS_distributed, yLabel='Calculation time (s)', saveToFile="distributedBFS_calcTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_bfs.values()), calcTimeBFS_distributed, yErrs=yErrCalcBFS_distributed, yLabel='Calculation time (s)', saveToFile="distributedBFS_calcTime.png", colors_=colors)
 
 	#PR
 	if pr or calcTimes:
-		grouped_bar_plot(graphs, dist_frameworks_pr.values(), calcTimePR_distributed, yErrs=yErrCalcPR_distributed, yLabel='Calculation time (s)', saveToFile="distributedPR_calcTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), calcTimePR_distributed, yErrs=yErrCalcPR_distributed, yLabel='Calculation time (s)', saveToFile="distributedPR_calcTime.png", colors_=colors)
 
 
 	## EXEC TIME
 	#SSSP
 	if sssp or execTimes:
-		grouped_bar_plot(graphs, dist_frameworks_sssp.values(), execTimeSSSP_distributed, yErrs=yErrExecSSSP_distributed, yLabel='Execution time (s)', saveToFile="distributedSSSP_execTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), execTimeSSSP_distributed, yErrs=yErrExecSSSP_distributed, yLabel='Execution time (s)', saveToFile="distributedSSSP_execTime.png", colors_=colors)
 
 	#BFS
 	if bfs or execTimes:
-		grouped_bar_plot(graphs, dist_frameworks_bfs.values(), execTimeBFS_distributed, yErrs=yErrExecBFS_distributed, yLabel='Execution time (s)', saveToFile="distributedBFS_execTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_bfs.values()), execTimeBFS_distributed, yErrs=yErrExecBFS_distributed, yLabel='Execution time (s)', saveToFile="distributedBFS_execTime.png", colors_=colors)
 
 	#PR
 	if pr or calcTimes:
-		grouped_bar_plot(graphs, dist_frameworks_pr.values(), execTimePR_distributed, yErrs=yErrExecPR_distributed, yLabel='Calculation time (s)', saveToFile="distributedPR_execTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), execTimePR_distributed, yErrs=yErrExecPR_distributed, yLabel='Calculation time (s)', saveToFile="distributedPR_execTime.png", colors_=colors)
 
 	## OVERHEAD
 	#SSSP
 	if sssp or overheads:
-		grouped_bar_plot(graphs, dist_frameworks_sssp.values(), overheadSSSP_distributed, title='Overhead time of each framework during SSSP', yLabel='Overhead time (s)', saveToFile="distributedSSSP_overheadTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSP_distributed, title='Overhead time of each framework during SSSP', yLabel='Overhead time (s)', saveToFile="distributedSSSP_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, dist_frameworks_sssp.values(), overheadSSSPNormalized_distributed, title='SSSP distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedSSSP_overheadTimeNormalized.png", yScale='linear')
+		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSPNormalized_distributed, title='SSSP distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
-		grouped_bar_plot(graphs, dist_frameworks_sssp.values(), overheadSSSP_distributed_normalizedToGalois, yLabel='Galois Push overhead times', saveToFile="distributedSSSP_overheadTimeNormalizedToGalois.png", yScale='log')
+		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSP_distributed_normalizedToGalois, yLabel='Galois Push overhead times', saveToFile="distributedSSSP_overheadTimeNormalizedToGalois.png", yScale='log', colors_=colors)
 
 	#BFS
 	if bfs or overheads:
-		grouped_bar_plot(graphs, dist_frameworks_bfs.values(), overheadBFS_distributed, title='Overhead time of each framework during BFS', yLabel='Overhead time (s)', saveToFile="distributedBFS_overheadTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_bfs.values()), overheadBFS_distributed, title='Overhead time of each framework during BFS', yLabel='Overhead time (s)', saveToFile="distributedBFS_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, dist_frameworks_bfs.values(), overheadBFSNormalized_distributed, title='BFS distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedBFS_overheadTimeNormalized.png", yScale='linear')
+		grouped_bar_plot(graphs, list(dist_frameworks_bfs.values()), overheadBFSNormalized_distributed, title='BFS distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedBFS_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 	#PR
 	if pr or overheads:
-		grouped_bar_plot(graphs, dist_frameworks_pr.values(), overheadPR_distributed, title='Overhead time of each framework during PR', yLabel='Overhead time (s)', saveToFile="distributedPR_overheadTime.png")
+		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), overheadPR_distributed, title='Overhead time of each framework during PR', yLabel='Overhead time (s)', saveToFile="distributedPR_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, dist_frameworks_pr.values(), overheadPRNormalized_distributed, title='PR distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedPR_overheadTimeNormalized.png", yScale='linear')
+		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), overheadPRNormalized_distributed, title='PR distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedPR_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 

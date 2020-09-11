@@ -83,6 +83,8 @@ for f in frameworks:
         fname += "-cpu-96thread" # select Galois thread count here
     k = 0 # graph index
     for g in graphs:
+        if g == 'rMat28':
+            continue
         for i in range(len(graph)):
             if g == graph[i] and fname == algo[i]:
                 tmpCalc.append(calcTime[i])
@@ -102,8 +104,29 @@ for f in frameworks:
     overheadSSSP_singleNode.append(overhead)
     overheadSSSPNormalized_singleNode.append(overheadNormalized)
 
-
-
+if False:
+    k = 0
+    gr = 0
+    s = np.zeros(len(graphs)-1)
+    for f in frameworks:
+        if f == 'Giraph':
+            k += 1
+            continue
+        for i in range(len(calcTimeSSSP_singleNode[k])):
+            s[i] += calcTimeSSSP_singleNode[k][i]
+        k += 1
+    s /= 4
+    print("average calculation time:", s)
+    k = 0
+    for f in frameworks:
+        # if f == 'Giraph':
+        #     k += 1
+        #     continue
+        print(f)
+        for i in range(1, len(execTimeSSSP_singleNode[k])):
+            print(graphs[i], round((execTimeSSSP_singleNode[k][i] / execTimeSSSP_singleNode[0][i]) * 100), "%")
+            print(graphs[i], round(execTimeSSSP_singleNode[k][i] * 100) / 100, "s")
+        k += 1
 
 ## SSSP DISTRIBUTED
 dist_frameworks_sssp = {

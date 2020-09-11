@@ -6,12 +6,11 @@ import matplotlib
 
 #
 # values = [[f1_g1,f1_g2,...],[f2_g1,f2_g2,...],...]
-def grouped_bar_plot(group_names, legend_names, values, yErrs=None, width=0.35, scaleFactor=None, title='', yLabel='', yScale='log', saveToFile=None):
+def grouped_bar_plot(group_names, legend_names, values, colors_=None, yErrs=None, width=0.35, scaleFactor=None, title='', yLabel='', yScale='log', saveToFile=None):
 	group_count = len(group_names)
 
 	if len(legend_names) != len(values):
 		raise Exception("Size mismatch: Expected " + str(len(legend_names)) + " categories, got " + str(len(values)))
-
 
 	if scaleFactor == None:
 		scaleFactor = (len(legend_names) + 1.5) * width
@@ -32,7 +31,10 @@ def grouped_bar_plot(group_names, legend_names, values, yErrs=None, width=0.35, 
 		while group_count > len(tmp):
 			tmp.append(float('nan'))
 
-		ps.append(ax.bar(scaleFactor * ind + i * width, tmp, width, yerr=yErr, bottom=0))
+		if not colors_ == None:
+			ps.append(ax.bar(scaleFactor * ind + i * width, tmp, width, yerr=yErr, bottom=0, color=colors_[legend_names[i]]))
+		else:
+			ps.append(ax.bar(scaleFactor * ind + i * width, tmp, width, yerr=yErr, bottom=0))
 		i += 1
 
 	ax.set_xticks(scaleFactor * ind + (len(legend_names)-1) / 2 * width)
