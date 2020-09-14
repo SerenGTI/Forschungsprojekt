@@ -155,14 +155,14 @@ overheadSSSP_distributed_normalizedToGalois = []
 i = 0
 for k in dist_frameworks_sssp:
     overheadSSSP_distributed_normalizedToGalois.append([])
-    #print(dist_frameworks_sssp[k])
+    #print(dist_frameworks_sssp[k], end='')
     for j in range(len(overheadSSSP_distributed[i])):
-        #print(graphs[j] + ": ", calcTimeSSSP_distributed[i][j]/calcTimeSSSP_distributed[2][j])
+        #print("&", round(execTimeSSSP_distributed[i][j]/execTimeSSSP_distributed[0][j] * 100) / 100, end='')
         overheadSSSP_distributed_normalizedToGalois[i].append(overheadSSSP_distributed[i][j]/overheadSSSP_distributed[0][j]) 
     i += 1
+    #print("\\\\")
 
-
-
+#print(graphs)
 
 
 
@@ -273,9 +273,10 @@ singleNode_frameworks_pr = {
     "gemini-pagerank":"Gemini",
     "giraph-pagerank":"Giraph",
     "ligra-pagerank":"Ligra",
-    "ligra-pagerank-delta":"Ligra Delta",
-    "polymer-pagerank":"Polymer",
-    "polymer-pagerank-delta":"Polymer Delta"}
+    #"ligra-pagerank-delta":"Ligra Delta",
+    #"polymer-pagerank":"Polymer",
+    "polymer-pagerank-delta":"Polymer Delta"
+    }
 
 calcTimePR_singleNode = []
 yErrCalcPR_singleNode = []
@@ -314,6 +315,44 @@ for f in singleNode_frameworks_pr:
     yErrExecPR_singleNode.append(tmpYErrExec)
     overheadPR_singleNode.append(overhead)
     overheadPRNormalized_singleNode.append(overheadNormalized)
+
+
+if False:
+    k = 0
+    values = {}
+    for f in singleNode_frameworks_pr:
+        if 'ligra' in f or 'polymer' in f:
+            values[f] = execTimePR_singleNode[k]
+        k += 1
+
+    ligra = []
+    polymer = []
+
+    for l in range(len(values["ligra-pagerank"])):
+        v1 = values["ligra-pagerank"][l]
+        v2 = values["ligra-pagerank-delta"][l]
+        v = abs((v1-v2) / max(v1,v2))
+        ligra.append(v)
+    # print(ligra)
+    # print(sum(ligra) / len(ligra))
+
+    for l in range(len(values["polymer-pagerank"])):
+        v1 = values["polymer-pagerank"][l]
+        v2 = values["polymer-pagerank-delta"][l]
+        if v1>v2:
+            print("delta")
+        else:
+            print("reg")
+        v = abs((v1-v2) / max(v1,v2))
+        polymer.append(v)
+
+    print(polymer)
+    print(sum(polymer[:-1]) / len(polymer[:-1])) 
+
+    
+
+
+
 
 
 
@@ -389,6 +428,8 @@ for i in range(len(graph)):
         continue
     if '-dist' in algo[i]:
         continue
+    if '-hp-' in algo[i]:
+        continue
     
     num = int(re.sub('\D', '', algo[i]))
     if not num in x:
@@ -400,7 +441,9 @@ for i in range(len(graph)):
         continue
     if '-dist' in algo[i]:
         continue
-    
+    if '-hp-' in algo[i]:
+        continue
+
     xVal = int(re.sub('\D', '', algo[i]))
     
     if 'sssp' in algo[i]:
@@ -429,8 +472,9 @@ for g in graphs:
 
 
 if False:
+    maxs = []
     for g in graphs:
-        if g == 'flickr' or g == 'orkut':
+        if g == "flickr" or g == 'orkut':
             continue
         tmp = speedupGaloisBFS[g]
         print(g)
@@ -439,6 +483,77 @@ if False:
         for k in tmp:
             xs.append(k)
         xs.sort()
+        tmps = []
         for k in xs:
-            print(k, tmp[k], tmp[k] / tmp[last])
+            tmps.append(tmp[k])
+            print(k, round(tmp[k]*10)/10)
+        maxs.append(max(tmps))
+        #print("inter: ", (tmp[32] - tmp[16])/(32-16) * (24-16) + tmp[16])
             #last = k
+            #
+        # for k in (16,32,40,48,96):
+        #      print(k ,speedupGaloisSSSP[g][k])
+    print(maxs)
+
+
+
+
+###SPEEDUP GALOIS HP
+speedupGaloisSSSP_HP = {}
+speedupGaloisBFS_HP = {}
+speedupGaloisPRPush_HP = {}
+speedupGaloisPRPull_HP = {}
+xHP = []
+for g in graphs:
+    speedupGaloisSSSP_HP[g] = {}
+    speedupGaloisBFS_HP[g] = {}
+    speedupGaloisPRPush_HP[g] = {}
+    speedupGaloisPRPull_HP[g] = {}
+
+for i in range(len(graph)):
+    if not 'galois' in algo[i]:
+        continue
+    if '-dist' in algo[i]:
+        continue
+    if not '-hp-' in algo[i]:
+        continue
+    
+    num = int(re.sub('\D', '', algo[i]))
+    if not num in xHP:
+        xHP.append(num)
+xHP.sort()
+
+for i in range(len(graph)):
+    if not 'galois' in algo[i]:
+        continue
+    if '-dist' in algo[i]:
+        continue
+    if not '-hp-' in algo[i]:
+        continue
+    
+    xVal = int(re.sub('\D', '', algo[i]))
+    
+    if 'sssp' in algo[i]:
+        speedupGaloisSSSP_HP[graph[i]][xVal] = calcTime[i]
+    elif 'bfs' in algo[i]:
+        speedupGaloisBFS_HP[graph[i]][xVal] = calcTime[i]
+    elif 'pagerank-push' in algo[i]:
+        speedupGaloisPRPush_HP[graph[i]][xVal] = calcTime[i]
+    elif 'pagerank-pull' in algo[i]:
+        speedupGaloisPRPull_HP[graph[i]][xVal] = calcTime[i]
+
+
+
+#print(speedupGaloisPRPush_HP)
+# Calculations for speedup
+for g in graphs:
+    tSSSP = speedupGaloisSSSP_HP[g][1]
+    tBFS = speedupGaloisBFS_HP[g][1]
+    tPRPush = speedupGaloisPRPush_HP[g][1]
+    tPRPull = speedupGaloisPRPull_HP[g][1]
+    for x_ in xHP:
+        speedupGaloisSSSP_HP[g][x_] = tSSSP / speedupGaloisSSSP_HP[g][x_]
+        speedupGaloisBFS_HP[g][x_] = tBFS / speedupGaloisBFS_HP[g][x_]
+        speedupGaloisPRPush_HP[g][x_] = tPRPush / speedupGaloisPRPush_HP[g][x_]
+        speedupGaloisPRPull_HP[g][x_] = tPRPull / speedupGaloisPRPull_HP[g][x_]
+

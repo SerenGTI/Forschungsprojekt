@@ -14,7 +14,7 @@ def grouped_bar_plot(group_names, legend_names, values, yErrs=None, width=0.35, 
 
 
 	if scaleFactor == None:
-		scaleFactor = group_count / len(legend_names) + 1
+		scaleFactor = (len(legend_names) + 1.5) * width
 
 	fig, ax = plt.subplots()
 

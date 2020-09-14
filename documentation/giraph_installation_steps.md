@@ -404,5 +404,6 @@ $HADOOP_HOME/bin/hadoop jar $GIRAPH_HOME/giraph-examples/target/giraph-examples-
 * The `class org.apache.giraph.examples.SimplePageRankComputation not <some other class>` exception. In this case, you selected the inner class of the MasterCompute or WorkerContext falsely. The correct way to adress those is `packageName.OuterClass\$InnerClass`! The backslash is very important. Check the supplied command above, the WorkerContext and MasterCompute  are selected correctly.
 * The console output is very short and the log file contains the exception
 `Tried to access reducer which wasn't registered <aggregator name>; Aggregators can be registered from MasterCompute by calling registerReducer function\. [...]`. Here you forgot to create a MasterCompute class or failed to tell giraph which one to use. Just add the `-mc` flag followed by the class name of a `MasterCompute`.
-
+* If you find yourself running out of disk space after running Giraph jobs for some time, check your `<hadoop-tmp>/mapred/userlogs` folder for logfiles. This  folder contains unnecessary logs that can easily be multiple gigabytes in size.
+* In some cases deletion may fail because the NameNode is in _safe mode_. This is supposed to happen on startup or when disk space is running low. To disable safe mode, run `$HADOOP_HOME/bin/hadoop dfsadmin -safemode leave`.
 ---

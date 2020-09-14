@@ -1,4 +1,4 @@
-\documentclass[conference,a4paper]{IEEEtran}
+\documentclass[a4paper]{IEEEtran}
 
 \usepackage[noadjust]{cite}
 \usepackage[utf8]{inputenc}
@@ -16,12 +16,14 @@
 \usepackage{amssymb}
 
 
+
 \usepackage{tabularx}
 \def\tabularxcolumn#1{m{#1}} % vertical centering in tabularx cells
 \newcolumntype{Y}{>{\centering\arraybackslash}X} % cell type Y for centered text with automatic line breaks
-\newcommand*\rot{\rotatebox{90}} % rotates content 90deg ccw, mainly for table headers
+\newcommand*\rot{\rotatebox{45}} % rotates content 90deg ccw, mainly for table headers
 \newcommand*\OK{\ding{51}} % a checkmark-style sign
 
+\newcommand{\todo}[1]{{\color{red!90!black}//\bf{TODO:} #1}}
 
 
 
@@ -30,19 +32,25 @@
 \title{A Comparison of Graph Processing Systems}
 
 \author{\IEEEauthorblockN{Simon König}
-\IEEEauthorblockA{(3344789)\\
+\IEEEauthorblockA{(3344789)
 st156571@stud.uni-stuttgart.de}
+
 \and
+
 \IEEEauthorblockN{Leon Matzner}
-\IEEEauthorblockA{(3315161)\\
+\IEEEauthorblockA{(3315161)
 st155698@stud.uni-stuttgart.de}
+
 \and
+
 \IEEEauthorblockN{Felix Rollbühler}
-\IEEEauthorblockA{(3310069)\\
+\IEEEauthorblockA{(3310069)
 st154960@stud.uni-stuttgart.de}
+
 \and
+
 \IEEEauthorblockN{Jakob Schmid}
-\IEEEauthorblockA{(3341630)\\
+\IEEEauthorblockA{(3341630)
 st157100@stud.uni-stuttgart.de}}
 
 \date{\today}
@@ -55,42 +63,46 @@ st157100@stud.uni-stuttgart.de}}
 
 
 \begin{abstract}
-TODO
+\todo{Section}
 \end{abstract}
 
 \begin{IEEEkeywords}
 graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon, Gemini
 \end{IEEEkeywords}
 
-
+\section*{TODOs}
+\begin{itemize}
+  \item Appendix für Setup Guides - md zu pdf
+\end{itemize}
 
 \section{Introduction}
-In recent years graph sizes have increased significantly [?] .
-Thus performance and memory efficiency of the graph analysis applications is now more important than ever. 
+\todo{Section}
+% In recent years graph sizes have increased significantly [?] .
+% Thus performance and memory efficiency of the graph analysis applications is now more important than ever.
 
-Many applications like 
+% Many applications like
 
-Wachsende graphen,
-benötigt für folgende Applikationen,
-verwenden graph algorithmen,
-diese müssen schnell und verteilt laufen
-dafür wurden Frameworks entwickelt...
+% Wachsende graphen,
+% benötigt für folgende Applikationen,
+% verwenden graph algorithmen,
+% diese müssen schnell und verteilt laufen
+% dafür wurden Frameworks entwickelt...
 
-und das noch schön formulieren
+% und das noch schön formulieren
 
 
-We compare several non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).
-The comparison is performed on both real world data sets and synthetic graphs. 
+% We compare several non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).
+% The comparison is performed on both real world data sets and synthetic graphs.
 
-To provide a comparison to a non-NUMA aware system, Giraph\cite{Giraph} is included in the testing. Giraph itself has often been compared to other state of the art systems like Pregel or GraphX.
+% To provide a comparison to a non-NUMA aware system, Giraph\cite{Giraph} is included in the testing. Giraph itself has often been compared to other state of the art systems like Pregel or GraphX.
 
 
 
 %One of the most famous is the (closed source) distributed graph processing system Pregel. Pregel and several open source versions of .
-%This results in suboptimal performance, due to missing cache locality, because the Pregel like systems are written in an object oriented manner relying on pointer chasing mechanisms. 
+%This results in suboptimal performance, due to missing cache locality, because the Pregel like systems are written in an object oriented manner relying on pointer chasing mechanisms.
 
 
-To this end several non-uniform memory access (NUMA) aware systems were proposed like Polymer \cite{Polymer}, Galois \cite{Galois} or Ligra \cite{Ligra}.
+% To this end several non-uniform memory access (NUMA) aware systems were proposed like Polymer \cite{Polymer}, Galois \cite{Galois} or Ligra \cite{Ligra}.
 
 
 
@@ -102,115 +114,48 @@ This paper makes the following contributions:
   \item
 \end{itemize}
 
-\section{Preliminaries}
-
-\paragraph{Graphs and Paths}
-An \emph{unweighted graph} is the pair $G=(V,E)$ where the \emph{vertex set} is $V\subseteq\mathbb N$ and the $E$ is the \emph{edge set}.
-The edge set describes a number of connections or relations between two vertices. Depending on these relations, a graph can be directed or undirected. For a \emph{directed graph} the edge set becomes 
-\begin{equation*}
-  E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
-\end{equation*}
-and in the \emph{undirected} case $E$ is a set of two-sets 
-\begin{equation*}
-  E\subseteq\{\{x,y\}\,|\, x,y\in V, x\neq y\}.
-\end{equation*}
-
-The main difference is thus, that in the case of a directed graph a connection between $s$ and $t$ is not the same as a connection between $t$ and $s$ -- the direction matters.
-
-Independently of the graph being directed or not, a graph can be \emph{weighted}. In this case the edge set is expanded by a numerical value $E_{\text{weighted}}=E_{\text{unweighted}}\times \mathbb R$ further describing the relation.
-
-The size of a graph is often described in the number of edges $|E|$ because this number is typically much larger than the number of vertices $|V|$.
-
-A \emph{Path} from start $s$ to target $t$ is a set of edges $P\subseteq E^n$ with
-\begin{equation*}
-   P=((x_0,x_1),(x_1,x_2),\ldots, (x_{n-1},x_n))
-\end{equation*}
-where all $(x_i,x_{i+1})\in E$ and $x_0=s, x_n=t$.
-
-Thus we call a target $t$ \emph{accessible} from $s$ if a Path from $s$ to $t$ exists.
-
-\paragraph{Single-Source Shortest-Paths}
-Single-Source Shortest-Paths (SSSP) describes the problem of finding a path along some edges of the input graph from a given start node to a target.
-
-Input to the problem is a weighted graph $G=(V,E)$ and a start node $s\in V$. Output is the shortest possible distance from $s$ to each node in $V$. 
-The distance is defined as the sum of edge weights $w_i$ on a path from $s$ to the target.
-In the case of a unweighted graph, the distance is often described in \emph{hops}, i.e. the number of edges on a path.
-
-The most common implementations are Dijkstra's algorithm or BellmanFord.
-
-\paragraph{Breadth-First Search}
-Breadth-first search (BFS) is a search problem on a graph. It usually requires an unweighted graph and a start vertex as input. In some cases a target vertex is also given.
-
-The output is usually a set of vertices that are accessible from the start vertex. In the case of a target being given, the output is true if a path from start to target exists or false otherwise.
-
-\paragraph{PageRank}
 
 
+\input{sections/relatedWork}
 
-\paragraph{Pregel Model}
+\input{sections/preliminiaries}
 
+\input{sections/overview/overview}
 
-
-
-% Google, to overcome, these challenges came up with Pregel.
-% Provides scalability
-% Fault-tolerance
-% Flexibility to express arbitrary algorithms
-% The high level organization of Pregel programs
-% is inspired by Valiant’s Bulk Synchronous
-%  Parallel model 
-\paragraph{Congest Model}
-
-
-\section{Overview of the framworks}
-\subsection{Galois and Gluon}
-\input{sections/overview/galois}
-
-\subsection{Gemini}
-\input{sections/overview/gemini}
-
-\subsection{Giraph}
-\input{sections/overview/giraph}
-
-\subsection{Ligra}
-\input{sections/overview/ligra}
-
-\subsection{Polymer}
-\input{sections/overview/polymer}
-
-
-\section{And}
-\input{sections/graphFormats}%hier oder supplementary data?
-
-\section{Testing methods}
 \input{sections/testingMethods}
 
-\section{Results}
 \input{sections/results/results}
 
 
 \section{Discussion}
+\todo{Section}
 
 
 
 
 \section{Conclusion}
-The conclusion goes here.
+\todo{Section}
+
 
 
 \clearpage
 
 
-\section*{Acknowledgment}
-We are using the graph frameworks Galois~\cite{Galois}, Ligra~\cite{Ligra}, Polymer~\cite{Polymer}, Gemini~\cite{Gemini} as well as Apache Giraph~\cite{Giraph}.
+\section*{Acknowledgments}
+%We would like to thank our supervisor Heiko Geppert for his continued guidance and support.
 
-Also we use Gluon~\cite{vertGalois} for the distributed Galois setups.
 
-Gemini~\cite{Gemini}
 
-%We would like to thank our supervisor Heiko Geppert for continued guidance and support.
+\appendices
+\todo{Beide zusammenfassen}
+\section{Installation Guides}\label{app:installationGuides}
+The complete installation guides with steps on how to run the same algorithms we used is available in our repository\footnote{\url{https://github.com/SerenGTI/Forschungsprojekt/tree/master/documentation}}
 
-\section*{Supplementary Data}\label{supplementaryData}
+In case of frameworks like Giraph, where for example no BFS algorithm is provided by the framework itself, the algorithm and a guide on how to include it in the framework can be found in the repository as well.
+
+\section{Conversion Tool}\label{app:conversionTool}
+In order to
+
 We have written a number of conversion tools and installation guides to help
 users or developers with the use of the tested frameworks.
 
@@ -246,9 +191,7 @@ Our GitHub repository: \url{http://www.github.com/serengti/Forschungsprojekt}.
 % Alles ab hier kommt aus main.bbl
 
 % Generated by IEEEtran.bst, version: 1.12 (2007/01/11)
-% Generated by IEEEtran.bst, version: 1.12 (2007/01/11)
-% Generated by IEEEtran.bst, version: 1.12 (2007/01/11)
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \providecommand{\url}[1]{#1}
 \csname url@samestyle\endcsname
 \providecommand{\newblock}{\relax}
@@ -270,6 +213,79 @@ Our GitHub repository: \url{http://www.github.com/serengti/Forschungsprojekt}.
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{Polymer}
+\BIBentryALTinterwordspacing
+K.~Zhang, R.~Chen, and H.~Chen, ``Numa-aware graph-structured analytics,'' in
+  \emph{Proceedings of the 20th ACM SIGPLAN Symposium on Principles and
+  Practice of Parallel Programming}, ser. PPoPP 2015.\hskip 1em plus 0.5em
+  minus 0.4em\relax New York, NY, USA: Association for Computing Machinery,
+  2015, p. 183–193. [Online]. Available:
+  \url{https://doi.org/10.1145/2688500.2688507}
+\BIBentrySTDinterwordspacing
+
+\bibitem{Ligra}
+\BIBentryALTinterwordspacing
+J.~Shun and G.~E. Blelloch, ``Ligra: A lightweight graph processing framework
+  for shared memory,'' in \emph{Proceedings of the 18th ACM SIGPLAN Symposium
+  on Principles and Practice of Parallel Programming}, ser. PPoPP ’13.\hskip
+  1em plus 0.5em minus 0.4em\relax New York, NY, USA: Association for Computing
+  Machinery, 2013, p. 135–146. [Online]. Available:
+  \url{https://doi.org/10.1145/2442516.2442530}
+\BIBentrySTDinterwordspacing
+
+\bibitem{pregel}
+\BIBentryALTinterwordspacing
+G.~Malewicz, M.~H. Austern, A.~J. Bik, J.~C. Dehnert, I.~Horn, N.~Leiser, and
+  G.~Czajkowski, ``Pregel: A system for large-scale graph processing,'' in
+  \emph{Proceedings of the 2010 ACM SIGMOD International Conference on
+  Management of Data}, ser. SIGMOD '10.\hskip 1em plus 0.5em minus 0.4em\relax
+  New York, NY, USA: Association for Computing Machinery, 2010, p. 135–146.
+  [Online]. Available: \url{https://doi.org/10.1145/1807167.1807184}
+\BIBentrySTDinterwordspacing
+
+\bibitem{pagerank}
+\BIBentryALTinterwordspacing
+S.~Brin and L.~Page, ``Reprint of: The anatomy of a large-scale hypertextual
+  web search engine,'' \emph{Computer Networks}, vol.~56, no.~18, pp. 3825 --
+  3833, 2012, the WEB we live in. [Online]. Available:
+  \url{http://www.sciencedirect.com/science/article/pii/S1389128612003611}
+\BIBentrySTDinterwordspacing
+
+\bibitem{bsp}
+\BIBentryALTinterwordspacing
+L.~G. Valiant, ``A bridging model for parallel computation,'' \emph{Commun.
+  ACM}, vol.~33, no.~8, p. 103–111, Aug. 1990. [Online]. Available:
+  \url{https://doi.org/10.1145/79173.79181}
+\BIBentrySTDinterwordspacing
+
+\bibitem{Giraph}
+\BIBentryALTinterwordspacing
+{Apache Software Foundation}. (2020, Jun.) {Apache Giraph}. [Online].
+  Available: \url{https://giraph.apache.org}
+\BIBentrySTDinterwordspacing
+
+\bibitem{graphx}
+J.~E. Gonzalez, R.~S. Xin, A.~Dave, D.~Crankshaw, M.~J. Franklin, and
+  I.~Stoica, ``Graphx: Graph processing in a distributed dataflow framework,''
+  in \emph{Proceedings of the 11th USENIX Conference on Operating Systems
+  Design and Implementation}, ser. OSDI'14.\hskip 1em plus 0.5em minus
+  0.4em\relax USA: USENIX Association, 2014, p. 599–613.
+
+\bibitem{powergraph}
+\BIBentryALTinterwordspacing
+J.~E. Gonzalez, Y.~Low, H.~Gu, D.~Bickson, and C.~Guestrin, ``Powergraph:
+  Distributed graph-parallel computation on natural graphs,'' in \emph{10th
+  {USENIX} Symposium on Operating Systems Design and Implementation ({OSDI}
+  12)}.\hskip 1em plus 0.5em minus 0.4em\relax Hollywood, CA: {USENIX}
+  Association, Oct. 2012, pp. 17--30. [Online]. Available:
+  \url{https://www.usenix.org/conference/osdi12/technical-sessions/presentation/gonzalez}
+\BIBentrySTDinterwordspacing
+
+\bibitem{mapreduce}
+J.~Dean and S.~Ghemawat, ``Mapreduce: Simplified data processing on large
+  clusters,'' in \emph{In Proceedings of Operating Systems Design and
+  Implementation (OSDI}, pp. 137--150.
+
 \bibitem{Galois}
 \BIBentryALTinterwordspacing
 D.~Nguyen, A.~Lenharth, and K.~Pingali, ``A lightweight infrastructure for
@@ -290,33 +306,6 @@ R.~Dathathri, G.~Gill, L.~Hoang, H.-V. Dang, A.~Brooks, N.~Dryden, M.~Snir, and
   \url{https://doi.org/10.1145/3192366.3192404}
 \BIBentrySTDinterwordspacing
 
-\bibitem{Polymer}
-\BIBentryALTinterwordspacing
-K.~Zhang, R.~Chen, and H.~Chen, ``Numa-aware graph-structured analytics,'' in
-  \emph{Proceedings of the 20th ACM SIGPLAN Symposium on Principles and
-  Practice of Parallel Programming}, ser. PPoPP 2015.\hskip 1em plus 0.5em
-  minus 0.4em\relax New York, NY, USA: Association for Computing Machinery,
-  2015, p. 183–193. [Online]. Available:
-  \url{https://doi.org/10.1145/2688500.2688507}
-\BIBentrySTDinterwordspacing
-
-\bibitem{adjListFormat}
-\BIBentryALTinterwordspacing
-J.~Shun, G.~Blelloch, J.~Fineman, P.~Gibbons, A.~Kyrola, K.~Tangwonsan, and
-  H.~V. Simhadri. (2020, Jun.) {Problem Based Benchmark Suite}. graphIO.html.
-  [Online]. Available: \url{http://www.cs.cmu.edu/~pbbs/benchmarks/}
-\BIBentrySTDinterwordspacing
-
-\bibitem{Ligra}
-\BIBentryALTinterwordspacing
-J.~Shun and G.~E. Blelloch, ``Ligra: A lightweight graph processing framework
-  for shared memory,'' in \emph{Proceedings of the 18th ACM SIGPLAN Symposium
-  on Principles and Practice of Parallel Programming}, ser. PPoPP ’13.\hskip
-  1em plus 0.5em minus 0.4em\relax New York, NY, USA: Association for Computing
-  Machinery, 2013, p. 135–146. [Online]. Available:
-  \url{https://doi.org/10.1145/2442516.2442530}
-\BIBentrySTDinterwordspacing
-
 \bibitem{Gemini}
 \BIBentryALTinterwordspacing
 X.~Zhu, W.~Chen, W.~Zheng, and X.~Ma, ``Gemini: A computation-centric
@@ -327,15 +316,22 @@ X.~Zhu, W.~Chen, W.~Zheng, and X.~Ma, ``Gemini: A computation-centric
   \url{https://www.usenix.org/conference/osdi16/technical-sessions/presentation/zhu}
 \BIBentrySTDinterwordspacing
 
-\bibitem{Giraph}
-\BIBentryALTinterwordspacing
-A.~S. Foundation. (2020, Jun.) {Apache Giraph}. [Online]. Available:
-  \url{https://giraph.apache.org}
-\BIBentrySTDinterwordspacing
-
 \bibitem{konect}
 J.~Kunegis, ``Konect: the koblenz network collection,'' 05 2013, pp.
   1343--1350.
+
+\bibitem{snap}
+\BIBentryALTinterwordspacing
+Stanford~University. (2020, Sep.) Stanford network analysis project. [Online].
+  Available: \url{https://snap.stanford.edu}
+\BIBentrySTDinterwordspacing
+
+\bibitem{pbbs}
+\BIBentryALTinterwordspacing
+J.~Shun, G.~Blelloch, J.~Fineman, P.~Gibbons, A.~Kyrola, K.~Tangwonsan, and
+  H.~V. Simhadri. (2020, Aug.) {Problem Based Benchmark Suite }. [Online].
+  Available: \url{http://www.cs.cmu.edu/~pbbs/}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}
 

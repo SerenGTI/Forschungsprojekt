@@ -631,9 +631,94 @@ benchmark_giraph_bfs_dist() {
   done
 }
 
+benchmark_giraph_pagerank() {
+  for startnode in ${startnodes_flickr[@]}; do
+    giraph-pagerank flickr
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    giraph-pagerank orkut
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    giraph-pagerank wikipedia
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    giraph-pagerank twitter
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    giraph-pagerank friendster
+  done
+  for startnode in ${startnodes_rMat27[@]}; do
+    giraph-pagerank rMat27
+  done
+  for startnode in ${startnodes_rMat28[@]}; do
+    giraph-pagerank rMat28
+  done
+}
+
+benchmark_giraph_bfs() {
+  for startnode in ${startnodes_flickr[@]}; do
+    giraph-bfs flickr $startnode
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    giraph-bfs friendster $startnode
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    giraph-bfs orkut $startnode
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    giraph-bfs twitter $startnode
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    giraph-bfs wikipedia $startnode
+  done
+  for startnode in ${startnodes_rMat27[@]}; do
+    giraph-bfs rMat27 $startnode
+  done
+  for startnode in ${startnodes_rMat28[@]}; do
+    giraph-bfs rMat28 $startnode
+  done
+}
+
+benchmark_giraph() {
+  for startnode in ${startnodes_flickr[@]}; do
+    giraph-sssp flickr $startnode
+    giraph-bfs flickr $startnode
+    giraph-pagerank flickr
+  done
+  for startnode in ${startnodes_orkut[@]}; do
+    giraph-sssp orkut $startnode
+    giraph-bfs orkut $startnode
+    giraph-pagerank orkut
+  done
+  for startnode in ${startnodes_wikipedia[@]}; do
+    giraph-sssp wikipedia $startnode
+    giraph-bfs wikipedia $startnode
+    giraph-pagerank wikipedia
+  done
+  for startnode in ${startnodes_twitter[@]}; do
+    giraph-sssp twitter $startnode
+    giraph-bfs twitter $startnode
+    giraph-pagerank twitter
+  done
+  for startnode in ${startnodes_friendster[@]}; do
+    giraph-sssp friendster $startnode
+    giraph-bfs friendster $startnode
+    giraph-pagerank friendster
+  done
+  for startnode in ${startnodes_rMat27[@]}; do
+    giraph-sssp rMat27 $startnode
+    giraph-bfs rMat27 $startnode
+    giraph-pagerank rMat27
+  done
+  for startnode in ${startnodes_rMat28[@]}; do
+    giraph-sssp rMat28 $startnode
+    giraph-bfs rMat28 $startnode
+    giraph-pagerank rMat28
+  done
+}
 
 
 time_start=$(get_time)
-benchmark_giraph_bfs_dist
+benchmark_giraph
 dur_exec=$((($(get_time)-$time_start)/1000000))
 echo "benchmark took $dur_exec seconds"

@@ -436,7 +436,7 @@ giraph-bfs-dist () {
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
     local dur_calc_giraph=$(echo "$result" | grep 'Superstep ' | awk -F '=' '{s += $2} END {print s*1000}')
-    log "giraph-bfs-dist $1 $pagerank_number_of_iterations - $dur_calc $dur_exec $dur_calc_giraph"
+    log "giraph-bfs-dist $1 $2 - $dur_calc $dur_exec $dur_calc_giraph"
 }
 
 giraph-bfs () {
@@ -452,5 +452,5 @@ giraph-bfs () {
     local start_calc=$(convert_time $start_calc)
     local dur_calc=$(($time_finish-$start_calc))
     local dur_calc_giraph=$(echo "$result" | grep 'Superstep ' | awk -F '=' '{s += $2} END {print s*1000}')
-    log "giraph-bfs $1 $pagerank_number_of_iterations - $dur_calc $dur_exec $dur_calc_giraph"
+    log "giraph-bfs $1 $2 - $dur_calc $dur_exec $dur_calc_giraph"
 }
