@@ -14,25 +14,25 @@ Thus, the following only shows Polymer's faster Delta-PR implementation.
 \todo{Hier fehlt noch Giraph, daher noch keine vollständige Auswertung.}
 
 \begin{figure*}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePR_calcTime.png}
-		\caption{Calculation times for PR on a single node}
+		\caption{Calculation time}
 		\label{fig:singleNodePR_calc}
 	\end{subfigure}
 	\hfil
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePR_execTime.png}
-		\caption{Execution times for PR on a single node}
+		\caption{Execution time}
 		\label{fig:singleNodePR_exec}
 	\end{subfigure}
 	\hfil
-	\begin{subfigure}{0.3\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/singleNodePR_overheadTimeNormalized.png}
-		\caption{Overhead time normalized by the graph size in million edges}
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePR_overheadTime.png}
+		\caption{Overhead time}
 		\label{fig:singleNodePR_overheadNormalized}
 	\end{subfigure}
 
-	\caption{Average times on a single computation node, black bars represent one standard deviation in our testing}
+	\caption{Average times for PR on a single computation node, black bars represent one standard deviation in our testing}
 \end{figure*}
 
 
@@ -43,25 +43,24 @@ First of all, Giraph was unable to complete the test because it required more th
 When comparing the calculation times in \autoref{fig:distributedPR_calc} to the execution times in \autoref{fig:distributedPR_exec}, we see similar behaviour of all frameworks. This means that unlike with SSSP or BFS, the calculation times and execution times are similar with respect to the relations of the frameworks to one another. More specifically, there are no overhead outliers like it was the case with Giraph on SSSP.
 
 \begin{figure*}
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/distributedPR_calcTime.png}
-		\caption{Calculation times for distributed PR}
+		\caption{Calculation time}
 		\label{fig:distributedPR_calc}
 	\end{subfigure}
 	\hfil
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/distributedPR_execTime.png}
-		\caption{Execution times for distributed PR}
+		\caption{Execution time}
 		\label{fig:distributedPR_exec}
 	\end{subfigure}
 	\hfil
-	\begin{subfigure}{0.3\textwidth}
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/distributedPR_overheadTime.png}
 		\caption{Overhead time}
 		\label{fig:distributedPR_overheadNormalized}
 	\end{subfigure}
-
-	\caption{Average times on the distributed cluster, black bars represent one standard deviation in our testing}
+	\caption{Average times for PR on the distributed cluster, black bars represent one standard deviation in our testing}
 	\label{fig:distributedPR}
 \end{figure*}
 

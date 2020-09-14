@@ -7,12 +7,27 @@
 \label{sec:galois_speedup}
 Analyzing the calculation time speedups for Galois, we can compare how or if the different algorithms benefit from increasing thread numbers.
 
+
+\begin{figure*}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisThreads.png}
+		\caption{Calculation time speedup with increasing thread count for Galois Single-source Shortest-paths}
+		\label{fig:galoisSpeedupSSSP}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisThreads.png}
+		\caption{Calculation time speedup with increasing thread count for Galois Breadth-first search}
+		\label{fig:galoisSpeedupBFS}
+	\end{subfigure}
+	\hfil
+\end{figure*}
+
+
+
 \subsubsection{Single-source Shortest-path}
-\begin{figure}
-	\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisThreads.png}
-	\caption{Calculation time speedup with increasing thread count for Galois Single-source Shortest-paths}
-	\label{fig:galoisSpeedupSSSP}
-\end{figure}
+
 Starting with SSSP, we see an algorithm that benefits from many available threads in \autoref{fig:galoisSpeedupSSSP}.
 For all larger graphs, speedup is in most cases very close to optimal up to about 8 threads.
 Twitter has the best speedup overall. It is 2.6$\times$ with 2 threads compared to one, 4$\times$ with 4, 7.7$\times$ with 8 and 9.7$\times$ using 16 threads.
@@ -26,11 +41,7 @@ Orkut reaches maximum speedup of 1.6$\times$ at 16 threads. However on orkut, th
 
 
 \subsubsection{Breadth-first search}
-\begin{figure}
-	\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisThreads.png}
-	\caption{Calculation time speedup with increasing thread count for Galois Breadth-first search}
-	\label{fig:galoisSpeedupBFS}
-\end{figure}
+
 
 For our speedup results on BFS, \autoref{fig:galoisSpeedupBFS} shows the calculation time speedup of Galois' BFS.
 On all graphs, the speedup never exceeds 6$\times$ even when using 96 threads.
@@ -58,19 +69,22 @@ Similar yet less pronounced behaviour is oberservable for Pull in \autoref{fig:g
 Here especially the values for 24 and 40 threads show a loss in performance.
 It is most visible on the values for twitter and friendster, where both values drop significantly compared to the neighbouring 32 and 48 thread results.
 
-\begin{figure}
-	\begin{subfigure}{\columnwidth}
+\begin{figure*}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisThreads.png}
 		\caption{PageRank Pull}
 		\label{fig:galoisSpeedupPRPull}
 	\end{subfigure}
-	\begin{subfigure}{\columnwidth}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePRPushGaloisThreads.png}
 		\caption{PageRank Push}
 		\label{fig:galoisSpeedupPRPush}
 	\end{subfigure}
+	\hfil
 	\caption{Calculation time speedup with increasing thread count for Galois PageRank Push and Pull algorithms.}
-\end{figure}
+\end{figure*}
 
 
 \section{Hugepages}
