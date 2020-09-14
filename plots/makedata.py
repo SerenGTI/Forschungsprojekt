@@ -172,19 +172,22 @@ for f in dist_frameworks_sssp:
     overheadSSSP_distributed.append(overhead)
     overheadSSSPNormalized_distributed.append(overheadNormalized)
 
-overheadSSSP_distributed_normalizedToGalois = []
+execTimeSSSP_distributed_normalizedToGalois = []
 
 #print("Overhead comparison distributed SSSP")
 i = 0
 for k in dist_frameworks_sssp:
-    overheadSSSP_distributed_normalizedToGalois.append([])
-    #print(dist_frameworks_sssp[k], end='')
-    for j in range(len(overheadSSSP_distributed[i])):
-        #print("&", round(execTimeSSSP_distributed[i][j]/execTimeSSSP_distributed[0][j] * 100) / 100, end='')
-        overheadSSSP_distributed_normalizedToGalois[i].append(overheadSSSP_distributed[i][j]/overheadSSSP_distributed[0][j]) 
+    execTimeSSSP_distributed_normalizedToGalois.append([])
+    for j in range(len(execTimeSSSP_distributed[i])):
+        execTimeSSSP_distributed_normalizedToGalois[i].append(execTimeSSSP_distributed[i][j]/execTimeSSSP_distributed[0][j]) 
     i += 1
-    #print("\\\\")
 
+for i in range(len(execTimeSSSP_distributed_normalizedToGalois[0])):
+    print(graphs[i], end=" & ")
+    for j in range(len(execTimeSSSP_distributed_normalizedToGalois)):
+        print(round(execTimeSSSP_distributed_normalizedToGalois[j][i] * 100)/100,end=" & (")
+        print(round(execTimeSSSP_distributed[j][i] * 10)/10 ,end=") & ")
+    print("\\\\")
 #print(graphs)
 
 
@@ -230,6 +233,17 @@ for f in frameworks:
     yErrExecBFS_singleNode.append(tmpYErrExec)
     overheadBFS_singleNode.append(overhead)
     overheadBFSNormalized_singleNode.append(overheadNormalized)
+
+if False:
+    k = 0
+    v = []
+    for f in frameworks:
+        print(f)
+        print(calcTimeBFS_singleNode[k])
+        print([round(calcTimeBFS_singleNode[k][i]/calcTimeBFS_singleNode[3][i] * 100) / 100 for i in range(len(calcTimeBFS_singleNode[k]))])
+        k += 1
+
+
 
 
 
