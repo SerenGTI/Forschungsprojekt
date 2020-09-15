@@ -1,14 +1,14 @@
 %!TEX root=../../main.tex
 
-Polymer is a NUMA-aware graph-analytics system that inherits the scatter- gather programming interface from Ligra \cite{Ligra}. 
+Polymer is a Non Uniform Memory Access (NUMA) aware graph-analytics system that inherits the scatter-gather programming interface from Ligra \cite{Ligra}.
 Key differences are the data layout and access strategies, Polymer implements.
-The goal is to minimize random and remote memory accesses to improve performance. 
+The goal is to minimize random and remote memory accesses to improve performance.
 %Computation is performed in a vertex-centric manner.
 
 The first optimization Polymer applies is data locality and access methods across NUMA nodes \cite{Polymer}.
 A general design principle for NUMA machines is to partition the input data so that computation can be grouped with the corresponding data on one node.
 Polymer adopts this and allocates graph data according to the access patterns.
-It treats a NUMA machine like a distributed cluster and splits work and graph data accordingly between the nodes. 
+It treats a NUMA machine like a distributed cluster and splits work and graph data accordingly between the nodes.
 Vertices and Edges are partitioned and then allocated across the corresponding memory nodes of the threads, eliminating most remote memory accesses.
 However, some computation requires vertices to perform computations on edges that are not in the local NUMA-node.
 For this case, Polymer introduces lightweight vertex replicas that are used to initiate computation on remote edges.
@@ -25,6 +25,6 @@ Time to synchronize threads on different cores increases dramatically with the g
 Thus, Polymer implements a topology-aware hierarchical synchronization barrier.
 A group of threads on the same NUMA-node shares a partition of data. This allows them to first only synchronize with threads on the same NUMA-node. Only the last thread of each group sychronizes across groups (i.e. nodes). This behaviour decreases the amount of needed cache coherence broadcasts across the nodes.
 
-Furthermore, Polymer switches between different data structures representing the runtime state, similiar to Ligra's behaviour. The main deciding factor to switch is the amount of active vertices relative to an application-defined threshold. Polymer uses a lock-less tree structure representing the active vertices. The leaves use bitmaps, which are efficient for a large proportion of active vertices. When only a small amount of vertices is active, the drawbacks of traversing through sparse bitmaps can be avoided by switching data structures. 
+Furthermore, Polymer switches between different data structures representing the runtime state, similiar to Ligra's behaviour. The main deciding factor to switch is the amount of active vertices relative to an application-defined threshold. Polymer uses a lock-less tree structure representing the active vertices. The leaves use bitmaps, which are efficient for a large proportion of active vertices. When only a small amount of vertices is active, the drawbacks of traversing through sparse bitmaps can be avoided by switching data structures.
 
 Polymer inherits the programming interfaces \texttt{EdgeMap} and \texttt{VertexMap} from Ligra as its main interface.

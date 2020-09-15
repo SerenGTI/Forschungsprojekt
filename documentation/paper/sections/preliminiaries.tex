@@ -55,7 +55,20 @@ The PageRank score of a vertex is only updated if the relative change of the Pag
 This effectively reduces the amount of vertices for which the PageRank has to be recalculated in following iterations.
 
 \subsection{Push and Pull Variants}
-\todo{Section}
+Many parallel graph algorithms, as well as the three we consider here, are implemented by iterating over vertices, or edges \cite{tao}.
+The respective vertex or edge, which is considered in an iteration, is also called \emph{active}.
+Applying an operator to this \emph{active} vertex or edge is called an \emph{activity}.
+This operator considers always only a local so called \emph{neighborhood} to the \emph{active} vertex or edge.
+To this \emph{neighborhood} belong only vertices and edges, which are in the direct surrounding of the \emph{active} vertex or edge, which allows to parallelise the iteration relatively easy.
+
+In general such an operator can change the whole structure of the \emph{neighbourhood}.
+But in the following we assume, that an operator changes only \emph{labels} of vertices or edges in the \emph{neighbourhood}.
+\emph{Labels} of edges also called \emph{weights}.
+Often this operator can be implemented in two different ways, called \emph{push style} or \emph{pull style}.
+A \emph{push-style} operator reads the \emph{label} of the \emph{active} vertex or edge and updates the \emph{label} of its \emph{neighborhood}.
+In contrast the \emph{pull-style} operator reads all values of its \emph{neighborhood} and updates the value of the \emph{active} vertex or edge.
+
+\emph{Pull-style} operators need less synchronization in parallel implementations, because unlike \emph{pull style} there is only one write and many read operations. Thus locks can be avoided. So \emph{push-style} operators are more efficient, if there are only a few \emph{active} vertices or edges at the same time, or the \emph{neighborhoods} do not overlap, which can not be avoided in general. On the other hand \emph{pull-style} operators are more efficient, if there are many \emph{active} vertices or edges at the same time.
 
 \subsection{Bulk-Synchronous Parallel Model}
 \label{sec:bsp}
@@ -86,5 +99,6 @@ Execution is performed in three phases:
 \end{enumerate}
 Giraph \cite{Giraph} is an example of a system using this framework.
 
-\subsection{NUMA-awareness}
-\todo{Section}
+\subsection{Hugepages}
+\todo{Section schreiben}
+\cite{hugepages}
