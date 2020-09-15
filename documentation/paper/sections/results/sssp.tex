@@ -33,7 +33,7 @@ Also, both Ligra and Polymer failed on rMat28. Because of that, removed rMat28 i
 Upon analyzing the calculation time (cf. \autoref{fig:singleNodeSSSP_calc}), most obvious is the fact that Giraph is at least one order of magnitude slower than any other framework. The only exception is Gemini, where Giraph is \emph{only} 4$\times$ slower on wikipedia. In general however, Giraph is on average 24$\times$ slower than the other frameworks on flickr, 17$\times$ on orkut and 12$\times$ on wikipedia.
 
 Comparing the other frameworks (i.e. excluding Giraph in the further comparisons), shows them to perform similar on the smaller graphs. There, the average calculation times of the four frameworks (Galois, Gemini, Ligra, Polymer) are 35ms on flickr, 77ms on orkut, 538ms on wikipedia. 
-The four frameworks are always within $x$ ms of this average. Galois and Gemini being 24ms and 12ms faster than the average. Ligra and Polymer are slower by 27ms and 9ms.
+The four frameworks are close to this average for the smaller graphs. Galois and Gemini being 24ms and 12ms faster than the average. Ligra and Polymer are slower by 27ms and 9ms.
 Orkut is the graph where all the four frameworks are within 20ms of their average, Galois being the outlier at 19ms slower than average.
 For wikipedia, Galois and Ligra are close to each other, while Gemini is 560ms (104\%) slower than the average of the four frameworks.
 And Polymer is the fastest framework on wikipedia, being 330ms (61\%) faster than the others.

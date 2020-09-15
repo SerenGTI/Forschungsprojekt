@@ -154,7 +154,7 @@ if distributed and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 
 		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSPNormalized_distributed, title='SSSP distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
-		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSP_distributed_normalizedToGalois, yLabel='Galois Push overhead times', saveToFile="distributedSSSP_overheadTimeNormalizedToGalois.png", yScale='log', colors_=colors)
+		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), execTimeSSSP_distributed_normalizedToGalois, yLabel='Galois Push execution times', saveToFile="distributedSSSP_executionTimeNormalizedToGalois.png", yScale='log', colors_=colors)
 
 	#BFS
 	if bfs or overheads:
