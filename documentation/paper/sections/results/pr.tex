@@ -11,7 +11,7 @@ For Polymer we found the delta version to be faster on all graphs except rMat28.
 Thus, the following only shows Polymer's faster Delta-PR implementation.
 
 
-\todo{Hier fehlt noch Giraph, daher noch keine vollständige Auswertung.}
+\todo{Auswertung fehlt noch.}
 
 \begin{figure*}
 	\begin{subfigure}{0.32\textwidth}
@@ -42,6 +42,7 @@ The \autoref{fig:distributedPR} shows our results of PageRank on the distributed
 First of all, Giraph was unable to complete the test because it required more than 250GB of RAM for rMat28. Thus this results is missing.
 When comparing the calculation times in \autoref{fig:distributedPR_calc} to the execution times in \autoref{fig:distributedPR_exec}, we see similar behaviour of all frameworks. This means that unlike with SSSP or BFS, the calculation times and execution times are similar with respect to the relations of the frameworks to one another. More specifically, there are no overhead outliers like it was the case with Giraph on SSSP.
 
+\todo{Auswertung fehlt noch.}
 \begin{figure*}
 	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/distributedPR_calcTime.png}
