@@ -38,15 +38,14 @@ Orkut is the graph where all the four frameworks are within 20ms of their averag
 For wikipedia, Galois and Ligra are close to each other, while Gemini is 560ms (104\%) slower than the average of the four frameworks.
 And Polymer is the fastest framework on wikipedia, being 330ms (61\%) faster than the others.
 For the larger graphs, Polymer has the shortest computation time as well. Gemini is second, taking about 1.9$\times$ times the computation time of Polymer on twitter and friendster while being equally fast (8\% longer) on rMat27. Galois and Ligra however have much longer computation times compared to Polymer. Galois takes anywhere from 3.3$\times$ (twitter) to 4.2$\times$ (friendster) the computation time of Polymer.
-Ligra requires 9.8$\times$, 7.0$\times$ and 3.2$\times$ the computation time of Polymer on twitter, rMat27 and friendster respectively. This makes Ligra the slowest Framework on twitter and rMat27. Galois is the slowest on friendster.
+Ligra requires between 3.2$\times$ (friendster) and 9.8$\times$ (twitter) the computation time of Polymer on the larger graphs. This makes Ligra the slowest Framework on both twitter and rMat27. Galois is the slowest on friendster.
 However, while especially Galois is comparably slow to Polymer in the computation time, it is important to keep in mind that Polymer could not finish computation on rMat28. Meanwhile both Gemini and Galois managed just fine.
 
-Moving on to the execution times, which can be seen in \autoref{fig:singleNodeBFS_exec}. 
-A general overview shows Galois as the clear winner on most graphs. It has the smalles computation times on all graphs except flickr, where Galois is 25ms (8\%) slower than Ligra. 
+The execution times show Galois to be the clear winner on most graphs (cf. \autoref{fig:singleNodeBFS_exec}).
+It has the smallest computation times on all graphs except flickr, where Galois is 25ms (8\%) slower than Ligra. 
 On the other 5 graphs however, Galois has the smaller execution time by one or sometimes even two orders of magnitude. 
-For example, on orkut Galois requires 0.78s to execute, while Gemini takes 13.8s, Giraph takes 135.9s, Ligra takes 2.66s and Polymer takes 26.6s.
-This goes on for the larger graphs, Ligra being second-fastest and Polymer and Gemini close together but both always at least one order of magnitude slower than Galois.
-
+For example, on orkut Galois requires 0.78s to execute, while the other frameworks require between 2.66s (Ligra) and 26.6s (Polymer).
+This goes on for the larger graphs, Ligra being second-fastest. Polymer and Gemini close together but both always at least one order of magnitude slower than Galois.
 
 \subsubsection{Distributed}
 \begin{figure*}
@@ -71,15 +70,11 @@ This goes on for the larger graphs, Ligra being second-fastest and Polymer and G
 	\caption{Average times for SSSP on the distributed cluster, black bars represent one standard deviation in our testing.}
 	\label{fig:distributedSSSP}
 \end{figure*}
-
-Moving on to the distributed cluster, \autoref{fig:distributedSSSP} shows the benchmark results as calculation and execution times.
-
-Comparing the two Galois implementations, we find the calculation and execution times to be similar on smaller graphs and Push being the superior implementation for SSSP on larger data sets. Galois Pull being anywhere from just as fast to 3.5$\times$ slower on real-world data sets compared to the Push variant. The synthetic graphs are more extreme, execution times are close to 4$\times$ (rMat27) and 5$\times$ (rMat28) longer.
-
+On the distributed cluster, we find similar results as on the single node (cf. \autoref{fig:distributedSSSP}).
 Both Galois implementations have significantly smaller execution times compared to Gemini or Giraph on all graphs (cf. \autoref{tbl:ssspexec}).
 You can see Gemini being worse by at least a factor of 4 compared to Galois Push on all graphs except flickr.
 Giraph's execution times in comparison to this are even worse, taking at least 7$\times$ longer than Galois Push on all graphs.
-
+Comparing the two Galois implementations, we find the calculation and execution times to be similar on smaller graphs and Push being the superior implementation for SSSP on larger data sets. Galois Pull is anywhere from just as fast to 3.5$\times$ slower on real-world data sets compared to the Push variant. The synthetic graphs are more extreme. Execution times are close to 4$\times$ (rMat27) and 5$\times$ (rMat28) longer on Pull.
 Evidently, Galois Push is the fastest algorithm in our lineup on 6 out of 7 graphs. With the exception being flickr, where Galois Push takes negligibly longer than the Pull counterpart.
 
 
@@ -87,7 +82,7 @@ Evidently, Galois Push is the fastest algorithm in our lineup on 6 out of 7 grap
 \renewcommand{\arraystretch}{1.2}
 \tiny
 \centering
-\caption{Distributed SSSP Execution Times and their Realation to Galois Push}
+\caption{Distributed SSSP Execution Times and Their Realation to Galois Push}
 \begin{tabular}{crrrrrrrr}
 \hline
 \bf{Data Set}&
@@ -104,13 +99,9 @@ rMat28 & 1.0 & (71.5) & 5.7 & (407.9) & 11.07 & (792.0) & 16.5 & (1180.2)\\\hlin
 \label{tbl:ssspexec}
 \end{table}
 
-
-
 When taking a closer look at Giraph, it seems to not cope well with synthetic data sets. Analyzing the computation times in \autoref{fig:distributedSSSP_calc}, we see that it is the fastest framework on our real-world graphs. And that with a considerable margin of other frameworks always taking at least 50\% longer (lower bound here is Gemini on flickr) up to Galois Pull needing 18$\times$ more time on wikipedia.
 On both synthetic graphs however, Giraph is actually the slowest to compute. Giraph requires 12$\times$ or even 15$\times$ the computation time of Gemini on rMat27 or rMat28 respectively.
-
 While Giraph's computation times are very competitive, when comparing the execution times in \autoref{fig:distributedSSSP_exec} we see that Giraph is actually the slowest framework on 5 out of 7 graphs. For the other two, namely twitter and friendster, Giraph is second slowest with only Gemini taking longer to complete.
-
 Giraph and Gemini's very long execution times are only due to their overhead being many orders of magnitude larger than Galois overhead (\autoref{fig:distributedSSSP_overhead}).
 Overhead for Gemini is greater than that of Galois on every graph. From just a 20\% increase on flickr up to friendster, where the overhead is 90$\times$ that of Galois Push.
 For Giraph the overhead times are not as extreme but still generally worse. Even on flickr, Giraph's overhead time is already 23$\times$ that of Galois. On friendster, where Gemini was worst, Giraph \emph{only} requires 73$\times$ the overhead time of Galois.
