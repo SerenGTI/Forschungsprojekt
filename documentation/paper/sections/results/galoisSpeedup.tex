@@ -94,13 +94,18 @@ The other graphs hardly reach a speedup of 3$\times$, even at 96 threads.
 
 
 \subsubsection{PageRank}
-We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. This is a perfect example for an algorithm that does not benefit from multithreaded computation.
-Computation is hardly sped up on any graph other than flicker, where the reached maximum is 64\%. This maximum is reached at two threads, with speedup steadily declining above that.
+We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. Without hugepages, computation is hardly sped up on any graph other than flickr, where the reached maximum is 64\% (cf. \autoref{fig:galoisSpeedupPRPull_noHP}). This maximum is reached at two threads, with speedup steadily declining above that.
 The rMat28 is the only other graph of one could say computation was sped up at large thread counts. Here we reached a maximum speedup of 31\%\ at 96 threads.
 All 5 other graphs only reach a speedup greater or equal to 1 in just one or two cases and if so only by a small margin.
 Computation on Orkut and Twitter reaches a speedup maximum of 12\%\ and 5\%\ at 4 threads, while being less or equal to 1 in all other cases.
 The wikipedia graph is never sped up.
 Friendster and rMat27 can be sped up by 6.5\%\ or 10\%\ respectively on 8 threads.
+
+Most of this changes on activation of the hugepages, see \autoref{fig:galoisSpeedupPRPull_HP}. Here actually all graphs except flickr reach a speedup greater than 1.5$\times$. Furthermore, orkut is the only graph that never reaches a speedup of 2$\times$. Twitter, rMat27, friendster and rMat28 all reach a speedup of around 2.5$\times$ at 96 threads.
+
+
+
+%###
 
 Speedup results on PageRank show odd behaviour in the Galois implementation.
 There is a significant performance loss on 4, 24 and 40 threads that is far from the expected behaviour. This is most visible for the Push variant seen in \autoref{fig:galoisSpeedupPRPush}, we validated the shown results two times.
