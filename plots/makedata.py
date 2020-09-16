@@ -116,16 +116,17 @@ if False:
             s[i] += calcTimeSSSP_singleNode[k][i]
         k += 1
     s /= 4
-    print("average calculation time:", s)
+    #print("average calculation time:", s)
     k = 0
     for f in frameworks:
         # if f == 'Giraph':
         #     k += 1
         #     continue
-        print(f)
+        #print(f)
         for i in range(1, len(execTimeSSSP_singleNode[k])):
-            print(graphs[i], round((execTimeSSSP_singleNode[k][i] / execTimeSSSP_singleNode[0][i]) * 100), "%")
-            print(graphs[i], round(execTimeSSSP_singleNode[k][i] * 100) / 100, "s")
+            pass
+            #print(graphs[i], round((execTimeSSSP_singleNode[k][i] / execTimeSSSP_singleNode[0][i]) * 100), "%")
+            #print(graphs[i], round(execTimeSSSP_singleNode[k][i] * 100) / 100, "s")
         k += 1
 
 ## SSSP DISTRIBUTED
@@ -182,12 +183,13 @@ for k in dist_frameworks_sssp:
         execTimeSSSP_distributed_normalizedToGalois[i].append(execTimeSSSP_distributed[i][j]/execTimeSSSP_distributed[0][j]) 
     i += 1
 
-for i in range(len(execTimeSSSP_distributed_normalizedToGalois[0])):
-    print(graphs[i], end=" & ")
-    for j in range(len(execTimeSSSP_distributed_normalizedToGalois)):
-        print(round(execTimeSSSP_distributed_normalizedToGalois[j][i] * 100)/100,end=" & (")
-        print(round(execTimeSSSP_distributed[j][i] * 10)/10 ,end=") & ")
-    print("\\\\")
+if False:
+    for i in range(len(execTimeSSSP_distributed_normalizedToGalois[0])):
+        print(graphs[i], end=" & ")
+        for j in range(len(execTimeSSSP_distributed_normalizedToGalois)):
+            print(round(execTimeSSSP_distributed_normalizedToGalois[j][i] * 100)/100,end=" & (")
+            print(round(execTimeSSSP_distributed[j][i] * 10)/10 ,end=") & ")
+        print("\\\\")
 #print(graphs)
 
 
@@ -469,6 +471,7 @@ for i in range(len(graph)):
         continue
     
     num = int(re.sub('\D', '', algo[i]))
+
     if not num in x:
         x.append(num)
 x.sort()
@@ -481,7 +484,10 @@ for i in range(len(graph)):
     if '-hp-' in algo[i]:
         continue
 
-    xVal = int(re.sub('\D', '', algo[i]))
+    tmp = re.sub('\D', '', algo[i])
+    if '032' in tmp:
+        continue # Werte mit vorangestellter 0 nicht werten
+    xVal = int(tmp)
     
     if 'sssp' in algo[i]:
         speedupGaloisSSSP[graph[i]][xVal] = calcTime[i]
@@ -568,15 +574,24 @@ for i in range(len(graph)):
     if not '-hp-' in algo[i]:
         continue
     
-    xVal = int(re.sub('\D', '', algo[i]))
+    tmp = re.sub('\D', '', algo[i])
+    xVal = int(tmp)
     
     if 'sssp' in algo[i]:
+        if '032' in tmp:
+            continue
         speedupGaloisSSSP_HP[graph[i]][xVal] = calcTime[i]
     elif 'bfs' in algo[i]:
+        if '032' in tmp:
+            continue
         speedupGaloisBFS_HP[graph[i]][xVal] = calcTime[i]
     elif 'pagerank-push' in algo[i]:
+        if xVal == 32 and not '032' in tmp:
+            continue
         speedupGaloisPRPush_HP[graph[i]][xVal] = calcTime[i]
     elif 'pagerank-pull' in algo[i]:
+        if '032' in tmp:
+            continue
         speedupGaloisPRPull_HP[graph[i]][xVal] = calcTime[i]
 
 

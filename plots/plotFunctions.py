@@ -54,7 +54,7 @@ def grouped_bar_plot(group_names, legend_names, values, colors_=None, yErrs=None
 
 #
 # values is a dictionary
-def line_plot(legend_names, x, values, title='', yLabel='', xLabel='', yScale=None, saveToFile=None):
+def line_plot(legend_names, x, values, title='', yLabel='', xLabel='', yScale=None, saveToFile=None, ylim=None):
 
 	if len(legend_names) != len(values):
 		raise Exception("Size mismatch: Expected " + str(len(legend_names)) + " categories, got " + str(len(values)))
@@ -76,6 +76,8 @@ def line_plot(legend_names, x, values, title='', yLabel='', xLabel='', yScale=No
 	ax.set_title(title)
 	ax.set_ylabel(yLabel)
 	ax.set_xlabel(xLabel)
+	if ylim != None:
+		ax.set_ylim(ylim)
 
 	
 	ax.legend(ps, legend_names)
