@@ -388,6 +388,8 @@ if False:
     print(polymer)
     print(sum(polymer[:-1]) / len(polymer[:-1])) 
 
+if False:
+    print(calcTimePR_singleNode[0])
     
 
 
@@ -609,3 +611,36 @@ for g in graphs:
         speedupGaloisPRPush_HP[g][x_] = tPRPush / speedupGaloisPRPush_HP[g][x_]
         speedupGaloisPRPull_HP[g][x_] = tPRPull / speedupGaloisPRPull_HP[g][x_]
 
+
+if False:
+    for xVal in xHP[:-4]:
+        print(xVal,"&",xVal,end="&")
+    print("\\\\")
+    for xVal in xHP[:-4]:
+        mean = 0
+        for k in graphs:
+            mean += speedupGaloisSSSP[k][xVal]
+        mean /= len(graphs)
+        print(round(mean * 10)/ 10, end="&")
+
+        variance = 0
+        for k in graphs:
+            variance += (speedupGaloisSSSP[k][xVal] - mean)**2
+        variance /= len(graphs)
+        print("(", round(variance * 10)/ 10, ")", end="&")
+
+    print("\\\\")
+    for xVal in xHP[:-4]:
+        meanHP = 0
+        for k in graphs:
+            meanHP += speedupGaloisSSSP_HP[k][xVal]
+        meanHP /= len(graphs)
+        print(round(meanHP * 10)/ 10, end="&")
+
+        variance = 0
+        for k in graphs:
+            variance += (speedupGaloisSSSP_HP[k][xVal] - meanHP)**2
+        variance /= len(graphs)
+        print("(", round(variance * 10)/ 10, ")", end="&")
+
+    print("\\\\")

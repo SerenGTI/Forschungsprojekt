@@ -12,13 +12,12 @@ Beginning with SSSP, followed by BFS and last the comparison for both PR Push an
 \subsubsection{Single-Source Shortest-Paths}
 \begin{figure*}
 	\hfil
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisThreads.png}
 		\caption{without hugepages}
 		\label{fig:galoisSpeedupSSSP_noHP}
 	\end{subfigure}
-	\hfil
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisHPThreads.png}
 		\caption{with hugepages}
 		\label{fig:galoisSpeedupSSSP_HP}
@@ -27,34 +26,51 @@ Beginning with SSSP, followed by BFS and last the comparison for both PR Push an
 	\caption{Calculation time speedups on SSSP for the different graphs with and without hugepages.}
 	\label{fig:galoisSpeedupSSSP}
 \end{figure*}
-Starting with SSSP, we see an algorithm that benefits from many available threads (cf. \autoref{fig:galoisSpeedupSSSP}).
+Starting with SSSP, we see an algorithm that benefits from many available threads this can be seen in \autoref{fig:galoisSpeedupSSSP}.
 We first look at the speedups without hugepages, seen in \autoref{fig:galoisSpeedupSSSP_noHP}.
 For all larger graphs, speedup is in most cases very close to optimal up to about 8 threads.
 Twitter has the best speedup overall. It is 2.6$\times$ with 2 threads compared to one, 4$\times$ with 4, 7.7$\times$ with 8 and 9.7$\times$ using 16 threads.
 Behaviour on friendster is similarly good. Here speedup is 1.9$\times$ at 2 threads compared to one, 3.5$\times$ at 4, 6.1$\times$ at 8 threads and 9.7$\times$ at 16 threads.
 Anything above 16 threads however no longer helps decrease the computation time significantly on any graph. Speedup above 16 threads is always less than double the speedup of 16 threads. The maximum measured speedups are 10$\times$ (96 threads) for wikipedia, 17$\times$ (96 threads) for twitter, 11$\times$ (96 threads) for rMat27, 16$\times$ (48 threads) for friendster and 19$\times$ (40 threads) for rMat28.
 In some cases increasing thread counts even prolongues calculation time. For example calculation on rMat28 is actually slower with 48 or 96 threads compared to 40 threads. For 40 threads, the speedup is nearly 19$\times$, on 48 threads 17$\times$ and with 96 threads only 15$\times$ compared to one thread.
-
 Small graphs, i.e. flickr and orkut neither benefit from more threads nor is the performance significantly held up by synchronization overhead.
 Performance on flickr can not be sped up at all, with speedup on flickr being very close to 1 for 1 to 8 threads and between 0.7$\times$ to 0.9$\times$ from 16 to 96 threads.
 Orkut reaches maximum speedup of 1.6$\times$ at 16 threads. However on orkut, the speedup is always greater or equal to 1.
 
-Upon activating the hugepages, we acquired the results seen in \autoref{fig:galoisSpeedupSSSP_HP}. Here, the overall results are similar to the findings without hugepages. 
+Upon activating the hugepages, we acquired the results seen in \autoref{fig:galoisSpeedupSSSP_HP}. Here, the overall results are similar to the findings without hugepages. \autoref{tbl:ssspMeansVariances} shows the mean speedups and variances over the different graphs. We see that the mean speedup is either very similar or slightly reduced by the hugepages. But in all cases, the variance is significantly smaller when using hugepages. This proves a slightly smaller but more reliable speedup with hugepages.
+Examples for this are on the one hand, orkut that could not reach a speedup above 1.6$\times$. Now, with hugepages it is 4.3$\times$ faster with 96 threads compared to one thread. On the other hand, twitter reached a speedup of 17$\times$ without hugepages and only 13$\times$ with.
 
-
-\todo{Hugepages}
+\begin{table}
+\renewcommand{\arraystretch}{1.2}
+%\scriptsize
+\centering
+\caption{Mean Speedups and Variances for SSSP With and Without HugePages}
+\label{tbl:ssspMeansVariances}
+\begin{tabular}{ccccccccc}
+\hline
+{\bf HP}&\multicolumn{2}{c}{\bf 1}&\multicolumn{2}{c}{\bf 2}&\multicolumn{2}{c}{\bf 4}&\multicolumn{2}{c}{\bf 8}\\
+&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$\\\hline
+w/o&1.0&0.0&1.6&0.2&2.5&1.1&4.5&5.3\\
+w/&1.0&0.0&1.6&0.1&2.5&0.9&3.4&2.1\\
+\hline
+\hline
+{\bf HP}&\multicolumn{2}{c}{\bf 16}&\multicolumn{2}{c}{\bf 32}&\multicolumn{2}{c}{\bf 48}&\multicolumn{2}{c}{\bf 96}\\
+&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$\\\hline
+w/o&6.7&13.0&9.6&38.3&10.3&41.4&10.2&38.1\\
+w/&5.8&7.3&7.0&10.8&10.7&31.4&10.8&29.9\\\hline
+\end{tabular}
+\end{table}
 
 
 \subsubsection{Breadth-First Search}
 \begin{figure*}
 	\hfil
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisThreads.png}
 		\caption{without hugepages}
 		\label{fig:galoisSpeedupBFS_noHP}
 	\end{subfigure}
-	\hfil
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisHPThreads.png}
 		\caption{with hugepages}
 		\label{fig:galoisSpeedupBFS_HP}
@@ -63,7 +79,6 @@ Upon activating the hugepages, we acquired the results seen in \autoref{fig:galo
 	\caption{Calculation time speedups on BFS for the different graphs with and without hugepages.}
 	\label{fig:galoisSpeedupBFS}
 \end{figure*}
-
 For our speedup results on BFS, \autoref{fig:galoisSpeedupBFS} shows the calculation time speedup of Galois' BFS.
 On all graphs, the speedup never exceeds 6$\times$ even when using 96 threads.
 For the smaller graphs (flickr, orkut), we have the same behaviour as on SSSP. Speedup is close to 1 in all cases, with orkut reaching a maximum speedup of 1.6$\times$ at 24 threads.
@@ -103,13 +118,12 @@ We assume the reason for this behaviour to be founded in the hugepages. Galois i
 
 \begin{figure*}
 	\hfil
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisThreads.png}
 		\caption{without hugepages}
 		\label{fig:galoisSpeedupPRPull_noHP}
 	\end{subfigure}
-	\hfil
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
 		\caption{with hugepages}
 		\label{fig:galoisSpeedupPRPull_HP}
@@ -128,13 +142,12 @@ We assume the reason for this behaviour to be founded in the hugepages. Galois i
 
 \begin{figure*}
 	\hfil
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePRPushGaloisThreads.png}
 		\caption{without hugepages}
 		\label{fig:galoisSpeedupPRPush_noHP}
 	\end{subfigure}
-	\hfil
-	\begin{subfigure}{0.32\textwidth}
+	\begin{subfigure}{0.4\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePRPushGaloisHPThreads.png}
 		\caption{with hugepages}
 		\label{fig:galoisSpeedupPRPush_HP}
