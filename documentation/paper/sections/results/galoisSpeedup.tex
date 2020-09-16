@@ -5,30 +5,30 @@
 
 \subsection{Galois speedup}
 \label{sec:galois_speedup}
-Analyzing the calculation time speedups for Galois, we can compare how or if the different algorithms benefit from increasing thread numbers.
+This section is dedicated to analyzing the speedup behaviour of Galois under the change to two parameters. First we change the thread count Galois is using. Second, a comparison between Galois using hugepages and Galois without hugepages is made.
+We compare the \emph{calculation speedups} of Galois on the different graphs. Thus, we show the calculation time on any thread count normalized by the calculation time in the single-threaded environment.
+Beginning with SSSP, followed by BFS and last the comparison for both PR Push and Pull.
 
-
+\subsubsection{Single-Source Shortest-Paths}
 \begin{figure*}
 	\hfil
 	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisThreads.png}
-		\caption{Calculation time speedup with increasing thread count for Galois Single-source Shortest-paths}
-		\label{fig:galoisSpeedupSSSP}
+		\caption{without hugepages}
+		\label{fig:galoisSpeedupSSSP_noHP}
 	\end{subfigure}
 	\hfil
 	\begin{subfigure}{0.32\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisThreads.png}
-		\caption{Calculation time speedup with increasing thread count for Galois Breadth-first search}
-		\label{fig:galoisSpeedupBFS}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisHPThreads.png}
+		\caption{with hugepages}
+		\label{fig:galoisSpeedupSSSP_HP}
 	\end{subfigure}
 	\hfil
+	\caption{Calculation time speedups on SSSP for the different graphs with and without hugepages.}
+	\label{fig:galoisSpeedupSSSP}
 \end{figure*}
-
-
-
-\subsubsection{Single-source Shortest-path}
-
-Starting with SSSP, we see an algorithm that benefits from many available threads in \autoref{fig:galoisSpeedupSSSP}.
+Starting with SSSP, we see an algorithm that benefits from many available threads (cf. \autoref{fig:galoisSpeedupSSSP}).
+We first look at the speedups without hugepages, seen in \autoref{fig:galoisSpeedupSSSP_noHP}.
 For all larger graphs, speedup is in most cases very close to optimal up to about 8 threads.
 Twitter has the best speedup overall. It is 2.6$\times$ with 2 threads compared to one, 4$\times$ with 4, 7.7$\times$ with 8 and 9.7$\times$ using 16 threads.
 Behaviour on friendster is similarly good. Here speedup is 1.9$\times$ at 2 threads compared to one, 3.5$\times$ at 4, 6.1$\times$ at 8 threads and 9.7$\times$ at 16 threads.
@@ -39,9 +39,30 @@ Small graphs, i.e. flickr and orkut neither benefit from more threads nor is the
 Performance on flickr can not be sped up at all, with speedup on flickr being very close to 1 for 1 to 8 threads and between 0.7$\times$ to 0.9$\times$ from 16 to 96 threads.
 Orkut reaches maximum speedup of 1.6$\times$ at 16 threads. However on orkut, the speedup is always greater or equal to 1.
 
+Upon activating the hugepages, we acquired the results seen in \autoref{fig:galoisSpeedupSSSP_HP}. Here, the overall results are similar to the findings without hugepages. 
 
-\subsubsection{Breadth-first search}
 
+\todo{Hugepages}
+
+
+\subsubsection{Breadth-First Search}
+\begin{figure*}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisThreads.png}
+		\caption{without hugepages}
+		\label{fig:galoisSpeedupBFS_noHP}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisHPThreads.png}
+		\caption{with hugepages}
+		\label{fig:galoisSpeedupBFS_HP}
+	\end{subfigure}
+	\hfil
+	\caption{Calculation time speedups on BFS for the different graphs with and without hugepages.}
+	\label{fig:galoisSpeedupBFS}
+\end{figure*}
 
 For our speedup results on BFS, \autoref{fig:galoisSpeedupBFS} shows the calculation time speedup of Galois' BFS.
 On all graphs, the speedup never exceeds 6$\times$ even when using 96 threads.
@@ -51,6 +72,14 @@ Wikipedia has a maximum speedup of 4.9$\times$ at 96 threads, for twitter it is 
 
 
 \subsubsection{PageRank}
+
+
+
+
+
+
+
+
 We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. This is a perfect example for an algorithm that does not benefit from multithreaded computation.
 Computation is hardly sped up on any graph other than flicker, where the reached maximum is 64\%. This maximum is reached at two threads, with speedup steadily declining above that.
 The rMat28 is the only other graph of one could say computation was sped up at large thread counts. Here we reached a maximum speedup of 31\%\ at 96 threads.
@@ -69,48 +98,48 @@ Similar yet less pronounced behaviour is oberservable for Pull in \autoref{fig:g
 Here especially the values for 24 and 40 threads show a loss in performance.
 It is most visible on the values for twitter and friendster, where both values drop significantly compared to the neighbouring 32 and 48 thread results.
 
+\todo{unfertig}
+We assume the reason for this behaviour to be founded in the hugepages. Galois is recommended to be run with hugepages. 
+
 \begin{figure*}
 	\hfil
 	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisThreads.png}
-		\caption{PageRank Pull}
-		\label{fig:galoisSpeedupPRPull}
+		\caption{without hugepages}
+		\label{fig:galoisSpeedupPRPull_noHP}
 	\end{subfigure}
 	\hfil
 	\begin{subfigure}{0.32\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/singleNodePRPushGaloisThreads.png}
-		\caption{PageRank Push}
-		\label{fig:galoisSpeedupPRPush}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
+		\caption{with hugepages}
+		\label{fig:galoisSpeedupPRPull_HP}
 	\end{subfigure}
 	\hfil
-	\caption{Calculation time speedup with increasing thread count for Galois PageRank Push and Pull algorithms.}
+	\caption{Calculation time speedups on PR Pull for the different graphs with and without hugepages.}
+	\label{fig:galoisSpeedupPRPull}
 \end{figure*}
 
 
-\subsubsection{Comparsion Hugepages}
-\todo{Section fehlt noch ganz, Bilder sind noch zu groß aber fertig.}
-\begin{figure}
-	\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisHPThreads.png}
-	\caption{Calculation time speedup with increasing thread count for Galois Single-source Shortest-paths with Hugepages}
-	\label{fig:galoisHPSpeedupSSSP}
-\end{figure}
 
-\begin{figure}
-	\includegraphics[width=\linewidth]{../../plots/singleNodeBFSGaloisHPThreads.png}
-	\caption{Calculation time speedup with increasing thread count for Galois Breadth-first search with Hugepages}
-	\label{fig:galoisHPSpeedupBFS}
-\end{figure}
 
-\begin{figure}
-	\begin{subfigure}{\columnwidth}
-		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
-		\caption{PageRank Pull}
-		\label{fig:galoisHPSpeedupPRPull}
+
+
+
+
+\begin{figure*}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePRPushGaloisThreads.png}
+		\caption{without hugepages}
+		\label{fig:galoisSpeedupPRPush_noHP}
 	\end{subfigure}
-	\begin{subfigure}{\columnwidth}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodePRPushGaloisHPThreads.png}
-		\caption{PageRank Push}
-		\label{fig:galoisHPSpeedupPRPush}
+		\caption{with hugepages}
+		\label{fig:galoisSpeedupPRPush_HP}
 	\end{subfigure}
-	\caption{Calculation time speedup with increasing thread count for Galois PageRank Push and Pull algorithms using Hugepages.}
-\end{figure}
+	\hfil
+	\caption{Calculation time speedups on PR Pushgi for the different graphs with and without hugepages.}
+	\label{fig:galoisSpeedupPRPush}
+\end{figure*}

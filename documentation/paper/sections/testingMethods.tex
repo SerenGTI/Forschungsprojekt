@@ -43,7 +43,7 @@ Both the rMat27 and rMat28 were created with a modified version (we changed the 
 \subsection{Measurements}
 For every framework, we measured the \emph{execution time} as the time from start to finish of the console command.
 For the \emph{calculation time}, we tried to extract only the time the framework actually executed the algorithm.
-Furthermore, the \emph{overhead} is the time difference between execution time and calculation time.
+Furthermore, the \emph{overhead} is the time difference between execution time and calculation time. This includes time to read the input graph and initialization.
 For measuring the calculation time, came up with the following:
 \begin{itemize}
 	\item For Galois, we extract console log time stamps. Galois outputs \enquote{\texttt{Reading graph complete.}}. Calculation time is the time from this output to the end of execution.
