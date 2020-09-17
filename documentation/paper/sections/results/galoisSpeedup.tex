@@ -41,28 +41,42 @@ Upon activating the hugepages, we acquired the results seen in \autoref{fig:galo
 Examples for this are on the one hand, orkut that could not reach a speedup above 1.6$\times$. Now, with hugepages it is 4.3$\times$ faster with 96 threads compared to one thread. On the other hand, twitter reached a speedup of 17$\times$ without hugepages and only 13$\times$ with.
 
 \begin{table}
-\renewcommand{\arraystretch}{1.2}
-%\scriptsize
+\renewcommand{\arraystretch}{1.3}
 \centering
 \caption{Mean Speedups and Variances for SSSP With and Without HugePages}
 \label{tbl:ssspMeansVariances}
-\begin{tabular}{ccccccccc}
+% \begin{tabular}{ccccccccc}
+% \toprule
+% &\multicolumn{8}{c}{\bf Thread count}\\
+% \cmidrule(r){2-9}
+% &\multicolumn{2}{c}{\bf 1}&\multicolumn{2}{c}{\bf 2}&\multicolumn{2}{c}{\bf 4}&\multicolumn{2}{c}{\bf 8}\\
+% {\bf HP*}&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$\\\hline
+% w/o&1.0&0.0&1.6&0.2&2.5&1.1&4.5&5.3\\
+% w/&1.0&0.0&1.6&0.1&2.5&0.9&3.4&2.1\\
+% \midrule
+% \addlinespace
+% %&\multicolumn{8}{c}{\bf Thread count}\\
+% %\cmidrule(r){2-9}
+% &\multicolumn{2}{c}{\bf 16}&\multicolumn{2}{c}{\bf 32}&\multicolumn{2}{c}{\bf 48}&\multicolumn{2}{c}{\bf 96}\\
+% {\bf HP*}&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$\\\hline
+% w/o&6.7&13.0&9.6&38.3&10.3&41.4&10.2&38.1\\
+% w/&5.8&7.3&7.0&10.8&10.7&31.4&10.8&29.9\\\bottomrule
+% \multicolumn{9}{c}{* HugePages}
+% \end{tabular}
+\begin{tabular}{c@{\hskip 2\tabcolsep}rrc@{\hskip 2\tabcolsep}rr}
 \toprule
-&\multicolumn{8}{c}{\bf Thread count}\\
-\cmidrule(r){2-9}
-&\multicolumn{2}{c}{\bf 1}&\multicolumn{2}{c}{\bf 2}&\multicolumn{2}{c}{\bf 4}&\multicolumn{2}{c}{\bf 8}\\
-{\bf HP*}&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$\\\hline
-w/o&1.0&0.0&1.6&0.2&2.5&1.1&4.5&5.3\\
-w/&1.0&0.0&1.6&0.1&2.5&0.9&3.4&2.1\\
+&\multicolumn{2}{c}{$\mu$}&\enspace&\multicolumn{2}{c}{$\sigma^2$}\\
+\cmidrule(r){2-3}\cmidrule(r){5-6}
+{\bf\#Threads}&\multicolumn{1}{c}{w/}&\multicolumn{1}{c}{w/o}&\enspace&\multicolumn{1}{c}{w/}&\multicolumn{1}{c}{w/o}\\\midrule
+\bf1 & 1.0 & 1.0 &\enspace& 0.0 & 0.0 \\
+\bf2 & 1.6 & 1.6 &\enspace& 0.2 & 0.1 \\
+\bf4 & 2.5 & 2.5 &\enspace& 1.1 & 0.9 \\
+\bf8 & 4.5 & 3.4 &\enspace& 5.3 & 2.1 \\
+\bf16 & 6.7 & 5.8 &\enspace& 13.0 & 7.3 \\
+\bf32 & 9.6 & 7.0 &\enspace& 38.3 & 10.8 \\
+\bf48 & 10.3 & 10.7 &\enspace& 41.4 & 31.4 \\
+\bf96 & 10.2 & 10.8 &\enspace& 38.1 & 29.9 \\
 \bottomrule
-\toprule
-&\multicolumn{8}{c}{\bf Thread count}\\
-\cmidrule(r){2-9}
-&\multicolumn{2}{c}{\bf 16}&\multicolumn{2}{c}{\bf 32}&\multicolumn{2}{c}{\bf 48}&\multicolumn{2}{c}{\bf 96}\\
-{\bf HP*}&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$&$\mu$&$\sigma^2$\\\hline
-w/o&6.7&13.0&9.6&38.3&10.3&41.4&10.2&38.1\\
-w/&5.8&7.3&7.0&10.8&10.7&31.4&10.8&29.9\\\bottomrule
-\multicolumn{9}{c}{* HugePages}
 \end{tabular}
 \end{table}
 
