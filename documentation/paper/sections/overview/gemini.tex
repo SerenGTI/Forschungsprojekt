@@ -9,7 +9,12 @@ Gemini tries to bridge the gap between efficient shared-memory and scalable dist
 To achieve this goal, Gemini, in contrast to the other frameworks discussed here, does not support shared-memory calculation, but chooses the distributed message-based approach from scratch.
 
 The real bottleneck of distributed systems is not the communication itself, but the extra instructions, as well as memory references and a lower usage of multiple cores compared to the shared memory counterparts.
-The main reasons for this are (1) the use of hash maps to convert vertex IDs between local and global states, (2) the maintenance of vertex replicas, (3) the communication-bound apply phase in the GAS abstraction, and (4) the lack of dynamic scheduling \cite{Gemini}.
+There are four main reasons for this.
+The first reason is the use of hash maps to convert the vertex IDs between the global and the local state.
+The second reason is the maintenance of vertex replicas on the different systems.
+Another reason is the communication-bound apply phase in GAS abstraction.
+And the last reason is the lack of dynamic scheduling.
+
 Gemini tries to work around all the problems mentioned above, by implemening a message-based system from scratch and getting rid of the extra mapping layer between shared-memory computation and communication.
 Therefore Ligra's push-pull computation model was adopted and applied to the distributed computation.
 Furthermore a chunk-based partitioning scheme was implemented, which allows to partition a graph without a large overhead.
