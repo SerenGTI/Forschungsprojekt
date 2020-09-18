@@ -1,10 +1,10 @@
 %!TEX root=../../main.tex
 
 
-\subsection{PageRank}
+\subsubsection{PageRank}
+\todo{Einleitung}
 
-
-\subsubsection{Single-Node}
+\paragraph{Single-Node}
 Ligra and Polymer support both regular and Delta-PageRank variants.
 Ligra's regular PR implementation is faster on 4 of 7 graphs. If the regular version is slower than delta, that is only by a small difference. Explicitly, regular is slower than delta by a range of 6\% to 19\%\ on twitter, rMat27 or friendster. For the other graphs, the delta version is slower by a far greater margin of 13\% to 68\%.
 Hence, we only show the results of Ligra's regular PageRank implementation in our evaluation.
@@ -37,7 +37,7 @@ Interestingly, the execution time for Ligra is at a maximum for twitter. The req
 
 
 
-\subsubsection{Distributed}
+\paragraph{Distributed}
 The \autoref{fig:distributedPR} shows our results of PageRank on the distributed cluster.
 First of all, Giraph was unable to complete the test because it required more than 250GB of RAM for rMat28, thus this result is missing.
 When comparing the calculation times in \autoref{fig:distributedPR_calc} to the execution times in \autoref{fig:distributedPR_exec}, we see similar behaviour of all frameworks. This means that unlike with SSSP or BFS, the calculation times and execution times are similar with respect to the relations of the frameworks to one another. More specifically, there are no overhead outliers like it was the case with Giraph on SSSP.
@@ -61,6 +61,7 @@ When comparing the calculation times in \autoref{fig:distributedPR_calc} to the 
 
 
 \todo{Auswertung fehlt noch.}
+\todo{Discussion}
 
 
 

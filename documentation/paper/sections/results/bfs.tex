@@ -1,8 +1,11 @@
 %!TEX root=../../main.tex
 
-\subsection{Breadth-first search}
+\subsubsection{Breadth-first search}
 As with our results for SSSP, for BFS we will begin with our single-node results before looking at the distributed scenario.
-\subsubsection{Single-Node}
+
+\todo{Einleitung, analog SSSP}
+
+\paragraph{Single-Node}
 \begin{figure*}
 	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeBFS_calcTime.png}
@@ -45,7 +48,7 @@ Again, Gemini and Polymer are comparable in their performance and at the same ti
 On those three graphs, Giraph is the slowest, by a difference of one to two orders of magnitude compared to Galois.
 On the other graphs, Polymer and Gemini are one order of magnitude slower than Galois.
 
-\subsubsection{Distributed}
+\paragraph{Distributed}
 \begin{figure*}
 	\hfil
 	\begin{subfigure}{0.32\textwidth}
@@ -81,3 +84,4 @@ Similar to SSSP, Giraph is slowest on all but one graph. Only on friendster is G
 Galois Push is generally faster than the Pull alternative while both Push and Pull versions are faster than Gemini and Giraph across all graphs.
 This makes Galois Push the clear winner for distributed BFS.
 
+\todo{Discussion ausarbeiten}

@@ -1,9 +1,9 @@
 %!TEX root=../../main.tex
 
 
-\subsection{Single-Source Shortest-Paths}
+\subsubsection{Single-Source Shortest-Paths}
 In this section, we compare the different frameworks in their performance on the SSSP algorithm. We first analyze the frameworks on a single computation node and compare to the distributed setup after that.
-\subsubsection{Single-node}
+\paragraph{Single-node}
 \begin{figure*}
 	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSP_calcTime.png}
@@ -46,7 +46,7 @@ On the other 5 graphs however, Galois has the smaller execution time by one or s
 For example, on orkut Galois requires 0.78s to execute, while the other frameworks require between 2.66s (Ligra) and 26.6s (Polymer).
 This goes on for the larger graphs, Ligra being second-fastest. Polymer and Gemini close together but both always at least one order of magnitude slower than Galois.
 
-\subsubsection{Distributed}
+\paragraph{Distributed}
 \begin{figure*}
 	\centering
 	\begin{subfigure}{0.32\textwidth}
@@ -104,4 +104,6 @@ While Giraph's computation times are very competitive, when comparing the execut
 Giraph and Gemini's very long execution times are only due to their overhead being many orders of magnitude larger than Galois overhead (\autoref{fig:distributedSSSP_overhead}).
 Overhead for Gemini is greater than that of Galois on every graph. From just a 20\% increase on flickr up to friendster, where the overhead is 90$\times$ that of Galois Push.
 For Giraph the overhead times are not as extreme but still generally worse. Even on flickr, Giraph's overhead time is already 23$\times$ that of Galois. On friendster, where Gemini was worst, Giraph \emph{only} requires 73$\times$ the overhead time of Galois.
+
+\todo{Discussion}
 
