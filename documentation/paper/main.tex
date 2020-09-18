@@ -117,6 +117,10 @@ This paper makes the following contributions:
 
 \input{sections/overview/overview}
 
+\section{Evaluation}
+\todo{Einleitung}
+
+
 \input{sections/testingMethods}
 
 \input{sections/results/results}
@@ -137,25 +141,17 @@ This paper makes the following contributions:
 
 
 \section*{Acknowledgments}
-%We would like to thank our supervisor Heiko Geppert for his continued guidance and support.
+We would like to thank our supervisor Heiko Geppert for his continued guidance and support.
 
 
 
-\appendices
-\todo{Beide zusammenfassen}
-\section{Installation Guides}\label{app:installationGuides}
-The complete installation guides with steps on how to run the same algorithms we used is available in our repository\footnote{\url{https://github.com/SerenGTI/Forschungsprojekt/tree/master/documentation}}
-
-In case of frameworks like Giraph, where for example no BFS algorithm is provided by the framework itself, the algorithm and a guide on how to include it in the framework can be found in the repository as well.
-
-\section{Conversion Tool}\label{app:conversionTool}
-In order to
-
-We have written a number of conversion tools and installation guides to help
-users or developers with the use of the tested frameworks.
+\appendix
+\label{app:installationGuides}\label{app:conversionTool}
+We provide a set of installation guides, describing setup and usage of each of the presented frameworks. In case of Giraph, where for example no BFS algorithm is provided by the framework itself, the algorithm and a guide on how to include it in the framework is provided as well. Furthermore, the conversion tool we described to convert between the different graph input formats is available alongside the guides in our repository\footnote{\url{https://github.com/SerenGTI/Forschungsprojekt/tree/master/documentation}}.
 
 
-Our GitHub repository: \url{http://www.github.com/serengti/Forschungsprojekt}.
+
+
 
 
 
@@ -179,8 +175,8 @@ Our GitHub repository: \url{http://www.github.com/serengti/Forschungsprojekt}.
 %    ausführen wie gewohnt.
 
 
-%\bibliographystyle{IEEEtran}
-%\bibliography{literature}
+% \bibliographystyle{IEEEtran}
+% \bibliography{literature}
 
 
 % Alles ab hier kommt aus main.bbl
@@ -270,6 +266,14 @@ K.~Pingali, D.~Nguyen, M.~Kulkarni, M.~Burtscher, M.~A. Hassaan, R.~Kaleem,
 L.~G. Valiant, ``A bridging model for parallel computation,'' \emph{Commun.
   ACM}, vol.~33, no.~8, p. 103–111, Aug. 1990. [Online]. Available:
   \url{https://doi.org/10.1145/79173.79181}
+\BIBentrySTDinterwordspacing
+
+\bibitem{congestModel}
+\BIBentryALTinterwordspacing
+S.~Forster and D.~Nanongkai, ``A faster distributed single-source shortest
+  paths algorithm,'' \emph{2018 IEEE 59th Annual Symposium on Foundations of
+  Computer Science (FOCS)}, Oct 2018. [Online]. Available:
+  \url{http://dx.doi.org/10.1109/FOCS.2018.00071}
 \BIBentrySTDinterwordspacing
 
 \bibitem{Giraph}
@@ -368,5 +372,6 @@ J.~Shun, G.~Blelloch, J.~Fineman, P.~Gibbons, A.~Kyrola, K.~Tangwonsan, and
 \BIBentrySTDinterwordspacing
 
 \end{thebibliography}
+
 
 \end{document}

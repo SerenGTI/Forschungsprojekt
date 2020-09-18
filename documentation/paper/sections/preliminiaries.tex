@@ -76,10 +76,10 @@ In contrast the \emph{pull-style} operator reads all values of its \emph{neighbo
 \subsection{Bulk-Synchronous Parallel Model}
 \label{sec:bsp}
 The Bulk-Synchronous Parallel (BSP) model is a computation model developed by Leslie Valiant \cite{bsp}. It is commonly used in computation environments with large amounts of synchronous computation.
-
 This model describes components, a communication network between those components and a method of synchronization.
 The components are capable of performing computations and transactions on \emph{local} memory. Pairs of components can only communicate using messages, thus remote memory access is also only possible in this way.
-The Messages have a user-defined form and should be as small as possible to keep the network traffic low. \todo{Congest Model, log limit in was?}
+The Messages have a user-defined form and should be as small as possible to keep the network traffic low. The \emph{Congest model} is a closely related model and furthermore describes the messages. There, the message length has to be logarithmic in the graph size \cite{congestModel}.
+
 Synchronization is realized through barriers for some or all processes.
 BSP algorithms are performed in a series of global supersteps. These consist of three steps, beginng with the processors performing local computations concurrently.
 This step can overlap with the second, the communication between components. Processes can exchange information to access remote data.

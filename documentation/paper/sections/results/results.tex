@@ -1,11 +1,13 @@
 %!TEX root=../../main.tex
 
-\section{Results}
-\todo{Rename Section???}
+\subsection{Results}
+\todo{Einleitung}
 
 
+\subsubsection{Lessons Learned}
 
-\subsection{The frameworks during setup and benchmark}
+\todo{umbenennen?}
+
 We would like to raise some issues we encountered first while installing and configuring and second while running the different frameworks.
 
 \begin{enumerate}
@@ -15,9 +17,7 @@ We would like to raise some issues we encountered first while installing and con
 
 	\item Furthermore, we would like to address the setup of Hadoop for Giraph. It requires multiple edits in \texttt{xml} files that aren't easily automized. This makes the setup rather time consuming, especially if reconfiguration is needed later on.
 	\item In order for Giraph to run, several Java tasks (the Hadoop infrastructure) have to be constantly running in the background. While we don't expect this to have a significant performance impact on other tasks, it is still suboptimal.
-	%\item The Hadoop distributed file system (HDFS) ran us into disk space problems on multiple occasions. First, unless configured otherwise, the standard implementation replicates all data three times, distributed over all participating nodes. Second, deleting files on the HDFS does not immediately free up disk space because the files are moved to a \emph{recycling bin}-like location.
-
-	\item
+	\item Giraph ran us into disk space problems on multiple occasions. First, deleting files on the Hadoop distributed file system (HDFS) does not immediately free up disk space because the files are moved to a \emph{recycling bin}-like location. Second, some log files that can easily be multiple gigabytes in size are stored outside of the HDFS and are never mentioned in the Giraph documentation.
 \end{enumerate}
 
 
@@ -34,22 +34,4 @@ On a plus side, setup of the frameworks Polymer and Ligra was straight forward a
 \input{sections/results/pr}
 
 \input{sections/results/galoisSpeedup}
-
-
-
-
-
-% \begin{figure}
-% 	\includegraphics[width=\columnwidth]{../../plots/singleNodeSSSP_overheadTime.png}
-% 	\caption{Overhead SSSP single node}
-% 	\label{fig:singleNodeSSSP_overhead}
-% \end{figure}
-
-
-
-% \begin{figure}
-% 	\includegraphics[width=\columnwidth]{../../plots/singleNodeBFS_overheadTime.png}
-% 	\caption{Overhead BFS single node}
-% 	\label{fig:singleNodeBFS_overhead}
-% \end{figure}
 

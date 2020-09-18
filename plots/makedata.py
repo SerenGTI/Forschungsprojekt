@@ -83,8 +83,6 @@ for f in frameworks:
         fname += "-cpu-96thread" # select Galois thread count here
     k = 0 # graph index
     for g in graphs:
-        if g == 'rMat28':
-            continue
         for i in range(len(graph)):
             if g == graph[i] and fname == algo[i]:
                 tmpCalc.append(calcTime[i])
@@ -116,16 +114,17 @@ if False:
             s[i] += calcTimeSSSP_singleNode[k][i]
         k += 1
     s /= 4
-    print("average calculation time:", s)
+    #print("average calculation time:", s)
     k = 0
     for f in frameworks:
         # if f == 'Giraph':
         #     k += 1
         #     continue
-        print(f)
+        #print(f)
         for i in range(1, len(execTimeSSSP_singleNode[k])):
-            print(graphs[i], round((execTimeSSSP_singleNode[k][i] / execTimeSSSP_singleNode[0][i]) * 100), "%")
-            print(graphs[i], round(execTimeSSSP_singleNode[k][i] * 100) / 100, "s")
+            pass
+            #print(graphs[i], round((execTimeSSSP_singleNode[k][i] / execTimeSSSP_singleNode[0][i]) * 100), "%")
+            #print(graphs[i], round(execTimeSSSP_singleNode[k][i] * 100) / 100, "s")
         k += 1
 
 ## SSSP DISTRIBUTED
@@ -182,12 +181,13 @@ for k in dist_frameworks_sssp:
         execTimeSSSP_distributed_normalizedToGalois[i].append(execTimeSSSP_distributed[i][j]/execTimeSSSP_distributed[0][j]) 
     i += 1
 
-for i in range(len(execTimeSSSP_distributed_normalizedToGalois[0])):
-    print(graphs[i], end=" & ")
-    for j in range(len(execTimeSSSP_distributed_normalizedToGalois)):
-        print(round(execTimeSSSP_distributed_normalizedToGalois[j][i] * 100)/100,end=" & (")
-        print(round(execTimeSSSP_distributed[j][i] * 10)/10 ,end=") & ")
-    print("\\\\")
+if False:
+    for i in range(len(execTimeSSSP_distributed_normalizedToGalois[0])):
+        print(graphs[i], end=" & ")
+        for j in range(len(execTimeSSSP_distributed_normalizedToGalois)):
+            print(round(execTimeSSSP_distributed_normalizedToGalois[j][i] * 100)/100,end=" & (")
+            print(round(execTimeSSSP_distributed[j][i] * 10)/10 ,end=") & ")
+        print("\\\\")
 #print(graphs)
 
 
@@ -386,6 +386,8 @@ if False:
     print(polymer)
     print(sum(polymer[:-1]) / len(polymer[:-1])) 
 
+if False:
+    print(calcTimePR_singleNode[0])
     
 
 
@@ -469,6 +471,7 @@ for i in range(len(graph)):
         continue
     
     num = int(re.sub('\D', '', algo[i]))
+
     if not num in x:
         x.append(num)
 x.sort()
@@ -481,7 +484,10 @@ for i in range(len(graph)):
     if '-hp-' in algo[i]:
         continue
 
-    xVal = int(re.sub('\D', '', algo[i]))
+    tmp = re.sub('\D', '', algo[i])
+    if '032' in tmp:
+        continue # Werte mit vorangestellter 0 nicht werten
+    xVal = int(tmp)
     
     if 'sssp' in algo[i]:
         speedupGaloisSSSP[graph[i]][xVal] = calcTime[i]
@@ -568,15 +574,24 @@ for i in range(len(graph)):
     if not '-hp-' in algo[i]:
         continue
     
-    xVal = int(re.sub('\D', '', algo[i]))
+    tmp = re.sub('\D', '', algo[i])
+    xVal = int(tmp)
     
     if 'sssp' in algo[i]:
+        if '032' in tmp:
+            continue
         speedupGaloisSSSP_HP[graph[i]][xVal] = calcTime[i]
     elif 'bfs' in algo[i]:
+        if '032' in tmp:
+            continue
         speedupGaloisBFS_HP[graph[i]][xVal] = calcTime[i]
     elif 'pagerank-push' in algo[i]:
+        if xVal == 32 and not '032' in tmp:
+            continue
         speedupGaloisPRPush_HP[graph[i]][xVal] = calcTime[i]
     elif 'pagerank-pull' in algo[i]:
+        if '032' in tmp:
+            continue
         speedupGaloisPRPull_HP[graph[i]][xVal] = calcTime[i]
 
 
@@ -594,3 +609,63 @@ for g in graphs:
         speedupGaloisPRPush_HP[g][x_] = tPRPush / speedupGaloisPRPush_HP[g][x_]
         speedupGaloisPRPull_HP[g][x_] = tPRPull / speedupGaloisPRPull_HP[g][x_]
 
+# for g in graphs:
+#     print(g, max([speedupGaloisPRPush[g][k] for k in xHP]))
+    # print(g, max([speedupGaloisPRPush_HP[g][k] for k in xHP]))
+
+if False:
+    means_noHP = {}
+    means_HP = {}
+    vars_noHP = {}
+    vars_HP = {}
+    for xVal in xHP:
+        print(xVal,"&",xVal,end="&")
+    print("\\\\")
+    for xVal in xHP:
+        mean = 0
+        for k in graphs:
+            mean += speedupGaloisSSSP[k][xVal]
+        mean /= len(graphs)
+        val = round(mean * 10)/ 10
+        means_noHP[xVal] = val
+        print(val, end="&")
+
+        variance = 0
+        for k in graphs:
+            variance += (speedupGaloisSSSP[k][xVal] - mean)**2
+        variance /= len(graphs)
+        variance = round(variance * 10) / 10
+        vars_noHP[xVal] = variance
+        print(variance, end="&")
+
+    print("\\\\")
+    for xVal in xHP:
+        meanHP = 0
+        for k in graphs:
+            meanHP += speedupGaloisSSSP_HP[k][xVal]
+        meanHP /= len(graphs)
+        val = round(meanHP * 10)/ 10
+        print(val, end="&")
+        means_HP[xVal] = val
+
+        variance = 0
+        for k in graphs:
+            variance += (speedupGaloisSSSP_HP[k][xVal] - meanHP)**2
+        variance /= len(graphs)
+        variance = round(variance * 10)/ 10
+        print(variance, end="&")
+        vars_HP[xVal] = variance
+
+
+    print("\\\\")
+
+
+    print()
+    for x_ in xHP:
+        print(x_,"&", means_noHP[x_],"&", means_HP[x_],"&", vars_noHP[x_],"&", vars_HP[x_],"\\\\")
+
+
+    valuesForMeanSpeedup = {"Means no HP": means_noHP, "Means HP": means_HP, "Variances no HP": vars_noHP, "Variances HP": vars_HP}
+
+    from plotFunctions import line_plot
+    line_plot(["Means no HP", "Means HP", "Variances no HP", "Variances HP"], xHP, valuesForMeanSpeedup, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="meanSpeedup.png")

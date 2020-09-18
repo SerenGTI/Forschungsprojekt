@@ -1,26 +1,26 @@
 %!TEX root=../main.tex
 
-\section{Evaluation}
+
+\subsection{Testing Methods}
 \todo{Einleitung}
 
-\subsection{Environment}
+\subsubsection{Environment}
 For testing the graph processing systems, we used 5 machines with two AMD EPYC 7401 (24-Cores) and 256 GB of RAM each. One of those machines was only used as part of the distributed cluster, since it only has 128 GB of RAM.
 All five machines were running Ubuntu 18.04.2 LTS.
 
-Setup of each framework was performed according to our provided installation guides available in Appendix \ref{app:installationGuides}.
+The setup of each framework was performed according to our provided installation guides available in Appendix \ref{app:installationGuides}.
 All benchmark cases were initiated by our benchmark script available in our repository.
 All five frameworks are tested on a single server.
 Galois, Gemini and Giraph were benchmarked in on the distributed 5-node cluster as well.
 Since Galois supports this parameter, we ran multiple tests comparing Galois' performance with different thread counts on a single machine.
 Furthermore, Galois is a framework capable of utilizing hugepages. We include an evaluation using those on the single node as well.
 Unless mentioned otherwise, we always show results of each framework utilizing 96 threads (i.e. the maximum on our machines) for the single-node evaluation.
+The complete benchmark log files and extracted raw results are available in our repository\footnote{\url{https://github.com/SerenGTI/Forschungsprojekt}}.
 
-The complete benchmark log files and extracted raw results are available in our repository\footnote{\url{https://github.com/SerenGTI/Forschungsprojekt} // das ist hier unschön.}.
 
-
-\subsection{Data Sets}
+\subsubsection{Data Sets}
 The graphs used in our testing can be seen in detail in \autoref{tbl:graphs}. We included a variaty of different graph sizes, from relatively small graphs like the flickr graph with 2 million edges up to an rMat28 with 4.2 billion edges. All graphs except the rMat27 and rMat28 are exemplary real-world graphs and were retrieved from the graph database\footnote{\url{http://konect.uni-koblenz.de/}} associated with the Koblenz Network Collection (KONECT)\cite{konect}.
-Both the rMat27 and rMat28 were created with a modified version (we changed the output format to EdgeList) of a graph generator provided by Ligra.
+Both the rMat27 and rMat28 were created with a modified version of a graph generator provided by Ligra (we changed the output format to EdgeList).
 \begin{table}
 	\centering
 	\caption{Size Comparison of the Used Graphs}
@@ -39,12 +39,30 @@ Both the rMat27 and rMat28 were created with a modified version (we changed the 
 	\label{tbl:graphs}
 \end{table}
 
+\subsubsection{Algorithms}
+The three problems Breadth-first search (BFS), PageRank (PR) and Single-source shortest-path (SSSP) were used to benchmark each framework with every graph.
+We always show the results of PageRank with a maximum of five iterations.
+For frameworks that support multiple implementations (i.e. PageRank in push and pull modes), we included both in our evaluation.
+We chose SSSP and BFS because they are iterative traversal algorithms. Active vertices typically are locally concentrated in the graph. The results of these algorithms can give some insight on the behaviour of the framework with other, similar behaving algorithms.
+PageRank on the other hand is an algorithm that is very different to SSSP or BFS for that matter. With PR, there are many active vertices spread across the entire graph, enforcing different data handling strategies from the framework.
 
-\subsection{Measurements}
+In detail, the algorithms for each framework are:
+\todo{Algorithmen auflisten}
+\begin{itemize}
+	\item Galois supports all of our tested algorithms, with both a Push and a Pull variant for PageRank available. In the distributed scenario, there are Push and Pull versions for SSSP and BFS available as well.
+	\item Gemini \todo{}
+	\item Giraph does not natively supply a BFS algorithm, so in our comparisons a custom implementation is used. For SSSP, slight variations had to be made to the default implementation, to allow us to use different start vertices. For PageRank the supplied implementation is used.
+	\item Ligra \todo{}
+	\item Polymer supports SSSP based on BellmanFord, BFS and two implementations of PageRank. The two implementations are a regular PR and a Delta Variant.
+\end{itemize}
+
+
+\subsubsection{Measurements}
 For every framework, we measured the \emph{execution time} as the time from start to finish of the console command.
 For the \emph{calculation time}, we tried to extract only the time the framework actually executed the algorithm.
-Furthermore, the \emph{overhead} is the time difference between execution time and calculation time.
-For measuring the calculation time, came up with the following:
+Furthermore, the \emph{overhead} is the time difference between execution time and calculation time. This includes time to read the input graph, initialization and any other tasks other than the actual user-defined algorithm.
+Measuring the execution time is straight forward and was done using console time stamps.
+For measuring the calculation time, we came up with the following:
 \begin{itemize}
 	\item For Galois, we extract console log time stamps. Galois outputs \enquote{\texttt{Reading graph complete.}}. Calculation time is the time from this output to the end of execution.
 
@@ -64,56 +82,3 @@ For measuring the calculation time, came up with the following:
 \end{itemize}
 Each evaluation consisting of graph, framework and algorithm was run 10 times, allowing us to smooth slight variations in the measured times.
 Later on, we provide the mean values of the individual times as well as the standard deviation where meaningful.
-
-
-
-\subsection{Algorithms}
-The three problems Breadth-first search (BFS), PageRank (PR) and Single-source shortest-path (SSSP) were used to benchmark framework with every graph.
-We always show the results of PageRank with a maximum of five iterations.
-For frameworks that support multiple implementations (i.e. PageRank in push and pull modes), we included both in our evaluation.
-
-In detail, the algorithms for each framework are:
-\todo{Algorithmen auflisten}
-\begin{itemize}
-	\item Galois: CPU, Push, Pull für PR und SSSP..
-	\item Gemini:
-	\item Giraph: Giraph does not natively supply a BFS algorithm, so in our comparisons a custom implementation is used.
-	\item Ligra:
-	\item Polymer: Polymer supports two implementations of Pagerank
-\end{itemize}
-
-
-
-
-% \autoref{tbl:algorithms} shows the tested algorithms in detail.
-
-% \newcommand{\txtdag}{\textsuperscript{\textdagger}}
-% \newcommand{\singleNode}{\textsuperscript{s}}
-% \newcommand{\distributed}{\textsuperscript{d}}
-% \begin{table}
-% 	\renewcommand{\arraystretch}{1.3}
-% 	\centering
-% 	\caption{REMOVE THIS // Tested Algorithms of Each Framework}
-% 	\begin{tabularx}{0.9\columnwidth}{cYYYYY}
-% 		\bf{Algorithm}&Galois&Gemini&Giraph&Ligra&Polymer\\\hline
-% 		PageRank&Yes\singleNode{}, $\Delta$Push\distributed{}, $\Delta$Pull\distributed{}&&Yes\singleNode\distributed&&Regular\singleNode, $\Delta$\singleNode\\\hline
-% 		SSSP&?, Push, Pull&&Yes\singleNode\distributed\txtdag&&Yes\singleNode{}\\\hline
-% 		BFS&Yes&&Yes\singleNode\distributed{}*&&\\
-% 		\hline
-% 		\multicolumn{6}{p{0.5\columnwidth}}{* Algorithm not natively supported
-
-% 		\txtdag{} Modified algorithm
-
-% 		\distributed{} distributed
-
-% 		\singleNode{} single-node}
-% 	\end{tabularx}
-% 	\label{tbl:algorithms}
-
-
-% \end{table}
-
-
-\subsection{Comparison of setup}
-\todo{Section schreiben}
-
