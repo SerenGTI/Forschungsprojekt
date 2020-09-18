@@ -23,7 +23,7 @@ Beginning with SSSP, followed by BFS and last the comparison for both PR Push an
 		\label{fig:galoisSpeedupSSSP_HP}
 	\end{subfigure}
 	\hfil
-	\caption{Calculation time speedups on SSSP for the different graphs with and without hugepages.}
+	\caption{Calculation time speedups on SSSP}
 	\label{fig:galoisSpeedupSSSP}
 \end{figure*}
 Starting with SSSP, we see an algorithm that benefits from many available threads this can be seen in \autoref{fig:galoisSpeedupSSSP}.
@@ -39,6 +39,8 @@ Orkut reaches maximum speedup of 1.6$\times$ at 16 threads. However on orkut, th
 
 Upon activating the hugepages, we acquired the results seen in \autoref{fig:galoisSpeedupSSSP_HP}. Here, the overall results are similar to the findings without hugepages. \autoref{tbl:ssspMeansVariances} shows the mean speedups and variances over the different graphs. We see that the mean speedup is either very similar or slightly reduced by the hugepages. But in all cases, the variance is significantly smaller when using hugepages. This proves a slightly smaller but more reliable speedup with hugepages.
 Examples for this are on the one hand, orkut that could not reach a speedup above 1.6$\times$. Now, with hugepages it is 4.3$\times$ faster with 96 threads compared to one thread. On the other hand, twitter reached a speedup of 17$\times$ without hugepages and only 13$\times$ with.
+
+While the hugepages did not neccessarily help improve the speedup value, they helped bring the different graphs together. Thus, the overall speedup benefit might not be as good as without hugepages. But the speedup is much more reliable regardless of the graph topology.
 
 \begin{table}
 \renewcommand{\arraystretch}{1.3}
@@ -65,7 +67,7 @@ Examples for this are on the one hand, orkut that could not reach a speedup abov
 % \end{tabular}
 \begin{tabular}{c@{\hskip 2\tabcolsep}rrc@{\hskip 2\tabcolsep}rr}
 \toprule
-&\multicolumn{2}{c}{$\mu$}&\enspace&\multicolumn{2}{c}{$\sigma^2$}\\
+&\multicolumn{2}{c}{\!\!\!$\mu$}&\enspace&\multicolumn{2}{c}{\!\!$\sigma^2$}\\
 \cmidrule(r){2-3}\cmidrule(r){5-6}
 {\bf\#Threads}&\multicolumn{1}{c}{w/}&\multicolumn{1}{c}{w/o}&\enspace&\multicolumn{1}{c}{w/}&\multicolumn{1}{c}{w/o}\\\midrule
 \bf1 & 1.0 & 1.0 &\enspace& 0.0 & 0.0 \\
@@ -95,45 +97,19 @@ Examples for this are on the one hand, orkut that could not reach a speedup abov
 		\label{fig:galoisSpeedupBFS_HP}
 	\end{subfigure}
 	\hfil
-	\caption{Calculation time speedups on BFS for the different graphs with and without hugepages.}
+	\caption{Calculation time speedups on BFS}
 	\label{fig:galoisSpeedupBFS}
 \end{figure*}
 For our speedup results on BFS, \autoref{fig:galoisSpeedupBFS} shows the calculation time speedup of Galois' BFS with and without hugepages.
 If we look at the results without hugepages first, we see most significantly, that the speedup never exceeds 6$\times$ even when using 96 threads (cf. \autoref{fig:galoisSpeedupBFS_noHP}).
-For the smaller graphs (flickr, orkut), we have the same behaviour as on SSSP without hugepages. Speedup is close to 1 in all cases, with orkut reaching a maximum speedup of 1.6$\times$ at 24 threads.
+For both flickr and orkut, we have the same behaviour as on SSSP without hugepages. Speedup is close to 1 in all cases, with orkut reaching a maximum speedup of 1.6$\times$ at 24 threads.
 That said, the larger graphs are not benefitting from more threads as much as they did with SSSP. Twitter for example, reaches a speedup of 2$\times$ only with 48 or more threads. Meanwhile on SSSP, twitter reached a speedup of around 17$\times$ on those thread counts.
 For the other graphs, the speedup is between 4.2$\times$ (rMat27) and 5.5$\times$ (friendster) at 96 threads. So while speedups are possible, not even remotely to the same degree as on SSSP. This in turn is not intuitive, one would assume that these two algorithms perform similarly. Both algorithms are iterative traversal algorithms with comparable computation and synchronization complexity.
 This behaviour extends even to the case with hugepages (cf. \autoref{fig:galoisSpeedupBFS_HP}). While the results are generally better, still not to the same degree as SSSP. With hugepages, BFS reaches a maximum speedup of 10.5$\times$ on wikipedia. The two graphs with largest speedup, namely wikipedia and friendster roughly follow a line with slope 0.125. So with every 8 threads, the speedup is increased by about 1. Orkut follows the same line up to about 32 threads, slowly flatting off above that.
 The other graphs hardly reach a speedup of 3$\times$, even at 96 threads.
 
 
-\subsubsection{PageRank}
-We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. Without hugepages, computation is hardly sped up on any graph other than flickr, where the reached maximum is 64\% (cf. \autoref{fig:galoisSpeedupPRPull_noHP}). This maximum is reached at two threads, with speedup steadily declining above that.
-The rMat28 is the only other graph of one could say computation was sped up at large thread counts. Here we reached a maximum speedup of 31\%\ at 96 threads.
-All 5 other graphs only reach a speedup greater or equal to 1 in just one or two cases and if so only by a small margin.
-Computation on Orkut and Twitter reaches a speedup maximum of 12\%\ and 5\%\ at 4 threads, while being less or equal to 1 in all other cases.
-The wikipedia graph is never sped up.
-Friendster and rMat27 can be sped up by 6.5\%\ or 10\%\ respectively on 8 threads.
-
-Most of this changes on activation of the hugepages, see \autoref{fig:galoisSpeedupPRPull_HP}. Here actually all graphs except flickr reach a speedup greater than 1.5$\times$. Furthermore, orkut is the only graph that never reaches a speedup of 2$\times$. Twitter, rMat27, friendster and rMat28 all reach a speedup of around 2.5$\times$ at 96 threads.
-
-
-
-%###
-
-Speedup results on PageRank show odd behaviour in the Galois implementation.
-There is a significant performance loss on 4, 24 and 40 threads that is far from the expected behaviour. This is most visible for the Push variant seen in \autoref{fig:galoisSpeedupPRPush}, we validated the shown results two times.
-Especially, the speedup for 24 threads is (by interpolating between 16 and 32 threads) expected to be anywhere between 25\% and 94\%.
-Actually however, the system does not reach a speedup of more than 4\%\ on any graph, with only rMat27 actually reaching a value greater than 1.
-On all other graphs, using 24 threads is anywhere from 3\% (flickr) to 9\%\ (wikipedia) slower than using just one thread.
-
-Similar yet less pronounced behaviour is oberservable for Pull in \autoref{fig:galoisSpeedupPRPull}.
-Here especially the values for 24 and 40 threads show a loss in performance.
-It is most visible on the values for twitter and friendster, where both values drop significantly compared to the neighbouring 32 and 48 thread results.
-
-\todo{unfertig}
-We assume the reason for this behaviour to be founded in the hugepages. Galois is recommended to be run with hugepages. 
-
+\subsubsection{PageRank Pull}
 \begin{figure*}
 	\hfil
 	\begin{subfigure}{0.4\textwidth}
@@ -147,17 +123,23 @@ We assume the reason for this behaviour to be founded in the hugepages. Galois i
 		\label{fig:galoisSpeedupPRPull_HP}
 	\end{subfigure}
 	\hfil
-	\caption{Calculation time speedups on PR Pull for the different graphs with and without hugepages.}
+	\caption{Calculation time speedups on PR Pull}
 	\label{fig:galoisSpeedupPRPull}
 \end{figure*}
+We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. Without hugepages, computation time is hardly reduced on any graph other than flickr, where the reached maximum is 1.6$\times$ (cf. \autoref{fig:galoisSpeedupPRPull_noHP}). This maximum is reached at two threads, with speedup steadily declining above that.
+The rMat28 is the only other graph of one could say computation was sped up at large thread counts. Here we reached a maximum speedup of 1.3$\times$ at 96 threads.
+All 5 other graphs only reach a speedup greater or equal to 1 in just one or two cases and if so only by a small margin.
+Computation on Orkut and Twitter reaches a speedup maximum of 12\%\ and 5\%\ at 4 threads, while being less or equal to 1 in all other cases.
+Speedup on the wikipedia graph is never grater than one.
+Friendster and rMat27 can be sped up by 6.5\%\ or 10\%\ respectively on 8 threads.
 
+Most of this changes with the activation of hugepages, our data can be seen in \autoref{fig:galoisSpeedupPRPull_HP}. 
+Here actually all graphs except flickr reach a speedup greater than 1.5$\times$. Remember, that 1.6$\times$ was the maximum possible speedup without hugepages.
+Furthermore, orkut is the only graph that never reaches a speedup of 2$\times$.
+Twitter, rMat27, friendster and rMat28 all reach a speedup of around 2.5$\times$ at 96 threads.
+Thus, we conclude that hugepages are very much recommended when using Galois PageRank Pull or a similar algorithm. Only with hugepages enabled do we observe a considerable increase in performance when using many threads, rather than a slowdown compared to the single threaded performance.
 
-
-
-
-
-
-
+\subsubsection{PageRank Push}
 \begin{figure*}
 	\hfil
 	\begin{subfigure}{0.4\textwidth}
@@ -171,6 +153,19 @@ We assume the reason for this behaviour to be founded in the hugepages. Galois i
 		\label{fig:galoisSpeedupPRPush_HP}
 	\end{subfigure}
 	\hfil
-	\caption{Calculation time speedups on PR Pushgi for the different graphs with and without hugepages.}
+	\caption{Calculation time speedups on PR Push}
 	\label{fig:galoisSpeedupPRPush}
 \end{figure*}
+The speedup results on the Push variant show odd behaviour in the Galois implementation, both with and without hugepages.
+Especially without hugepages, there is a significant performance loss on 4, 24 and 40 threads that is far from the expected behaviour. This is most visible in \autoref{fig:galoisSpeedupPRPush_noHP}, we validated the shown results with multiple samples each.
+The speedup for 24 threads is, by interpolating between 16 and 32 threads, expected to be anywhere between 1.3$\times$ and 1.9$\times$.
+Actually however, the system does not reach a speedup of more than 1.04$\times$ on any graph, with only rMat27 actually reaching a value greater than 1.
+On all other graphs, using 24 threads is anywhere from 3\% (flickr) to 9\%\ (wikipedia) slower than when using just one thread.
+We intially assumed that this is due to the missing hugepages, Galois is recommended to run with. This seems to be only partly true, since the results with hugepages are generally better, but still show some of this behaviour (cf. \autoref{fig:galoisSpeedupPRPush_HP}).
+There is only one significant anomaly at 32 threads, while the points where we observed the performance drop before look more \emph{reasonable}\todo{das ist nicht das wort, das ich suche..}.
+At 32 threads, speedup for 5 of 7 graphs drops to a value between 1.4$\times$ and 1.5$\times$. Those five graphs reach a speedup larger than 1.8$\times$ both at 16 and 48 threads (i.e. immediately before and after 32).
+
+If we disregard these anomalies however, we see a significant performance increase with hugepages compared to without them. Actually, all graphs show an improvement in their maximum reached spedups. The largest improvements are from 1.8$\times$ to 2.2$\times$ for flickr, 1.5$\times$ to 2.1$\times$ for rMat27, 1.5$\times$ to 2.4$\times$ for friendster and 1.4$\times$ to 2.2$\times$ for rMat28, just by switching hugepages on.
+Interestingly, with hugepages all graphs reach a speedup with 4 threads that is very similar, if not equal to the speedup at 96 threads. The largest discrepancy between the two thread counts is rMat27, with a performance uplift from 1.96$\times$ to 2.14$\times$ at 4 and 96 threads.
+
+Using hugepages shows very effective, while it does not completely remove the anomalies we observed, it definitely increases performance by a considerable margin.

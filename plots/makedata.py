@@ -611,36 +611,63 @@ for g in graphs:
         speedupGaloisPRPush_HP[g][x_] = tPRPush / speedupGaloisPRPush_HP[g][x_]
         speedupGaloisPRPull_HP[g][x_] = tPRPull / speedupGaloisPRPull_HP[g][x_]
 
+# for g in graphs:
+#     print(g, max([speedupGaloisPRPush[g][k] for k in xHP]))
+    # print(g, max([speedupGaloisPRPush_HP[g][k] for k in xHP]))
 
 if False:
-    for xVal in xHP[:-4]:
+    means_noHP = {}
+    means_HP = {}
+    vars_noHP = {}
+    vars_HP = {}
+    for xVal in xHP:
         print(xVal,"&",xVal,end="&")
     print("\\\\")
-    for xVal in xHP[:-4]:
+    for xVal in xHP:
         mean = 0
         for k in graphs:
             mean += speedupGaloisSSSP[k][xVal]
         mean /= len(graphs)
-        print(round(mean * 10)/ 10, end="&")
+        val = round(mean * 10)/ 10
+        means_noHP[xVal] = val
+        print(val, end="&")
 
         variance = 0
         for k in graphs:
             variance += (speedupGaloisSSSP[k][xVal] - mean)**2
         variance /= len(graphs)
-        print("(", round(variance * 10)/ 10, ")", end="&")
+        variance = round(variance * 10) / 10
+        vars_noHP[xVal] = variance
+        print(variance, end="&")
 
     print("\\\\")
-    for xVal in xHP[:-4]:
+    for xVal in xHP:
         meanHP = 0
         for k in graphs:
             meanHP += speedupGaloisSSSP_HP[k][xVal]
         meanHP /= len(graphs)
-        print(round(meanHP * 10)/ 10, end="&")
+        val = round(meanHP * 10)/ 10
+        print(val, end="&")
+        means_HP[xVal] = val
 
         variance = 0
         for k in graphs:
             variance += (speedupGaloisSSSP_HP[k][xVal] - meanHP)**2
         variance /= len(graphs)
-        print("(", round(variance * 10)/ 10, ")", end="&")
+        variance = round(variance * 10)/ 10
+        print(variance, end="&")
+        vars_HP[xVal] = variance
+
 
     print("\\\\")
+
+
+    print()
+    for x_ in xHP:
+        print(x_,"&", means_noHP[x_],"&", means_HP[x_],"&", vars_noHP[x_],"&", vars_HP[x_],"\\\\")
+
+
+    valuesForMeanSpeedup = {"Means no HP": means_noHP, "Means HP": means_HP, "Variances no HP": vars_noHP, "Variances HP": vars_HP}
+
+    from plotFunctions import line_plot
+    line_plot(["Means no HP", "Means HP", "Variances no HP", "Variances HP"], xHP, valuesForMeanSpeedup, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="meanSpeedup.png")
