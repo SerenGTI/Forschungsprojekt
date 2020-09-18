@@ -83,8 +83,6 @@ for f in frameworks:
         fname += "-cpu-96thread" # select Galois thread count here
     k = 0 # graph index
     for g in graphs:
-        if g == 'rMat28':
-            continue
         for i in range(len(graph)):
             if g == graph[i] and fname == algo[i]:
                 tmpCalc.append(calcTime[i])

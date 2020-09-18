@@ -5,9 +5,9 @@ from plotFunctions import *
 
 
 distributed = False
-singleNode = False
+singleNode = True
 
-sssp = False
+sssp = True
 bfs = False
 pr = False
 
@@ -16,7 +16,7 @@ execTimes = False
 overheads = False
 
 
-galoisSpeedup = True
+galoisSpeedup = False
 
 
 colors = {"Galois":"#1f77b4",
@@ -34,7 +34,7 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	## CALC TIME
 	#SSSP
 	if sssp or calcTimes:
-		grouped_bar_plot(graphs[:-1], frameworks, calcTimeSSSP_singleNode, yErrs=yErrCalcSSSP_singleNode, yLabel='Calculation time (s)', saveToFile="singleNodeSSSP_calcTime.png", colors_=colors)
+		grouped_bar_plot(graphs, frameworks, calcTimeSSSP_singleNode, yErrs=yErrCalcSSSP_singleNode, yLabel='Calculation time (s)', saveToFile="singleNodeSSSP_calcTime.png", colors_=colors)
 
 	#BFS
 	if bfs or calcTimes:
@@ -50,7 +50,7 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	## EXEC TIME
 	#SSSP
 	if sssp or execTimes:
-		grouped_bar_plot(graphs[:-1], frameworks, execTimeSSSP_singleNode, yErrs=yErrExecSSSP_singleNode, yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png", colors_=colors)
+		grouped_bar_plot(graphs, frameworks, execTimeSSSP_singleNode, yErrs=yErrExecSSSP_singleNode, yLabel='Execution time (s)', saveToFile="singleNodeSSSP_execTime.png", colors_=colors)
 
 	#BFS
 	if bfs or execTimes:
@@ -68,9 +68,9 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	## OVERHEAD
 	#SSSP
 	if sssp or overheads:
-		grouped_bar_plot(graphs[:-1], frameworks, overheadSSSP_singleNode, yLabel='Overhead time (s)', saveToFile="singleNodeSSSP_overheadTime.png", colors_=colors)
+		grouped_bar_plot(graphs, frameworks, overheadSSSP_singleNode, yLabel='Overhead time (s)', saveToFile="singleNodeSSSP_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs[:-1], frameworks, overheadSSSPNormalized_singleNode, title='SSSP single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
+		grouped_bar_plot(graphs, frameworks, overheadSSSPNormalized_singleNode, title='SSSP single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 	#BFS
 	if bfs or overheads:
