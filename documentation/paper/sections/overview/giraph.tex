@@ -9,16 +9,16 @@ Furthermore, one can mutate the graph by adding or removing vertices and edges d
 The computation is vertex oriented and iterative.
 For each iteration step called superstep, the \emph{compute} method implementing the algorithm is invoked on each active vertex, with every vertex being active in the beginning.
 This method receives messages sent in the previous superstep as well as its vertex value and the values of outgoing edges.
-With this data the values are modified and messages to other vertices are sent.
+With this data, the vertex values are modified and messages to other vertices are sent.
 Communication between vertices is only performed via messages, so a vertex has no direct access to values of other vertices. The only visible information is the set of attached edges and their weights.
-Supersteps are synchronized with barriers, meaning that all messages only get delivered in the following superstep and computation for the next superstep can only begin after every vertex has finished computing the current superstep.
+Supersteps are synchronized using barriers, meaning that all messages only get delivered in the following superstep and computation for the next superstep can only begin after every vertex has finished computing the current superstep.
 Edge and vertex values are retained across supersteps.
 Any vertex can stop computing (i.e. setting its state to inactive) at any time but incoming messages will reactivate the vertex.
 A vote-to-halt method is applied, i.e. if all vertices are inactive or if a user defined superstep number is reached the computation ends.
 Once calculation is finished, each vertex outputs some local information (e.g. the final vertex value) as result.
 
 In order for Giraph a achieve scalability and parallelization, it is built on top of Apache Hadoop \cite{Giraph}.
-Hadoop is a MapReduce infrastructure providing a fault tolerant basis for large scale graph processing.
+Hadoop is a MapReduce infrastructure providing a fault tolerant basis for large scale data processing.
 Hadoop supplies a distributed file system (HDFS), on which all computations are performed.
 Giraph is thus, even when only using a single node, running in a distributed manner.
 Hence, expanding single-node processing to a multi-node cluster is seamless.
