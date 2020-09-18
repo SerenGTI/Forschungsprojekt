@@ -1,6 +1,24 @@
 %!TEX root=../main.tex
 
+
 \section{Related Work}
-\todo{Section}
+Almost every framework, that gets published in a paper compares itself to other, similar frameworks. 
+Hence there already exists some information on the relative performance between frameworks. 
+However, many of the most common frameworks today have been released many years ago. 
+Because of that two problems arise.
+First, the comparisons are often themselves very old. 
+And second, many other frameworks are no longer in use because they were replaced by something else.
+We are thus providing an objective benchmark on what changed since the initial release, with a comparison between the most commonly used frameworks today. 
+
+The most recent publication on Galois was in 2013 \cite{Galois}, along with a comparison to GraphLab, PowerGraph and Ligra, which is in our testing lineup itself. The results of their comparison is mainly, that Galois outperforms Ligra on BFS and SSSP on most graphs. Meanwhile, their performance on PR is similar but very dependent on the graph. In some cases, Ligra outperforms Galois, on other graphs Galois is faster than Ligra.
+
+Gemini puts itself against Ligra, Galois, PowerGraph, PowerLyra and GraphX \cite{Gemini}.
+In a single-threaded scenario, Ligra is faster than both Galois and Gemini in SSSP and BFS applications. 
+On the other hand, Gemini beats the other two in PR.
+Furthermore, Gemini is presented to be one order of magnitude faster than PowerGraph, PowerLyra and GraphX on a multi-node computation unit.
+
+The publication on Ligra is mainly about the multicore behaviour of Ligra rather than a comparison to other frameworks \cite{Ligra}.
+
+Polymer provides a large set of comparisons to Galois, Ligra and X-Stream, all on a single computation node. In nearly all of their test cases, Polymer outperformed the other three frameworks \cite{Polymer}. 
 
 
