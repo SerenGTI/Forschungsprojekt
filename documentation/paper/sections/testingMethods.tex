@@ -49,11 +49,11 @@ PageRank on the other hand is an algorithm that is very different to SSSP or BFS
 In detail, the algorithms for each framework are:
 \todo{Algorithmen auflisten}
 \begin{itemize}
-	\item Galois supports all of our tested algorithms, with both a Push and a Pull variant for PageRank available. In the distributed scenario, there are Push and Pull versions for SSSP and BFS available as well.
-	\item Gemini \todo{}
+	\item Ligra supports SSSP based on BellmanFord, BFS and two implementations of PageRank. The two implementations are a regular PR and a Delata Variant.
+	\item Polymer supports the same algoritms as ligra.
+	\item Gemini supports all of our tested algorithms and there are no setting options or specifications which implementations for the algorithms are used.
+	\item Galois supports all of our tested algorithms too, with both a Push and a Pull variant for PageRank available. In the distributed scenario, there are Push and Pull versions for SSSP and BFS available as well. It also supports multiple implementations of the shared-memory allgorithms. The default implementation of SSSP is deltaTile. A lot of setting options are avilable as well, but we're gone with the defaults.
 	\item Giraph does not natively supply a BFS algorithm, so in our comparisons a custom implementation is used. For SSSP, slight variations had to be made to the default implementation, to allow us to use different start vertices. For PageRank the supplied implementation is used.
-	\item Ligra \todo{}
-	\item Polymer supports SSSP based on BellmanFord, BFS and two implementations of PageRank. The two implementations are a regular PR and a Delta Variant.
 \end{itemize}
 
 
