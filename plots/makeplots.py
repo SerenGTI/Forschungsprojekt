@@ -7,9 +7,9 @@ from plotFunctions import *
 distributed = False
 singleNode = True
 
-sssp = True
+sssp = False
 bfs = False
-pr = False
+pr = True
 
 calcTimes = False
 execTimes = False
@@ -38,11 +38,11 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 
 	#BFS
 	if bfs or calcTimes:
-		grouped_bar_plot(graphs, frameworks, calcTimeBFS_singleNode, yErrs=yErrCalcBFS_singleNode, title='BFS single node', yLabel='Calculation time (s)', saveToFile="singleNodeBFS_calcTime.png", colors_=colors)
+		grouped_bar_plot(graphs, frameworks, calcTimeBFS_singleNode, yErrs=yErrCalcBFS_singleNode, yLabel='Calculation time (s)', saveToFile="singleNodeBFS_calcTime.png", colors_=colors)
 
 	#PR
 	if pr or calcTimes:
-		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), calcTimePR_singleNode, yErrs=yErrCalcPR_singleNode, title='PR single node (ugly)', yLabel='Calculation time (s)', saveToFile="singleNodePR_calcTime.png", colors_=colors)
+		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), calcTimePR_singleNode, yErrs=yErrCalcPR_singleNode, yLabel='Calculation time (s)', saveToFile="singleNodePR_calcTime.png", colors_=colors)
 
 
 
@@ -54,11 +54,11 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 
 	#BFS
 	if bfs or execTimes:
-		grouped_bar_plot(graphs, frameworks, execTimeBFS_singleNode, yErrs=yErrExecBFS_singleNode, title='BFS single node', yLabel='Execution time (s)', saveToFile="singleNodeBFS_execTime.png", colors_=colors)
+		grouped_bar_plot(graphs, frameworks, execTimeBFS_singleNode, yErrs=yErrExecBFS_singleNode, yLabel='Execution time (s)', saveToFile="singleNodeBFS_execTime.png", colors_=colors)
 
 	#PR
 	if pr or execTimes:
-		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), execTimePR_singleNode, yErrs=yErrExecPR_singleNode, title='PR single node (ugly)', yLabel='Execution time (s)', saveToFile="singleNodePR_execTime.png", colors_=colors)
+		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), execTimePR_singleNode, yErrs=yErrExecPR_singleNode, yLabel='Execution time (s)', saveToFile="singleNodePR_execTime.png", colors_=colors)
 
 
 
@@ -74,14 +74,14 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 
 	#BFS
 	if bfs or overheads:
-		grouped_bar_plot(graphs, frameworks, overheadBFS_singleNode, title='Overhead time of each framework during BFS', yLabel='Overhead time (s)', saveToFile="singleNodeBFS_overheadTime.png", colors_=colors)
+		grouped_bar_plot(graphs, frameworks, overheadBFS_singleNode, yLabel='Overhead time (s)', saveToFile="singleNodeBFS_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, frameworks, overheadBFSNormalized_singleNode, title='BFS single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeBFS_overheadTimeNormalized.png", yScale='linear', colors_=colors)
+		grouped_bar_plot(graphs, frameworks, overheadBFSNormalized_singleNode, yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeBFS_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 	if pr or overheads:
-		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), overheadPR_singleNode, title='Overhead time of each framework during PR', yLabel='Overhead time (s)', saveToFile="singleNodePR_overheadTime.png", scaleFactor=3.25, colors_=colors)
+		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), overheadPR_singleNode, yLabel='Overhead time (s)', saveToFile="singleNodePR_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), overheadPRNormalized_singleNode, title='PR single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodePR_overheadTimeNormalized.png", yScale='linear', colors_=colors)
+		grouped_bar_plot(graphs, list(singleNode_frameworks_pr.values()), overheadPRNormalized_singleNode, yLabel='Overhead time (s) (normalized)', saveToFile="singleNodePR_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 
 
