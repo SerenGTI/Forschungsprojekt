@@ -36,7 +36,7 @@ On a plus side, setup of the frameworks Polymer and Ligra was straight forward a
 \subsubsection{Comparison of a Single-Node to the Distributed Cluster}
 \begin{table}
 	\caption{Execution Times on a SingleNode vs. 5-Node Distributed Cluster}
-	\label{tbl:SSSP_execTimeComparison}
+	\label{tbl:execTimeComparison}
 	\renewcommand{\arraystretch}{1.2}
 	\centering
 	\begin{tabular}{ccr@{\tabskip 1 \tabcolsep}r
@@ -76,19 +76,21 @@ On a plus side, setup of the frameworks Polymer and Ligra was straight forward a
 \end{table}
 Until now, we have only compared the frameworks with each other, under the same setup circumstances. Hence, a comparison of the same framework, in single-node versus distributed setup is the content of this section.
 Of course only frameworks that were tested in both setups are shown.
-We focus primarily on the results of the execution times, the data can be seen in \autoref{tbl:SSSP_execTimeComparison}. We show the results of Galois Push for the 5-node cluster in the table, since it is faster than Pull.
+We focus primarily on the results of the execution times, the data can be seen in \autoref{tbl:execTimeComparison}. We show the results of Galois Push for the 5-node cluster in the table, since it is faster than Pull.
 
 There are some, rather large differences in the execution times of each framework. Galois is consistently faster on a single computation node compared to the distributed setup. 
 On both SSSP and BFS, the margin between the two setups is already noticeable. The distributed scenario requires from 2$\times$ (BFS, rMat28) to 7.8$\times$ (SSSP, wikipedia) the execution time of single-node Galois.
 For PR however, the difference is multiple orders of magnitude large. Distributed Galois requires from 8.6$\times$ to 121$\times$ more time than single-node Galois. 
 
+Gemini's distributed calculation only requires more time on the smaller graphs (i.e. flickr to wikipedia). There, the distributed scenario is anywhere from 1.1$\times$ (BFS, orkut) to 4.2$\times$ (SSSP, flickr) slower.
+Twitter is the tipping point for Gemini's SSSP and PR algorithm. Here, execution times on the single-node and distributed cluster are within 2\% of each other. For BFS, the tipping point is anywhere between twitter and rMat27.
+Above that, i.e. on the larger graphs, the added computation power can be leveraged to overcome the synchronization overhead of the distributed scenario. Hence, on those graphs single-node Gemini becomes up to 1.8$\times$ (BFS, rMat28) slower than the distributed version.
+This relation is very dependent on the graph size. The smaller the graph, the faster single-node Gemini is in comparison. Analogously, the larger the graph, the larger the gap becomes, in favour of the distributed version.
 
-
-
-Gemini's distributed calculation only requires more time on the smaller graphs (i.e. flickr to wikipedia). On the larger graphs, the added computation power can be leveraged to overcome the synchronization overhead of the distributed scenario. On rMat27, friendster and rMat28, Gemini is anywhere from 1.3$\times$ to 1.6$\times$ faster than on a single-node.
-Giraph already uses the distributed cluster efficiently on the smaller graphs as well. Only on flickr is the distributed version slower than a single node. The differences for Giraph on the other graphs are rather large, single-node execution time is 2.25$\times$ and 3.7$\times$ the execution time of the distributed version on orkut and wikipedia respectively.
-
-
+A very similiar behaviour can be observed for Giraph, but the relation tips in favour of the distributed version much sooner. Giraph already uses the distributed cluster efficiently on the smaller graphs as well.
+On flickr, the execution times of single-node vs distributed Giraph are already within 9\% of each other.
+On the larger graphs, the differences quickly increase, again in favour of the distributed scenario. Giraph's single-node version runs up to 5.9$\times$ (PR, wikipedia) slower than the distributed version.
+Keep in mind, that only a comparison between the three smallest graphs can be made here.
 
 \input{sections/results/galoisSpeedup}
 

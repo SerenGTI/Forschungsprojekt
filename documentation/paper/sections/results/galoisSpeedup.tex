@@ -2,13 +2,10 @@
 
 
 \subsubsection{Behaviour of Galois}
-
-\todo{Section umbenennen?}
-
 \label{sec:galois_speedup}
 This section is dedicated to analyzing the speedup behaviour of Galois under the change to two parameters. First we change the thread count Galois is using. Second, a comparison between Galois using hugepages and Galois without hugepages is made.
 We compare the \emph{calculation speedups} of Galois on the different graphs. Thus, we show the calculation time on any thread count normalized by the calculation time in the single-threaded environment.
-Beginning with SSSP, followed by BFS and last the comparison for both PR Push and Pull.
+Beginning with SSSP, followed by BFS and finally the comparison for both PR Push and Pull.
 
 \paragraph{Single-Source Shortest-Paths}
 \begin{figure*}
@@ -32,19 +29,21 @@ Beginning with SSSP, followed by BFS and last the comparison for both PR Push an
 \centering
 \caption{Mean Speedups and Variances for SSSP With and Without HugePages}
 \label{tbl:ssspMeansVariances}
-\begin{tabular}{c@{\hskip 2\tabcolsep}rrc@{\hskip 2\tabcolsep}rr}
+\begin{tabular}{c
+r@{\tabskip 1 \tabcolsep}r
+r@{\tabskip 1 \tabcolsep}r}
 \toprule
-&\multicolumn{2}{c}{\!\!\!$\mu$}&\enspace&\multicolumn{2}{c}{\!\!$\sigma^2$}\\
-\cmidrule(r){2-3}\cmidrule(r){5-6}
-{\bf\#Threads}&\multicolumn{1}{c}{w/}&\multicolumn{1}{c}{w/o}&\enspace&\multicolumn{1}{c}{w/}&\multicolumn{1}{c}{w/o}\\\midrule
-\bf1 & 1.0 & 1.0 &\enspace& 0.0 & 0.0 \\
-\bf2 & 1.6 & 1.6 &\enspace& 0.2 & 0.1 \\
-\bf4 & 2.5 & 2.5 &\enspace& 1.1 & 0.9 \\
-\bf8 & 4.5 & 3.4 &\enspace& 5.3 & 2.1 \\
-\bf16 & 6.7 & 5.8 &\enspace& 13.0 & 7.3 \\
-\bf32 & 9.6 & 7.0 &\enspace& 38.3 & 10.8 \\
-\bf48 & 10.3 & 10.7 &\enspace& 41.4 & 31.4 \\
-\bf96 & 10.2 & 10.8 &\enspace& 38.1 & 29.9 \\
+&\multicolumn{2}{c}{\!\!\!$\mu$}&\multicolumn{2}{c}{\!\!$\sigma^2$}\\
+\cmidrule(r){2-3}\cmidrule(r){4-5}
+{\bf\#Threads}&w/&w/o&w/&w/o\\\midrule
+\bf1 & 1.0 & 1.0 & 0.0 & 0.0 \\
+\bf2 & 1.6 & 1.6 & 0.2 & 0.1 \\
+\bf4 & 2.5 & 2.5 & 1.1 & 0.9 \\
+\bf8 & 4.5 & 3.4 & 5.3 & 2.1 \\
+\bf16 & 6.7 & 5.8 & 13.0 & 7.3 \\
+\bf32 & 9.6 & 7.0 & 38.3 & 10.8 \\
+\bf48 & 10.3 & 10.7 & 41.4 & 31.4 \\
+\bf96 & 10.2 & 10.8 & 38.1 & 29.9 \\
 \bottomrule
 \end{tabular}
 \end{table}

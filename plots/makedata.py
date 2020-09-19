@@ -463,14 +463,14 @@ if False:
 
 
 
-if True:
+if False:
     for i in range(len(graphs)):
-        # timeGaloisDist = round(execTimeSSSP_distributed[0][i] * 10)/10
-        # timeGeminiDist = round(execTimeSSSP_distributed[2][i] * 10)/10
-        # timeGiraphDist = round(execTimeSSSP_distributed[3][i] * 10)/10
-        # timeGalois = round(execTimeSSSP_singleNode[0][i] * 10)/10
-        # timeGemini = round(execTimeSSSP_singleNode[1][i] * 10)/10
-        # timeGiraph = round(execTimeSSSP_singleNode[2][i] * 10)/10
+        timeGaloisDist = round(execTimeSSSP_distributed[0][i] * 10)/10
+        timeGeminiDist = round(execTimeSSSP_distributed[2][i] * 10)/10
+        timeGiraphDist = round(execTimeSSSP_distributed[3][i] * 10)/10
+        timeGalois = round(execTimeSSSP_singleNode[0][i] * 10)/10
+        timeGemini = round(execTimeSSSP_singleNode[1][i] * 10)/10
+        timeGiraph = round(execTimeSSSP_singleNode[2][i] * 10)/10
 
         # timeGaloisDist = round(execTimeBFS_distributed[0][i] * 10)/10
         # timeGeminiDist = round(execTimeBFS_distributed[2][i] * 10)/10
@@ -479,13 +479,13 @@ if True:
         # timeGemini = round(execTimeBFS_singleNode[1][i] * 10)/10
         # timeGiraph = round(execTimeBFS_singleNode[2][i] * 10)/10
 
-        timeGaloisDist = round(execTimePR_distributed[0][i] * 10)/10
-        timeGeminiDist = round(execTimePR_distributed[2][i] * 10)/10
-        timeGiraphDist = round(execTimePR_distributed[3][i] * 10)/10
-        timeGalois = round(execTimePR_singleNode[1][i] * 10)/10
-        timeGemini = round(execTimePR_singleNode[2][i] * 10)/10
-        timeGiraph = round(execTimePR_singleNode[3][i] * 10)/10
-        print(timeGaloisDist/timeGalois)
+        # timeGaloisDist = round(execTimePR_distributed[0][i] * 10)/10
+        # timeGeminiDist = round(execTimePR_distributed[2][i] * 10)/10
+        # timeGiraphDist = round(execTimePR_distributed[3][i] * 10)/10
+        # timeGalois = round(execTimePR_singleNode[1][i] * 10)/10
+        # timeGemini = round(execTimePR_singleNode[2][i] * 10)/10
+        # timeGiraph = round(execTimePR_singleNode[3][i] * 10)/10
+        print(timeGiraph/timeGiraphDist)
 
         print("&", graphs[i], "&", timeGalois, "&", timeGaloisDist, "&", timeGemini, "&", timeGeminiDist, "&", timeGiraph, "&", timeGiraphDist, "\\\\")
 
