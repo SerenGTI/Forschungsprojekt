@@ -2,10 +2,10 @@
 
 Gemini is a framework for distributed graph processing \cite{Gemini}.
 It was developed with the goal to deliver a generally better performance through efficient communication.
-While most other distributed graph processing systems achieve very good results in the shared-memory area, they often deliver unsatisfactory results in distributed computing.
-Furthermore, a well optimized single-threaded implementation often outperforms a distributed system.
+While most other graph processing systems achieve very good results in the shared-memory area, they often deliver unsatisfactory results in distributed computing.
+Furthermore, a well optimized single-threaded implementation often outperforms a distributed system \cite{scalability}.
 Therefore it is necessary to not only focus on the performance of the computation but also of the performance of the communication.
-Gemini tries to bridge the gap between efficient shared-memory and scalable distributed systems.
+Gemini tries to bridge the gap between efficient shared-memory and scalable distributed systems \cite{Gemini}.
 To achieve this goal, Gemini, in contrast to the other frameworks discussed here, does not support shared-memory calculation, but chooses the distributed message-based approach from scratch.
 
 The real bottleneck of distributed systems is not the communication itself, but the extra instructions, as well as memory references and a lower usage of multiple cores compared to the shared memory counterparts.
@@ -15,10 +15,10 @@ The second reason is the maintenance of vertex replicas on the different systems
 Another reason is the communication-bound apply phase in GAS abstraction.
 And the last reason is the lack of dynamic scheduling.
 
-Gemini tries to work around all the problems mentioned above, by implemening a message-based system from scratch and getting rid of the extra mapping layer between shared-memory computation and communication.
+Gemini tries to work around all the problems, by implemening a message-based system from scratch and getting rid of the extra mapping layer between shared-memory computation and communication.
 Therefore Ligra's push-pull computation model was adopted and applied to the distributed computation.
 Furthermore a chunk-based partitioning scheme was implemented, which allows to partition a graph without a large overhead.
 Gemini also implements a co-scheduling mechanism to connect the computation and inter-node communication.
 
-Gemini is fairly lightweight and has a clearly defined API between the core framework and the implementations of the individual algorithms. The five already implemented algorithms are Single-Source Shortest-Path (SSSP), Breath-First Search (BFS), PageRank (PR), Connected-Components (CC) and Biconnected-Components (BC).
+Gemini is fairly lightweight and has a clearly defined API between the core framework and the implementations of the individual algorithms. The five already implemented algorithms are Single-Source Shortest-Path (SSSP), Breath-First Search (BFS), PageRank (PR), Connected-Components (CC) and Betweenness-Centrality (BC).
 
