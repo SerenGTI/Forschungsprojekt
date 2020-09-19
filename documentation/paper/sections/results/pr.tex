@@ -38,9 +38,6 @@ Interestingly, the execution time for Ligra is at a maximum for twitter. The req
 
 
 \paragraph{Distributed}
-The \autoref{fig:distributedPR} shows our results of PageRank on the distributed cluster.
-First of all, Giraph was unable to complete the test because it required more than 250GB of RAM for rMat28, thus this result is missing.
-When comparing the calculation times in \autoref{fig:distributedPR_calc} to the execution times in \autoref{fig:distributedPR_exec}, we see similar behaviour of all frameworks. This means that unlike with SSSP or BFS, the calculation times and execution times are similar with respect to the relations of the frameworks to one another. More specifically, there are no overhead outliers like it was the case with Giraph on SSSP.
 \begin{figure*}
 	\hfil
 	\begin{subfigure}{0.32\textwidth}
@@ -55,12 +52,31 @@ When comparing the calculation times in \autoref{fig:distributedPR_calc} to the 
 		\label{fig:distributedPR_exec}
 	\end{subfigure}
 	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedPR_overheadTime.png}
+		\caption{Overhead}
+		\label{fig:distributedPR_overhead}
+	\end{subfigure}
+	\hfil
 	\caption{Average times for PR on the distributed cluster, black bars represent one standard deviation in our testing}
 	\label{fig:distributedPR}
 \end{figure*}
 
+Our benchmark results of PageRank on the distributed cluster can be seen in \autoref{fig:distributedPR}.
+First of all, Giraph was unable to complete the test on rMat28 because it ran out of memory, thus this result is missing.
+When comparing the calculation times in \autoref{fig:distributedPR_calc} to the execution times in \autoref{fig:distributedPR_exec}, we see similar behaviour of all frameworks.
+This means that unlike with SSSP or BFS, the calculation times and execution times are similar with respect to the relations of the frameworks to one another.
 
-\todo{Auswertung fehlt noch.}
+Gemini has the shortest calculation times on all graphs (cf. \autoref{fig:distributedPR_calc}).
+The two Galois implementations are second on flickr, orkut, friendster and rMat28, with Giraph being second on the others.
+Generally, the calculation of Galois Push is anywhere from 6\% (flickr) to 46\% (orkut) faster than the Pull counterpart.
+
+This applies to the execution times in almost the same way (cf. \autoref{fig:distributedPR_exec}).
+Gemini is the fastest on all graphs except orkut, where both Galois implementations are faster. Galois Pull takes 13s, whereas Gemini requires 19.4s on orkut.
+Again, as for the calculation times, Galois is the second fastest framework on flickr, wikipedia, friendster and rMat28.
+And Galois Push has smaller execution times than the Pull version because the overhead times for both implementations are similar (cf. \autoref{fig:distributedPR_overhead}).
+
+
 \todo{Discussion}
 
 
