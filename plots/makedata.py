@@ -192,6 +192,11 @@ if False:
 
 
 
+
+
+
+
+
 #### BFS SINGLE NODE
 calcTimeBFS_singleNode = []
 yErrCalcBFS_singleNode = []
@@ -440,6 +445,59 @@ for f in dist_frameworks_pr:
     overheadPR_distributed.append(overhead)
     overheadPRNormalized_distributed.append(overheadNormalized)
 
+
+
+if False:
+    #GaloisPush = 0
+    #GaloisPull = 1
+    print([calcTimePR_distributed[0][i] / calcTimePR_distributed[1][i] for i in range(len(graphs))])
+
+    print(execTimePR_distributed[1][1], execTimePR_distributed[2][1])
+
+
+
+
+
+
+
+
+
+
+if True:
+    for i in range(len(graphs)):
+        # timeGaloisDist = round(execTimeSSSP_distributed[0][i] * 10)/10
+        # timeGeminiDist = round(execTimeSSSP_distributed[2][i] * 10)/10
+        # timeGiraphDist = round(execTimeSSSP_distributed[3][i] * 10)/10
+        # timeGalois = round(execTimeSSSP_singleNode[0][i] * 10)/10
+        # timeGemini = round(execTimeSSSP_singleNode[1][i] * 10)/10
+        # timeGiraph = round(execTimeSSSP_singleNode[2][i] * 10)/10
+
+        # timeGaloisDist = round(execTimeBFS_distributed[0][i] * 10)/10
+        # timeGeminiDist = round(execTimeBFS_distributed[2][i] * 10)/10
+        # timeGiraphDist = round(execTimeBFS_distributed[3][i] * 10)/10
+        # timeGalois = round(execTimeBFS_singleNode[0][i] * 10)/10
+        # timeGemini = round(execTimeBFS_singleNode[1][i] * 10)/10
+        # timeGiraph = round(execTimeBFS_singleNode[2][i] * 10)/10
+
+        timeGaloisDist = round(execTimePR_distributed[0][i] * 10)/10
+        timeGeminiDist = round(execTimePR_distributed[2][i] * 10)/10
+        timeGiraphDist = round(execTimePR_distributed[3][i] * 10)/10
+        timeGalois = round(execTimePR_singleNode[1][i] * 10)/10
+        timeGemini = round(execTimePR_singleNode[2][i] * 10)/10
+        timeGiraph = round(execTimePR_singleNode[3][i] * 10)/10
+        print(timeGaloisDist/timeGalois)
+
+        print("&", graphs[i], "&", timeGalois, "&", timeGaloisDist, "&", timeGemini, "&", timeGeminiDist, "&", timeGiraph, "&", timeGiraphDist, "\\\\")
+
+
+        # for j in range(len(frameworks)):
+        #     if frameworks[j] == 'Ligra' or frameworks[j] == 'Polymer':
+        #         continue
+        #     print(graphs[i],frameworks[j], execTimeSSSP_singleNode[j][i])
+        # for j in range(len(dist_frameworks_sssp)):
+        #     if list(dist_frameworks_sssp.values())[j] == 'Galois Pull':
+        #         continue
+        #     print(graphs[i],list(dist_frameworks_sssp.values())[j], "dist", execTimeSSSP_distributed[j][i])
 
 
 

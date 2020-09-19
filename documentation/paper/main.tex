@@ -22,6 +22,7 @@
 \newcolumntype{Y}{>{\centering\arraybackslash}X} % cell type Y for centered text with automatic line breaks
 \newcommand*\rot{\rotatebox{45}} % rotates content 90deg ccw, mainly for table headers
 \newcommand*\OK{\ding{51}} % a checkmark-style sign
+\newcommand{\txtdagger}{\textsuperscript{\textdagger{}}}
 
 \newcommand{\todo}[1]{{\color{red!90!black}//\bf{TODO:} #1}}
 
@@ -104,18 +105,18 @@ graphs, distributed computing, Galois, Ligra, Polymer, Giraph, Gluon, Gemini
 This paper makes the following contributions:
 \begin{itemize}
   \item Comparison of several state-of-the-art graph processing frameworks
-  \item
+  \item 
   \item
   \item
 \end{itemize}
 
 
 
-\input{sections/relatedWork}
-
 \input{sections/preliminiaries}
 
 \input{sections/overview/overview}
+
+\input{sections/relatedWork}
 
 \section{Evaluation}
 \todo{Einleitung}
@@ -127,9 +128,28 @@ This paper makes the following contributions:
 
 
 \section{Discussion}
-\todo{Hier zunächst mal ein kurzer Vergleich zwischen Distributed und Single Node wo sinnvoll, dann zwischen den Frameworks und so weiter..}
+\todo{unfertig}
+
+There are two main cases that should be regarded in a comparison of the frameworks. One, the case of individual calculations on a graph, i.e. for each calculation, the graph has to be loaded. For this case, frameworks with small execution times and small overhead are preferred. Case two on the other hand is the case of a running system, that performs multiple calculations on a single graph, without the need of reloading graph data with every calculation.
+In this case, frameworks with short calculation times should be preferred because the overhead time is only spent once on startup.
+
+Orthogonal to this, the graph size and topology of the system is a decinding factor. Large graphs often require a distributed cluster, because the graph is simply too large to fit in the RAM of just one machine. We observed this for example with Giraph on 4 of 7 graphs. Furthermore, some environments require a distributed framework setup regardless of any other factors.
 
 
+
+SSSP
+For graphs that are not too large for the RAM and individual test runs, Galois as the fastest single-node framework should be utilized. It provides excellent performance, being orders of magnitude faster than the competing frameworks on a single node.
+
+
+Especially for frameworks like Giraph, that require large amounts of memory, the distributed scenario allows them to complete their computations. 
+
+
+
+BFS
+
+
+
+PR
 
 
 \section{Conclusion}

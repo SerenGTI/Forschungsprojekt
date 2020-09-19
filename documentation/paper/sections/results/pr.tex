@@ -25,6 +25,12 @@ Giraph required more than the available 250 GB of RAM on any graph larger than w
 		\label{fig:singleNodePR_exec}
 	\end{subfigure}
 	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePR_overheadTIme.png}
+		\caption{Overhead}
+		\label{fig:singleNodePR_overhead}
+	\end{subfigure}
+	\hfil
 	\caption{Average times for PR on a single computation node, black bars represent one standard deviation in our testing}
 	\label{fig:singleNodePR}
 \end{figure*}
@@ -75,15 +81,4 @@ This applies to the execution times in almost the same way (cf. \autoref{fig:dis
 Gemini is the fastest on all graphs except orkut, where both Galois implementations are faster. Galois Pull takes 13s, whereas Gemini requires 19.4s on orkut.
 Again, as for the calculation times, Galois is the second fastest framework on flickr, wikipedia, friendster and rMat28.
 And Galois Push has smaller execution times than the Pull version because the overhead times for both implementations are similar (cf. \autoref{fig:distributedPR_overhead}).
-
-
-\todo{Discussion}
-
-
-
-
-
-
-
-
 
