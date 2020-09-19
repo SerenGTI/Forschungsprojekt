@@ -5,11 +5,11 @@ from plotFunctions import *
 
 
 distributed = False
-singleNode = True
+singleNode = False
 
 sssp = False
 bfs = False
-pr = True
+pr = False
 
 calcTimes = False
 execTimes = False
@@ -70,7 +70,7 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	if sssp or overheads:
 		grouped_bar_plot(graphs, frameworks, overheadSSSP_singleNode, yLabel='Overhead time (s)', saveToFile="singleNodeSSSP_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, frameworks, overheadSSSPNormalized_singleNode, title='SSSP single node', yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
+		grouped_bar_plot(graphs, frameworks, overheadSSSPNormalized_singleNode, yLabel='Overhead time (s) (normalized)', saveToFile="singleNodeSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 	#BFS
 	if bfs or overheads:
@@ -93,9 +93,9 @@ if galoisSpeedup:
 
 	line_plot(graphs, x, speedupGaloisBFS, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeBFSGaloisThreads.png", ylim=[0,11])
 
-	line_plot(graphs, x, speedupGaloisPRPush, title='Speedup PR Push', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPushGaloisThreads.png", ylim=[0.85,2.5])
+	line_plot(graphs, x, speedupGaloisPRPush, xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPushGaloisThreads.png", ylim=[0.85,2.5])
 
-	line_plot(graphs, x, speedupGaloisPRPull, title='Speedup PR Pull', yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPullGaloisThreads.png", ylim=[0.5,2.6])
+	line_plot(graphs, x, speedupGaloisPRPull, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPullGaloisThreads.png", ylim=[0.5,2.6])
 
 
 ## GALOIS HP THREAD COUNT
@@ -104,9 +104,9 @@ if galoisSpeedup:
 
 	line_plot(graphs, xHP, speedupGaloisBFS_HP, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeBFSGaloisHPThreads.png", ylim=[0,11])
 
-	line_plot(graphs, xHP, speedupGaloisPRPush_HP, title='Speedup PR Push HP',  xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPushGaloisHPThreads.png", ylim=[0.85,2.5])
+	line_plot(graphs, xHP, speedupGaloisPRPush_HP,  xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPushGaloisHPThreads.png", ylim=[0.85,2.5])
 
-	line_plot(graphs, xHP, speedupGaloisPRPull_HP, title='Speedup PR Pull HP', yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPullGaloisHPThreads.png", ylim=[0.5,2.6])
+	line_plot(graphs, xHP, speedupGaloisPRPull_HP, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPullGaloisHPThreads.png", ylim=[0.5,2.6])
 
 
 
@@ -146,21 +146,21 @@ if distributed and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 	## OVERHEAD
 	#SSSP
 	if sssp or overheads:
-		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSP_distributed, title='Overhead time of each framework during SSSP', yLabel='Overhead time (s)', saveToFile="distributedSSSP_overheadTime.png", colors_=colors)
+		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSP_distributed, yLabel='Overhead time (s)', saveToFile="distributedSSSP_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSPNormalized_distributed, title='SSSP distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
+		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), overheadSSSPNormalized_distributed, yLabel='Overhead time (s) (normalized)', saveToFile="distributedSSSP_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 		grouped_bar_plot(graphs, list(dist_frameworks_sssp.values()), execTimeSSSP_distributed_normalizedToGalois, yLabel='Galois Push execution times', saveToFile="distributedSSSP_executionTimeNormalizedToGalois.png", yScale='log', colors_=colors)
 
 	#BFS
 	if bfs or overheads:
-		grouped_bar_plot(graphs, list(dist_frameworks_bfs.values()), overheadBFS_distributed, title='Overhead time of each framework during BFS', yLabel='Overhead time (s)', saveToFile="distributedBFS_overheadTime.png", colors_=colors)
+		grouped_bar_plot(graphs, list(dist_frameworks_bfs.values()), overheadBFS_distributed, yLabel='Overhead time (s)', saveToFile="distributedBFS_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, list(dist_frameworks_bfs.values()), overheadBFSNormalized_distributed, title='BFS distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedBFS_overheadTimeNormalized.png", yScale='linear', colors_=colors)
+		grouped_bar_plot(graphs, list(dist_frameworks_bfs.values()), overheadBFSNormalized_distributed, yLabel='Overhead time (s) (normalized)', saveToFile="distributedBFS_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
 	#PR
 	if pr or overheads:
-		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), overheadPR_distributed, title='Overhead time of each framework during PR', yLabel='Overhead time (s)', saveToFile="distributedPR_overheadTime.png", colors_=colors)
+		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), overheadPR_distributed, yLabel='Overhead time (s)', saveToFile="distributedPR_overheadTime.png", colors_=colors)
 
-		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), overheadPRNormalized_distributed, title='PR distributed', yLabel='Overhead time (s) (normalized)', saveToFile="distributedPR_overheadTimeNormalized.png", yScale='linear', colors_=colors)
+		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), overheadPRNormalized_distributed, yLabel='Overhead time (s) (normalized)', saveToFile="distributedPR_overheadTimeNormalized.png", yScale='linear', colors_=colors)
 
