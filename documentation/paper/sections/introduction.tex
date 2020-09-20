@@ -1,0 +1,76 @@
+%!TEX root=../../main.tex
+\section{Introduction}
+
+1. Einführung, warum ist Graph analysis wichtig\\
+- Graph processing is gaining increasing attentions in both academic and industrial communities. (Gemini)\\
+- Graphen werden immer wichtiger in vielen Domänen \todo{welche}\\
+-Many machine learning, data mining and scientific computation can be modeled as graph-structured computation, resulting in a new application domain called graph analytics. (Polymer)\\
+- In recent years graph sizes have increased significantly. Thus performance and memory efficiency of the graph analysis applications is now more important than ever. \todo{Quelle}\\
+- Many applications like, Wachsende graphen, benötigt für folgende Applikationen, verwenden graph algorithmen, diese müssen schnell und verteilt laufen\\
+- Graphen wachsen schneller als CPUs \todo{Quelle}\\
+\\
+2. Ausgangssituation und Problem\\
+- dafür wurden Zahlreiche Framweworks entwickelt (Paper: Galois)\\
+- Domänenspezifische Sprachen DSL (Paper: Galois)\\
+- Es wurden auch Librarys und Technologien entwickelt (boost, hugepages, numa, ...)\\
+- Um es zu erleichtern Graphprogramme zu schreiben (Paper: Galois)\\
+- Größe der Graphen fordert Parallelität/Verteiltheit => Probleme  (Paper:Galois)\\
+- Prolem der Vergleichbarkeit der Systeme\\
+- Systeme entwickeln sich weiter und wurden nur zu deren Start verglichen\\
+- Vergleiche wurden von Machern der Systeme erledigt\\
+\\
+3. Was wir zur Lösung des Problems beitragen\\
+- ersten, die unabhängig alle Systeme Vergleichen 2020\\
+- Wir vergleichen die Frameworks nach folgenden Gesichtspunkten:\\
+(Benutzerfreundlichkeit, Performanz/Varianz, Weiterentwicklung)
+- We compare several non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).\\
+- The comparison is performed on both real world data sets and synthetic graphs.
+To provide a comparison to a non-NUMA aware system, Giraph\cite{Giraph} is included in the testing. Giraph itself has often been compared to other state of the art systems like Pregel or GraphX.
+One of the most famous is the (closed source) distributed graph processing system Pregel. Pregel and several open source versions of .
+This results in suboptimal performance, due to missing cache locality, because the Pregel like systems are written in an object oriented manner relying on pointer chasing mechanisms. To this end several non-uniform memory access (NUMA) aware systems were proposed like Polymer \cite{Polymer}, Galois \cite{Galois} or Ligra \cite{Ligra}.\\
+- Comparison of several state-of-the-art graph processing frameworks\\
+\\
+4. Wie ist das Paper aufgebaut\\
+- Section 2: Relatet Work (Wie haben die Macher der Systeme die Systeme verglichen)\\
+- Section 3: Preliminaries (Was muss man an technischen Details wissen)\\
+- Section 4: Framework Overview (Welche Frameworks und was macht diese aus)\\
+- Section 5: Evaluaten (Was wurde gemessen?, Wie wurde gemessen?, Was sind die Ergebnisse?)\\
+- Section 6: Discussion (Warum sehen die Ergebnisse so aus, wie sie aussehen?)\\
+- Section 7: Concluseion (Was lernen wir daraus?)\\
+
+
+
+% In recent years graph sizes have increased significantly [?] .
+% Thus performance and memory efficiency of the graph analysis applications is now more important than ever.
+
+% Many applications like
+
+% Wachsende graphen,
+% benötigt für folgende Applikationen,
+% verwenden graph algorithmen,
+% diese müssen schnell und verteilt laufen
+% dafür wurden Frameworks entwickelt...
+
+% und das noch schön formulieren
+
+
+% We compare several non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).
+% The comparison is performed on both real world data sets and synthetic graphs.
+
+% To provide a comparison to a non-NUMA aware system, Giraph\cite{Giraph} is included in the testing. Giraph itself has often been compared to other state of the art systems like Pregel or GraphX.
+
+
+
+%One of the most famous is the (closed source) distributed graph processing system Pregel. Pregel and several open source versions of .
+%This results in suboptimal performance, due to missing cache locality, because the Pregel like systems are written in an object oriented manner relying on pointer chasing mechanisms.
+
+
+% To this end several non-uniform memory access (NUMA) aware systems were proposed like Polymer \cite{Polymer}, Galois \cite{Galois} or Ligra \cite{Ligra}.
+
+This paper makes the following contributions:
+\begin{itemize}
+  \item Comparison of several state-of-the-art graph processing frameworks
+  \item 
+  \item
+  \item
+\end{itemize}
