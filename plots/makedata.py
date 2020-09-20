@@ -599,11 +599,16 @@ if False:
 
 
 
+
+
+
 ###SPEEDUP GALOIS HP
 speedupGaloisSSSP_HP = {}
 speedupGaloisBFS_HP = {}
 speedupGaloisPRPush_HP = {}
 speedupGaloisPRPull_HP = {}
+
+
 xHP = []
 for g in graphs:
     speedupGaloisSSSP_HP[g] = {}
@@ -727,3 +732,140 @@ if False:
 
     from plotFunctions import line_plot
     line_plot(["Means no HP", "Means HP", "Variances no HP", "Variances HP"], xHP, valuesForMeanSpeedup, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="meanSpeedup.png")
+
+
+if False:
+    for g in graphs:
+        maxSSSP_noHP = round(max([speedupGaloisSSSP[g][i] for i in x]) * 10) / 10
+        maxSSSP_HP = round(max([speedupGaloisSSSP_HP[g][i] for i in xHP]) * 10) / 10
+
+        maxBFS_noHP = round(max([speedupGaloisBFS[g][i] for i in x]) * 10) / 10
+        maxBFS_HP = round(max([speedupGaloisBFS_HP[g][i] for i in xHP]) * 10) / 10
+
+        print(g, end=" & ")
+
+        if maxSSSP_HP > maxSSSP_noHP:
+             print(maxSSSP_noHP, "& \\bf", maxSSSP_HP, end=" & ")
+        else:
+             print("\\bf", maxSSSP_noHP, "& ", maxSSSP_HP, end=" & ")
+        if maxBFS_HP > maxBFS_noHP:
+            print(maxBFS_noHP, "& \\bf", maxBFS_HP, "\\\\")
+        else:
+            print("\\bf", maxBFS_noHP, "&", maxBFS_HP, "\\\\")
+
+
+
+
+
+
+
+
+
+#### TIMES GALOIS HUGEPAGES
+calcTimeSSSP_HP = []
+calcTimeBFS_HP = []
+calcTimePRPull_HP = []
+calcTimePRPush_HP = []
+
+execTimeSSSP_HP = []
+execTimeBFS_HP = []
+execTimePRPull_HP = []
+execTimePRPush_HP = []
+
+for g in graphs:
+    for i in range(len(graph)):
+        if not "galois" in algo[i]:
+            continue
+        if not "-hp-" in algo[i]:
+            continue
+        if not "96thread" in algo[i]:
+            continue
+
+        if not g in graph[i]:
+            continue
+
+        if "sssp" in algo[i]:
+            calcTimeSSSP_HP.append(calcTime[i])
+            execTimeSSSP_HP.append(totalTime[i])
+        elif "bfs" in algo[i]:
+            calcTimeBFS_HP.append(calcTime[i])
+            execTimeBFS_HP.append(totalTime[i])
+        elif "pagerank-pull" in algo[i]:
+            calcTimePRPull_HP.append(calcTime[i])
+            execTimePRPull_HP.append(totalTime[i])
+        elif "pagerank-push" in algo[i]:
+            calcTimePRPush_HP.append(calcTime[i])
+            execTimePRPush_HP.append(totalTime[i])
+if False:
+    calcTimeSSSP = calcTimeSSSP_singleNode[0]
+    calcTimeBFS = calcTimeBFS_singleNode[0]
+    calcTimePRPush = calcTimePR_singleNode[0]
+    calcTimePRPull = calcTimePR_singleNode[1]
+
+    execTimeSSSP = execTimeSSSP_singleNode[0]
+    execTimeBFS = execTimeBFS_singleNode[0]
+    execTimePRPush = execTimePR_singleNode[0]
+    execTimePRPull = execTimePR_singleNode[1]
+    for i in range(len(graphs)):
+        print("&", graphs[i], end=" & ")
+        if calcTimeSSSP[i] < calcTimeSSSP_HP[i]:
+            print("\\bf", round(calcTimeSSSP[i] * 100) / 100,"&", round(calcTimeSSSP_HP[i] * 100) / 100, end=" & ")
+        else:
+            print(round(calcTimeSSSP[i] * 100) / 100,"& \\bf", round(calcTimeSSSP_HP[i] * 100) / 100, end=" & ")
+
+        if execTimeSSSP[i] < execTimeSSSP_HP[i]:
+            print("\\bf", round(execTimeSSSP[i] * 10) / 10,"&", round(execTimeSSSP_HP[i] * 10) / 10, end=" ")
+        else:
+            print(round(execTimeSSSP[i] * 10) / 10,"& \\bf", round(execTimeSSSP_HP[i] * 10) / 10, end=" ")
+
+        print("\\\\")
+    
+    print("\\midrule")
+
+
+    for i in range(len(graphs)):
+        print("&", graphs[i], end=" & ")
+        if calcTimeBFS[i] < calcTimeBFS_HP[i]:
+            print("\\bf", round(calcTimeBFS[i] * 100) / 100,"&", round(calcTimeBFS_HP[i] * 100) / 100, end=" & ")
+        else:
+            print(round(calcTimeBFS[i] * 100) / 100,"& \\bf", round(calcTimeBFS_HP[i] * 100) / 100, end=" & ")
+
+        if execTimeBFS[i] < execTimeBFS_HP[i]:
+            print("\\bf", round(execTimeBFS[i] * 10) / 10,"&", round(execTimeBFS_HP[i] * 10) / 10, end=" ")
+        else:
+            print(round(execTimeBFS[i] * 10) / 10,"& \\bf", round(execTimeBFS_HP[i] * 10) / 10, end=" ")
+
+        print("\\\\")
+        
+    print("\\midrule")
+
+    for i in range(len(graphs)):
+        print("&", graphs[i], end=" & ")
+        if calcTimePRPush[i] < calcTimePRPush_HP[i]:
+            print("\\bf", round(calcTimePRPush[i] * 1000) / 1000,"&", round(calcTimePRPush_HP[i] * 1000) / 1000, end=" & ")
+        else:
+            print(round(calcTimePRPush[i] * 1000) / 1000,"& \\bf", round(calcTimePRPush_HP[i] * 1000) / 1000, end=" & ")
+
+        if execTimePRPush[i] < execTimePRPush_HP[i]:
+            print("\\bf", round(execTimePRPush[i] * 10) / 10,"&", round(execTimePRPush_HP[i] * 10) / 10, end=" ")
+        else:
+            print(round(execTimePRPush[i] * 10) / 10,"& \\bf", round(execTimePRPush_HP[i] * 10) / 10, end=" ")
+
+        print("\\\\")
+
+    print("\\midrule")
+
+    for i in range(len(graphs)):
+        print("&", graphs[i], end=" & ")
+        if calcTimePRPull[i] < calcTimePRPull_HP[i]:
+            print("\\bf", round(calcTimePRPull[i] * 100) / 100,"&", round(calcTimePRPull_HP[i] * 100) / 100, end=" & ")
+        else:
+            print(round(calcTimePRPull[i] * 100) / 100,"& \\bf", round(calcTimePRPull_HP[i] * 100) / 100, end=" & ")
+
+        if execTimePRPull[i] < execTimePRPull_HP[i]:
+            print("\\bf", round(execTimePRPull[i] * 10) / 10,"&", round(execTimePRPull_HP[i] * 10) / 10, end=" ")
+        else:
+            print(round(execTimePRPull[i] * 10) / 10,"& \\bf", round(execTimePRPull_HP[i] * 10) / 10, end=" ")
+
+        print("\\\\")
+    print("\\bottomrule")
