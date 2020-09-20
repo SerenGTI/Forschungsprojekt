@@ -1,0 +1,77 @@
+%!TEX root=../main.tex
+
+\section{Discussion}
+\todo{unfertig}
+
+There are two main cases that should be regarded in a comparison of the frameworks. One, the case of individual calculations on a graph, i.e. for each calculation, the graph has to be loaded. This is called the \emph{research} case. For research, frameworks with small execution times and small overhead are preferred. Case two on the other hand is the case of a running system, that performs multiple calculations on a single graph, without the need of reloading graph data with every calculation. This is the \emph{production} case.
+In production, frameworks with short calculation times should be preferred because the overhead time is only spent once on startup.
+
+Orthogonal to this, the graph size and topology of the system is a deciding factor. Large graphs often require a distributed cluster, because the graph is simply too large to fit in the RAM of just one machine. We observed this for example with Giraph on multiple cases.
+Furthermore, some environments require a distributed framework setup regardless of any other factors.
+
+
+%### SSSP
+%### BFS
+For algorithms that perform a traversal through the graph, with a concentrated and relativly small amount of active vertices, our results for SSSP and BFS are most relevant.
+
+
+
+
+
+
+%### general
+For graphs that are not too large for single node RAM and when performing research work, Galois as the fastest single-node framework is recommended.
+It provides excellent performance, being orders of magnitude faster than the competing frameworks.
+In some cases, especially on PageRank-like applications, tests to determine whether a push- or pull-style implementation is most efficient might be necessary.
+Because hugepages provide an improvement in performance when running calculations on many different graphs, using them in research systems is beneficial as well.
+
+
+
+
+%## production
+On production systems we expect it to be possible to determine what configuration is best, before putting the system in service.
+There are multiple possibilities to be accounted for
+
+hp on/off
+thread count.. weniger wichtig
+
+
+
+
+
+
+
+
+
+
+
+%### PR
+There is still some testing to be performed, in order to find the reason for the performance anomalies we encountered. 
+
+
+
+
+%### Distributed
+A distributed setup can have many advantages,
+
+
+first, there is some data security, because many distributed file systems also support automatic data replication etc.
+
+
+
+There is an argument to be made for systems like Hadoop.
+A user defining an application does not need to know the topology of the system that runs the application later on.
+Hadoop transparently splits the input data and distributes work among the worker nodes.
+And Hadoop automatically handles node failures, a node failure does not immediately result in loss of data or a faulty computation result.
+This is especially important on very large clusters, that can not easily be monitored by humans.
+Furthermore, Giraph using hadoop shows a bias towards larger graphs, we observed an improvement in performance over single-node Giraph, when increasing the size of the input graph.
+This shows the hadoop infrastructure to be working well. 
+The Giraph/hadoop system is recommended for very large graphs on very large computation clusters.
+Only a system like hadoop can reasonably be used on such large clusters.
+Any of the other framewors will just result in large administration overhead due to node failures or other problems of distributed systems in general.
+
+
+
+
+Especially for frameworks like Giraph, that require large amounts of memory, the distributed scenario allows them to complete their computations. 
+
