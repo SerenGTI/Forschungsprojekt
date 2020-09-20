@@ -11,7 +11,7 @@ We begin with the time comparisons, followed by the speedups. These begin with S
 
 \paragraph{Time Comparison for Hugepages}
 \begin{table}
-	\caption{Times With and Without Hugepages}
+	\caption{Times for 96 Threads With and Without Hugepages}
 	\label{tbl:timeComparison_HPnoHP}
 	\renewcommand{\arraystretch}{1.2}
 	\centering
@@ -60,7 +60,8 @@ We begin with the time comparisons, followed by the speedups. These begin with S
 		\multicolumn{6}{l}{(-) Result is less or equal to 1ms}
 	\end{tabular}
 \end{table}
-
+When comparing the performance with and without hugepages, the results really speak for themselves they can be seen in \autoref{tbl:timeComparison_HPnoHP}. It is obvious that enabling hugepages greatly improves performance in almost every case. This means that on every algorithm and almost all graphs, calculation time and execution tame can be reduced significantly with just the use of hugepages. The only exception is twitter on both PageRank implementations, where the execution time is smaller without hugepages (74.9s vs 201.3s for Push and 8.7s vs 9.3s for Pull with and without hugepages respectively). In all other cases (that's 26 of 28 test cases), the hugepage-version is significantly faster.
+The execution time is approximately halved on SSSP and BFS. And on PageRank, the execution time is reduced to 35\% to 87\% of the time without hugepages.
 
 
 \paragraph{Single-Source Shortest-Paths}
