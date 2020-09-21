@@ -1,7 +1,6 @@
 %!TEX root=../main.tex
 
 \section{Preliminaries}
-\todo{Section beschreiben}
 This section briefly explain the concepts and applications necessary, but not directly related to our work.
 Initialy graphs and paths are defined, followed by explanations for various graph analysis applications.
 Afterwards a few models for compution on graphs or large data sets in general are explained as well as hugepages.
@@ -34,7 +33,7 @@ The most common sequential implementations are Dijkstra's algorithm or BellmanFo
 Breadth-first search (BFS) is a search problem on a graph.
 It requires an unweighted graph and a start vertex as input.
 The output is a set of vertices that are reachable from the start vertex.
-In some special cases, a target vertex is also given. In the case of a target being given, the output is true if a path from start to target exists or false otherwise.
+In some special cases, a target vertex is also given. In the case of a target being given, the output is true if a path from start to target exists and otherwise false.
 It is called Breadth-First search because the algorithm searches in a path length-based way. First all paths of length one i.e. all neighbors of the start vertex are checked before checking paths of length two and so on.
 The search algorithm, where the paths of maximum length are checked first is called Depth-First search.
 
@@ -58,10 +57,10 @@ The PageRank score of a vertex is only updated if the relative change of the Pag
 This effectively reduces the amount of vertices for which the PageRank has to be recalculated in following iterations.
 
 \subsection{Push and Pull Variants}
-Many parallel graph algorithms, as well as the three we consider here, are implemented by iterating over vertices \cite{tao}.
-The respective vertex, which is considered in an iteration and the operator is applied to, is also called \emph{active}.
-It's also possible to iterate over edges and consider them as \emph{active}, but in the following, whithout loss of generality, we will use the term \emph{active vertex}.
-This operator considers always only a local so called \emph{neighborhood} to the \emph{active} vertex.
+Many parallel graph algorithms, including the three we consider here, are implemented by iterating over vertices \cite{tao}.
+The vertex, to which the operator is applied, is called \emph{active}.
+It's possible to iterate over edges and consider them as \emph{active}, but in the following, whithout loss of generality, we will use the term \emph{active vertex}.
+This operator considers only a so called \emph{neighborhood} to the \emph{active} vertex.
 To this \emph{neighborhood} belong only vertices, which are in the direct surrounding of the \emph{active} vertex.
 This allows to parallelise the iteration relatively easy, caused by the locality of the operator.
 
@@ -84,7 +83,7 @@ The components are capable of performing computations and transactions on \emph{
 The Messages have a user-defined form and should be as small as possible to keep the network traffic low. The \emph{Congest model} is a closely related model and furthermore describes the messages. There, the message length has to be logarithmic in the graph size \cite{congestModel}.
 
 Synchronization is realized through barriers for some or all processes.
-BSP algorithms are performed in a series of global supersteps. These consist of three steps, beginng with the processors performing local computations concurrently.
+BSP algorithms are performed in a series of global supersteps. These consist of three steps, beginning with the processors performing local computations concurrently.
 This step can overlap with the second, the communication between components. Processes can exchange information to access remote data.
 Lastly, processes reaching a barrier wait until all other processes have reached the same barrier.
 
@@ -106,5 +105,15 @@ Execution is performed in three phases:
 Giraph \cite{Giraph} is an example of a system using this framework.
 
 \subsection{Hugepages}
-\todo{Section schreiben}
-\cite{hugepages}
+Most systems in use today use a so-called virtual memory management \cite{virtual_memory}.
+It is implemented in the kernel and represents an abstraction between the memory devices of a machine and the individual programs.
+Each program gets its own virtual leading address space.
+This simplifies the implementation of applications considerably and also increases security, since each program can only access its own virtual address space.
+The address areas are organized in so called pages, which in most cases are 4 KiB in size.
+In the Translation lookaside buffer (TBL) the most recent translations of virtual memory to physical memory are cached.
+
+Translating from the virtual to the physical address space significantly reduces the performance of today's data processing systems, since the size of the RAM grows much faster than the size of the TBL \cite{hugepages, superpages}.
+To counteract this problem, hugepages were developed, which are usually several mibibibytes in size.
+This minimizes the CPU time needed for table lookups, because there are much less TBL misses.
+This speedup is especially noticeable in applications that are very memory intensive, like graph processing systems.
+
