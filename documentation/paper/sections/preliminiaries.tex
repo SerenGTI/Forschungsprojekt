@@ -105,5 +105,15 @@ Execution is performed in three phases:
 Giraph \cite{Giraph} is an example of a system using this framework.
 
 \subsection{Hugepages}
-\todo{Section schreiben}
-\cite{hugepages}
+Most systems in use today use a so-called virtual memory management \cite{virtual_memory}.
+It is implemented in the kernel and represents an abstraction between the memory devices of a machine and the individual programs.
+Each program gets its own virtual leading address space.
+This simplifies the implementation of applications considerably and also increases security, since each program can only access its own virtual address space.
+The address areas are organized in so called pages, which in most cases are 4 KiB in size.
+In the Translation lookaside buffer (TBL) the most recent translations of virtual memory to physical memory are cached.
+
+Translating from the virtual to the physical address space significantly reduces the performance of today's data processing systems, since the size of the RAM grows much faster than the size of the TBL \cite{hugepages, superpages}.
+To counteract this problem, hugepages were developed, which are usually several mibibibytes in size.
+This minimizes the CPU time needed for table lookups, because there are much less TBL misses.
+This speedup is especially noticeable in applications that are very memory intensive, like graph processing systems.
+

@@ -285,3 +285,35 @@ series = {PLDI '11}
 	publisher = {{USENIX} Association},
 	month = may,
 }
+
+@inproceedings{virtual_memory,
+author = {Abrossimov, E. and Rozier, M. and Shapiro, M.},
+title = {Generic Virtual Memory Management for Operating System Kernels},
+year = {1989},
+isbn = {0897913388},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/74850.74863},
+doi = {10.1145/74850.74863},
+abstract = {We discuss the rationale and design of a Generic Memory management Interface, for a family of scalable operating systems. It consists of a general interface for managing virtual memory, independently of the underlying hardware architecture (e.g. paged versus segmented memory), and independently of the operating system kernel in which it is to be integrated. In particular, this interface provides abstractions for support of a single, consistent cache for both mapped objects and explicit I/O, and control of data caching in real memory. Data management policies are delegated to external managers.A portable implementation of the Generic Memory management Interface for paged architectures, the Paged Virtual Memory manager, is detailed. The PVM uses the novel history object technique for efficient deferred copying. The GMI is used by the Chorus Nucleus, in particular to support a distributed version of Unix. Performance measurements compare favorably with other systems.},
+booktitle = {Proceedings of the Twelfth ACM Symposium on Operating Systems Principles},
+pages = {123–136},
+numpages = {14},
+series = {SOSP '89}
+}
+
+@InProceedings{superpages,
+author="Gorman, Mel
+and Healy, Patrick",
+editor="Varbanescu, Ana Lucia
+and Molnos, Anca
+and van Nieuwpoort, Rob",
+title="Performance Characteristics of Explicit Superpage Support",
+booktitle="Computer Architecture",
+year="2012",
+publisher="Springer Berlin Heidelberg",
+address="Berlin, Heidelberg",
+pages="293--310",
+abstract="Many modern processors support more than one page size. In the 1990s the larger pages, called superpages, were identified as one means of reducing the time spent servicing Translation Lookaside Buffer (TLB) misses by increasing TLB reach. Transparent usage of superpages has seen limited support due to architectural limitations, the cost of monitoring and implementing promotion/demotion, the uncertainity of whether superpages will be a performance boost and the decreasing cost of TLB misses due to hardware innovations. As significant modifications are required to transparently support superpages, the perception is that the cost of transparency will exceed the benefits for real workloads.",
+isbn="978-3-642-24322-6"
+}
