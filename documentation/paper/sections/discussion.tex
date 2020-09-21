@@ -15,27 +15,17 @@ Furthermore, some environments require a distributed framework setup regardless 
 For algorithms that perform a traversal through the graph, with a concentrated and relativly small amount of active vertices, our results for SSSP and BFS are most relevant.
 
 
-
-
-
-
 %### general
 For graphs that are not too large for single node RAM and when performing research work, Galois as the fastest single-node framework is recommended.
-It provides excellent performance, being orders of magnitude faster than the competing frameworks.
-In some cases, especially on PageRank-like applications, tests to determine whether a push- or pull-style implementation is most efficient might be necessary.
-Because hugepages provide an improvement in performance when running calculations on many different graphs, using them in research systems is beneficial as well.
-
-
+It provides excellent performance, being orders of magnitude faster than the competing frameworks. And when it is possible to use hugepages, these improve performance even further, sometimes up to a factor of 2 faster compared to Galois without hugepages.
+Also, we have shown that most algorithms are able to utilize many threads in favour of much smaller calculation times. Graph-traversal algorithms like BFS or SSSP shown here are examples for such algorithms.
+In some cases, especially on PageRank-like applications, it might be necessary to perform some tests whether a push- or pull-style implementation is most efficient.
+However, especially when using push-style implementations, a large thread count is most likely not going to significantly improve performance over single threaded performance. The reason for this is the synchronization required for push applications. This is true not only for Galois but any framework.
 
 
 %## production
 On production systems we expect it to be possible to determine what configuration is best, before putting the system in service.
 There are multiple possibilities to be accounted for
-
-hp on/off
-thread count.. weniger wichtig
-
-
 
 
 

@@ -63,6 +63,7 @@ We begin with the time comparisons, followed by the speedups. These begin with S
 When comparing the performance with and without hugepages, the results really speak for themselves they can be seen in \autoref{tbl:timeComparison_HPnoHP}. It is obvious that enabling hugepages greatly improves performance in almost every case. This means that on every algorithm and almost all graphs, calculation time and execution tame can be reduced significantly with just the use of hugepages. The only exception is twitter on both PageRank implementations, where the execution time is smaller without hugepages (74.9s vs 201.3s for Push and 8.7s vs 9.3s for Pull with and without hugepages respectively). In all other cases (that's 26 of 28 test cases), the hugepage-version is significantly faster.
 The execution time is approximately halved on SSSP and BFS. And on PageRank, the execution time is reduced to 35\% to 87\% of the time without hugepages.
 
+Keep in mind, that we have shown the results of 96 threads in this section. The following sections compare the behavoiur of Galois on different numbers of threads.
 
 \paragraph{Single-Source Shortest-Paths}
 \begin{figure*}
@@ -119,10 +120,6 @@ Orkut reaches maximum speedup of 1.6$\times$ at 16 threads. But on orkut, the sp
 Upon activating the hugepages, we acquired the results seen in \autoref{fig:galoisSpeedupSSSP_HP}. Here, the overall results are similar to the findings without hugepages. \autoref{tbl:ssspMeansVariances} shows the mean speedups and variances over the different graphs with and without hugepages. We see that the mean speedup is either very similar or slightly reduced by the hugepages. But in all cases with hugepages, the variance is significantly smaller. This proves a slightly smaller but more reliable speedup with hugepages.
 Examples for this are on the one hand, orkut that could not reach a speedup above 1.6$\times$. Now, with hugepages it is 4.3$\times$ faster with 96 threads compared to one thread. On the other hand, twitter reached a speedup of 17$\times$ without hugepages and only 13$\times$ with.
 While the hugepages did not neccessarily help improve the speedup value, they helped bring the different graphs together. 
-Thus, the overall speedup benefit might not be as good as without hugepages. 
-But the speedup is much more reliable regardless of the graph topology. 
-In this regard, hugepages can be beneficial when many different graphs are in use, because it is more likely a speedup can be achieved. 
-If only a few graphs are used, activating hugepages can decrease mutlithreaded performance, if the graphs behave for example like twitter above.
 
 \paragraph{Breadth-First Search}
 \begin{figure*}
@@ -177,16 +174,12 @@ But hugepages did not necessarily increase the maximum possible speedup. For 4 o
 However exactly this is happening with BFS, we measured a larger speedup with hugepages on all real-world graphs (i.e. 5 of 7).
 But as can also be seen in \autoref{fig:galoisSpeedupBFS_HP}, the variance of the speedup increases, making the possible speedup very dependent on the graph.
 
-While it is most likely beneficial to use hugepages in both cases, it is due to different reasons.
-On BFS, the maximum observed speedup increases on almost every graph with hugepages compared to without. So using hugepages should generally improve multithreaded performance on most graphs.
-SSSP on the other hand sometimes performes better without 
+%Das ist irgendwie quatsch.
+% While it is beneficial to use hugepages on both algorithms, simply due to the general improvement in the needed times, the hugepages bring different multithreaded behaviour.
+% On BFS, the maximum observed speedup increases on almost every graph with hugepages compared to without. So with hugepages
 
 
-In applications similar to SSSP or BFS, the benefit of many threads can be on the one hand be increased, if the graph allows it.
-
-
-
-
+% In applications similar to SSSP or BFS, the benefit of many threads can be on the one hand be increased, if the graph allows it.
 
 
 \paragraph{PageRank Pull}
@@ -219,7 +212,7 @@ Here actually all graphs except flickr reach a speedup greater than 1.5$\times$.
 Furthermore, orkut is the only graph that never reaches a speedup of 2$\times$.
 Twitter, rMat27, friendster and rMat28 all reach a speedup of around 2.5$\times$ at 96 threads.
 Only with hugepages enabled do we observe a considerable increase in performance and thus a benefit of utilizing many threads.
-Without hugepages though, having many threads available is in most cases slowing down the performance. Hence, we see a great benefit in enabling hugepages, without any drawbacks resulting from them on this algorithm.
+Without hugepages though, having many threads available is in most cases slowing down the performance. Hence, enabling hugepages is very much recommended to be able to use a machine with many cores.
 
 \paragraph{PageRank Push}
 \begin{figure*}
@@ -245,13 +238,13 @@ The speedup for 24 threads is, by interpolating between 16 and 32 threads, expec
 Actually however, the system does not reach a speedup of more than 1.04$\times$ on any graph, with only rMat27 actually reaching a value greater than 1.
 On all other graphs, using 24 threads is anywhere from 3\% (flickr) to 9\%\ (wikipedia) slower than using just one thread.
 We intially assumed that this is due to the missing hugepages, Galois is recommended to be run with. This seems to be only partly true, since the results with hugepages are generally better, but still show some of this behaviour (cf. \autoref{fig:galoisSpeedupPRPush_HP}).
-There is only one significant anomaly at 32 threads, while the points where we observed the performance drop without hugepages look more \emph{reasonable}\todo{das ist nicht das wort das ich suche..}.
+There is only one significant anomaly at 32 threads, while the points where we observed the performance drop without hugepages look normal.
 At 32 threads, speedup for 5 of 7 graphs drops to a value between 1.4$\times$ and 1.5$\times$. Yet those five graphs reach a speedup larger than 1.8$\times$ both at 16 and 48 threads (i.e. immediately before and after 32).
 
 Nevertheless, if we disregard these anomalies, we see a significant performance increase with hugepages compared to without them. Actually, all graphs show an improvement in their maximum reached spedups. The largest improvements are from 1.5$\times$ to 2.1$\times$ for rMat27, 1.5$\times$ to 2.4$\times$ for friendster and 1.4$\times$ to 2.2$\times$ for rMat28, just by switching hugepages on.
 Interestingly, with hugepages all graphs reach a speedup at 4 threads that is very similar, if not equal to the speedup at 96 threads. The largest discrepancy between the two thread counts is rMat27, with a performance uplift from 1.96$\times$ to 2.14$\times$ at 4 and 96 threads.
 
-Using hugepages is again very effective and increases performance by a considerable margin.
+Using hugepages is very effective and yet again increases performance by a considerable margin.
 Though, they do not completely remove the performance drops on some thread counts we observed without hugepages, the abnormal behaviour is at least less severe.
 But even with hugepages, a thread count larger than 4 did often not improve performance at all. This is due to the great synchonization overhead of a push based implementation. Generally, the push based application requires many more write operations, with each requiring synchronization.
 So, on push based applications a large thread pool is not helpful, rather should the framework itself be optimized. In this optimization, hugepages are a great factor for Galois.
