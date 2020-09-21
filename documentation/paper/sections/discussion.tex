@@ -18,23 +18,9 @@ On a distributed cluster though, the synchronization time is not as severely imp
 We already know push implementations to be more efficient on problems with only few active vertices or where the affected push-areas are not overlapping. 
 Because SSSP and BFS often have few active vertices with few overlapping vertices in the neighborhood, synchronization is often not impacting performance as much, making push the better implementation for those algorithms.
 PR on the other hand is expected to perform much better with pull implementations, simply due to less synchronization needed.
-Hence, a good guideline is pull-style on single-node systems or PR-like applications and push-style for SSSP and BFS, especially on distributed systems.
-
-
-
-While we often observed Galois Push to be slightly faster than the pull implementations on distributed systems, we expect pull implementations 
-Our data for PR on a single-node proves pull implemenations to be faster.
-
-
-
-
-
-
-
-
-%Furthermore, in every application case, a pull-style implementation is most likely to perform better than an equivalent push algorithm. This is simply due to the 
-
-
+Hence, a good guideline is pull-style on single-node systems with PR-like applications and push-style for SSSP and BFS, especially on distributed systems. 
+Our data backs this up, we observed single-node PageRank to be fastest with Galois Pull, while Galois Push was the fastest application on distributed systems.
+In general however, some tests determining which implementation is faster can be beneficial.
 
 %### general
 For graphs that are not too large for single node RAM and when performing research work, Galois as the fastest single-node framework is recommended.
@@ -44,21 +30,15 @@ In some cases, especially on PageRank-like applications, it might be necessary t
 However, especially when using push-style implementations, a large thread count is most likely not going to significantly improve performance over single threaded performance. The reason for this is the synchronization required for push applications. This is true not only for Galois but any framework.
 
 
+
+
+
+
+
 %## production
 On production systems we expect it to be possible to determine what configuration is best, before putting the system in service.
 There are multiple possibilities to be accounted for
-
-
-
-
-
-
-
-
-
-%### PR
-There is still some testing to be performed, in order to find the reason for the performance anomalies we encountered. 
-
+\todo{unfertig}
 
 
 
@@ -82,7 +62,7 @@ On research systems however, single computations are performed and node failures
 Hence, Hadoop handling all this in the background is a nice-to-have but most likely, a plain faster framework would be preferred.
 Furthermore, administration is most likely needed frequently because system reconfiguration is happening often?
 Because the system is most likely reconfigured frequently.
-
+\todo{unfertig}
 Here, the fastest framework really depends on the use case. Graph traversal algorithms prefer
 
 Here, Galois is the fastest distributed framework for SSSP and BFS, while Gemini outperforms Galois on PR.
