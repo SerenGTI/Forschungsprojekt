@@ -4,39 +4,79 @@
 \todo{unfertig}
 
 There are two main cases that should be regarded in a comparison of the frameworks. One, the case of individual calculations on a graph, i.e. for each calculation, the graph has to be loaded. This is called the \emph{research} case. For research, frameworks with small execution times and small overhead are preferred. Case two on the other hand is the case of a running system, that performs multiple calculations on a single graph, without the need of reloading graph data with every calculation. This is the \emph{production} case.
-In production, frameworks with short calculation times should be preferred because the overhead time is only spent once on startup.
+In production, frameworks with short calculation times should be preferred because the overhead time is only spent once on startup and amortizes quickly.
 
 Orthogonal to this, the graph size and topology of the system is a deciding factor. Large graphs often require a distributed cluster, because the graph is simply too large to fit in the RAM of just one machine. We observed this for example with Giraph on multiple cases.
 Furthermore, some environments require a distributed framework setup regardless of any other factors.
 
 For algorithms that perform a traversal through the graph, with a concentrated and relativly small amount of active vertices, our results for SSSP and BFS are most relevant.
 If the problem is however of a nature, where many vertices are active, thus many vertices, widely spread across the graph performe some kind of calculation, the results for PR are most applicable.
-Further, some considerations whether a push or pull-style implemenation is better should be made.
-
-Generally, we expect pull-style implementations to be faster on a single-node, we observed this for example for PR with Galois.
+Further, some considerations whether a push or pull-style implemenation is more efficient should be made.
+Generally, we expect pull-style implementations to be faster on a single-node, like for example PR with Galois.
 On a distributed cluster though, the synchronization time is not as severely impacting performance because communication over the network is needed, which is slower than local synchonization in any case.
+
 We already know push implementations to be more efficient on problems with only few active vertices or where the affected push-areas are not overlapping. 
-Because SSSP and BFS often have few active vertices with few overlapping vertices in the neighborhood, synchronization is often not impacting performance as much, making push the better implementation for those algorithms.
-PR on the other hand is expected to perform much better with pull implementations, simply due to less synchronization needed.
+Because SSSP and BFS often have few active vertices with few overlapping vertices (i.e. little synchronization needed), synchronization is often not impacting performance as much, making push often the better implementation for those algorithms.
+PageRank on the other hand has many active vertices and is thus expected to perform much better with pull implementations, because less synchronization is needed in that case.
 Hence, a good guideline is pull-style on single-node systems with PR-like applications and push-style for SSSP and BFS, especially on distributed systems. 
-Our data backs this up, we observed single-node PageRank to be fastest with Galois Pull, while Galois Push was the fastest application on distributed systems.
+Our data backs this up, we observed single-node PageRank to be fastest with Galois Pull, while the push based algorithms were fastest on the distributed systems.
 In general however, some tests determining which implementation is faster can be beneficial.
 
-%### general
-For graphs that are not too large for single node RAM and when performing research work, Galois as the fastest single-node framework is recommended.
-It provides excellent performance, being orders of magnitude faster than the competing frameworks. And when it is possible to use hugepages, these improve performance even further, sometimes up to a factor of 2 faster compared to Galois without hugepages.
+For graphs that are not too large for single node RAM 
+%and when performing research work
+, Galois as the fastest single-node framework is recommended.
+It provides excellent performance, being orders of magnitude faster than the competing frameworks. And when it is possible to use hugepages, these improve performance even further, sometimes up to a factor of 2 times faster compared to Galois without hugepages.
 Also, we have shown that most algorithms are able to utilize many threads in favour of much smaller calculation times. Graph-traversal algorithms like BFS or SSSP shown here are examples for such algorithms.
-In some cases, especially on PageRank-like applications, it might be necessary to perform some tests whether a push- or pull-style implementation is most efficient.
-However, especially when using push-style implementations, a large thread count is most likely not going to significantly improve performance over single threaded performance. The reason for this is the synchronization required for push applications. This is true not only for Galois but any framework.
-
-
-
-
+Supplying a large thread pool for Galois is most likely improving performance on those algorithms.
+However, especially when using push-style algorithms, a large thread count is most likely not going to significantly improve performance over single threaded performance. The reason for this is the synchronization required for push applications. This is true not only for single-node Galois but any framework.
 
 
 
 %## production
-On production systems we expect it to be possible to determine what configuration is best, before putting the system in service.
+On production systems, we expect it to be possible to determine what configuration is best before putting the system in service.
+But not only the absolute runtime of each computation has to be taken into account. Production systems have to be very reliable because downtime often directly correlates to financial loss.
+
+This is often a reason for choosing a distributed system. Many nodes together are less prone to failure of the entire system.
+Thus, there is an argument to be made for systems like Hadoop.
+It automatically handles node failures, a node failure does not immediately result in loss of data or a faulty computation result.
+This is especially important on very large clusters, that can not easily be monitored by humans.
+A user defining an application does not need to know the topology of the system that runs the application later on.
+Hadoop transparently splits the input data and distributes work among the worker nodes.
+Furthermore, Giraph using hadoop shows a bias towards larger graphs, we observed an improvement in performance over single-node Giraph, when increasing the size of the input graph.
+This shows the hadoop infrastructure to be working well and is exactly what the distributed system should be used for anyways. 
+Only a system like hadoop can reasonably be used on such large clusters.
+Any of the other framewors will just result in large administration overhead due to node failures or other problems of distributed systems in general.
+Furthermore, the calculation times of Giraph proved to be very fast in comparison to the other distributed frameworks, with Giraph often being one of the fastest framework in computation time.
+Very short calculation times along with automatic handling of the computation cluster make Giraph using Hadoop a good choice for production systems.
+Pregel is a similarl, fault-tolerant and scalable system but it is contrary to Giraph closed-source.
+
+But not only distributed production systems are possible, of course.  Single-node systems are possible, as long as the graph data fits in local memory. 
+Further, horizontal scaling can for example be used to provide fault-tolerance of the entire system.
+While Giraph has very short computation times even on a single node, we would advise against it. Giraph requires a lot more memory than any of the other frameworks and ran out of memory on multiple occasions. Thus it should only really be considered on distributed setups.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 There are multiple possibilities to be accounted for
 \todo{unfertig}
 
@@ -45,18 +85,7 @@ There are multiple possibilities to be accounted for
 %### Distributed
 If the graph data becomes too large for one node or the computation cluster is distributed anyways, there are multiple possibilities.
 
-First, there is an argument to be made for systems like Hadoop.
-A user defining an application does not need to know the topology of the system that runs the application later on.
-Hadoop transparently splits the input data and distributes work among the worker nodes.
-And Hadoop automatically handles node failures, a node failure does not immediately result in loss of data or a faulty computation result.
-This is especially important on very large clusters, that can not easily be monitored by humans.
-Furthermore, Giraph using hadoop shows a bias towards larger graphs, we observed an improvement in performance over single-node Giraph, when increasing the size of the input graph.
-This shows the hadoop infrastructure to be working well and is exactly what the distributed system should be used for anyways. 
-Only a system like hadoop can reasonably be used on such large clusters.
-Any of the other framewors will just result in large administration overhead due to node failures or other problems of distributed systems in general.
-Furthermore, the calculation times of Giraph proved to be very fast in comparison to the other distributed frameworks, with Giraph often being one of the fastest framework in computation time.
-Very short calculation times along with automatic handling of the computation cluster make Giraph using Hadoop a good choice for production systems.
-Pregel is a similarly fault-tolerant, scalable system but it is contrary to Giraph closed-source.
+
 
 On research systems however, single computations are performed and node failures are not as common, because the system is most likely not in-use constantly.
 Hence, Hadoop handling all this in the background is a nice-to-have but most likely, a plain faster framework would be preferred.
