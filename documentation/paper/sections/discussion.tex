@@ -22,9 +22,7 @@ Hence, a good guideline is pull-style on single-node systems with PR-like applic
 Our data backs this up, we observed single-node PageRank to be fastest with Galois Pull, while the push based algorithms were fastest on the distributed systems.
 In general however, some tests determining which implementation is faster can be beneficial.
 
-For graphs that are not too large for single node RAM 
-%and when performing research work
-, Galois as the fastest single-node framework is recommended.
+For graphs that are not too large for single node RAM, Galois as the fastest single-node framework is recommended.
 It provides excellent performance, being orders of magnitude faster than the competing frameworks. And when it is possible to use hugepages, these improve performance even further, sometimes up to a factor of 2 times faster compared to Galois without hugepages.
 Also, we have shown that most algorithms are able to utilize many threads in favour of much smaller calculation times. Graph-traversal algorithms like BFS or SSSP shown here are examples for such algorithms.
 Supplying a large thread pool for Galois is most likely improving performance on those algorithms.

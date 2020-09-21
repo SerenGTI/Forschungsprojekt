@@ -4,10 +4,7 @@
 Ahead of the discussion of the results a few of the issues we encountered while testing are mentioned. Afterwards the benchmark results for SSSP, BFS, PR and the speedup of Galois given a varying number of threads are discussed in that order.
 
 
-\subsubsection{Lessons Learned}
-
-\todo{umbenennen?}
-
+\subsubsection{Encountered Issues}
 We would like to raise some issues we encountered first while installing and configuring and second while running the different frameworks.
 
 \begin{enumerate}
@@ -36,7 +33,7 @@ On a plus side, setup of the frameworks Polymer and Ligra was straight forward a
 
 \subsubsection{Comparison of a Single-Node to the Distributed Cluster}
 \begin{table}
-	\caption{Execution Times in Seconds on a SingleNode vs. 5-Node Distributed Cluster}
+	\caption{Execution Times in Seconds on a Single Node vs. 5-Node Distributed Cluster}
 	\label{tbl:execTimeComparison}
 	\renewcommand{\arraystretch}{1.2}
 	\centering
@@ -48,29 +45,29 @@ On a plus side, setup of the frameworks Polymer and Ligra was straight forward a
 		\cmidrule{3-4}\cmidrule{5-6}\cmidrule{7-8}
 		&\bf Graph&1N&5N&1N&5N&1N&5N\\
 		\midrule
-		\multirow{7}{0.5ex}{\rotatebox{90}{\bf SSSP}}&flickr & 0.3 & 2.4 & 0.6 & 2.5 & 38.8 & 42.6 \\
-		& orkut & 0.8 & 4.2 & 13.9 & 17.3 & 135.9 & 60.4 \\
-		& wikipedia & 1.8 & 14.2 & 48.5 & 74.5 & 377.2 & 100.8 \\
-		& twitter & 10.8 & 40.0 & 383.0 & 391.1 & - & 349.9 \\
-		& rMat27 & 16.0 & 39.0 & 563.5 & 386.0 & - & 565.8 \\
-		& friendster & 14.4 & 58.5 & 742.6 & 568.9 & - & 444.0 \\
-		& rMat28 & 27.8 & 71.5 & 1236.7 & 792.0 & - & 1180.2 \\
+		\multirow{7}{0.5ex}{\rotatebox{90}{\bf SSSP}}&flickr & \bf 0.3 & 2.4 & \bf 0.6 & 2.5 & \bf 38.8 & 42.6 \\
+		& orkut & \bf 0.8 & 4.2 & \bf 13.9 & 17.3 & 135.9 & \bf 60.4 \\
+		& wikipedia & \bf 1.8 & 14.2 & \bf 48.5 & 74.5 & 377.2 & \bf 100.8 \\
+		& twitter & \bf 10.8 & 40.0 & \bf 383.0 & 391.1 & - & \bf 349.9 \\
+		& rMat27 & \bf 16.0 & 39.0 & 563.5 & \bf 386.0 & - & \bf 565.8 \\
+		& friendster & \bf 14.4 & 58.5 & 742.6 & \bf 568.9 & - & \bf 444.0 \\
+		& rMat28 & \bf 27.8 & 71.5 & 1236.7 & \bf 792.0 & - & \bf 1180.2 \\
 		\midrule
-		\multirow{7}{0.5ex}{\rotatebox{90}{\bf BFS}}& flickr & 0.6 & 2.3 & 0.7 & 2.4 & 38.9 & 41.9 \\
-		& orkut & 0.9 & 4.0 & 12.5 & 13.8 & 128.2 & 58.1 \\
-		& wikipedia & 2.4 & 13.2 & 44.9 & 60.9 & 360.7 & 95.1 \\
-		& twitter & 14.2 & 37.9 & 355.0 & 293.2 & - & 322.3 \\
-		& rMat27 & 14.6 & 34.4 & 540.8 & 305.3 & - & 539.2 \\
-		& friendster & 12.8 & 47.6 & 708.4 & 450.2 & - & 412.3 \\
-		& rMat28 & 33.1 & 67.1 & 1178.7 & 634.3 & - & 1135.6 \\
+		\multirow{7}{0.5ex}{\rotatebox{90}{\bf BFS}}& flickr & \bf 0.6 & 2.3 & \bf 0.7 & 2.4 & \bf 38.9 & 41.9 \\
+		& orkut & \bf 0.9 & 4.0 & \bf 12.5 & 13.8 & 128.2 & \bf 58.1 \\
+		& wikipedia & \bf 2.4 & 13.2 & \bf 44.9 & 60.9 & 360.7 & \bf 95.1 \\
+		& twitter & \bf 14.2 & 37.9 & 355.0 & \bf 293.2 & - & \bf 322.3 \\
+		& rMat27 & \bf 14.6 & 34.4 & 540.8 & \bf 305.3 & - & \bf 539.2 \\
+		& friendster & \bf 12.8 & 47.6 & 708.4 & \bf 450.2 & - & \bf 412.3 \\
+		& rMat28 & \bf 33.1 & 67.1 & 1178.7 & \bf 634.3 & - & \bf 1135.6 \\
 		\midrule
-		\multirow{7}{0.5ex}{\rotatebox{90}{\bf PR}}& flickr & 0.3\txtdagger & 2.6 & 0.7 & 2.2 & 45.6 & 44.1 \\
-		& orkut & 0.7\txtdagger & 8.0 & 13.1 & 19.4 & 561.3 & 106.2 \\
-		& wikipedia & 1.7\txtdagger & 206.5 & 44.4 & 54.4 & 1501.3 & 252.6 \\
-		& twitter & 8.7\txtdagger & 910.9 & 359.9 & 363.5 & - & 1200.2 \\
-		& rMat27 & 19.2\txtdagger & 1287.4 & 536.3 & 376.3 & - & 1369.5 \\
-		& friendster & 20.4\txtdagger & 593.3 & 716.5 & 591.1 & - & 1655.0 \\
-		& rMat28 & 46.0\txtdagger & 2540.2 & 1188.5 & 774.2 & - & - \\
+		\multirow{7}{0.5ex}{\rotatebox{90}{\bf PR}}& flickr & \bf 0.3\txtdagger & 2.6 & \bf 0.7 & 2.2 & 45.6 & \bf 44.1 \\
+		& orkut & \bf 0.7\txtdagger & 8.0 & \bf 13.1 & 19.4 & 561.3 & \bf 106.2 \\
+		& wikipedia & \bf 1.7\txtdagger & 206.5 & \bf 44.4 & 54.4 & 1501.3 & \bf 252.6 \\
+		& twitter & \bf 8.7\txtdagger & 910.9 & \bf 359.9 & 363.5 & - & \bf 1200.2 \\
+		& rMat27 & \bf 19.2\txtdagger & 1287.4 & 536.3 & \bf 376.3 & - & \bf 1369.5 \\
+		& friendster & \bf 20.4\txtdagger & 593.3 & 716.5 & \bf 591.1 & - & \bf 1655.0 \\
+		& rMat28 & \bf 46.0\txtdagger & 2540.2 & 1188.5 & \bf 774.2 & - & - \\
 		\bottomrule
 		\multicolumn{8}{l}{(\txtdagger) Results of Galois Pull shown.}
 	\end{tabular}
