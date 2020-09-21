@@ -9,10 +9,31 @@ In production, frameworks with short calculation times should be preferred becau
 Orthogonal to this, the graph size and topology of the system is a deciding factor. Large graphs often require a distributed cluster, because the graph is simply too large to fit in the RAM of just one machine. We observed this for example with Giraph on multiple cases.
 Furthermore, some environments require a distributed framework setup regardless of any other factors.
 
-
-%### SSSP
-%### BFS
 For algorithms that perform a traversal through the graph, with a concentrated and relativly small amount of active vertices, our results for SSSP and BFS are most relevant.
+If the problem is however of a nature, where many vertices are active, thus many vertices, widely spread across the graph performe some kind of calculation, the results for PR are most applicable.
+Further, some considerations whether a push or pull-style implemenation is better should be made.
+
+Generally, we expect pull-style implementations to be faster on a single-node, we observed this for example for PR with Galois.
+On a distributed cluster though, the synchronization time is not as severely impacting performance because communication over the network is needed, which is slower than local synchonization in any case.
+We already know push implementations to be more efficient on problems with only few active vertices or where the affected push-areas are not overlapping. 
+Because SSSP and BFS often have few active vertices with few overlapping vertices in the neighborhood, synchronization is often not impacting performance as much, making push the better implementation for those algorithms.
+PR on the other hand is expected to perform much better with pull implementations, simply due to less synchronization needed.
+Hence, a good guideline is pull-style on single-node systems or PR-like applications and push-style for SSSP and BFS, especially on distributed systems.
+
+
+
+While we often observed Galois Push to be slightly faster than the pull implementations on distributed systems, we expect pull implementations 
+Our data for PR on a single-node proves pull implemenations to be faster.
+
+
+
+
+
+
+
+
+%Furthermore, in every application case, a pull-style implementation is most likely to perform better than an equivalent push algorithm. This is simply due to the 
+
 
 
 %### general
@@ -42,26 +63,41 @@ There is still some testing to be performed, in order to find the reason for the
 
 
 %### Distributed
-A distributed setup can have many advantages,
+If the graph data becomes too large for one node or the computation cluster is distributed anyways, there are multiple possibilities.
 
-
-first, there is some data security, because many distributed file systems also support automatic data replication etc.
-
-
-
-There is an argument to be made for systems like Hadoop.
+First, there is an argument to be made for systems like Hadoop.
 A user defining an application does not need to know the topology of the system that runs the application later on.
 Hadoop transparently splits the input data and distributes work among the worker nodes.
 And Hadoop automatically handles node failures, a node failure does not immediately result in loss of data or a faulty computation result.
 This is especially important on very large clusters, that can not easily be monitored by humans.
 Furthermore, Giraph using hadoop shows a bias towards larger graphs, we observed an improvement in performance over single-node Giraph, when increasing the size of the input graph.
-This shows the hadoop infrastructure to be working well. 
-The Giraph/hadoop system is recommended for very large graphs on very large computation clusters.
+This shows the hadoop infrastructure to be working well and is exactly what the distributed system should be used for anyways. 
 Only a system like hadoop can reasonably be used on such large clusters.
 Any of the other framewors will just result in large administration overhead due to node failures or other problems of distributed systems in general.
+Furthermore, the calculation times of Giraph proved to be very fast in comparison to the other distributed frameworks, with Giraph often being one of the fastest framework in computation time.
+Very short calculation times along with automatic handling of the computation cluster make Giraph using Hadoop a good choice for production systems.
+Pregel is a similarly fault-tolerant, scalable system but it is contrary to Giraph closed-source.
+
+On research systems however, single computations are performed and node failures are not as common, because the system is most likely not in-use constantly.
+Hence, Hadoop handling all this in the background is a nice-to-have but most likely, a plain faster framework would be preferred.
+Furthermore, administration is most likely needed frequently because system reconfiguration is happening often?
+Because the system is most likely reconfigured frequently.
+
+Here, the fastest framework really depends on the use case. Graph traversal algorithms prefer
+
+Here, Galois is the fastest distributed framework for SSSP and BFS, while Gemini outperforms Galois on PR.
+
+
+
+%A distributed setup can have many advantages,
+
+%Especially for frameworks like Giraph, that require large amounts of memory, the distributed scenario allows them to complete their computations. 
+
+
+%first, there is some data security, because many distributed file systems also support automatic data replication etc.
 
 
 
 
-Especially for frameworks like Giraph, that require large amounts of memory, the distributed scenario allows them to complete their computations. 
+
 
