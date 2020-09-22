@@ -1,20 +1,22 @@
 %!TEX root=../main.tex
 \section{Introduction}
 
-1. Einführung, warum ist Graph analysis wichtig\\
-- Graph processing is gaining increasing attentions in both academic and industrial communities. (Gemini)\\
-- Graphen werden immer wichtiger in vielen Domänen \todo{welche}\\
--Many machine learning, data mining and scientific computation can be modeled as graph-structured computation, resulting in a new application domain called graph analytics. (Polymer)\\
-- In recent years graph sizes have increased significantly. Thus performance and memory efficiency of the graph analysis applications is now more important than ever. \todo{Quelle}\\
-- Many applications like, Wachsende graphen, benötigt für folgende Applikationen, verwenden graph algorithmen, diese müssen schnell und verteilt laufen\\
-- Graphen wachsen schneller als CPUs \todo{Quelle}\\
+In recent years, graph processing has become increasingly important, both in academic and industrial environments \cite{Gemini}.
+In many areas, such as machine learning and data mining, but also scientific computations, problems can be modeled and solved with the help of graphs \cite{Polymer}.
+Thus a new application domain called graph alnalytics was created.
+Some business models are based on working with graphs, such as marketing analysis, advertising, or even Google's search engine.
+The economic success of these business models depends on the efficiency of the graph algorithms.
+In addition, the size of graphs has grown significantly in the last few years and will most likely continue to grow.
+This makes the performance and memory efficency of graph analysis applications more important than ever.
+But also the parallelism and distribution of graph algorithms becomes more important with increasing graph sizes.
+
+Some frameworks were developed for this purpose.
+One of the best known is the (closed source) distributed graph processing system Pregel \cite{pregel}.
+Pregel, as well as some open source versions of it, like Giraph \cite{Giraph}, was built to handle large graphs reliable and fault tolerant on large MapReduce infrastructures.
+Due to the lack of cache locality, as these systems are written object oriented, they provide rather suboptimal performance.
+Because of this, some non-uniform memory access (NUMA) aware systems like Ligra \cite{Ligra}, Polymer \cite{Polymer}, Galois \cite{Galois} and Gemini \cite{Gemini} were introduced.
+\todo{Heiko fragen, ob es ok ist, dass in diesem Abschnitt einiges aus seinem Aushang stammt}
 \\
-2. Ausgangssituation und Problem\\
-- dafür wurden Zahlreiche Framweworks entwickelt (Paper: Galois)\\
-- Domänenspezifische Sprachen DSL (Paper: Galois)\\
-- Es wurden auch Librarys und Technologien entwickelt (boost, hugepages, numa, ...)\\
-- Um es zu erleichtern Graphprogramme zu schreiben (Paper: Galois)\\
-- Größe der Graphen fordert Parallelität/Verteiltheit => Probleme  (Paper:Galois)\\
 - Prolem der Vergleichbarkeit der Systeme\\
 - Systeme entwickeln sich weiter und wurden nur zu deren Start verglichen\\
 - Vergleiche wurden von Machern der Systeme erledigt\\
@@ -36,7 +38,7 @@ This results in suboptimal performance, due to missing cache locality, because t
 This paper makes the following contributions:
 \begin{itemize}
   \item Comparison of several state-of-the-art graph processing frameworks
-  \item 
+  \item
   \item
   \item
 \end{itemize}
