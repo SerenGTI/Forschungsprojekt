@@ -46,10 +46,10 @@ The output of PageRank is a percentage for each vertex. This percentage, called 
 With a small probability, the damping factor, a jump is made to a completely random vertex instead of following a edge.
 The PageRank can be calculated by iterating
 \begin{equation*}
-	\operatorname{PR}(v_i) = \frac{1 - d}{|V|} + d \sum_{v_j \in N^-(v_i)} \frac{\operatorname{PR}(v_j)}{\operatorname{deg^+}(v_j)}
+	\operatorname{PR}(v_i) = \frac{1 - d}{|V|} + d \sum_{v_j \in \operatorname{N^-}(v_i)} \frac{\operatorname{PR}(v_j)}{\operatorname{deg^+}(v_j)}
 \end{equation*}
 for all edges $v_i \in V$.
-$d$ is the damping factor, $deg^+(v)$ is the number of outgoing edges the vertex $v$ has and $N^-(v)$ denotes the set of vertices that have edges to vertex $v$.
+$d$ is the damping factor, $\operatorname{deg^+}(v)$ is the number of outgoing edges the vertex $v$ has and $\operatorname{N^-}(v)$ denotes the set of vertices that have edges to vertex $v$.
 
 The analogy is that the graph represents website pages of the Word Wide Web, that are hyperlinked between one another. 
 PageRank simulates a random surfer who is following links.
