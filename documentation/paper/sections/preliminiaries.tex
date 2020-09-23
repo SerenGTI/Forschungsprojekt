@@ -38,23 +38,25 @@ It is called Breadth-First search because the algorithm searches in a path lengt
 The search algorithm, where the paths of maximum length are checked first is called Depth-First search.
 
 \subsection{PageRank}
-\todo{Aufbau unschön, Formel fehlt}
 \emph{PageRank} (PR) is a link analysis algorithm that weighs the vertices of a graph, measuring the vertices relative importance within the graph \cite{pagerank}.
 The algorithm was invented by Sergey Brin and Larry Page, the founders of Google. To this date, Google Search uses PageRank to rank web pages in their search engine results.
+It is also used as a centrality metric.
 
+The output of PageRank is a percentage for each vertex. This percentage, called the PageRank of the vertex, is the probability of arriving at this vertex when starting at a random vertex and then following random edges.
+With a small probability, the damping factor, a jump is made to a completely random vertex instead of following a edge.
+The PageRank can be calculated by iterating
+\begin{equation*}
+	\operatorname{PR}(v_i) = \frac{1 - d}{|V|} + d \sum_{v_j \in \operatorname{N^-}(v_i)} \frac{\operatorname{PR}(v_j)}{\operatorname{deg^+}(v_j)}
+\end{equation*}
+for all edges $v_i \in V$.
+$d$ is the damping factor, $\operatorname{deg^+}(v)$ is the number of outgoing edges the vertex $v$ has and $\operatorname{N^-}(v)$ denotes the set of vertices that have edges to vertex $v$.
 
-
-This represents a centrality metric of the vertices.
-The analogy is that the graph represents website pages of the Word Wide Web, that are hyperlinked between one another. A website that is more important is likely to receive more links from other webiste.
-PageRank counts the number and quality of links to a page to estimate the importance of a page.
-The output of PageRank is a percentage for each vertex. This percentage, called the PageRank of the vertex, is the probability with which a web surfer starting at a random web page reaches this webpage (vertex).
-With a high probability the web surfer uses a random link from the web page they are currently on and with a smaller probability (called damping factor) they jump to a completely random web page.
-
-
+The analogy is that the graph represents website pages of the Word Wide Web, that are hyperlinked between one another. 
+PageRank simulates a random surfer who is following links.
 
 An optimization to the traditional PageRank implementation is called \emph{Delta-PageRank}.
 The PageRank score of a vertex is only updated if the relative change of the PageRank is larger than some user-defined delta.
-This effectively reduces the amount of vertices for which the PageRank has to be recalculated in following iterations.
+In the next iteration only neighbors of vertices whose PageRank has changed need to be recalculated, thus computation time can be saved.
 
 \subsection{Push and Pull Variants}
 Many parallel graph algorithms, including the three we consider here, are implemented by iterating over vertices \cite{tao}.
@@ -64,7 +66,7 @@ This operator considers only a so called \emph{neighborhood} to the \emph{active
 To this \emph{neighborhood} belong only vertices, which are in the direct surrounding of the \emph{active} vertex.
 This allows to parallelise the iteration relatively easy, caused by the locality of the operator.
 
-In general such an operator can change the whole structure of the \emph{neighbourhood}.
+In general such an operator can change the whole structure of the \emph{neighborhood}.
 But in the following we assume, that an operator changes only \emph{labels} of vertices in the \emph{neighbourhood}.
 \emph{Labels} of edges are also called \emph{weights}.
 Often this operator can be implemented in two different ways, called \emph{push style} or \emph{pull style}.
