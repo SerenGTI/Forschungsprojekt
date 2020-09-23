@@ -19,7 +19,7 @@ On production systems, we expect it to be possible to determine what configurati
 But not only the absolute runtime of each computation has to be taken into account. Production systems have to be very reliable because downtime often directly correlates to financial loss.
 This is often a reason for choosing a distributed system. Many nodes together are less prone to failure of the entire system.
 Thus, there is an argument to be made for systems like Hadoop.
-It automatically handles node failures, whith a node failure not immediately resulting in loss of data or faulty computation results.
+It automatically handles node failures, with a node failure not immediately resulting in loss of data or faulty computation results.
 This is especially important on very large clusters, that can not easily be monitored by humans.
 Further, a user defining an application does not need to know the topology of the system that runs the application later on.
 Hadoop transparently splits the input data and distributes work among the worker nodes.
@@ -38,7 +38,7 @@ We have found around 2B edges, or roughly the size of the twitter graph to be a 
 If required, horizontal scaling can for example be used to provide fault-tolerance of the entire system.
 
 If only the calculation time is important, there are multiple options with the deciding factors being the graph size and the application.
-For algorithms that perform a traversal through the graph, with a concentrated and relativly small amount of active vertices, our results for SSSP and BFS are most relevant.
+For algorithms that perform a traversal through the graph, with a concentrated and relatively small number of active vertices, our results for SSSP and BFS are most relevant.
 Here Galois is fastest on very small graphs (i.e. flickr), but is quickly overtaken by other frameworks.
 In the case of SSSP those are Gemini and Polymer and on BFS they are Ligra and again Gemini. While Gemini is not the fastest on either BFS or SSSP, it is still the safest bet on other algorithms. That is because Polymer is fast on SSSP but slowest on BFS and in turn Ligra is fastest on BFS but one of the slowest frameworks on SSSP. Gemini is second fastest on SSSP and BFS on the larger graphs.
 Also, it might be important to consider the implementation style of a custom application for either of the frameworks.
