@@ -10,7 +10,7 @@ We would like to raise some issues we encountered first while installing and con
 \begin{enumerate}
 	\item During setup and benchmark of Gemini, we encountered several bugs in the cloned repository. These include non zero-terminated strings or even missing return statements.
 
-	The errors rendered the code as-is unable to perform calculations, forcing us to fork the repository and modify the source code. Our changes can be found in one of our repositories\footnote{\url{https://github.com/jasc7636/GeminiGraph}}.
+	The errors rendered the code as-is unable to perform calculations, forcing us to fork the repository and to modify the source code. Our changes can be found in one of our repositories\footnote{\url{https://github.com/jasc7636/GeminiGraph}}.
 
 	\item Furthermore, we would like to address the setup of Hadoop for Giraph. It requires multiple edits in \texttt{xml} files that aren't easily automized. This makes the setup rather time consuming, especially if reconfiguration is needed later on.
 	\item In order for Giraph to run, several Java tasks (the Hadoop infrastructure) have to be constantly running in the background. While we don't expect this to have a significant performance impact on other tasks, it is still suboptimal.
@@ -19,6 +19,8 @@ We would like to raise some issues we encountered first while installing and con
 
 
 On a plus side, setup of the frameworks Polymer and Ligra was straight forward and did not require any special treatment.
+Galois is also fairly easy to setup without hugepages and the process is well documented. 
+Setting up hugepages might require some research and a bit of trial and error to find the ideal way, since there are several ways to achive the same.
 \todo{Gemini? Außerdem sollte hier noch ein bisschen was hin, die beiden Zeilen sehen ja nur traurig aus.}
 
 

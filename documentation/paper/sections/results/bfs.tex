@@ -3,8 +3,6 @@
 \subsubsection{Breadth-first search}
 As with our results for SSSP, for BFS we will begin with our single-node results before looking at the distributed scenario. 
 
-\todo{Einleitung, analog SSSP}
-
 \paragraph{Single-Node}
 \begin{figure*}
 	\begin{subfigure}{0.32\textwidth}
@@ -37,13 +35,13 @@ Only on wikipedia and rMat28, there is a noticeable difference between the two f
 For the remaining frameworks, we compare to Ligra since it is generally slightly faster than Gemini.
 Giraph and Polymer are one to two orders of magnitude slower than Ligra. The only exception to this is Polymer on flickr, here Polymer is just 24ms (35\%) slower than Ligra.
 Giraph takes between 13$\times$ and 32$\times$ longer than Ligra on flickr, orkut or wikipedia.
-As we said, Polymer is comparable to Ligra on flickr, but for the other graphs, its computation times are even longer than those of Giraph. The upside is though, that Polymer managed -- contrary to Giraph -- to finish computation on some larger graphs.
+As already stated, Polymer is comparable to Ligra on flickr, but for the other graphs, its computation times are even longer than those of Giraph. The upside is though, that Polymer managed -- contrary to Giraph -- to finish computation on some larger graphs.
 Polymer takes between 55$\times$ and 530$\times$ longer than Ligra on the graphs larger than flickr.
 Especially interesting is here the difference between the times of rMat27 and friendster. There are 20\% (439M) more edges in friendster, yet the computation for the synthetic rMat27 takes 42\% longer.
 Galois calculation performance is comparable to Gemini or Ligra on the smaller three graphs (flickr, orkut and wikipedia).
 Only on the larger graphs is Galois slower than Gemini or Ligra, meanwhile Galois is always faster than Polymer by one order of magnitude.
 
-The execution time results are very similiar to our findings of SSSP (cf. \autoref{fig:singleNodeBFS_exec}). Just like on SSSP, Galois is the fastest framework and Ligra is second fastest on all graphs except flickr.
+The execution time results are very similiar to our findings of SSSP (cf. \autoref{fig:singleNodeSSSP_exec}). Just like on SSSP, Galois is the fastest framework and Ligra is second fastest on all graphs except flickr.
 Again, Gemini and Polymer are comparable in their performance and at the same time the slowest frameworks on all graphs except flickr, orkut and wikipedia.
 On those three graphs, Giraph is the slowest, by a difference of one to two orders of magnitude compared to Galois.
 On the other graphs, Polymer and Gemini are one order of magnitude slower than Galois.

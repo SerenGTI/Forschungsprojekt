@@ -8,8 +8,8 @@ This data structure can be passed to both of the routines and is maintained by t
 That makes Ligra well suited for expressing graph traversal algorithms.
 
 When \texttt{EdgeMap} is used Ligra decides between a push and a pull style execution.
-The decisive factor is the number of active vertices and their outdegree.
+The deciding factor is the number of active vertices and their outdegree.
 When this number is small a push style execution is used, otherwise a pull style execution is used.
 The default threshold is set to one twentieth of all edges.
 This hybrid approach can increase performance significantly \cite{hybridBFS}.
-When push and pull mode changes also the representation of the \texttt{VertexSubset} is changed. A push style execution corresponds to a sparse representation as array of the active vertex IDs, while a pull style execution corresponds to a dense representation as bitmap.
+When push and pull mode changes the representation of the \texttt{VertexSubset} is also changed. A push style execution corresponds to a sparse representation as array of the active vertex IDs, while a pull style execution corresponds to a dense representation as bitmap.

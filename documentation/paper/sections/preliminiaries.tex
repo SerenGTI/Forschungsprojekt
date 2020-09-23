@@ -116,6 +116,6 @@ In the Translation lookaside buffer (TBL) the most recent translations of virtua
 
 Translating from the virtual to the physical address space significantly reduces the performance of today's data processing systems, since the size of the RAM grows much faster than the size of the TBL \cite{hugepages, superpages}.
 To counteract this problem, hugepages were developed, which are usually several mibibibytes in size.
-This minimizes the CPU time needed for table lookups, because there are much less TBL misses.
-This speedup is especially noticeable in applications that are very memory intensive, like graph processing systems.
+This minimizes the CPU time needed for table lookups, because there are fewer TBL misses.
+This speedup is especially noticeable in very memory intensive applications, like graph processing systems.
 

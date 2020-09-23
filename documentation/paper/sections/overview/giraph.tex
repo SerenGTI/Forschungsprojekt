@@ -17,7 +17,7 @@ Any vertex can stop computing (i.e. setting its state to inactive) at any time b
 A vote-to-halt method is applied, i.e. if all vertices are inactive or if a user defined superstep number is reached the computation ends.
 Once calculation is finished, each vertex outputs some local information (e.g. the final vertex value) as result.
 
-In order for Giraph a achieve scalability and parallelization, it is built on top of Apache Hadoop \cite{Giraph}.
+In order for Giraph to achieve scalability and parallelization, it is built on top of Apache Hadoop \cite{Giraph}.
 Hadoop is a MapReduce infrastructure providing a fault tolerant basis for large scale data processing.
 Hadoop supplies a distributed file system (HDFS), on which all computations are performed.
 Giraph is thus, even when only using a single node, running in a distributed manner.
