@@ -1,0 +1,21 @@
+%!TEX root=../main.tex
+
+\section{Conclusion}
+
+We compared the performance of several graph processing frameworks including Ligra, Polymer, Gemini, Galois and Giraph. 
+For comparison we used the three problems SSSP, BFS and PR on graphs of various sizes.
+We measured the calculation time of the algorithm itself and the overall execution time, which also includes the startup time of the programm.
+All of the frameworks were tested on a single compute node. Gemini, Galois and Giraph also support distributed computation and were therefore also tested on a five node cluster.
+On a single node, different frameworks outperform others in computation time based on the problem under consideration.
+For SSSP Polymer performed best while for BFS Ligra and Gemini best. PR was calculated by Galois the fastest.
+When looking at the computation times of the distributed it stands out that the best time for each problem is beaten by most if not all of the single node times.
+Comparing the distributed computation times SSSP and BFS results looked simular with Giraph being the fastest with the exception of syntetic graphs where Gemini was faster. The push version of Galois outperform the pull version but ultimativly was slower than Gemini. For distributed PR Gemini was the fastest by a margin.
+In contrast, in terms of overall execution times, Galois almost always outperforms the other frameworks because the overhead is very small.
+These benchmark results suggest that single node systems should be used whenever the graph fits into the RAM. 
+If only individual calculations are performed on a graph, Galois is recommended due to its overall speed for a single node system. 
+For a distributed system Galois is still a good choice if the algorithm is simular to SSSP and BFS. If the algorithm is more simular to PR Gemini would be a better choice.
+In case of multiple calculations on a single graph, the graph doesn't need to be reloaded. Thus overall execution time is less important and only calculation time should to be considered.
+As single node system, there is no single best framework. All choices excluding Giraph can be suitable here, depending on the exact circumstances. Gemini would be a safe bet being the second best framework often. 
+In situations where a distributed system is required and the calculation time is important Giraph can be a good choice offering additional fault tolerance. Otherwise Gemini can be used.
+
+\todo{Future work}

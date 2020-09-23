@@ -57,7 +57,7 @@ Our data backs this up, we observed single-node PageRank to be fastest with Galo
 %## research
 For single-node research systems, a overall good execution time on \emph{any} application is necessary. 
 Here we recommend Galois as the fastest executing single-node framework overall.
-It provides excellent performance, being orders of magnitude faster than the competing frameworks. And when it is possible to use hugepages, further improvements in performance can be expected. We frequently observed Galois with hugepages to be around 2 times faster compared to Galois without hugepages.
+It provides excellent performance, being orders of magnitude faster than any of the competing frameworks. And when it is possible to use hugepages, further improvements in performance can be expected. We frequently observed Galois with hugepages to be around 2 times faster compared to Galois without hugepages.
 Also, we have shown that most algorithms are able to utilize many threads in favour of much smaller calculation times. Graph-traversal algorithms like BFS or SSSP shown here are examples for such algorithms.
 Supplying a large thread pool for Galois is most likely improving performance on those algorithms.
 However, especially when using push-style algorithms, a large thread count is most likely not going to significantly improve performance over single threaded results. 
