@@ -682,16 +682,18 @@ if False:
     vars_noHP = {}
     vars_HP = {}
     for xVal in xHP:
-        print(xVal,"&",xVal,end="&")
-    print("\\\\")
+        pass
+        #print(xVal,"&",xVal,end="&")
+    #print("\\\\")
     for xVal in xHP:
         mean = 0
         for k in graphs:
             mean += speedupGaloisSSSP[k][xVal]
         mean /= len(graphs)
-        val = round(mean * 10)/ 10
+        #val = round(mean * 10)/ 10
+        val = mean
         means_noHP[xVal] = val
-        print(val, end="&")
+        #print(val, end="&")
 
         variance = 0
         for k in graphs:
@@ -699,7 +701,7 @@ if False:
         variance /= len(graphs)
         variance = round(variance * 10) / 10
         vars_noHP[xVal] = variance
-        print(variance, end="&")
+        #print(variance, end="&")
 
     print("\\\\")
     for xVal in xHP:
@@ -707,8 +709,9 @@ if False:
         for k in graphs:
             meanHP += speedupGaloisSSSP_HP[k][xVal]
         meanHP /= len(graphs)
-        val = round(meanHP * 10)/ 10
-        print(val, end="&")
+        #val = round(meanHP * 10)/ 10
+        val = meanHP
+        #print(val, end="&")
         means_HP[xVal] = val
 
         variance = 0
@@ -716,7 +719,7 @@ if False:
             variance += (speedupGaloisSSSP_HP[k][xVal] - meanHP)**2
         variance /= len(graphs)
         variance = round(variance * 10)/ 10
-        print(variance, end="&")
+        #print(variance, end="&")
         vars_HP[xVal] = variance
 
 
@@ -725,6 +728,8 @@ if False:
 
     print()
     for x_ in xHP:
+        print(vars_noHP[x_] > vars_HP[x_])
+
         print(x_,"&", means_noHP[x_],"&", means_HP[x_],"&", vars_noHP[x_],"&", vars_HP[x_],"\\\\")
 
 

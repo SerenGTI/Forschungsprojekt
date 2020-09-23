@@ -77,26 +77,27 @@ Comparing the two Galois implementations, we find the calculation and execution 
 Evidently, Galois Push is the fastest algorithm in our lineup on 6 out of 7 graphs. With the exception being flickr, where Galois Push takes negligibly longer than the Pull counterpart.
 
 
-\begin{table}
+\begin{table*}
 \renewcommand{\arraystretch}{1.2}
-\tiny
+\renewcommand{\rot}[1]{\rotatebox{90}{#1}}
 \centering
 \caption{Distributed SSSP Execution Times and Their Realation to Galois Push}
-\begin{tabular}{crrrrrrrr}
+\begin{tabular}{c@{\tabskip 1.4 \tabcolsep}r@{\tabskip 1 \tabcolsep}r@{\tabskip 1.4 \tabcolsep}r@{\tabskip 1 \tabcolsep}r@{\tabskip 1.4 \tabcolsep}r@{\tabskip 1 \tabcolsep}r@{\tabskip 1.4 \tabcolsep}r@{\tabskip 1 \tabcolsep}r}
 \toprule
-\bf{Data Set}&
+&
 \multicolumn{2}{c}{\bf Galois Push}&\multicolumn{2}{c}{\bf Galois Pull}&\multicolumn{2}{c}{\bf Gemini}&\multicolumn{2}{c}{\bf Giraph}\\
-&$\times$&(s)&$\times$&(s)&$\times$&(s)&$\times$&(s)\\\midrule
-flickr & 1.0 & (2.4) & 0.97 & (2.4) & 1.02 & (2.5) & 17.46 & (42.6)\\
-orkut & 1.0 & (4.2) & 1.28 & (5.4) & 4.12 & (17.3) & 14.38 & (60.4)\\
-wikipedia & 1.0 & (14.2) & 1.88 & (26.6) & 5.26 & (74.5) & 7.11 & (100.8) \\
-twitter & 1.0 & (40.0) & 3.56 & (142.2) & 9.79 & (391.1) & 8.76 & (349.9)\\
-rMat27 & 1.0 & (39.0) & 3.98 & (154.9) & 9.91 & (386.0) & 14.52 & (565.8)\\
-friendster & 1.0 & (58.5) & 2.32 & (136.0) & 9.72 & (568.9) & 7.59 & (444.0)\\
-rMat28 & 1.0 & (71.5) & 5.7 & (407.9) & 11.07 & (792.0) & 16.5 & (1180.2)\\\bottomrule
+\cmidrule{2-3}\cmidrule{4-5}\cmidrule{6-7}\cmidrule{8-9}
+\bf{Data Set}&$\times$G.Push&time (s)&$\times$G.Push&time (s)&$\times$G.Push&time (s)&$\times$G.Push&time (s)\\\midrule
+flickr & 1.0 & 2.4 & 0.97 & 2.4 & 1.02 & 2.5 & 17.46 & 42.6\\
+orkut & 1.0 & 4.2 & 1.28 & 5.4 & 4.12 & 17.3 & 14.38 & 60.4\\
+wikipedia & 1.0 & 14.2 & 1.88 & 26.6 & 5.26 & 74.5 & 7.11 & 100.8 \\
+twitter & 1.0 & 40.0 & 3.56 & 142.2 & 9.79 & 391.1 & 8.76 & 349.9\\
+rMat27 & 1.0 & 39.0 & 3.98 & 154.9 & 9.91 & 386.0 & 14.52 & 565.8\\
+friendster & 1.0 & 58.5 & 2.32 & 136.0 & 9.72 & 568.9 & 7.59 & 444.0\\
+rMat28 & 1.0 & 71.5 & 5.7 & 407.9 & 11.07 & 792.0 & 16.5 & 1180.2\\\bottomrule
 \end{tabular}
 \label{tbl:ssspexec}
-\end{table}
+\end{table*}
 
 When taking a closer look at Giraph, it seems to not cope well with synthetic data sets. Analyzing the computation times in \autoref{fig:distributedSSSP_calc}, we see that it is the fastest framework on our real-world graphs. And that with a considerable margin of other frameworks always taking at least 50\% longer (lower bound here is Gemini on flickr) up to Galois Pull needing 18$\times$ more time on wikipedia.
 On both synthetic graphs however, Giraph is actually the slowest to compute. Giraph requires 12$\times$ or even 15$\times$ the computation time of Gemini on rMat27 or rMat28 respectively.
