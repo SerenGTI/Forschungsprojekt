@@ -10,7 +10,7 @@ However, many of the most common frameworks today have been released many years 
 Because of that, two problems arise.
 First, the comparisons are based on very old versions of the frameworks, with no information on the current behaviour available. 
 And second, many of the other frameworks are no longer in use because they were replaced by something else, making the comparisons difficult to interpret.
-We are thus providing an objective benchmark on what changed since the initial release, with a comparison between the most commonly used frameworks today. 
+We are thus providing an objective benchmark on the current state of the most commonly used graph analysis frameworks. 
 
 It quickly becomes apparent that many of the comparisons provided 
 
@@ -19,7 +19,14 @@ The comparisons often include PowerGraph or Apache's Spark GraphX, two framework
 
 
 
-The most recent publication on Galois was in 2013 \cite{Galois}, along with a comparison to GraphLab, PowerGraph and Ligra, which is in our testing lineup itself. The results of their comparison is mainly, that Galois outperforms Ligra on BFS and SSSP on most graphs. Meanwhile, performance of Ligra and Galois on PR is similar but very dependent on the graph. In some cases, Ligra outperforms Galois, on other graphs Galois is faster than Ligra.
+In 2013 \cite{Galois} was last compared to GraphLab, PowerGraph and Ligra in a shared memory setting. The results of their comparison are mainly, that Galois outperforms Ligra on BFS and SSSP on most graphs. Meanwhile, performance of Ligra and Galois on PR is similar but very dependent on the graph. In some cases, Ligra outperforms Galois, on other graphs Galois is faster than Ligra.
+
+About 5 years afterwards the capability of executing distributed was added to Galois through Gluon \cite{vertGalois}. 
+There distributed Galois is being compared to Gemini and distributed versions of Ligra and IrGl, where the distributed versions where created using Gluon. 
+IrGL is a graph analysis framework utilizing a GPU. 
+The results of the comparison were that Galois loads graphs faster, is faster than Gemini and Ligra at BFS and SSSP and depending on the graph either Ligra or Galois is the fastest at PR. 
+In most cases distributed IrGL was the fastest of the tested frameworks. 
+Galois and Ligra were shown to scale better on the number of nodes than Gemini.
 
 Gemini puts itself against Ligra, Galois, PowerGraph, PowerLyra and GraphX \cite{Gemini}.
 In a single-threaded scenario, Ligra was shown to be faster than both Galois and Gemini in SSSP and BFS applications. 
