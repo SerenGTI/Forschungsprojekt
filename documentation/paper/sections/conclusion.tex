@@ -6,11 +6,13 @@ We compared the performance of several graph processing frameworks including Lig
 For comparison we used the three problems SSSP, BFS and PR on graphs of various sizes.
 We measured the calculation time of the algorithm itself and the overall execution time, which also includes the startup time of the programm.
 All of the frameworks were tested on a single compute node. Gemini, Galois and Giraph also support distributed computation and were therefore also tested on a five-node cluster.
+
 On a single node, the fastest framework in computation time is dependent on the problem under consideration.
 For SSSP, we found Polymer to perform best while for BFS Ligra and Gemini are fastest. PR was calculated by Galois the fastest.
 When looking at the computation times of the distributed systems, it stands out that the best time for each problem is beaten by most if not all of the single node times.
 Comparing the distributed computation times SSSP and BFS results looked simular with Giraph being the fastest with the exception of synthetic graphs where Gemini was faster. The push version of Galois outperforms the pull version but ultimativly was slower than Gemini. For distributed PR, Gemini was the fastest by a margin.
 In contrast, in terms of overall execution times, Galois almost always outperforms the other frameworks because the overhead is very small.
+
 These benchmark results suggest that single-node systems should be used whenever the graph fits into the RAM. 
 If only individual calculations are performed on a graph, Galois is recommended due to its overall speed for a single node system. 
 For a distributed system Galois is still a good choice if the algorithm is simular to SSSP and BFS. If the algorithm is more simular to PR, Gemini would be a better choice.
@@ -19,4 +21,8 @@ As single-node system, there is no single best framework. All choices excluding 
 In situations where a distributed system is required and the calculation time is important, Gemini is faster than Giraph in most cases.
 However Giraph can be a good choice as well, offering additional features like node fault-tolerance.
 
-\todo{Future work}
+
+While comparing the frameworks we have noticed that the performance highly depends on the interaction between framework, algorithm and input graphs.
+Therefore there is room for further investigation here. These tests could incorporate new frameworks and new algorithms.
+Some of the tested systems offer a great range of settings and multiple implementations for the same problem. It would be iteresting to see a comparison there as well.
+At a later point in time, it is important to carry out such a comparison again because the frameworks are further developed and new ones are created.
