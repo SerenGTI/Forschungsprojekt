@@ -3,21 +3,21 @@
 
 In recent years, graph processing has become increasingly important, both in academic and industrial environments \cite{Gemini}.
 In many areas, such as machine learning and data mining, but also scientific computations, problems can be modeled and solved with the help of graphs \cite{Polymer}.
-Thus a new application domain called graph alnalytics was created.
-Some business models are based on working with graphs, such as marketing analysis, advertising, or even Google's search engine.
+Thus a new application domain called graph analytics was created.
+Some business models are based on working with graphs, such as marketing analysis, advertising, or even Google's search engine \cite{pagerank}.
 In addition, the size of graphs has grown significantly in the last few years and will most likely continue to grow.
 This makes the performance and memory efficency of graph analysis applications more important than ever.
 But also the parallelism and distribution of graph algorithms becomes more important with increasing graph sizes.
 
 Some frameworks were developed for this purpose.
-One of the best known is the closed source distributed graph processing system Pregel \cite{pregel}.
-Pregel, as well as some open source versions of it, like Giraph \cite{Giraph} and GraphX \cite{graphx}, was built to handle large graphs reliable and fault tolerant on large MapReduce infrastructures.
-Due to the lack of cache locality, as these systems are written object oriented, they provide rather suboptimal performance.
-Because of this, some non-uniform memory access (NUMA) aware systems like Ligra \cite{Ligra}, Polymer \cite{Polymer}, Galois \cite{Galois} and Gemini \cite{Gemini} were introduced.
-These systems have some similarities, but many differences, which partly results in considerable performance differences.
-The systems were compared at their proposal.
-However, these comparisons were often incomplete, or are simply no longer relevant today, since most of the systems are several years old and some of them have evolved, or are still evolving.
-Other systems are simply no longer used today, which also reduces the significance of the comparisons.
+One of the most commonly known graph-processing systems is the closed-source and distributed system Pregel \cite{pregel}.
+Pregel, as well as some open source versions of it, like Giraph \cite{Giraph} and GraphX \cite{graphx}, was built to handle large graphs reliably and be fault-tolerant on large MapReduce infrastructures.
+Due to the lack of cache locality, as these systems are written object-oriented, they provide rather suboptimal performance.
+Because of this, many non-uniform memory access (NUMA) aware systems such as Ligra \cite{Ligra}, Polymer \cite{Polymer}, Galois \cite{Galois} and Gemini \cite{Gemini} were introduced.
+These systems have some similarities, but many differences. This results in considerable performance differences on many occasions.
+The systems were initially compared at their introduction.
+Because most of the systems are several years old and some of them have evolved, or are still evolving, these comparisons were often incomplete or are simply no longer relevant today. 
+Other systems are simply no longer used today, which also reduces the significance of some of the existing comparisons.
 
 Therefore we compared several state-of-the-art non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).
 The comparison is performed on both real world data sets and synthetic graphs.
@@ -27,4 +27,7 @@ We also included a comparison of Galois with itself with and without hugepages \
 Where possible, several versions of the algorithms were used, like the push and pull variants.
 
 The rest of this paper is organized as follows.
-In section 2 we first clarify what a graph is, how the algorithms we are looking at work and what else is necessary for further understanding. Then we give a short overview of the graph formats we are looking at in section 3 and of the graph formats used in section 4. Before we come to our results, we show in section 5 what has been done in this area so far. In Section 6, which is the core of the paper, we will present all our results and also briefly show how they were developed. After that, in section 7, we will discuss these results. And at the end in section 8 we will present our conclusion.
+In section 2 we first clarify what a graph is, how the algorithms we are looking at work and what else is necessary for further understanding. Then we give a short overview of the frameworks we comparing in section 3 and of the graph formats used in section 4. 
+Before we come to our results, we show in section 5 what has been done in this area so far. 
+In Section 6, which is the core of the paper, we will present all our results and also briefly show how they were developed. 
+After that, in section 7, we will discuss these results. And at the end in section 8 we will present our conclusion.

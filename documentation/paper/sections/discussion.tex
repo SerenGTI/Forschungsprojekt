@@ -24,7 +24,7 @@ This is especially important on very large clusters, that can not easily be moni
 Further, a user defining an application does not need to know the topology of the system that runs the application later on.
 Hadoop transparently splits the input data and distributes work among the worker nodes.
 Additionally, Giraph using hadoop shows a bias towards larger graphs, we observed an improvement in performance over single-node Giraph, when increasing the size of the input graph.
-This shows the hadoop infrastructure to be working well with large graphs being exactly what the distributed system should be used for. 
+This shows the hadoop infrastructure to be working well with large graphs, which is exactly what the distributed system should be used for. 
 Only a system like hadoop can reasonably be used on such large clusters.
 Any of the other framewors will just result in large administration overhead due to node failures or other problems of distributed systems in general.
 Furthermore, the calculation times of Giraph proved to be very fast in comparison to the other distributed frameworks, with Giraph often being one of the fastest framework in computation time.
@@ -34,7 +34,7 @@ Pregel is a similar, fault-tolerant and scalable system but it is contrary to Gi
 But not only distributed production systems are possible, of course. 
 For small graphs, i.e. those that are not too large for single node RAM, a single-node setup is usually faster than the same framework on a distributed cluster. 
 We have shown that the distributed cluster of the same framework becomes faster than the equivalent single-node setup only on large graphs.
-We have found around 2B edges, or roughly the size of the twitter graph to be a size at which Ligra and Giraph become faster on the distributed setup compared to single-node.
+We have found around 2B edges, or roughly the size of the twitter graph to be a size at which Ligra and Giraph are faster on the distributed setup compared to single-node.
 If required, horizontal scaling can for example be used to provide fault-tolerance of the entire system.
 
 If only the calculation time is important, there are multiple options with the deciding factors being the graph size and the application.
