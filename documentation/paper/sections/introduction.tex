@@ -1,6 +1,6 @@
 %!TEX root=../main.tex
 \section{Introduction}
-
+\todo{Hier gibts einige Todos, am besten nochmal nachschauen}
 In recent years, graph processing has become increasingly important, both in academic and industrial environments \cite{Gemini}.
 In many areas, such as machine learning and data mining, but also scientific computations, problems can be modeled and solved with the help of graphs \cite{Polymer}.
 Thus a new application domain called graph analytics was created.
@@ -26,8 +26,9 @@ Giraph itself has often been compared to other state-of-the-art systems like Pre
 We also included a comparison of Galois with itself with and without hugepages \cite{hugepages}, and several runs with different numbers of threads to see how it scales.
 Where possible, several versions of the algorithms were used, like the push and pull variants.
 
-The rest of this paper is organized as follows.
-In section 2 we first clarify what a graph is, how the algorithms we are looking at work and what else is necessary for further understanding. Then we give a short overview of the frameworks we comparing in section 3 and of the graph formats used in section 4. 
-Before we come to our results, we show in section 5 what has been done in this area so far. 
-In Section 6, which is the core of the paper, we will present all our results and also briefly show how they were developed. 
-After that, in section 7, we will discuss these results. And at the end in section 8 we will present our conclusion.
+The rest of this paper is organized as follows:
+Section 2 is dedicated to all preliminaries, in order to keep this paper self-contained.
+After that, we give a short overview of each framework in our comparison.
+Section 4 explains the used graph formats. 
+Related work is discussed in section 5.
+In Section 6 we present our evaluation, followed by a discussion of these results in section 7. Finally we conclude the paper in section 8.

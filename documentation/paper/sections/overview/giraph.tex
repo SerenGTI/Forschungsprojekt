@@ -20,7 +20,7 @@ Once calculation is finished, each vertex outputs some local information (e.g. t
 In order for Giraph to achieve scalability and parallelization, it is built on top of Apache Hadoop \cite{Giraph}.
 Hadoop is a MapReduce infrastructure providing a fault tolerant basis for large scale data processing.
 Hadoop supplies a distributed file system (HDFS), on which all computations are performed.
-Giraph is thus, even when only using a single node, running in a distributed manner.
+Giraph is thus, even when only using a single computation node, running in a distributed manner.
 Hence, expanding single-node processing to a multi-node cluster is seamless.
 Giraph uses the Map functionality of Hadoop to run the algorithms. Reduce is only used as the identity function.
 

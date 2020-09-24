@@ -17,7 +17,7 @@ We would like to raise some issues we encountered first while installing and con
 	\item Giraph ran us into disk space problems on multiple occasions. First, deleting files on the Hadoop distributed file system (HDFS) does not immediately free up disk space because the files are moved to a \emph{recycling bin}-like location. Second, some log files that can easily be multiple gigabytes in size are stored outside of the HDFS and are never mentioned in the Giraph documentation.
 \end{itemize}
 \noindent
-On a plus side, setup of the frameworks Polymer and Ligra was straight forward and did not require any special treatment.
+Setup of the frameworks Polymer and Ligra was straight forward and did not require any special treatment.
 Galois is also fairly easy to setup without hugepages and the process is well documented. 
 Setting up hugepages might require some research and a bit of trial and error to find the ideal way, since there are several ways to achive the same.
 

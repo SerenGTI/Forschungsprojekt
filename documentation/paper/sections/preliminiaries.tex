@@ -11,7 +11,7 @@ The edge set describes a number of connections or relations between two vertices
 \begin{equation*}
   E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
 \end{equation*}
-and in the \emph{undirected} case, the direction is no longer relevant. Thus, in an undirected graph for each $(x,y)\in E$, it holds $(x,y)=(y,x)$.
+and in the \emph{undirected} case, the direction is no longer relevant. Thus, in an undirected graph for each $(x,y)\in E: (x,y)=(y,x)$ holds.
 The size of a graph is defined as the number of edges $|E|$ \cite{newman2010networks}.
 Independently of the graph being directed or not, a graph can be \emph{weighted}. In this case a function $w:E\rightarrow \mathbb R$ is introduced, that maps an edge to a numerical value, further describing the relation.
 
@@ -35,15 +35,14 @@ It requires an unweighted graph and a start vertex as input.
 The output is a set of vertices that are reachable from the start vertex.
 In some special cases, a target vertex is also given. In the case of a target being given, the output is true if a path from start to target exists and otherwise false.
 It is called Breadth-First search because the algorithm searches in a path length-based way. First all paths of length one i.e. all neighbors of the start vertex are checked before checking paths of length two and so on.
-The search algorithm, where the paths of maximum length are checked first is called Depth-First search.
 
 \subsection{PageRank}
 \emph{PageRank} (PR) is a link analysis algorithm that weighs the vertices of a graph, measuring the vertices relative importance within the graph \cite{pagerank}.
-The algorithm was invented by Sergey Brin and Larry Page, the founders of Google. To this date, Google Search uses PageRank to rank web pages in their search engine results.
+The algorithm was invented by Sergey Brin and Larry Page, the founders of Google. To this date, Google Search uses a modified version of PageRank to rank web pages in their search engine results.
 It is also used as a centrality metric.
 
 The output of PageRank is a percentage for each vertex. This percentage, called the PageRank of the vertex, is the probability of arriving at this vertex when starting at a random vertex and then following random edges.
-With a small probability, the damping factor, a jump is made to a completely random vertex instead of following a edge.
+With a small probability, the damping factor, a jump is made to a completely random vertex instead of following an edge.
 The PageRank can be calculated by iterating
 \begin{equation*}
 	\operatorname{PR}(v_i) = \frac{1 - d}{|V|} + d \sum_{v_j \in \operatorname{N^-}(v_i)} \frac{\operatorname{PR}(v_j)}{\operatorname{deg^+}(v_j)}
@@ -59,6 +58,7 @@ The PageRank score of a vertex is only updated if the relative change of the Pag
 In the next iteration only neighbors of vertices whose PageRank has changed need to be recalculated, thus computation time can be saved.
 
 \subsection{Push and Pull Variants}
+\todo{kompliziert}
 Many parallel graph algorithms, including the three we consider here, are implemented by iterating over vertices \cite{tao}.
 The vertex, to which the operator is applied, is called \emph{active}.
 It's possible to iterate over edges and consider them as \emph{active}, but in the following, whithout loss of generality, we will use the term \emph{active vertex}.
@@ -96,7 +96,7 @@ Pregel, Giraph and many frameworks similar to those were built to process large 
 The MapReduce model is a computation infrastructure developed by Google to reliably handle large data sets on distributed clusters \cite{mapreduce}.
 
 A user specifies just the two functions Map and Reduce.
-The system hides the details of parallelization, fault-tolerance, data distribution and load balancing away from the application logic.
+The system hides the details of parallelization: fault-tolerance, data distribution and load balancing away from the application logic.
 All of these features are automatically provided.
 Execution is performed in three phases:
 \begin{enumerate}
@@ -115,7 +115,7 @@ The address areas are organized in so called pages, which in most cases are 4 Ki
 In the Translation lookaside buffer (TBL) the most recent translations of virtual memory to physical memory are cached.
 
 Translating from the virtual to the physical address space significantly reduces the performance of today's data processing systems, since the size of the RAM grows much faster than the size of the TBL \cite{hugepages, superpages}.
-To counteract this problem, hugepages were developed, which are usually several mibibibytes in size.
+To counteract this problem, hugepages were developed, which are usually several mibibytes in size.
 This minimizes the CPU time needed for table lookups, because there are fewer TBL misses.
 This speedup is especially noticeable in very memory intensive applications, like graph processing systems.
 

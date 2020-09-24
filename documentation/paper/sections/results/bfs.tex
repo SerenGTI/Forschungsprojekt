@@ -22,9 +22,9 @@ As with our results for SSSP, for BFS we will begin with our single-node results
 		\caption{Overhead time}
 		\label{fig:singleNodeBFS_overheadNormalized}
 	\end{subfigure}
-	\caption{Average times for BFS on a single computation node, black bars represent one standard deviation in our testing}
+	\caption{Average times for BFS on a single computation node}
 \end{figure*}
-Just like with SSSP, Giraph ran out of memory ($>$250 GB) on any graph larger than wikipedia. Also, Polymer failed to complete on rMat28. Ligra, that failed during SSSP however completed our benchmark for BFS.
+Giraph ran out of memory ($>$250 GB) on any graph larger than wikipedia. Also, Polymer failed to complete on rMat28. Ligra, that failed during SSSP however completed our benchmark for BFS.
 
 The calculation times provided in \autoref{fig:singleNodeBFS_calc} show Gemini and Ligra to be comparable in their performance. 
 Their computation times deviate less than 151ms on all graphs except wikipedia and rMat28, with Ligra being the faster framework on most graphs.
@@ -32,12 +32,12 @@ Ligra is between 2ms (twitter) and 151ms (friendster) faster than Gemini.
 In turn, Gemini is 17ms faster than Ligra on flickr.
 Only on wikipedia and rMat28, there is a noticeable difference between the two frameworks. Ligra is 1.2s (7.8$\times$) faster than Gemini on wikipedia and 696ms (4.4$\times$) faster on rMat28.
 
-For the remaining frameworks, we compare to Ligra since it is generally slightly faster than Gemini.
-Giraph and Polymer are one to two orders of magnitude slower than Ligra. The only exception to this is Polymer on flickr, here Polymer is just 24ms (35\%) slower than Ligra.
+We compare the remaining frameworks to Ligra because it is generally slightly faster than Gemini.
+Giraph and Polymer are one to two orders of magnitude slower. The only exception to this is Polymer on flickr, here Polymer is just 24ms (35\%) slower than Ligra.
 Giraph takes between 13$\times$ and 32$\times$ longer than Ligra on flickr, orkut or wikipedia.
-As already stated, Polymer is comparable to Ligra on flickr, but for the other graphs, its computation times are even longer than those of Giraph. The upside is though, that Polymer managed -- contrary to Giraph -- to finish computation on some larger graphs.
+As already stated, Polymer is comparable to Ligra on flickr, but for the other graphs, its calculation times are even longer than those of Giraph. However, Polymer managed -- contrary to Giraph -- to finish computation on some larger graphs.
 Polymer takes between 55$\times$ and 530$\times$ longer than Ligra on the graphs larger than flickr.
-Especially interesting is here the difference between the times of rMat27 and friendster. There are 20\% (439M) more edges in friendster, yet the computation for the synthetic rMat27 takes 42\% longer.
+Here, the difference between the times of rMat27 and friendster are especially interesting. There are 20\% (439M) more edges in friendster, yet the computation for the synthetic rMat27 takes 42\% longer.
 Galois calculation performance is comparable to Gemini or Ligra on the smaller three graphs (flickr, orkut and wikipedia).
 Only on the larger graphs is Galois slower than Gemini or Ligra, meanwhile Galois is always faster than Polymer by one order of magnitude.
 
@@ -67,11 +67,11 @@ On the other graphs, Polymer and Gemini are one order of magnitude slower than G
 		\label{fig:distributedBFS_overhead}
 	\end{subfigure}
 	\hfil
-	\caption{Average times for BFS on the distributed cluster, black bars represent one standard deviation in our testing}
+	\caption{Average times for BFS on the distributed cluster}
 	\label{fig:distributedBFS}
 \end{figure*}
 For both the calculation and the execution times, Breadth-First Search shows similar behaviour as the distributed SSSP test case. This is expected since both are graph traversal algorithms starting in one source vertex.
-Hence, calculation complexity for each vertex and communication overhead is similar. All measurements can be seen in \autoref{fig:distributedBFS}.
+Hence, calculation complexity for each vertex and communication overhead is comparable. All measurements can be seen in \autoref{fig:distributedBFS}.
 
 The results for calculation time (cf. \autoref{fig:distributedBFS_calc}) show Giraph to have very short calculation times on the real-world graphs, while Giraph's calculation times on both rMat27 and rMat28 are the worst of all frameworks. Thus, Giraph is fastest on the three smallest graphs and second fastest on twitter and friendster. On those two graphs, Gemini is fastest with only a small margin between the two frameworks.
 Just like with SSSP, the Galois implementations have the longest calculation time on the real-world graphs. And Galois is second slowest, on the synthetic graphs.

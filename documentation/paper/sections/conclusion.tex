@@ -3,10 +3,11 @@
 \section{Conclusion}
 
 We compared the performance of several graph processing frameworks including Ligra, Polymer, Gemini, Galois and Giraph. 
-For comparison we used the three problems SSSP, BFS and PR on graphs of various sizes.
-We measured the calculation time of the algorithm itself and the overall execution time, which also includes the startup time of the programm.
+For comparison we used the three graph algorithms SSSP, BFS and PR on data sets of various sizes.
+We measured the calculation time of the algorithm itself and the overall execution time, which also includes the framework overhead.
 All of the frameworks were tested on a single compute node. Gemini, Galois and Giraph also support distributed computation and were therefore also tested on a five-node cluster.
 
+\todo{Ab hier kürzer fassen}
 On a single node, the fastest framework in computation time is dependent on the problem under consideration.
 For SSSP, we found Polymer to perform best while for BFS Ligra and Gemini are fastest. PR was calculated by Galois the fastest.
 When looking at the computation times of the distributed systems, it stands out that the best time for each problem is beaten by most if not all of the single node times.

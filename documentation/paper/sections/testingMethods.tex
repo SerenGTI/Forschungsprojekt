@@ -2,10 +2,10 @@
 
 
 \subsection{Testing Methods}
-The testing methods cover the test environment, including hardware and the setup of the frameworks, the graphs used, followed by the algorithms utilized and how the times are measured. 
+The testing methods cover the test environment, including hardware and the setup of the frameworks, the graphs used, followed by the algorithms utilized and our measurement procedures. 
 
 \subsubsection{Environment}
-For testing the graph processing systems, we used 5 machines with two AMD EPYC 7401 (24-Cores) and 256 GB of RAM each. One of those machines was only used as part of the distributed cluster, since it only has 128 GB of RAM.
+For testing the graph processing systems, we used 5 machines with two AMD EPYC 7401 (24-Cores) and 256 GB of RAM each. Thus, each machine has 96 cores, half of which are virtual. One of those machines was only used as part of the distributed cluster, since it only has 128 GB of RAM.
 All five machines were running Ubuntu 18.04.2 LTS.
 
 The setup of each framework was performed according to our provided installation guides available in Appendix \ref{app:installationGuides}.
@@ -19,7 +19,7 @@ The complete benchmark log files and extracted raw results are available in our 
 
 
 \subsubsection{Data Sets}
-The graphs used in our testing can be seen in detail in \autoref{tbl:graphs}. We included a variaty of different graph sizes, from relatively small graphs like the flickr graph with 2 million edges up to an rMat28 with 4.2 billion edges. All graphs except the rMat27 and rMat28 are exemplary real-world graphs and were retrieved from the graph database\footnote{\url{http://konect.uni-koblenz.de/}} associated with the Koblenz Network Collection (KONECT)\cite{konect}.
+The graphs used in our testing can be seen in detail in \autoref{tbl:graphs}. We included a variaty of different graph sizes, from relatively small graphs like the flickr graph with 2 million edges up to an rMat28 with 4.2 billion edges. All graphs except the rMat27 and rMat28 are exemplary real-world graphs and were retrieved from the graph database associated with the Koblenz Network Collection (KONECT)\cite{konect}.
 Both the rMat27 and rMat28 were created with a modified version of a graph generator provided by Ligra (we changed the output format to EdgeList).
 \begin{table}
 	\centering
@@ -51,7 +51,7 @@ In detail, the algorithms for each framework are:
 	\item Ligra supports SSSP based on BellmanFord, BFS and two implementations of PageRank. The two implementations are a regular PR and a Delta Variant.
 	\item Polymer supports the same algorithms as Ligra.
 	\item Gemini supports all of our tested algorithms. For SSSP a BellmanFord implementation is used.
-	\item Galois supports all of our tested algorithms too, with both a Push and a Pull variant for PageRank available. In the distributed scenario, there are Push and Pull versions for SSSP and BFS available as well. It also supports multiple implementations of the shared-memory allgorithms. The default implementation of SSSP is deltaTile. A lot of options are available as well, but we have gone with the defaults.
+	\item Galois supports all of our tested algorithms too, with both a Push and a Pull variant for PageRank available. In the distributed scenario, there are Push and Pull versions for SSSP and BFS available as well. It also supports multiple implementations of the shared-memory allgorithms. The default implementation of SSSP is deltaTile. A lot of options are available as well, but we used the defaults.
 	\item Giraph does not natively supply a BFS algorithm, so in our comparisons a custom implementation is used. For SSSP, slight variations had to be made to the default implementation, to allow us to use different start vertices. For PageRank the supplied implementation is used.
 \end{itemize}
 
