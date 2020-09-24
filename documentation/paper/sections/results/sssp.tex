@@ -4,7 +4,7 @@
 \subsubsection{Single-Source Shortest-Paths}
 In this section, we compare the different frameworks in their performance on the SSSP algorithm. We first analyze the frameworks on a single computation node and then compare to the distributed setup.
 \paragraph{Single-node}
-\begin{figure*}
+\begin{figure*}[ht]
 	\begin{subfigure}{0.32\textwidth}
 		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSP_calcTime.png}
 		\caption{Calculation times}
@@ -24,6 +24,28 @@ In this section, we compare the different frameworks in their performance on the
 	\end{subfigure}
 	\caption{Average times for SSSP on a single computation node}
 	\label{fig:singleNodeSSSP}
+\end{figure*}
+\begin{figure*}[h]
+	\centering
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_calcTime.png}
+		\caption{Calculation times}
+		\label{fig:distributedSSSP_calc}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_execTime.png}
+		\caption{Execution times}
+		\label{fig:distributedSSSP_exec}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_overheadTime.png}
+		\caption{Overhead times}
+		\label{fig:distributedSSSP_overhead}
+	\end{subfigure}
+	\caption{Average times for SSSP on the distributed cluster}
+	\label{fig:distributedSSSP}
 \end{figure*}
 Beginning with the single-node performance, \autoref{fig:singleNodeSSSP} shows the average calculation and execution times for SSSP on the different frameworks.
 Note, that Giraph ran out of memory ($>$250 GB) for all graphs larger than wikipedia (twitter, rMat27, friendster and rMat28). Thus, the data points on the larger graphs for Giraph are missing in the figures and our evaluation. 
@@ -46,28 +68,6 @@ For example, on orkut Galois requires 0.78s to execute, while the other framewor
 This goes on for the larger graphs, Ligra being second-fastest. Polymer and Gemini close together but both always at least one order of magnitude slower than Galois.
 
 \paragraph{Distributed}
-\begin{figure*}
-	\centering
-	\begin{subfigure}{0.32\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_calcTime.png}
-		\caption{Calculation times}
-		\label{fig:distributedSSSP_calc}
-	\end{subfigure}
-	\hfil
-	\begin{subfigure}{0.32\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_execTime.png}
-		\caption{Execution times}
-		\label{fig:distributedSSSP_exec}
-	\end{subfigure}
-	\hfil
-	\begin{subfigure}{0.32\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_overheadTime.png}
-		\caption{Overhead times}
-		\label{fig:distributedSSSP_overhead}
-	\end{subfigure}
-	\caption{Average times for SSSP on the distributed cluster}
-	\label{fig:distributedSSSP}
-\end{figure*}
 On the distributed cluster, we find similar results as on the single node (cf. \autoref{fig:distributedSSSP}).
 Both Galois implementations have significantly smaller execution times compared to Gemini or Giraph on all graphs (cf. \autoref{tbl:ssspexec}).
 You can see Gemini being worse by at least a factor of 4 compared to Galois Push on all graphs except flickr.
