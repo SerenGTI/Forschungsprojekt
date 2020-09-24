@@ -16,7 +16,7 @@ execTimes = False
 overheads = False
 
 
-galoisSpeedup = False
+galoisSpeedup = True
 
 
 colors = {"Galois":"#1f77b4",
@@ -89,24 +89,24 @@ if singleNode and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 
 ## GALOIS THREAD COUNT
 if galoisSpeedup:
-	line_plot(graphs, x, speedupGaloisSSSP, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeSSSPGaloisThreads.png", ylim=[0,20])
+	line_plot(graphs, x, speedupGaloisSSSP, yLabel='Avg. calc time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeSSSPGaloisThreads.png", ylim=[0,20])
 
-	line_plot(graphs, x, speedupGaloisBFS, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeBFSGaloisThreads.png", ylim=[0,11])
+	line_plot(graphs, x, speedupGaloisBFS, yLabel='Avg. calc time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeBFSGaloisThreads.png", ylim=[0,11])
 
-	line_plot(graphs, x, speedupGaloisPRPush, xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPushGaloisThreads.png", ylim=[0.85,2.5])
+	line_plot(graphs, x, speedupGaloisPRPush, xLabel='Thread count', yLabel='Avg. calc time speedup', yScale='linear', saveToFile="singleNodePRPushGaloisThreads.png", ylim=[0.85,2.5])
 
-	line_plot(graphs, x, speedupGaloisPRPull, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPullGaloisThreads.png", ylim=[0.5,2.6])
+	line_plot(graphs, x, speedupGaloisPRPull, yLabel='Avg. calc time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPullGaloisThreads.png", ylim=[0.5,2.6])
 
 
 ## GALOIS HP THREAD COUNT
 if galoisSpeedup:
-	line_plot(graphs, xHP, speedupGaloisSSSP_HP, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeSSSPGaloisHPThreads.png", ylim=[0,20])
+	line_plot(graphs, xHP, speedupGaloisSSSP_HP, yLabel='Avg. calc time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeSSSPGaloisHPThreads.png", ylim=[0,20])
 
-	line_plot(graphs, xHP, speedupGaloisBFS_HP, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeBFSGaloisHPThreads.png", ylim=[0,11])
+	line_plot(graphs, xHP, speedupGaloisBFS_HP, yLabel='Avg. calc time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodeBFSGaloisHPThreads.png", ylim=[0,11])
 
-	line_plot(graphs, xHP, speedupGaloisPRPush_HP,  xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPushGaloisHPThreads.png", ylim=[0.85,2.5])
+	line_plot(graphs, xHP, speedupGaloisPRPush_HP,  xLabel='Thread count', yLabel='Avg. calc time speedup', yScale='linear', saveToFile="singleNodePRPushGaloisHPThreads.png", ylim=[0.85,2.5])
 
-	line_plot(graphs, xHP, speedupGaloisPRPull_HP, yLabel='Average calculation time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPullGaloisHPThreads.png", ylim=[0.5,2.6])
+	line_plot(graphs, xHP, speedupGaloisPRPull_HP, yLabel='Avg. calc time speedup', xLabel='Thread count', yScale='linear', saveToFile="singleNodePRPullGaloisHPThreads.png", ylim=[0.5,2.6])
 
 
 
