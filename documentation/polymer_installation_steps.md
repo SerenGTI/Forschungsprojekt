@@ -53,9 +53,3 @@ Polymer supports the following algorithms with the supplied command line invocat
 ```
 ./numa-Components [graph file]
 ```
-
-
-
-
-## Retreiving and using the generated output
-tbd

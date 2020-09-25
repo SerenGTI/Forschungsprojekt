@@ -169,7 +169,7 @@ On the other graphs, a speedup of 3$\times$ is hardly reached, even at 96 thread
 		\bottomrule
 	\end{tabular}
 \end{table}
-One might assume the two algorithms SSSP and BFS to behave very similarly, yet they produce very different results. \todo{Begründung, z.b. Frontier Set}
+One might assume the two algorithms SSSP and BFS to behave very similarly, yet they produce very different results. While they both traverse the graph, the number of active vertices is generally higher on SSSP. This is because there can be multiple paths to each vertex. Thus, the work can be spread across more worker threads.
 With SSSP, we observed a decrease in the variance of the speedups, while the average speedup decreased or stayed the same. This provided a more reliable speedup. 
 But hugepages did not necessarily increase the maximum possible speedup. For 4 of 7 graphs the larger speedup value is reached without hugepages (cf. \autoref{tbl:maxReachedSpeedupSSSPBFS}).
 However exactly this is happening with BFS, we measured a larger speedup with hugepages on all real-world graphs (i.e. 5 of 7).
