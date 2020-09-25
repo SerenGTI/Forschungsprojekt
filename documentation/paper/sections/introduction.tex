@@ -1,34 +1,33 @@
 %!TEX root=../main.tex
 \section{Introduction}
-\todo{Hier gibts einige Todos, am besten nochmal nachschauen}
 In recent years, graph processing has become increasingly important, both in academic and industrial environments \cite{Gemini}.
-In many areas, such as machine learning and data mining, but also scientific computations, problems can be modeled and solved with the help of graphs \cite{Polymer}.
+In many areas, such as machine learning and data mining, but also scientific computations \todo{Quellen}, problems can be modeled and solved with the help of graphs \cite{Polymer}.
 Thus a new application domain called graph analytics was created.
-Some business models are based on working with graphs, such as marketing analysis, advertising, or even Google's search engine \cite{pagerank}.
+Some business models are based on working with graphs, such as marketing analysis, advertising \todo{Quellen}, or even Google's search engine \cite{pagerank}.
 In addition, the size of graphs has grown significantly in the last few years and will most likely continue to grow.
 This makes the performance and memory efficency of graph analysis applications more important than ever.
-But also the parallelism and distribution of graph algorithms becomes more important with increasing graph sizes.
+But also the parallelism and distribution of graph algorithms becomes more important with increasing graph sizes. \todo{Weiter gehen}
 
-Some frameworks were developed for this purpose.
-One of the most commonly known graph-processing systems is the closed-source and distributed system Pregel \cite{pregel}.
+Some frameworks were developed to facilitate the writing of parallel and distributed graph algorithms.
+One of the most commonly known graph-processing systems is the closed-source, distributed system Pregel \cite{pregel}.
 Pregel, as well as some open source versions of it, like Giraph \cite{Giraph} and GraphX \cite{graphx}, was built to handle large graphs reliably and be fault-tolerant on large MapReduce infrastructures.
 Due to the lack of cache locality, as these systems are written object-oriented, they provide rather suboptimal performance.
 Because of this, many non-uniform memory access (NUMA) aware systems such as Ligra \cite{Ligra}, Polymer \cite{Polymer}, Galois \cite{Galois} and Gemini \cite{Gemini} were introduced.
-These systems have some similarities, but many differences. This results in considerable performance differences on many occasions.
-The systems were initially compared at their introduction.
-Because most of the systems are several years old and some of them have evolved, or are still evolving, these comparisons were often incomplete or are simply no longer relevant today. 
+These systems have some similarities, but many differences \todo{Zu wem}. This results in considerable performance differences on many occasions.
+Each systems performance was evaluated at release time with some older graph processing frameworks.
+However most of the systems are several years old and some of them have evolved, or are still evolving, these comparisons were often incomplete or are simply outdated today.
 Other systems are no longer in use, which also reduces the significance of some of the existing comparisons.
 
-Therefore we compared several state-of-the-art non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).
+Therefore we compared several state-of-the-art non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).\todo{Frameworks nennen}
 The comparison is performed on both real world data sets and synthetic graphs.
 To provide a comparison to a non-NUMA aware system, Giraph is included in the testing.
 Giraph itself has often been compared to other state-of-the-art systems like Pregel or GraphX.
-We also included a comparison of Galois with itself with and without hugepages \cite{hugepages}, and several runs with different numbers of threads to see how it scales.
+We also included a comparison of Galois with and without hugepages \cite{hugepages}, and several runs with different numbers of threads to see how it scales.
 Where possible, several versions of the algorithms were used, like the push and pull variants.
 
 The rest of this paper is organized as follows:
 Section 2 is dedicated to all preliminaries, in order to keep this paper self-contained.
 After that, we give a short overview of each framework in our comparison.
-Section 4 explains the used graph formats. 
+Section 4 explains the used graph formats.
 Related work is discussed in section 5.
 In Section 6 we present our evaluation, followed by a discussion of these results in section 7. Finally we conclude the paper in section 8.
