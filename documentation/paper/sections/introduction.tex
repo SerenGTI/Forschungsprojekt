@@ -5,8 +5,10 @@ In many areas, such as machine learning and data mining, but also scientific com
 Thus a new application domain called graph analytics was created.
 Some business models are based on working with graphs, such as marketing analysis, advertising \todo{Quellen}, or even Google's search engine \cite{pagerank}.
 In addition, the size of graphs has grown significantly in the last few years and will most likely continue to grow.
-This makes the performance and memory efficency of graph analysis applications more important than ever.
-But also the parallelism and distribution of graph algorithms becomes more important with increasing graph sizes. \todo{Weiter gehen}
+This makes the performance and memory efficiency of graph analysis applications more important than ever.
+But also the parallelism and distribution of graph algorithms becomes more important with increasing graph sizes.
+Parallelism may be important to exploit in order to finish the computations in an acceptable time frame. 
+It is especially important to utilize distributed computation when the RAM of a single node is insufficient for the task.
 
 Some frameworks were developed to facilitate the writing of parallel and distributed graph algorithms.
 One of the most commonly known graph-processing systems is the closed-source, distributed system Pregel \cite{pregel}.
