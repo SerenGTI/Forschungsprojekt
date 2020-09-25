@@ -112,7 +112,7 @@ We first look at the speedups without hugepages, seen in \autoref{fig:galoisSpee
 For all larger graphs, speedup is in most cases very close to optimal up to about 8 threads.
 Twitter has the best speedup overall. It is 2.6$\times$ with 2 threads compared to one, 4$\times$ with 4, 7.7$\times$ with 8 and 9.7$\times$ using 16 threads.
 Behaviour on friendster is similarly good. Here speedup is 1.9$\times$ at 2 threads compared to one, 3.5$\times$ at 4, 6.1$\times$ at 8 threads and 9.7$\times$ at 16 threads.
-Anything above 16 threads however no longer helps decreasing the computation time significantly on any graph. Speedup above 16 threads is always less than double the speedup of 16 threads. The maximum measured speedups are between 10$\times$ (96 threads, wikipedia) and 19$\times$ (40 threads, rMat28).
+Anything above 16 threads however no longer helps decreasing the calculation time significantly on any graph. Speedup above 16 threads is always less than double the speedup of 16 threads. The maximum measured speedups are between 10$\times$ (96 threads, wikipedia) and 19$\times$ (40 threads, rMat28).
 In some cases, increasing the thread count can even decrease the speedup again. For example calculation on rMat28 is actually slower with 48 or 96 threads compared to 40 threads. For 40 threads, the speedup is nearly 19$\times$, on 48 threads 17$\times$ and with 96 threads only 15$\times$ compared to one thread.
 Small graphs, i.e. flickr and orkut neither benefit from more threads nor is the performance significantly reduced by the synchronization overhead.
 Performance on flickr can not be sped up at all, with speedup on flickr being very close to 1 for 1 to 8 threads and between 0.7$\times$ to 0.9$\times$ from 16 to 96 threads.
@@ -196,7 +196,7 @@ But as can also be seen in \autoref{fig:galoisSpeedupBFS_HP}, the variance of th
 	\label{fig:galoisSpeedupPRPull}
 \end{figure}
 
-We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. Without hugepages, computation time is hardly reduced on any graph other than flickr, where the reached maximum is 1.6$\times$ (cf. \autoref{fig:galoisSpeedupPRPull_noHP}). This maximum is reached at two threads, with speedup steadily declining above that.
+We want to first take a look at the results for PageRank in Pull mode, seen in \autoref{fig:galoisSpeedupPRPull}. Without hugepages, calculation time is hardly reduced on any graph other than flickr, where the reached maximum is 1.6$\times$ (cf. \autoref{fig:galoisSpeedupPRPull_noHP}). This maximum is reached at two threads, with speedup steadily declining above that.
 The rMat28 is the only other graph one could say computation was sped up at large thread counts. Here we reached a maximum speedup of 1.3$\times$ at 96 threads.
 All 5 other graphs only reach a speedup greater or equal to 1 in just one or two cases, and if so only by a small margin.
 % Computation on Orkut and Twitter reaches a speedup maximum of 1.1$\times$ and 1.05$\times$ at 4 threads, while being less or equal to 1 in all other cases.

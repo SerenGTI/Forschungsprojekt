@@ -66,6 +66,12 @@ This operator considers only a so called \emph{neighborhood} to the \emph{active
 To this \emph{neighborhood} belong only vertices, which are in the direct surrounding of the \emph{active} vertex.
 This allows to parallelise the iteration relatively easy, caused by the locality of the operator.
 
+\todo{choose paragraph version}
+Many parallel graph algorithms, including the three we consider here, are implemented by iterating over vertices \cite{tao}.
+A vertex to which an operator is applied to is called an \emph{active} vertex.
+Such an operator considers only the \emph{neighbourhood} of the \emph{active} vertex, where the \emph{neighbourhood} includes only adjacent vertices.
+The locality of the operator simplifies the parallelisation of iterations over vertices.
+
 In general such an operator can change the whole structure of the \emph{neighborhood}.
 But in the following we assume, that an operator changes only \emph{labels} of vertices in the \emph{neighbourhood}.
 \emph{Labels} of edges are also called \emph{weights}.
