@@ -7,7 +7,7 @@ Some business models are based on working with graphs, such as marketing analysi
 In addition, the size of graphs has grown significantly in the last few years and will most likely continue to grow.
 This makes the performance and memory efficiency of graph analysis applications more important than ever.
 But also the parallelism and distribution of graph algorithms becomes more important with increasing graph sizes.
-Parallelism may be important to exploit in order to finish the computations in an acceptable time frame. 
+Parallelism may be important to exploit in order to finish the computations in an acceptable time frame.
 It is especially important to utilize distributed computation when the RAM of a single node is insufficient for the task.
 
 Some frameworks were developed to facilitate the writing of parallel and distributed graph algorithms.
@@ -15,14 +15,16 @@ One of the most commonly known graph-processing systems is the closed-source, di
 Pregel, as well as some open source versions of it, like Giraph \cite{Giraph} and GraphX \cite{graphx}, was built to handle large graphs reliably and be fault-tolerant on large MapReduce infrastructures.
 Due to the lack of cache locality, as these systems are written object-oriented, they provide rather suboptimal performance.
 Because of this, many non-uniform memory access (NUMA) aware systems such as Ligra \cite{Ligra}, Polymer \cite{Polymer}, Galois \cite{Galois} and Gemini \cite{Gemini} were introduced.
-These systems have some similarities, but many differences \todo{Zu wem}. This results in considerable performance differences on many occasions.
+The different NUMA aware systems have some similarities, but many differences and differ in the technologies they use.
+This results in considerable performance differences on many occasions.
 Each systems performance was evaluated at release time with some older graph processing frameworks.
 However most of the systems are several years old and some of them have evolved, or are still evolving, these comparisons were often incomplete or are simply outdated today.
 Other systems are no longer in use, which also reduces the significance of some of the existing comparisons.
 
-Therefore we compared several state-of-the-art non-uniform memory access (NUMA) aware systems in terms of their performance on three graph algorithms (PageRank, SSSP, BFS).\todo{Frameworks nennen}
+Therefore we compared the state-of-the-art NUMA aware systems Ligra, Polymer, Galois and Gemini in terms of their performance on three graph algorithms PageRank, SSSP, BFS.
 The comparison is performed on both real world data sets and synthetic graphs.
 To provide a comparison to a non-NUMA aware system, Giraph is included in the testing.
+It is like the NUMA aware systems open-source and is still being maintained.
 Giraph itself has often been compared to other state-of-the-art systems like Pregel or GraphX.
 We also included a comparison of Galois with and without hugepages \cite{hugepages}, and several runs with different numbers of threads to see how it scales.
 Where possible, several versions of the algorithms were used, like the push and pull variants.
