@@ -9,10 +9,9 @@ Gemini tries to bridge the gap between efficient shared-memory and scalable dist
 To achieve this goal, Gemini, in contrast to the other frameworks discussed here, does not support shared-memory calculation, but chooses the distributed message-based approach from scratch.
 
 The real bottleneck of distributed systems is not the communication itself, but the extra instructions, as well as memory references and a lower usage of multiple cores compared to the shared memory counterparts.
-There are four main reasons for this.
+There are three main reasons for this.
 The first reason is the use of hash maps to convert the vertex IDs between the global and the local state.
-The second reason is the maintenance of vertex replicas on the different systems.
-Another reason is the communication-bound apply phase in GAS abstraction.
+Another reason is the maintenance of vertex replicas on the different systems.
 And the last reason is the lack of dynamic scheduling.
 
 Gemini tries to work around all the problems, by implemening a message-based system from scratch and getting rid of the extra mapping layer between shared-memory computation and communication.
@@ -20,5 +19,5 @@ Therefore Ligra's push-pull computation model was adopted and applied to the dis
 Furthermore a chunk-based partitioning scheme was implemented, which allows to partition a graph without a large overhead.
 Gemini also implements a co-scheduling mechanism to connect the computation and inter-node communication.
 
-Gemini is fairly lightweight and has a clearly defined API between the core framework and the implementations of the individual algorithms. The five already implemented algorithms are Single-Source SSSP, BFS, PR, Connected-Components (CC) and Betweenness-Centrality (BC).
-
+Gemini is fairly lightweight and has a clearly defined API between the core framework and the implementations of the individual algorithms.
+It also provides standard implementations for the following algorithms Single-Source SSSP, Breadth-First Search (BFS), PageRank (PR), Connected-Components (CC) and Betweenness-Centrality (BC).
