@@ -23,7 +23,7 @@ with the condition $(x_i,x_{i+1})\in E$ for each $i\in\{1,\ldots,n-1\}$ and $x_1
 Thus we call a target $t$ \emph{reachable} from $s$ if a Path from $s$ to $t$ exists.
 
 \subsection{Single-Source Shortest-Paths}
-Single-Source Shortest-Paths (SSSP) describes the problem of finding the shortest path from a starting vertex to every other vertex in the input graph.
+Single-Source Shortest-Paths (SSSP) is the problem of finding the shortest path from a starting vertex to every other vertex in the input graph.
 Input to the problem is a weighted graph $G=(V,E)$ and a start vertex $s\in V$. Output is the shortest possible distance from $s$ to each vertex in $V$.
 The distance is defined as the sum of edge weights $w_i$ on a path from $s$ to the target.
 In the case of a unweighted graph, the distance is often described in \emph{hops}, i.e. the number of edges on a path.
@@ -76,7 +76,7 @@ So these operators are more efficient, if there are many active vertices at the 
 The Bulk-Synchronous Parallel (BSP) model is a computation model developed by Leslie Valiant \cite{bsp}. It is commonly used in computation environments with large amounts of synchronous computation.
 This model describes components, a communication network between those components and a method of synchronization.
 The components are capable of performing computations and transactions on \emph{local} memory. Pairs of components can only communicate using messages, thus remote memory access is also only possible in this way.
-The Messages have a user-defined form and should be as small as possible to keep the network traffic low. The \emph{Congest model} is a closely related model and furthermore describes the messages. There, the message length has to be logarithmic in the graph size \cite{congestModel}.
+The messages have a user-defined form and should be as small as possible to keep the network traffic low. The \emph{Congest model} is a closely related model and furthermore describes the messages. There, the message length has to be logarithmic in the graph size \cite{congestModel}.
 
 Synchronization is realized through barriers for some or all processes.
 BSP algorithms are performed in a series of global supersteps. These consist of three steps, beginning with the processors performing local computations concurrently.
@@ -106,10 +106,10 @@ It is implemented in the kernel and represents an abstraction between the memory
 Each program gets its own virtual leading address space.
 This simplifies the implementation of applications considerably and also increases security, since each program can only access its own virtual address space.
 The address areas are organized in so called pages, which in most cases are 4 KiB in size.
-In the Translation lookaside buffer (TBL) the most recent translations of virtual memory to physical memory are cached.
+In the Translation lookaside buffer (TLB) the most recent translations of virtual memory to physical memory are cached.
 
-Translating from the virtual to the physical address space significantly reduces the performance of today's data processing systems, since the size of the RAM grows much faster than the size of the TBL \cite{hugepages, superpages}.
+Translating from the virtual to the physical address space significantly reduces the performance of today's data processing systems, since the size of the RAM grows much faster than the size of the TLB \cite{hugepages, superpages}.
 To counteract this problem, hugepages were developed, which are usually several mibibytes in size.
-This minimizes the CPU time needed for table lookups, because there are fewer TBL misses.
+This minimizes the CPU time needed for table lookups, because there are fewer TLB misses.
 This speedup is especially noticeable in very memory intensive applications, like graph processing systems.
 
