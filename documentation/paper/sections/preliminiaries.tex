@@ -60,16 +60,16 @@ In the next iteration only neighbors of vertices whose PageRank has changed need
 \subsection{Push and Pull Variants}
 Many parallel graph algorithms, including the three we consider here, are implemented by iterating over vertices \cite{tao}.
 To each of the vertices an operator is applied.
-This operator reads and writes the labels of the active vertex and of the vertices in the direct surrounding, also called neighbourhood, of the active vertex.
-It's also possible to iterate over edges, but in the following, whithout loss of generality, we will use the term active vertex.
+This operator reads and writes the labels (i.e. vertex or edge weights) of the active vertex and of the vertices in the direct surrounding. Thse vertices are called the \emph{neighbourhood} of the active vertex.
+%It's also possible to iterate over edges, but in the following, whithout loss of generality, we will use the term active vertex.
 
 Often this operator can be implemented in two different ways, called \emph{push style} or \emph{pull style}.
-A \emph{push-style} operator reads the label of the active vertex and updates the label of its neighborhood.
-These operators are more efficient, if there are only a few active vertices at the same time, or the neighborhoods do not overlap, which can not be avoided in general.
+A \emph{push-style} operator reads the label of the active vertex and updates the labels of its neighborhood.
+These operators are more efficient, if there are only a few active vertices at the same time, or the neighborhoods do not overlap. Overlapping can not be avoided in general.
 In contrast the \emph{pull-style} operator reads all values of its neighborhood and updates the value of the active vertex.
 \emph{Pull-style} operators need less synchronization in parallel implementations, because unlike \emph{push style} there is only one write and many read operations.
-Thus locks can be avoided.
-So these operators are more efficient, if there are many active vertices at the same time.
+Thus many locks can be avoided.
+So, these operators are more efficient, if there are many active vertices at the same time.
 
 \subsection{Bulk-Synchronous Parallel Model}
 \label{sec:bsp}
