@@ -50,7 +50,7 @@ The PageRank can be calculated by iterating
 for all edges $v_i \in V$.
 $d$ is the damping factor, $\operatorname{deg^+}(v)$ is the number of outgoing edges the vertex $v$ has and $\operatorname{N^-}(v)$ denotes the set of vertices that have edges to vertex $v$.
 
-The analogy is that the graph represents website pages of the Word Wide Web, that are hyperlinked between one another. 
+The analogy is that the graph represents website pages of the Word Wide Web, that are hyperlinked between one another.
 PageRank simulates a random surfer who is following links.
 
 An optimization to the traditional PageRank implementation is called \emph{Delta-PageRank}.
@@ -58,30 +58,18 @@ The PageRank score of a vertex is only updated if the relative change of the Pag
 In the next iteration only neighbors of vertices whose PageRank has changed need to be recalculated, thus computation time can be saved.
 
 \subsection{Push and Pull Variants}
-\todo{kompliziert}
 Many parallel graph algorithms, including the three we consider here, are implemented by iterating over vertices \cite{tao}.
-The vertex, to which the operator is applied, is called \emph{active}.
-It's possible to iterate over edges and consider them as \emph{active}, but in the following, whithout loss of generality, we will use the term \emph{active vertex}.
-This operator considers only a so called \emph{neighborhood} to the \emph{active} vertex.
-To this \emph{neighborhood} belong only vertices, which are in the direct surrounding of the \emph{active} vertex.
-This allows to parallelise the iteration relatively easy, caused by the locality of the operator.
+To each of the vertices an operator is applied.
+This operator reads and writes the labels of the active vertex and of the vertices in the direct surrounding, also called neighbourhood, of the active vertex.
+It's also possible to iterate over edges, but in the following, whithout loss of generality, we will use the term active vertex.
 
-\todo{choose paragraph version}
-Many parallel graph algorithms, including the three we consider here, are implemented by iterating over vertices \cite{tao}.
-A vertex to which an operator is applied to is called an \emph{active} vertex.
-Such an operator considers only the \emph{neighbourhood} of the \emph{active} vertex, where the \emph{neighbourhood} includes only adjacent vertices.
-The locality of the operator simplifies the parallelisation of iterations over vertices.
-
-In general such an operator can change the whole structure of the \emph{neighborhood}.
-But in the following we assume, that an operator changes only \emph{labels} of vertices in the \emph{neighbourhood}.
-\emph{Labels} of edges are also called \emph{weights}.
 Often this operator can be implemented in two different ways, called \emph{push style} or \emph{pull style}.
-A \emph{push-style} operator reads the \emph{label} of the \emph{active} vertex and updates the \emph{label} of its \emph{neighborhood}.
-These operators are more efficient, if there are only a few \emph{active} vertices at the same time, or the \emph{neighborhoods} do not overlap, which can not be avoided in general.
-In contrast the \emph{pull-style} operator reads all values of its \emph{neighborhood} and updates the value of the \emph{active} vertex.
+A \emph{push-style} operator reads the label of the active vertex and updates the label of its neighborhood.
+These operators are more efficient, if there are only a few active vertices at the same time, or the neighborhoods do not overlap, which can not be avoided in general.
+In contrast the \emph{pull-style} operator reads all values of its neighborhood and updates the value of the active vertex.
 \emph{Pull-style} operators need less synchronization in parallel implementations, because unlike \emph{push style} there is only one write and many read operations.
 Thus locks can be avoided.
-So these operators are more efficient, if there are many \emph{active} vertices at the same time.
+So these operators are more efficient, if there are many active vertices at the same time.
 
 \subsection{Bulk-Synchronous Parallel Model}
 \label{sec:bsp}
