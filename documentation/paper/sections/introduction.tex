@@ -11,7 +11,7 @@ Parallelism may be important to exploit in order to finish the computations in a
 It is especially important to utilize distributed computation when the RAM of a single node is insufficient for the task.
 
 Some frameworks were developed to facilitate the writing of parallel and distributed graph algorithms.
-One of the most commonly known graph-processing systems is the closed-source, distributed system Pregel \cite{pregel}.
+One of the most commonly known graph processing systems is the closed-source, distributed system Pregel \cite{pregel}.
 Pregel, as well as some open source versions of it, like Giraph \cite{Giraph} and GraphX \cite{graphx}, was built to handle large graphs reliably and be fault-tolerant on large MapReduce infrastructures.
 Due to the lack of cache locality, as these systems are written object-oriented, they provide rather suboptimal performance.
 Because of this, many non-uniform memory access (NUMA) aware systems such as Ligra \cite{Ligra}, Polymer \cite{Polymer}, Galois \cite{Galois} and Gemini \cite{Gemini} were introduced.
