@@ -1,0 +1,12 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}%
+\contentsline {section}{\numberline {2}Overview}{2}{section.2}%
+\contentsline {section}{\numberline {3}Preliminaries}{4}{section.3}%
+\contentsline {section}{\numberline {4}Frameworks}{5}{section.4}%
+\contentsline {section}{\numberline {5}Evaluation}{6}{section.5}%
+\contentsline {section}{\numberline {6}Production Case}{8}{section.6}%
+\contentsline {section}{\numberline {7}Research Case}{8}{section.7}%
+\contentsline {section}{\numberline {8}Production Case Single Node}{10}{section.8}%
+\contentsline {section}{\numberline {9}Production Case Distributed}{11}{section.9}%
+\contentsline {section}{\numberline {10}Research Case Single Node}{11}{section.10}%
+\contentsline {section}{\numberline {11}Research Case Distributed}{13}{section.11}%
+\contentsline {section}{\numberline {12}Conclusion and Outlook}{13}{section.12}%
