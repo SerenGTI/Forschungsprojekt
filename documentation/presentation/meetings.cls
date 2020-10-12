@@ -50,6 +50,7 @@
 \author{}%Fallback Autor leer
 \date{\today}%Fallback Datum heute
 \rhead{}
+\lhead{}
 \lfoot{\sffamily\small\theauthor}
 \rfoot{\sffamily\small\thedate}
 \cfoot{}

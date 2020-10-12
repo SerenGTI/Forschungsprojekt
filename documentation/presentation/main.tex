@@ -8,18 +8,23 @@
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{multicol}
+\usepackage{biblatex}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
 \setlength{\parskip}{0pt}
 \raggedcolumns
 
+\bibliography{bib.bib}
+
 \author{S. König, L. Matzner, F. Rollbühler and J. Schmid}
 \date{Tuesday, 20\textsuperscript{th} October 2020}
 
 
 \begin{document}
-
+% Ich weiß, dass es die Beamer-Klasse gibt.
+% Lasst mich doch alle in Ruhe!
+% Die hier hatte ich noch rumliegen, das muss jetzt reichen.
 \section{Introduction}
 Graphs are growing fast and are becoming increasingly popular. Many problems can be modeled and solved using graphs.
 
@@ -36,56 +41,101 @@ We compare not only the time the frameworks indicate, they need to compute, but 
 \clearpage
 \section{Preliminaries}
 \begin{multicols}{2}
-A \emph{weighted, directed graph} is the pair $G=(V,E,w)$ where the \emph{vertex set} is $V\subseteq\mathbb N$ and the $E$ is the \emph{edge set} with
+\noindent
+	A \emph{weighted, directed graph} is the tuple $G=(V,E,w)$ where the \emph{vertex set} is $V\subseteq\mathbb N$ and the $E$ is the \emph{edge set} with
 	\begin{equation*}
 	  E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
 	\end{equation*}
 	and $w:E\rightarrow \mathbb R$ is a mapping of edge to a weight.
 	
+	\begin{center}
 	\begin{tikzpicture}
-		\node[circle, draw] (a) at (0,0) {A};
-		\node[circle, draw] (b) at (2,0) {B};
+		\node[circle, draw] (a) at (1.7,0) {A};
+		\node[circle, draw] (b) at (0,2) {B};
 		\node[circle, draw] (c) at (4,0) {C};
-		\node[circle, draw] (d) at (0,2) {D};
-		\node[circle, draw] (e) at (2,2) {E};
+		\node[circle, draw] (d) at (0,4) {D};
+		\node[circle, draw] (e) at (2.5,2) {E};
 
-		\draw[-stealth, bend right, line width=1pt] (a) edge (b);
-		\draw[-stealth, bend right, line width=1pt] (a) edge (c);
+		\draw[->, bend right, line width=1pt] (a) edge (b);
+		\draw[->, bend right, line width=1pt] (a) edge (c);
 
-		\draw[-stealth, bend right, line width=1pt] (b) edge (a);
-		\draw[-stealth, line width=1pt] (b) -- (d);
-		\draw[-stealth, line width=1pt] (b) -- (e);
+		\draw[->, bend right, line width=1pt] (b) edge (a);
+		\draw[->, line width=1pt] (b) edge (d);
+		\draw[->, line width=1pt] (b) edge (e);
 
-		\draw[-stealth, line width=1pt] (c) -- (e);
+		\draw[->, line width=1pt] (c) edge (e);
 
-		\draw[-stealth, line width=1pt] (e) -- (a);
+		\draw[->, line width=1pt] (e) edge (a);
+
+		\node at (2.5,3) {$w(x)=1\ \forall x\in V$};
 	\end{tikzpicture}
+	\end{center}
 
 
 	\columnbreak
 
 	
-	Algorithms:
-\begin{itemize}
-	\item Single-Source Shortest-Paths (SSSP) is the problem of finding the shortest path from a starting vertex to every other vertex in the input graph.
+	\subsection{Algorithms}
+	\begin{description}
+		\item[Single-Source Shortest-Paths (SSSP):] find the shortest path from a starting vertex to every other vertex
 
-	\item Breadth-first search (BFS) is a search problem on a graph.
+		\item[Breadth-first search (BFS):] find a node outgoing from a starting vertex, by increasing maximum hop count step-wise
 
-
-	\item PageRank (PR) is a link analysis algorithm that weighs the vertices of a graph, measuring the vertices relative importance within the graph
-
-\end{itemize}
+		\item[PageRank (PR):] link analysis algorithm; weighs vertices, measuring their relative importance
+	\end{description}
 \end{multicols}
 
 
 \clearpage
-\section{Push \& Pull}
+\begin{multicols}{2}
+\section{Push Style}
+\begin{center}
+\begin{tikzpicture}
+	\node[circle, draw] (a) at (1.5,1.2) {\bf A};
+	\node[circle, draw] (b) at (0,0) {B};
+	\node[circle, draw] (c) at (3,0) {C};
+	\node[circle, draw] (d) at (1.5,3) {D};
+
+	\draw[->, line width=1pt] (a) edge node[midway, above] {1} (b);
+	\draw[->, line width=1pt] (a) edge node[midway, above] {1} (c);
+	\draw[->, line width=1pt] (a) edge node[midway, right] {1} (d);
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+	\item reads active vertex, writes neighborhood 
+	\item more efficient, if only few active vertices at the same time
+	\item more efficient, if neighborhoods do not overlap
+\end{itemize}
+
+
+\columnbreak
+\section{Pull Style}
+\begin{center}
+\begin{tikzpicture}
+	\node[circle, draw] (a) at (1.5,1.2) {\bf A};
+	\node[circle, draw] (b) at (0,0) {B};
+	\node[circle, draw] (c) at (3,0) {C};
+	\node[circle, draw] (d) at (1.5,3) {D};
+
+	\draw[->, line width=1pt] (b) edge node[midway, above] {3} (a);
+	\draw[->, line width=1pt] (c) edge node[midway, above] {2} (a);
+	\draw[->, line width=1pt] (d) edge node[midway, right] {6} (a);
+\end{tikzpicture}
+\end{center}
+\begin{itemize}
+	\item reads neighborhood, writes active vertex
+	\item[$\rightarrow$] only one write and many read operations
+	\item less synchronization in parallel implementations needed
+	\item more efficient, if many vertices active at the same time
+\end{itemize}
+\end{multicols}
+
+
+
 
 \clearpage
 \section{Hugepages}
 
-
-SSSP, BFS, PR, Push/Pull, Hugepages
 
 \clearpage
 \section{Frameworks}
@@ -267,4 +317,8 @@ Blabla.
 
 Outlook:
 Immer wieder solche Tests machen, viele der Frameworks ändern sich immer wieder weiter und so, nicht wahr.
+
+\clearpage
+\nocite{unserPaper}
+\printbibliography
 \end{document}
