@@ -148,6 +148,21 @@ Graphs are growing fast and are becoming increasingly popular. Many problems can
 
 
 \section{Hugepages}
+\begin{itemize}
+	\item most systems use virtual memory management
+\begin{itemize}
+	\item represents an abstraction to hardware memory
+	\item virtual memory is then organized in pages
+	\item translations of virtual memory to physical memory are cached, because every translation takes time
+\end{itemize}
+	\item typically, memory pages are 4 KiB in size
+	\item \textbf{hugepages} can be several MiB in size $\rightarrow$ reduce number of cache misses
+	\item especially noticeable in very memory intensive applications
+\end{itemize}
+
+
+
+
 
 
 
