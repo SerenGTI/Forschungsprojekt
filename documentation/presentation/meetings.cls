@@ -4,7 +4,7 @@
 \LoadClass[oneside, 14pt]{extarticle}
 
 \RequirePackage[utf8]{inputenc}
-\RequirePackage[paperwidth=28.1cm, paperheight=18cm, left=3.2cm,right=3.2cm,top=1cm,bottom=1cm,includefoot,heightrounded]{geometry}
+\RequirePackage[paperwidth=28.1cm, paperheight=18cm, left=3.2cm,right=3.2cm,top=0.7cm,bottom=1cm,includefoot,heightrounded]{geometry}
 
 \RequirePackage[hyperref,dvipsnames]{xcolor}
 \RequirePackage{hyperref}
@@ -33,11 +33,18 @@
 
 
 \titleformat{\section}[display]
-{\centering\normalfont}
+{\centering\normalfont\clearpage}
 {}
 {0pt}
 {\huge}
 \titlespacing{\section}{0pt}{0pt}{1.5em}
+
+\titleformat{\subsection}[display]
+{\normalfont}
+{}
+{0pt}
+{\Large}
+\titlespacing{\subsection}{0pt}{0pt}{1em}
 
 
 %Standards einstellen

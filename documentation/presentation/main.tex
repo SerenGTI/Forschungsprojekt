@@ -12,6 +12,8 @@
 \usetikzlibrary{positioning}
 
 \setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{1cm}
 \raggedcolumns
 
 
@@ -24,13 +26,26 @@
 % Lasst mich doch alle in Ruhe!
 % Die hier hatte ich noch rumliegen, das muss jetzt reichen.
 \section{Introduction}
+\begin{itemize}
+	\item 
+In the past years several graph processing systems emerged.
 Graphs are growing fast and are becoming increasingly popular. Many problems can be modeled and solved using graphs.
+\item Comparison of non-uniform memory access (NUMA) aware systems and Giraph in their performance
+\begin{itemize}
+	\item on different graphs (real world and synthetic)
+\item and different algorithms (SSSP, BFS, PR)
+\end{itemize}
+\end{itemize}
 
 
 
-We compare some state-of-the-art non-uniform memory access (NUMA) aware systems and Giraph in terms of performance, both on real world and synthetic graphs.
-Therefore, we evaluate the three algorithms Single-Source Shortest-Paths (SSSP), Breadth-First Search (BFS) and PageRank (PR).
-We compare not only the time the frameworks indicate, they need to compute, but also the time they actually run and consume resources, as well as the resulting overhead time.
+
+
+
+
+
+
+
 
 \clearpage
 \section{Overview}
@@ -73,7 +88,7 @@ We compare not only the time the frameworks indicate, they need to compute, but 
 	\columnbreak
 
 	
-	\subsection{Algorithms}
+	\subsection*{Algorithms}
 	\begin{description}
 		\item[Single-Source Shortest-Paths (SSSP):] find the shortest path from a starting vertex to every other vertex
 
@@ -131,14 +146,49 @@ We compare not only the time the frameworks indicate, they need to compute, but 
 
 
 
-\clearpage
+
 \section{Hugepages}
 
 
-\clearpage
+
 \section{Frameworks}
 
-\clearpage
+\definecolor{Galois}{HTML}{1f77b4}
+\definecolor{Gemini}{HTML}{ff7f0e}
+\definecolor{Giraph}{HTML}{2ca02c}
+\definecolor{Ligra}{HTML}{d62728}
+\definecolor{Polymer}{HTML}{9467bd}
+
+\begin{multicols}{2}
+\begin{description}
+	\item[$\color{Galois}\blacksquare$ Galois] is a general purpose library designed for parallel programming
+	\begin{itemize}
+		\item Version 6.0 from 29\textsuperscript{th} June 2020 used 
+	\end{itemize}
+	\item[$\color{Gemini}\blacksquare$ Gemini] uses a distributed message-based approach from scratch
+	\begin{itemize}
+		\item Version from 2\textsuperscript{nd} November 2016 used
+		\item Version contains bugs that had to be fixed 
+	\end{itemize}
+	\item[$\color{Giraph}\blacksquare$ Giraph] is built on Apache Hadoop, a large scale data processing infrastructure
+	\begin{itemize}
+		\item Version 1.3 from 8\textsuperscript{th} May 2020 used
+		\item BFS is not natively supported 
+	\end{itemize}
+	\item[$\color{Ligra}\blacksquare$ Ligra] dynamically switches between push and pull style
+	\begin{itemize}
+		\item Version from 14\textsuperscript{th} August 2019
+	\end{itemize}
+	\item[$\color{Polymer}\blacksquare$ Polymer] optimizes data layout and memory access strategies
+	\begin{itemize}
+		\item Version from 28\textsuperscript{th} August 2018
+	\end{itemize}
+\end{description}
+\end{multicols}
+
+
+
+
 \section{Evaluation}
 \begin{multicols}{2}
 \noindent 5 Machines, with
@@ -154,10 +204,10 @@ We compare not only the time the frameworks indicate, they need to compute, but 
 	\item \textbf{overhead}: time difference between execution time and calculation time \newline (time to read the input graph, initialization, etc.)
 \end{itemize}
 
-\renewcommand{\arraystretch}{1.2}%
-{%
-\noindent
-\centering
+\columnbreak
+
+\begin{center}
+	\renewcommand{\arraystretch}{1.2}%
 	\begin{tabular}{crr}
 		\hline
 		\bf{Graph}&\# Vertices (M)&\# Edges (M)\\\hline
@@ -170,7 +220,8 @@ We compare not only the time the frameworks indicate, they need to compute, but 
 		rMat28&         121&  4294\\
 		\hline
 	\end{tabular}
-}%
+\end{center}
+
 
 each test case (graph, framework, algorithm) was run 10 times
 \end{multicols}
@@ -196,9 +247,7 @@ each test case (graph, framework, algorithm) was run 10 times
 \end{itemize}
 \end{multicols}
 
-Messfehlern bei Galois Calc was sagen
 
-\clearpage
 \section{Production Case Single Node}
 
 \begin{figure}[h]
@@ -223,7 +272,7 @@ Messfehlern bei Galois Calc was sagen
 	\item Message-based approach can compete with shared-memory
 \end{itemize}
 
-\clearpage
+
 \section{Production Case Distributed}
 
 \begin{figure}[h]
@@ -281,7 +330,7 @@ Messfehlern bei Galois Calc was sagen
 	\item Gemini and Polymer are comparably slow
 \end{itemize}
 
-\clearpage
+
 \section{Research Case Distributed}
 
 \begin{figure}[h]
@@ -308,13 +357,68 @@ Messfehlern bei Galois Calc was sagen
 \end{itemize}
 
 
+\section{Galois With Hugepages}
+\begin{multicols}{2}
+	
+
+\begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}r}
+		\toprule
+		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}\\
+		\cmidrule{3-4}\cmidrule{5-6}
+		&\bf Graph&w/o&w/&w/o&w/\\
+		\midrule
+\multirow{7}{0.5ex}{\rotatebox{90}{\bf SSSP}}
+		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2 \\
+		& orkut & 0.10 & \bf 0.02 & 0.8 & \bf 0.5 \\
+		& wikipedia & 0.38 & \bf 0.11 & 1.8 & \bf 1.1 \\
+		& twitter & 2.47 & \bf 0.94 & 10.8 & \bf 5.1 \\
+		& rMat27 & 4.50 & \bf 1.39 & 16.0 & \bf 6.4 \\
+		& friendster & 4.70 & \bf 1.78 & 14.4 & \bf 7.5 \\
+		& rMat28 & 9.77 & \bf 3.34 & 27.8 & \bf 13.1 \\
+		\midrule
+\multirow{7}{0.5ex}{\rotatebox{90}{\bf PR Pull}}
+		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2 \\
+		& orkut & 0.06 & \bf 0.02 & 0.7 & \bf 0.6 \\
+		& wikipedia & 0.17 & \bf 0.03 & 1.7 & \bf 1.4 \\
+		& twitter & 0.77 & \bf 0.11 & \bf 8.7 & 9.3 \\
+		& rMat27 & 0.65 & \bf 0.13 & 19.2 & \bf 8.1 \\
+		& friendster & 1.01 & \bf 0.14 & 20.4 & \bf 13.1 \\
+		& rMat28 & 1.15 & \bf 0.24 & 46.0 & \bf 16.4 \\
+		\bottomrule
+\end{tabular}
+
+\columnbreak
+
+
+	\includegraphics[width=0.7\linewidth]{../../plots/singleNodeSSSPGaloisHPThreads.png}
+	SSSP
+
+	\includegraphics[width=0.7\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
+	PR Pull
+\end{multicols}
 
 \section{Conclusion and Outlook}
-Für jeden Fall ist das beste Framework sehr spezifisch.
-Blabla.
+\begin{itemize}
+	\item performance highly dependent on the framework, algorithm and data set
+	\begin{itemize}
+		\item Galois is almost always fastest in the research case; especially with hugepages
+		\item Giraph is good on SSSP or BFS in distributed production
+		\item Gemini is a good middleground for distributed PR and single node production
+	\end{itemize}
+	
+	\item single node almost always preferrable, as long as RAM is sufficient
+\end{itemize}
 
-Outlook:
-Immer wieder solche Tests machen, viele der Frameworks ändern sich immer wieder weiter und so, nicht wahr.
+
+\subsection{Outlook}
+\begin{itemize}
+	\item[$\rightarrow$] incorporate new frameworks and new algorithms
+	\item[$\rightarrow$] great range of settings and multiple implementations for the same problem
+	\item[$\rightarrow$] At a later point in time, it is important to repeat such a comparison, because the frameworks are further developed and new ones are created.
+\end{itemize}
+
+
+
 
 
 \end{document}
