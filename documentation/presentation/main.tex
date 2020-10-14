@@ -46,7 +46,7 @@
 	\item Evaluation
 	\begin{itemize}
 	\item Research vs. Production Case
-	\item Results for those Cases
+	\item Results
 	\item Impact of Hugepages on Galois
 	\end{itemize}
 	\item Conclusion
@@ -62,7 +62,7 @@
 \clearpage
 \section{Preliminaries}
 \begin{multicols}{2}
-\noindent
+	\subsection*{Graphs}
 	A \emph{weighted, directed graph} is the tuple $G=(V,E,w)$ where the \emph{vertex set} is $V\subseteq\mathbb N$ and the $E$ is the \emph{edge set} with
 	\begin{equation*}
 	  E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
@@ -91,11 +91,7 @@
 		\node at (2.5,3) {$w(x)=1\ \forall x\in V$};
 	\end{tikzpicture}
 	\end{center}
-
-
 	\columnbreak
-
-	
 	\subsection*{Algorithms}
 	\begin{description}
 		\item[Single-Source Shortest-Paths (SSSP):] find the shortest path from a starting vertex to every other vertex
@@ -217,13 +213,14 @@
 
 \section{Evaluation}
 \begin{multicols}{2}
-\noindent Machines: vsflash1-5, 
+\subsection*{Machines}
+vsflash1-5, 
 \begin{itemize}
 	\item 96 cores, of which 48 virtual
 	\item 256 GB of RAM each\footnote{\sffamily one machine only 128 GB}
 	\item Ubuntu 18.04.2 LTS
 \end{itemize}
-\noindent Measurements:
+\subsection*{Measurements}
 \begin{itemize}
 	\item \textbf{execution time}: time from start to finish of the console command
 	\item \textbf{calculation time}: time the framework actually executed the algorithm
@@ -233,6 +230,8 @@
 
 \columnbreak
 
+\subsection*{Graphs}
+Both rMat graphs are synthetic, others are real-world data sets
 \begin{center}
 	\includegraphics[width=\linewidth]{graphsize.png}
 \end{center}
