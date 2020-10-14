@@ -26,29 +26,37 @@
 % Lasst mich doch alle in Ruhe!
 % Die hier hatte ich noch rumliegen, das muss jetzt reichen.
 \section{Introduction}
-\begin{itemize}
-	\item 
-In the past years several graph processing systems emerged.
-Graphs are growing fast and are becoming increasingly popular. Many problems can be modeled and solved using graphs.
-\item Comparison of non-uniform memory access (NUMA) aware systems and Giraph in their performance
-\begin{itemize}
-	\item on different graphs (real world and synthetic)
-\item and different algorithms (SSSP, BFS, PR)
-\end{itemize}
-\end{itemize}
+\begin{center}
+	\begin{minipage}{0.6\linewidth}
+		\centering
+		Main Goal: \itshape  Comparison of five graph processing systems in their performance on different graphs and algorithms.
+	\end{minipage}
+\end{center}
 
 
 
+\begin{enumerate}
+	\item Preliminaries
+	\begin{itemize}
+	\item Basics
+	\item Computation Styles
+	\item Hugepages
+	\end{itemize}
+	\item Frameworks
+	\item Evaluation
+	\begin{itemize}
+	\item Research vs. Production Case
+	\item Results for those Cases
+	\item Impact of Hugepages on Galois
+	\end{itemize}
+	\item Conclusion
+\end{enumerate}
+
+% In the past years several graph processing systems emerged.
+% Graphs are growing fast and are becoming increasingly popular. Many problems can be modeled and solved using graphs.
 
 
 
-
-
-
-
-
-\clearpage
-\section{Overview}
 
 
 \clearpage
@@ -185,10 +193,14 @@ Graphs are growing fast and are becoming increasingly popular. Many problems can
 		\item Version from 2\textsuperscript{nd} November 2016 used
 		\item Version contains bugs that had to be fixed 
 	\end{itemize}
+
+	\columnbreak
+
 	\item[$\color{Giraph}\blacksquare$ Giraph] is built on Apache Hadoop, a large scale data processing infrastructure
 	\begin{itemize}
 		\item Version 1.3 from 8\textsuperscript{th} May 2020 used
 		\item BFS is not natively supported 
+		\item state-of-the-art, but not NUMA-aware
 	\end{itemize}
 	\item[$\color{Ligra}\blacksquare$ Ligra] dynamically switches between push and pull style
 	\begin{itemize}
@@ -203,42 +215,30 @@ Graphs are growing fast and are becoming increasingly popular. Many problems can
 
 
 
-
 \section{Evaluation}
 \begin{multicols}{2}
-\noindent 5 Machines, with
+\noindent Machines: vsflash1-5, 
 \begin{itemize}
 	\item 96 cores, of which 48 virtual
-	\item 256 GB of RAM each, one machine only 128 GB
+	\item 256 GB of RAM each\footnote{\sffamily one machine only 128 GB}
 	\item Ubuntu 18.04.2 LTS
 \end{itemize}
 \noindent Measurements:
 \begin{itemize}
 	\item \textbf{execution time}: time from start to finish of the console command
 	\item \textbf{calculation time}: time the framework actually executed the algorithm
-	\item \textbf{overhead}: time difference between execution time and calculation time \newline (time to read the input graph, initialization, etc.) -- brauchen wir das überhaupt?
+	%\item \textbf{overhead}: time difference between execution time and calculation time \newline (time to read the input graph, initialization, etc.) -- brauchen wir das überhaupt?
+	\item executed each test case 10 times
 \end{itemize}
 
 \columnbreak
 
 \begin{center}
-	\renewcommand{\arraystretch}{1.2}%
-	\begin{tabular}{crr}
-		\hline
-		\bf{Graph}&\# Vertices (M)&\# Edges (M)\\\hline
-		flickr&    		0.1&  2\\
-		orkut&          3&    117\\
-		wikipedia&      12&   378\\
-		twitter&     	52&   1963\\
-		rMat27&         63&   2147\\
-		friendster&     68&   2586\\
-		rMat28&         121&  4294\\
-		\hline
-	\end{tabular}
+	\includegraphics[width=\linewidth]{graphsize.png}
 \end{center}
 
 
-each test case (graph, framework, algorithm) was run 10 times
+
 \end{multicols}
 
 
@@ -247,18 +247,18 @@ each test case (graph, framework, algorithm) was run 10 times
 \begin{multicols}{2}
 \section{Production Case}
 \begin{itemize}
-	\item running system, that performs multiple calculations on a single graph
-	\item without the need of reloading graph data with every calculation
-	\item short calculation times should be preferred because the overhead time is only spent once on startup and amortizes quickly
+	\item running system: multiple calculations on a single graph
+	\item graph data stays loaded between calculations
+	\item[$\rightarrow$] short calculation times should be preferred
 \end{itemize}
 
 \columnbreak
 \section{Research Case}
 \begin{itemize}
-	\item individual calculations on a graph, i.e. for each calculation, the graph has to be loaded
-	\item the algorithm can change frequently
-	\item requiring the framework to be relatively fast on different algorithms
-	\item overall small execution times and small overhead are preferred
+	\item individual calculation cases: possibly new graph for each calculation
+	\item frequently changing algorithm
+	\item[$\rightarrow$] framework should be relatively fast on different algorithms
+	\item[$\rightarrow$] overall small execution times should be preferred
 \end{itemize}
 \end{multicols}
 
@@ -373,50 +373,41 @@ each test case (graph, framework, algorithm) was run 10 times
 
 
 \section{Galois With Hugepages}
-\begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}rc}
-		\toprule
-		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}&\\
+\begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}r}
+
+		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}\\
 		\cmidrule{3-4}\cmidrule{5-6}
-		&\bf Graph&w/o&w/&w/o&w/&\\
+		&\bf Graph&w/o&w/&w/o&w/\\
 		\midrule
 \multirow{7}{0.5ex}{\rotatebox{90}{\bf SSSP}}
-		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2 & 
-		\multirow{7}{8cm}{\includegraphics[width=5.5cm]{../../plots/singleNodeSSSPGaloisHPThreads.png}}
-		\\
-		& orkut & 0.10 & \bf 0.02 & 0.8 & \bf 0.5 & \\
-		& wikipedia & 0.38 & \bf 0.11 & 1.8 & \bf 1.1 & \\
-		& twitter & 2.47 & \bf 0.94 & 10.8 & \bf 5.1 & \\
-		& rMat27 & 4.50 & \bf 1.39 & 16.0 & \bf 6.4 & \\
-		& friendster & 4.70 & \bf 1.78 & 14.4 & \bf 7.5 & \\
-		& rMat28 & 9.77 & \bf 3.34 & 27.8 & \bf 13.1 & \\
-		\midrule
-
-		\bottomrule
+		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2\\
+		& orkut & 0.10 & \bf 0.02 & 0.8 & \bf 0.5\\
+		& wikipedia & 0.38 & \bf 0.11 & 1.8 & \bf 1.1\\
+		& twitter & 2.47 & \bf 0.94 & 10.8 & \bf 5.1\\
+		& rMat27 & 4.50 & \bf 1.39 & 16.0 & \bf 6.4\\
+		& friendster & 4.70 & \bf 1.78 & 14.4 & \bf 7.5\\
+		& rMat28 & 9.77 & \bf 3.34 & 27.8 & \bf 13.1\\
 \end{tabular}
-
+\includegraphics[width=8cm]{../../plots/singleNodeSSSPGaloisThreads.png}
+\includegraphics[width=8cm]{../../plots/singleNodeSSSPGaloisHPThreads.png}
 
 \section{Galois With Hugepages}
 \begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}rc}
-\toprule
-		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}&\\
+		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}\\
 		\cmidrule{3-4}\cmidrule{5-6}
-		&\bf Graph&w/o&w/&w/o&w/&\\
+		&\bf Graph&w/o&w/&w/o&w/\\
 		\midrule
 	\multirow{7}{0.5ex}{\rotatebox{90}{\bf PR Pull}}
-		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2 & \\
-		& orkut & 0.06 & \bf 0.02 & 0.7 & \bf 0.6 & \\
-		& wikipedia & 0.17 & \bf 0.03 & 1.7 & \bf 1.4 & \\
-		& twitter & 0.77 & \bf 0.11 & \bf 8.7 & 9.3 & \\
-		& rMat27 & 0.65 & \bf 0.13 & 19.2 & \bf 8.1 & \\
-		& friendster & 1.01 & \bf 0.14 & 20.4 & \bf 13.1 & \\
-		& rMat28 & 1.15 & \bf 0.24 & 46.0 & \bf 16.4 & \\
-	\bottomrule
+		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2\\
+		& orkut & 0.06 & \bf 0.02 & 0.7 & \bf 0.6\\
+		& wikipedia & 0.17 & \bf 0.03 & 1.7 & \bf 1.4\\
+		& twitter & 0.77 & \bf 0.11 & \bf 8.7 & 9.3\\
+		& rMat27 & 0.65 & \bf 0.13 & 19.2 & \bf 8.1\\
+		& friendster & 1.01 & \bf 0.14 & 20.4 & \bf 13.1\\
+		& rMat28 & 1.15 & \bf 0.24 & 46.0 & \bf 16.4\\
 \end{tabular}
-
-	\includegraphics[width=1cm]{../../plots/singleNodeSSSPGaloisHPThreads.png}
-
-
-	%\includegraphics[width=0.7\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
+\includegraphics[width=0.5\linewidth]{../../plots/singleNodePRPullGaloisThreads.png}
+\includegraphics[width=0.5\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
 
 
 

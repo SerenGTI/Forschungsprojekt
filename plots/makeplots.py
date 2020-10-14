@@ -4,19 +4,19 @@ from plotFunctions import *
 
 
 
-distributed = False
+distributed = True
 singleNode = False
 
 sssp = False
 bfs = False
-pr = False
+pr = True
 
 calcTimes = False
 execTimes = False
 overheads = False
 
 
-galoisSpeedup = True
+galoisSpeedup = False
 
 
 colors = {"Galois":"#1f77b4",
@@ -141,7 +141,7 @@ if distributed and ( sssp or bfs or pr or calcTimes or execTimes or overheads):
 
 	#PR
 	if pr or calcTimes:
-		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), execTimePR_distributed, yErrs=yErrExecPR_distributed, yLabel='Calculation time (s)', saveToFile="distributedPR_execTime.png", colors_=colors)
+		grouped_bar_plot(graphs, list(dist_frameworks_pr.values()), execTimePR_distributed, yErrs=yErrExecPR_distributed, yLabel='Execution time (s)', saveToFile="distributedPR_execTime.png", colors_=colors)
 
 	## OVERHEAD
 	#SSSP
