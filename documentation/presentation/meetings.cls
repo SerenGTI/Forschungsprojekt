@@ -37,14 +37,14 @@
 {}
 {0pt}
 {\huge}
-\titlespacing{\section}{0pt}{0pt}{1.5em}
+\titlespacing{\section}{0pt}{0pt}{1.3em}
 
 \titleformat{\subsection}[display]
 {\normalfont}
 {}
 {0pt}
 {\Large}
-\titlespacing{\subsection}{0pt}{0pt}{1em}
+\titlespacing{\subsection}{0pt}{0pt}{0.6em}
 
 
 %Standards einstellen

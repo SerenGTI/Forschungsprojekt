@@ -371,63 +371,114 @@ Both rMat graphs are synthetic, others are real-world data sets
 \end{itemize}
 
 
-\section{Galois With Hugepages}
-\begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}r}
-
-		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}\\
-		\cmidrule{3-4}\cmidrule{5-6}
-		&\bf Graph&w/o&w/&w/o&w/\\
+\newgeometry{paperwidth=28.1cm, paperheight=18cm, left=1cm, right=1cm, top=0.7cm,bottom=1cm,includefoot,heightrounded}
+\section{Galois With Hugepages on SSSP}
+\begin{figure}[h!]
+\hfil
+\begin{subfigure}{0.33\linewidth}
+	\sffamily
+	\small
+	\centering
+	\begin{tabular}{cr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}r}
+		&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}\\
+		\cmidrule{2-3}\cmidrule{4-5}
+		\bf Graph&w/o&w/&w/o&w/\\
 		\midrule
-\multirow{7}{0.5ex}{\rotatebox{90}{\bf SSSP}}
-		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2\\
-		& orkut & 0.10 & \bf 0.02 & 0.8 & \bf 0.5\\
-		& wikipedia & 0.38 & \bf 0.11 & 1.8 & \bf 1.1\\
-		& twitter & 2.47 & \bf 0.94 & 10.8 & \bf 5.1\\
-		& rMat27 & 4.50 & \bf 1.39 & 16.0 & \bf 6.4\\
-		& friendster & 4.70 & \bf 1.78 & 14.4 & \bf 7.5\\
-		& rMat28 & 9.77 & \bf 3.34 & 27.8 & \bf 13.1\\
+		flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2\\
+		orkut & 0.10 & \bf 0.02 & 0.8 & \bf 0.5\\
+		wikipedia & 0.38 & \bf 0.11 & 1.8 & \bf 1.1\\
+		twitter & 2.47 & \bf 0.94 & 10.8 & \bf 5.1\\
+		rMat27 & 4.50 & \bf 1.39 & 16.0 & \bf 6.4\\
+		friendster & 4.70 & \bf 1.78 & 14.4 & \bf 7.5\\
+		rMat28 & 9.77 & \bf 3.34 & 27.8 & \bf 13.1\\
 \end{tabular}
-\includegraphics[width=8cm]{../../plots/singleNodeSSSPGaloisThreads.png}
-\includegraphics[width=8cm]{../../plots/singleNodeSSSPGaloisHPThreads.png}
+\end{subfigure}
+\hfil
+\begin{subfigure}{0.3\linewidth}
+\centering
+\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisThreads.png}
+	\caption{Without Hugepages}
+\end{subfigure}
+\begin{subfigure}{0.3\linewidth}
+\centering
+\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisHPThreads.png}
+	\caption{With Hugepages}
+\end{subfigure}
+\end{figure}
+\begin{itemize}
+	\item Hugepages further reduce both calculation and execution time
+	\item Speedups with hugepages are \enquote{more reliable}, i.e., more predictable
+\end{itemize}
 
-\section{Galois With Hugepages}
-\begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}rc}
-		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}\\
-		\cmidrule{3-4}\cmidrule{5-6}
-		&\bf Graph&w/o&w/&w/o&w/\\
+
+\section{Galois With Hugepages on PR Pull}
+\begin{figure}[h!]
+\hfil
+\begin{subfigure}{0.33\linewidth}
+	\sffamily
+	\small
+	\centering
+	\begin{tabular}{cr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}rc}
+		&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}\\
+		\cmidrule{2-3}\cmidrule{4-5}
+		\bf Graph&w/o&w/&w/o&w/\\
 		\midrule
-	\multirow{7}{0.5ex}{\rotatebox{90}{\bf PR Pull}}
-		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2\\
-		& orkut & 0.06 & \bf 0.02 & 0.7 & \bf 0.6\\
-		& wikipedia & 0.17 & \bf 0.03 & 1.7 & \bf 1.4\\
-		& twitter & 0.77 & \bf 0.11 & \bf 8.7 & 9.3\\
-		& rMat27 & 0.65 & \bf 0.13 & 19.2 & \bf 8.1\\
-		& friendster & 1.01 & \bf 0.14 & 20.4 & \bf 13.1\\
-		& rMat28 & 1.15 & \bf 0.24 & 46.0 & \bf 16.4\\
+		flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2\\
+		orkut & 0.06 & \bf 0.02 & 0.7 & \bf 0.6\\
+		wikipedia & 0.17 & \bf 0.03 & 1.7 & \bf 1.4\\
+		twitter & 0.77 & \bf 0.11 & \bf 8.7 & 9.3\\
+		rMat27 & 0.65 & \bf 0.13 & 19.2 & \bf 8.1\\
+		friendster & 1.01 & \bf 0.14 & 20.4 & \bf 13.1\\
+		rMat28 & 1.15 & \bf 0.24 & 46.0 & \bf 16.4\\
 \end{tabular}
-\includegraphics[width=0.5\linewidth]{../../plots/singleNodePRPullGaloisThreads.png}
-\includegraphics[width=0.5\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
+\end{subfigure}
+\hfil
+	\begin{subfigure}{0.3\linewidth}
+	\centering
+\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisThreads.png}
+		\caption{Without Hugepages}
+\end{subfigure}
+\begin{subfigure}{0.3\linewidth}
+	\centering
+\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
+		\caption{With Hugepages}
+	\end{subfigure}
+\end{figure}
+\begin{itemize}
+	\item Hugepages further reduce both calculation and execution time
+	\item Hugepages make speedup in multithreaded scenario possible
+	\item Speedup not to the same degree as with SSSP (15$\times$ vs. 2.5$\times$)
+\end{itemize}
+
+
+\restoregeometry
 
 
 
 \section{Conclusion and Outlook}
-\begin{itemize}
-	\item performance highly dependent on the framework, algorithm and data set
+Generally: 1) performance highly dependent on the framework, algorithm and data set
+
+2) single node almost always preferrable, as long as RAM is sufficient
+\begin{multicols}{2}
+	\subsection{Production Case}
 	\begin{itemize}
-		\item Galois is almost always fastest in the research case; especially with hugepages
-		\item Giraph is good on SSSP or BFS in distributed production
-		\item Gemini is a good middleground for distributed PR and single node production
+		\item Giraph is very fast on distributed systems (especially SSSP and BFS), with added benefit of Hadoop (fault-tolerance, automatic parallelization) 
+		\item Gemini (surprisingly) and Ligra are good options for single node 
 	\end{itemize}
-	
-	\item single node almost always preferrable, as long as RAM is sufficient
-\end{itemize}
+
+	\columnbreak
+	\subsection{Research Case}
+	\begin{itemize}
+		\item Galois is fastest in almost all cases; further improvements with hugepages possible
+	\end{itemize}
+\end{multicols}
 
 
 \subsection{Outlook}
 \begin{itemize}
 	\item[$\rightarrow$] incorporate new frameworks and new algorithms
-	\item[$\rightarrow$] great range of settings and multiple implementations for the same problem
-	\item[$\rightarrow$] At a later point in time, it is important to repeat such a comparison, because the frameworks are further developed and new ones are created.
+	\item[$\rightarrow$] explore range of settings and other implementations
+	\item[$\rightarrow$] repeat similar tests in the future: frameworks are improved and new ones are introduced
 \end{itemize}
 
 
