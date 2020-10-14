@@ -216,7 +216,7 @@ Graphs are growing fast and are becoming increasingly popular. Many problems can
 \begin{itemize}
 	\item \textbf{execution time}: time from start to finish of the console command
 	\item \textbf{calculation time}: time the framework actually executed the algorithm
-	\item \textbf{overhead}: time difference between execution time and calculation time \newline (time to read the input graph, initialization, etc.)
+	\item \textbf{overhead}: time difference between execution time and calculation time \newline (time to read the input graph, initialization, etc.) -- brauchen wir das überhaupt?
 \end{itemize}
 
 \columnbreak
@@ -373,44 +373,52 @@ each test case (graph, framework, algorithm) was run 10 times
 
 
 \section{Galois With Hugepages}
-\begin{multicols}{2}
-	
-
-\begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}r}
+\begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}rc}
 		\toprule
-		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}\\
+		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}&\\
 		\cmidrule{3-4}\cmidrule{5-6}
-		&\bf Graph&w/o&w/&w/o&w/\\
+		&\bf Graph&w/o&w/&w/o&w/&\\
 		\midrule
 \multirow{7}{0.5ex}{\rotatebox{90}{\bf SSSP}}
-		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2 \\
-		& orkut & 0.10 & \bf 0.02 & 0.8 & \bf 0.5 \\
-		& wikipedia & 0.38 & \bf 0.11 & 1.8 & \bf 1.1 \\
-		& twitter & 2.47 & \bf 0.94 & 10.8 & \bf 5.1 \\
-		& rMat27 & 4.50 & \bf 1.39 & 16.0 & \bf 6.4 \\
-		& friendster & 4.70 & \bf 1.78 & 14.4 & \bf 7.5 \\
-		& rMat28 & 9.77 & \bf 3.34 & 27.8 & \bf 13.1 \\
+		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2 & 
+		\multirow{7}{8cm}{\includegraphics[width=5.5cm]{../../plots/singleNodeSSSPGaloisHPThreads.png}}
+		\\
+		& orkut & 0.10 & \bf 0.02 & 0.8 & \bf 0.5 & \\
+		& wikipedia & 0.38 & \bf 0.11 & 1.8 & \bf 1.1 & \\
+		& twitter & 2.47 & \bf 0.94 & 10.8 & \bf 5.1 & \\
+		& rMat27 & 4.50 & \bf 1.39 & 16.0 & \bf 6.4 & \\
+		& friendster & 4.70 & \bf 1.78 & 14.4 & \bf 7.5 & \\
+		& rMat28 & 9.77 & \bf 3.34 & 27.8 & \bf 13.1 & \\
 		\midrule
-\multirow{7}{0.5ex}{\rotatebox{90}{\bf PR Pull}}
-		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2 \\
-		& orkut & 0.06 & \bf 0.02 & 0.7 & \bf 0.6 \\
-		& wikipedia & 0.17 & \bf 0.03 & 1.7 & \bf 1.4 \\
-		& twitter & 0.77 & \bf 0.11 & \bf 8.7 & 9.3 \\
-		& rMat27 & 0.65 & \bf 0.13 & 19.2 & \bf 8.1 \\
-		& friendster & 1.01 & \bf 0.14 & 20.4 & \bf 13.1 \\
-		& rMat28 & 1.15 & \bf 0.24 & 46.0 & \bf 16.4 \\
+
 		\bottomrule
 \end{tabular}
 
-\columnbreak
+
+\section{Galois With Hugepages}
+\begin{tabular}{ccr@{\tabskip 2 \tabcolsep}rr@{\tabskip 2 \tabcolsep}rc}
+\toprule
+		&&\multicolumn{2}{c}{\bf Calc Time (s)}&\multicolumn{2}{c}{\bf Exec Time (s)}&\\
+		\cmidrule{3-4}\cmidrule{5-6}
+		&\bf Graph&w/o&w/&w/o&w/&\\
+		\midrule
+	\multirow{7}{0.5ex}{\rotatebox{90}{\bf PR Pull}}
+		& flickr & 0.01 & \bf 0.01 & 0.3 & \bf 0.2 & \\
+		& orkut & 0.06 & \bf 0.02 & 0.7 & \bf 0.6 & \\
+		& wikipedia & 0.17 & \bf 0.03 & 1.7 & \bf 1.4 & \\
+		& twitter & 0.77 & \bf 0.11 & \bf 8.7 & 9.3 & \\
+		& rMat27 & 0.65 & \bf 0.13 & 19.2 & \bf 8.1 & \\
+		& friendster & 1.01 & \bf 0.14 & 20.4 & \bf 13.1 & \\
+		& rMat28 & 1.15 & \bf 0.24 & 46.0 & \bf 16.4 & \\
+	\bottomrule
+\end{tabular}
+
+	\includegraphics[width=1cm]{../../plots/singleNodeSSSPGaloisHPThreads.png}
 
 
-	\includegraphics[width=0.7\linewidth]{../../plots/singleNodeSSSPGaloisHPThreads.png}
-	SSSP
+	%\includegraphics[width=0.7\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
 
-	\includegraphics[width=0.7\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
-	PR Pull
-\end{multicols}
+
 
 \section{Conclusion and Outlook}
 \begin{itemize}
