@@ -26,7 +26,7 @@ ax.set_ylabel("# of edges (Million)")
 
 saveToFile = "graphsize.png"
 if saveToFile != None:
-	plt.savefig(saveToFile)
+	plt.savefig(saveToFile, transparent=True)
 else:
 	plt.show()
 

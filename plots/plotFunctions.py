@@ -47,7 +47,7 @@ def grouped_bar_plot(group_names, legend_names, values, colors_=None, yErrs=None
 	ax.legend(ps, legend_names)
 
 	if saveToFile != None:
-		plt.savefig(saveToFile)
+		plt.savefig(saveToFile, transparent=True)
 	else:
 		plt.show()
 
@@ -83,7 +83,7 @@ def line_plot(legend_names, x, values, title='', yLabel='', xLabel='', yScale=No
 	ax.legend(ps, legend_names)
 
 	if saveToFile != None:
-		plt.savefig(saveToFile)
+		plt.savefig(saveToFile, transparent=True)
 	else:
 		plt.show()
 

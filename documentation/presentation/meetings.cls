@@ -28,22 +28,24 @@
 \RequirePackage{ascii}%tt
 \RequirePackage{newtxmath}
 \RequirePackage[T1]{fontenc}
+
 \renewcommand{\normalfont}{\sffamily}
 \renewcommand{\rmfamily}{\sffamily}
 
 
+\definecolor{heading}{HTML}{d62728}
 \titleformat{\section}[display]
 {\centering\normalfont\clearpage}
 {}
 {0pt}
-{\huge}
-\titlespacing{\section}{0pt}{0pt}{1.3em}
+{\huge\color{heading}}
+\titlespacing{\section}{0pt}{0pt}{2em}
 
 \titleformat{\subsection}[display]
 {\normalfont}
 {}
 {0pt}
-{\Large}
+{\Large\sffamily\color{heading}}
 \titlespacing{\subsection}{0pt}{0pt}{0.6em}
 
 

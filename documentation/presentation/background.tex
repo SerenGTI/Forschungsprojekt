@@ -1,0 +1,35 @@
+\documentclass{meetings}
+
+
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+
+
+\date{}
+
+\usepackage[pages=all]{background}
+
+\definecolor{left} {HTML}{001528}
+\backgroundsetup{
+scale=1,
+color=black,
+opacity=0.3,
+angle=0,
+contents={%
+  \begin{tikzpicture}
+  	\node [shading = axis,rectangle, left color=left, right color=white,shading angle=135, anchor=north, minimum width=\paperwidth, minimum height=\paperheight] (box) at (current page.north){};
+  \end{tikzpicture}
+  }%
+}
+
+
+\begin{document}
+	\ 
+\end{document}
