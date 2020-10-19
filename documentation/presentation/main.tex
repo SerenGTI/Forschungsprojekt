@@ -333,11 +333,26 @@ Both rMat graphs are synthetic, others are real-world data sets; Flickr: 24MB, r
 
 
 
+\section{Research Case Distributed}
 
-
-
-
-
+\begin{figure}[h]
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_execTime.png}
+		\caption{SSSP}
+		\label{fig:distributedSSSP_exec}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedPR_execTime.png}
+		\caption{PR}
+		\label{fig:distributedSSSP_exec}
+	\end{subfigure}
+\end{figure}
+\begin{itemize}
+	\item Galois Push is faster than Pull in all cases
+	\item Both Galois implementations fastest on SSSP or BFS
+	\item Gemini is fastest on PR in almost all cases
+\end{itemize}
 
 
 
@@ -362,27 +377,6 @@ Both rMat graphs are synthetic, others are real-world data sets; Flickr: 24MB, r
 	\item Gemini and Polymer are comparably slow
 \end{itemize}
 
-
-\section{Research Case Distributed}
-
-\begin{figure}[h]
-	\begin{subfigure}{0.45\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_execTime.png}
-		\caption{SSSP}
-		\label{fig:distributedSSSP_exec}
-	\end{subfigure}
-	\hfil
-	\begin{subfigure}{0.45\textwidth}
-		\includegraphics[width=\linewidth]{../../plots/distributedPR_execTime.png}
-		\caption{PR}
-		\label{fig:distributedSSSP_exec}
-	\end{subfigure}
-\end{figure}
-\begin{itemize}
-	\item Galois Push is faster than Pull in all cases
-	\item Both Galois implementations fastest on SSSP or BFS
-	\item Gemini is fastest on PR in almost all cases
-\end{itemize}
 
 
 %\newgeometry{paperwidth=28.1cm, paperheight=18cm, left=1cm, right=1cm, top=0.7cm,bottom=1cm,includefoot,heightrounded}
