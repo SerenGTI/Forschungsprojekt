@@ -48,14 +48,14 @@ contents={%
 \section{Motivation and Goal}
 \sffamily
 \begin{center}
-	
+
 	\vfill
 
 	\begin{itemize}
 		\item graph processing becomes increasingly important in academic and industrial environments
 		\item many problems modeled with graphs, e.\,g.,\xspace machine learning and data mining
 		\item many business models are based on graphs, e.\,g.,\xspace viral marketing or Google’s search engine
-		\item graph sizes increase to several billion edges 
+		\item graph sizes increase to several billion edges
 		\item[$\rightarrow$] performance, parallelism and distribution of graph algorithms becomes more important
 	\end{itemize}
 
@@ -104,7 +104,7 @@ contents={%
 	  E\subseteq\{(x,y)\,|\, x,y\in V, x\neq y\}
 	\end{equation*}
 	and $w:E\rightarrow \mathbb R$ is a mapping of edge to a weight.
-	
+
 	\begin{center}
 	\begin{tikzpicture}
 		\node[circle, draw] (a) at (1.7,0) {A};
@@ -155,7 +155,7 @@ contents={%
 \end{tikzpicture}
 \end{center}
 \begin{itemize}
-	\item reads active vertex, writes neighborhood 
+	\item reads active vertex, writes neighborhood
 	\item more efficient, if only few active vertices at the same time
 	\item more efficient, if neighborhoods of active vertices do not overlap
 \end{itemize}
@@ -222,8 +222,8 @@ contents={%
 \begin{tabular}{lcccp{8cm}p{6cm}}
 	Framework&Version&NUMA&Dist.&\multicolumn{1}{c}{Features}&\multicolumn{1}{c}{Notes}\\
 	\toprule
-	$\color{Galois}\blacksquare$\ \bf Galois&29.06.2020&\checkmark&(\checkmark)&general purpose library designed for parallel programming&Distributed using Gluon\\\midrule
-	$\color{Gemini}\blacksquare$\ \bf Gemini&02.11.2016&\checkmark&\checkmark&distributed message-based approach from scratch&Version contains bugs that had to be fixed \\\midrule
+	$\color{Galois}\blacksquare$\ \bf Galois&29.06.2020&\checkmark&(\checkmark)&general purpose library designed for parallel programming, Hugepage support&distributed using Gluon\\\midrule
+	$\color{Gemini}\blacksquare$\ \bf Gemini&02.11.2016&\checkmark&\checkmark&distributed message-based approach from scratch&version contains bugs that had to be fixed \\\midrule
 	$\color{Giraph}\blacksquare$\ \bf Giraph&08.05.2020&X&\checkmark&built on Apache Hadoop&BFS is not natively supported \\\midrule
 	$\color{Ligra}\blacksquare$\ \bf Ligra&14.08.2019&\checkmark&X&dynamically switches between push and pull style&\\\midrule
 	$\color{Polymer}\blacksquare$\ \bf Polymer&28.08.2018&\checkmark&X&optimizes data layout and memory access strategies&\\
@@ -240,7 +240,7 @@ contents={%
 \section{Evaluation}
 \begin{multicols}{2}
 \subsection*{Machines}
-vsflash1-5, 
+vsflash1-5,
 \begin{itemize}
 	\item 96 cores, of which 48 virtual
 	\item 256 GB of RAM each\footnote{\sffamily one machine only 128 GB}
