@@ -215,11 +215,11 @@ contents={%
 \definecolor{Polymer}{HTML}{9467bd}
 
 
-\newgeometry{paperwidth=28.1cm, paperheight=18cm, left=2cm, right=2cm, top=0.7cm,bottom=1cm,includefoot,heightrounded}
+%\newgeometry{paperwidth=28.1cm, paperheight=18cm, left=2cm, right=2cm, top=0.7cm,bottom=1cm,includefoot,heightrounded}
 \section{Frameworks}
 \vfill
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{lcccp{8cm}p{6cm}}
+\begin{tabular}{lcccp{7cm}p{5cm}}
 	Framework&Version&NUMA&Dist.&\multicolumn{1}{c}{Features}&\multicolumn{1}{c}{Notes}\\
 	\toprule
 	$\color{Galois}\blacksquare$\ \bf Galois&29.06.2020&\checkmark&(\checkmark)&general purpose library designed for parallel programming, Hugepage support&distributed using Gluon\\\midrule
@@ -463,7 +463,7 @@ Generally: 1) performance highly dependent on the framework, algorithm and data 
 	\begin{itemize}
 		\item Giraph is very fast on distributed systems (especially SSSP and BFS)
 		\item Gemini is fast for distributed PR
-		\item Gemini and Ligra are good options for single node 
+		\item Gemini and Ligra are good options for single node
 	\end{itemize}
 
 	\columnbreak
