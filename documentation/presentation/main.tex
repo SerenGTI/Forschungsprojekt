@@ -45,6 +45,21 @@ contents={%
 % Ich weiß, dass es die Beamer-Klasse gibt.
 % Lasst mich doch alle in Ruhe!
 % Die hier hatte ich noch rumliegen, das muss jetzt reichen.
+\thispagestyle{empty}
+\ 
+\vfill
+
+\begin{center}
+	\huge\sffamily\color{heading} Comparison of Graph Processing Systems
+
+	\vfill
+
+	\normalsize Tuesday, 20\textsuperscript{th} October 2020
+\end{center}
+
+
+\vfill
+
 \section{Motivation and Goal}
 \sffamily
 \begin{center}
@@ -483,6 +498,181 @@ Generally: 1) performance highly dependent on the framework, algorithm and data 
 
 
 
+\section{Additional Data}
+\clearpage
+\begin{figure*}
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSP_calcTime.png}
+		\caption{Calculation times}
+		\label{fig:singleNodeSSSP_calc}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSP_execTime.png}
+		\caption{Execution times}
+		\label{fig:singleNodeSSSP_exec}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSP_overheadTime.png}
+		\caption{Overhead time}
+		\label{fig:singleNodeSSSP_overhead}
+	\end{subfigure}
+	\caption{Average times for SSSP on a single computation node}
+	\label{fig:singleNodeSSSP}
+\end{figure*}%
+\begin{figure*}
+	\centering
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_calcTime.png}
+		\caption{Calculation times}
+		\label{fig:distributedSSSP_calc}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_execTime.png}
+		\caption{Execution times}
+		\label{fig:distributedSSSP_exec}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedSSSP_overheadTime.png}
+		\caption{Overhead times}
+		\label{fig:distributedSSSP_overhead}
+	\end{subfigure}
+	\caption{Average times for SSSP on the distributed cluster}
+	\label{fig:distributedSSSP}
+\end{figure*}
 
 
+\clearpage
+\begin{figure*}
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeBFS_calcTime.png}
+		\caption{Calculation time}
+		\label{fig:singleNodeBFS_calc}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeBFS_execTime.png}
+		\caption{Execution time}
+		\label{fig:singleNodeBFS_exec}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeBFS_overheadTime.png}
+		\caption{Overhead time}
+		\label{fig:singleNodeBFS_overheadNormalized}
+	\end{subfigure}
+	\caption{Average times for BFS on a single computation node}
+\end{figure*}
+\begin{figure*}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedBFS_calcTime.png}
+		\caption{Calculation time}
+		\label{fig:distributedBFS_calc}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedBFS_execTime.png}
+		\caption{Execution time}
+		\label{fig:distributedBFS_exec}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedBFS_overheadTime.png}
+		\caption{Overhead}
+		\label{fig:distributedBFS_overhead}
+	\end{subfigure}
+	\hfil
+	\caption{Average times for BFS on the distributed cluster}
+	\label{fig:distributedBFS}
+\end{figure*}
+
+\clearpage
+
+\begin{figure*}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePR_calcTime.png}
+		\caption{Calculation time}
+		\label{fig:singleNodePR_calc}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePR_execTime.png}
+		\caption{Execution time}
+		\label{fig:singleNodePR_exec}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePR_overheadTIme.png}
+		\caption{Overhead}
+		\label{fig:singleNodePR_overhead}
+	\end{subfigure}
+	\hfil
+	\caption{Average times for PR on a single computation node}
+	\label{fig:singleNodePR}
+\end{figure*}
+\begin{figure*}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedPR_calcTime.png}
+		\caption{Calculation time}
+		\label{fig:distributedPR_calc}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedPR_execTime.png}
+		\caption{Execution time}
+		\label{fig:distributedPR_exec}
+	\end{subfigure}
+	\hfil
+	\begin{subfigure}{0.32\textwidth}
+		\includegraphics[width=\linewidth]{../../plots/distributedPR_overheadTime.png}
+		\caption{Overhead}
+		\label{fig:distributedPR_overhead}
+	\end{subfigure}
+	\hfil
+	\caption{Average times for PR on the distributed cluster}
+	\label{fig:distributedPR}
+\end{figure*}
+
+\clearpage
+
+\begin{figure}
+	\hfil
+	\begin{subfigure}{0.48\columnwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisThreads.png}
+		\caption{without hugepages}
+		\label{fig:galoisSpeedupSSSP_noHP}
+	\end{subfigure}
+	\begin{subfigure}{0.48\columnwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodeSSSPGaloisHPThreads.png}
+		\caption{with hugepages}
+		\label{fig:galoisSpeedupSSSP_HP}
+	\end{subfigure}
+	\hfil
+	\caption{Calculation time speedups on SSSP}
+	\label{fig:galoisSpeedupSSSP}
+\end{figure}
+
+
+\begin{figure}
+	\hfil
+	\begin{subfigure}{0.48\columnwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisThreads.png}
+		\caption{without hugepages}
+		\label{fig:galoisSpeedupPRPull_noHP}
+	\end{subfigure}
+	\begin{subfigure}{0.48\columnwidth}
+		\includegraphics[width=\linewidth]{../../plots/singleNodePRPullGaloisHPThreads.png}
+		\caption{with hugepages}
+		\label{fig:galoisSpeedupPRPull_HP}
+	\end{subfigure}
+	\hfil
+	\caption{Calculation time speedups on PR Pull}
+	\label{fig:galoisSpeedupPRPull}
+\end{figure}
 \end{document}

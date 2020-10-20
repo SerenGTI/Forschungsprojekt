@@ -4,11 +4,11 @@ from plotFunctions import *
 
 
 
-distributed = False
-singleNode = False
+distributed = True
+singleNode = True
 
 sssp = False
-bfs = False
+bfs = True
 pr = False
 
 calcTimes = False
@@ -16,7 +16,7 @@ execTimes = False
 overheads = False
 
 
-galoisSpeedup = True
+galoisSpeedup = False
 
 
 colors = {"Galois":"#1f77b4",
